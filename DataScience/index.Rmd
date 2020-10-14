@@ -2,12 +2,15 @@
 title: "Data Science Course"
 author: "Fernando Racimo and Shyam Gopalakrishnan"
 date: "`r Sys.Date()`"
-site: bookdown::bookdown_site
+bibliography:
+- book.bib
+- packages.bib
+description: This is a minimal example of using the bookdown package to write a book.
+  The output format for this example is bookdown::gitbook.
 documentclass: book
-bibliography: [book.bib, packages.bib]
-biblio-style: apalike
 link-citations: yes
-description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
+site: bookdown::bookdown_site
+biblio-style: apalike
 ---
 
 # Prerequisites

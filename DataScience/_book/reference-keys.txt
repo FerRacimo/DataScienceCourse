@@ -2,8 +2,8 @@ fig:nice-fig
 tab:nice-tab
 prerequisites
 intro
-literature
-methods
+probability
+linear-models
 applications
 example-one
 example-two
