@@ -5,8 +5,7 @@ date: "`r Sys.Date()`"
 bibliography:
 - book.bib
 - packages.bib
-description: This is a minimal example of using the bookdown package to write a book.
-  The output format for this example is bookdown::gitbook.
+description: This is a guide for the Globe Data Science Course.
 documentclass: book
 link-citations: yes
 site: bookdown::bookdown_site

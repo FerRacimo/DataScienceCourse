@@ -4,24 +4,24 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Data Science Course</title>
-  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <title>Ordination</title>
+  <meta name="description" content="This is a guide for the Globe Data Science Course." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Data Science Course" />
+  <meta property="og:title" content="Ordination" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta property="og:description" content="This is a guide for the Globe Data Science Course." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Data Science Course" />
+  <meta name="twitter:title" content="Ordination" />
   
-  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="twitter:description" content="This is a guide for the Globe Data Science Course." />
   
 
-<meta name="author" content="Fernando Racimo and Shyam Gopalakrishnan" />
+<meta name="author" content="adapted from notes by Marco Plebani and Steven Holland" />
 
 
 <meta name="date" content="2020-10-14" />
@@ -143,6 +143,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>5.2</b> Example two</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
+<li class="chapter" data-level="7" data-path="ordination.html"><a href="ordination.html"><i class="fa fa-check"></i><b>7</b> Ordination</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="ordination.html"><a href="ordination.html#libraries-and-data"><i class="fa fa-check"></i><b>7.1</b> Libraries and Data</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="ordination.html"><a href="ordination.html#exercise-1-visualizing-the-data"><i class="fa fa-check"></i><b>7.1.1</b> Exercise 1: Visualizing the data</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="ordination.html"><a href="ordination.html#principal-component-analysis-pca"><i class="fa fa-check"></i><b>7.2</b> Principal component analysis (PCA)</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="ordination.html"><a href="ordination.html#biplots"><i class="fa fa-check"></i><b>7.2.1</b> Biplots</a></li>
+<li class="chapter" data-level="7.2.2" data-path="ordination.html"><a href="ordination.html#exercise-2-interpreting-biplots"><i class="fa fa-check"></i><b>7.2.2</b> Exercise 2: Interpreting biplots</a></li>
+<li class="chapter" data-level="7.2.3" data-path="ordination.html"><a href="ordination.html#pca-using-ggplot"><i class="fa fa-check"></i><b>7.2.3</b> PCA using ggplot</a></li>
+<li class="chapter" data-level="7.2.4" data-path="ordination.html"><a href="ordination.html#pca-under-the-hood"><i class="fa fa-check"></i><b>7.2.4</b> PCA under the hood</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="ordination.html"><a href="ordination.html#nmds"><i class="fa fa-check"></i><b>7.3</b> NMDS</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="ordination.html"><a href="ordination.html#exercise-3-interpreting-nmds-plots"><i class="fa fa-check"></i><b>7.3.1</b> Exercise 3: interpreting NMDS plots</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -156,7 +174,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Science Course</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Ordination</a>
           </h1>
         </div>
 
@@ -165,8 +183,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="header">
-<h1 class="title">Data Science Course</h1>
-<p class="author"><em>Fernando Racimo and Shyam Gopalakrishnan</em></p>
+<h1 class="title">Ordination</h1>
+<h2 class="subtitle"><em>Fernando Racimo</em></h2>
+<p class="author"><em>adapted from notes by Marco Plebani and Steven Holland</em></p>
 <p class="date"><em>2020-10-14</em></p>
 </div>
 <div id="prerequisites" class="section level1" number="1">

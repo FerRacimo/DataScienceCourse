@@ -8,3 +8,13 @@ applications
 example-one
 example-two
 final-words
+ordination
+libraries-and-data
+exercise-1-visualizing-the-data
+principal-component-analysis-pca
+biplots
+exercise-2-interpreting-biplots
+pca-using-ggplot
+pca-under-the-hood
+nmds
+exercise-3-interpreting-nmds-plots
