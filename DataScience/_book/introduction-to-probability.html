@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Probability | Probability</title>
+  <title>Chapter 3 Introduction to Probability | Introduction to Probability</title>
   <meta name="description" content="This is a guide for the Globe Data Science Course." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Probability | Probability" />
+  <meta property="og:title" content="Chapter 3 Introduction to Probability | Introduction to Probability" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Probability | Probability" />
+  <meta name="twitter:title" content="Chapter 3 Introduction to Probability | Introduction to Probability" />
   
   <meta name="twitter:description" content="This is a guide for the Globe Data Science Course." />
   
@@ -135,10 +135,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
-<li class="chapter" data-level="3" data-path="probability.html"><a href="probability.html"><i class="fa fa-check"></i><b>3</b> Probability</a>
+<li class="chapter" data-level="3" data-path="introduction-to-probability.html"><a href="introduction-to-probability.html"><i class="fa fa-check"></i><b>3</b> Introduction to Probability</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="probability.html"><a href="probability.html#tossing-a-coin-the-bernoulli-distribution"><i class="fa fa-check"></i><b>3.1</b> Tossing a coin (the Bernoulli distribution)</a></li>
-<li class="chapter" data-level="3.2" data-path="probability.html"><a href="probability.html#adding-up-many-coin-tosses-the-binomial-distribution"><i class="fa fa-check"></i><b>3.2</b> Adding up many coin tosses (the Binomial distribution)</a></li>
+<li class="chapter" data-level="3.1" data-path="introduction-to-probability.html"><a href="introduction-to-probability.html#tossing-a-coin-the-bernoulli-distribution"><i class="fa fa-check"></i><b>3.1</b> Tossing a coin (the Bernoulli distribution)</a></li>
+<li class="chapter" data-level="3.2" data-path="introduction-to-probability.html"><a href="introduction-to-probability.html#adding-up-many-coin-tosses-the-binomial-distribution"><i class="fa fa-check"></i><b>3.2</b> Adding up many coin tosses (the Binomial distribution)</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>4</b> Linear Models</a></li>
 <li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a></li>
@@ -174,7 +174,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Probability</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Probability</a>
           </h1>
         </div>
 
@@ -182,29 +182,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="probability" class="section level1" number="3">
-<h1><span class="header-section-number">Chapter 3</span> Probability</h1>
+<div id="introduction-to-probability" class="section level1" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Introduction to Probability</h1>
 <div id="tossing-a-coin-the-bernoulli-distribution" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Tossing a coin (the Bernoulli distribution)</h2>
 <p>We can “virtually” toss a coin in our R console, using the rbinom() function:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="probability.html#cb3-1" aria-hidden="true"></a><span class="kw">rbinom</span>(<span class="dv">1</span>, <span class="dv">1</span>,.<span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="introduction-to-probability.html#cb3-1" aria-hidden="true"></a><span class="kw">rbinom</span>(<span class="dv">1</span>, <span class="dv">1</span>,.<span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
 <p>Try copying the above chunk to your R console and running it multiple times. Do you always get the same result?</p>
 <p>This function has 3 required input parameters: n, size and prob. The first parameter (n) determines the number of trials we are telling R to perform, in other words, the number of coin tosses we want to generate:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="probability.html#cb5-1" aria-hidden="true"></a><span class="kw">rbinom</span>(<span class="dv">20</span>, <span class="dv">1</span>,<span class="fl">0.5</span>)</span></code></pre></div>
-<pre><code>##  [1] 0 0 1 1 0 0 0 1 1 1 1 0 1 0 0 1 1 0 1 0</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="introduction-to-probability.html#cb5-1" aria-hidden="true"></a><span class="kw">rbinom</span>(<span class="dv">20</span>, <span class="dv">1</span>,<span class="fl">0.5</span>)</span></code></pre></div>
+<pre><code>##  [1] 0 1 1 0 1 1 1 0 1 0 0 0 0 1 1 1 0 1 1 1</code></pre>
 <p>Here, we generate 20 toin cosses, and the zeroes and ones represent whether we got a heads or a tails in each trial. For now, we will ignore the second parameter (size) and fixed it at 1, but we’ll revisit it in a moment. The third parameter (prob) dictates how biased the coin is. If we set it to 0.9, we’ll get the outcomes of a biased coin toss, in particular biased towards heads:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="probability.html#cb7-1" aria-hidden="true"></a><span class="kw">rbinom</span>(<span class="dv">20</span>, <span class="dv">1</span>,<span class="fl">0.9</span>)</span></code></pre></div>
-<pre><code>##  [1] 1 0 1 1 1 1 1 1 1 1 0 1 1 0 1 1 1 1 1 1</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="introduction-to-probability.html#cb7-1" aria-hidden="true"></a><span class="kw">rbinom</span>(<span class="dv">20</span>, <span class="dv">1</span>,<span class="fl">0.9</span>)</span></code></pre></div>
+<pre><code>##  [1] 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1</code></pre>
 <p>What happens when you set prob to 0.1? Or 0.999? Why?</p>
 <p>What we are really doing here is simulating outcomes of a random variable that is governed by a particular probability distribution (in this case, the Bernoulli distribution). We can assign a name to this variable for storage and manipulation later on:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="probability.html#cb9-1" aria-hidden="true"></a>X &lt;-<span class="st"> </span><span class="kw">rbinom</span>(<span class="dv">1</span>, <span class="dv">1</span>,<span class="fl">0.9</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="introduction-to-probability.html#cb9-1" aria-hidden="true"></a>X &lt;-<span class="st"> </span><span class="kw">rbinom</span>(<span class="dv">1</span>, <span class="dv">1</span>,<span class="fl">0.9</span>)</span></code></pre></div>
 <p>If you type this in your console, X will now store the value of the outcome of a biased coin toss (either 0 or 1), which you can use later in your code.</p>
 <p>How can we verify that R is really doing what we think it is doing? Well, if we think we have a fair coin and we throw it many times, then, on average, we should get the same number of heads and tails, right? This experiment should be more accurate the more trials we have. We can compute the average of our coin tosses by using the function sum(), which adds the elements of a vector, and then dividing by the total number of trials.</p>
 <p>Let’s create a new variable (n) that will determine how many trials we attempt, say 20.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="probability.html#cb10-1" aria-hidden="true"></a>n &lt;-<span class="st"> </span><span class="dv">20</span></span>
-<span id="cb10-2"><a href="probability.html#cb10-2" aria-hidden="true"></a><span class="kw">sum</span>(<span class="kw">rbinom</span>(n,<span class="dv">1</span>,<span class="fl">0.5</span>)) <span class="op">/</span><span class="st"> </span>n</span></code></pre></div>
-<pre><code>## [1] 0.45</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="introduction-to-probability.html#cb10-1" aria-hidden="true"></a>n &lt;-<span class="st"> </span><span class="dv">20</span></span>
+<span id="cb10-2"><a href="introduction-to-probability.html#cb10-2" aria-hidden="true"></a><span class="kw">sum</span>(<span class="kw">rbinom</span>(n,<span class="dv">1</span>,<span class="fl">0.5</span>)) <span class="op">/</span><span class="st"> </span>n</span></code></pre></div>
+<pre><code>## [1] 0.55</code></pre>
 <p>Try copying this into your console. Do you get the same number as I do? Do you get exactly 0.5? If not, why not? Try the same exercise but with 100 trials, 1000 trials and 100000 trials. What happens as we increase the number of trials?</p>
 <p>This should illustrate how powerful R can be. We just threw 100 thousand coins into the air without even lifting our fingers! Try to repeat the exercise above, but this time, set the Bernoulli prob parameter to be equal to a number of your choice (between 0 and 1). What is the average of all your coin tosses?</p>
 </div>
@@ -212,12 +212,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">3.2</span> Adding up many coin tosses (the Binomial distribution)</h2>
 <p>Let’s say we are now not interested in any particular coin toss, but in the sum of our coin tosses. Each toss is represented by a 0 or a 1, so the sum of all our tosses cannot be smaller than 0 or larger than the total number of tosses we perform.</p>
 <p>Try running the below code 5 times. What numbers do you obtain?</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="probability.html#cb12-1" aria-hidden="true"></a><span class="kw">sum</span>(<span class="kw">rbinom</span>(<span class="dv">20</span>,<span class="dv">1</span>,<span class="fl">0.5</span>))</span></code></pre></div>
-<pre><code>## [1] 7</code></pre>
-<p>Turns out there’s a short-hand way of performing the exact same experiment, i.e. taking the sum of multiple Bernoulli coin tosses, without using the sum() function at all. Here’s where the second input parameter (size) of the rbinom function comes into play. So far, we’ve always left it at 1, but we can set it to any positive integer:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="probability.html#cb14-1" aria-hidden="true"></a><span class="kw">rbinom</span>(<span class="dv">1</span>,<span class="dv">20</span>,<span class="fl">0.5</span>)</span></code></pre></div>
-<pre><code>## [1] 12</code></pre>
-<p>The above code is equivalent to taking 20 Bernoulli trials, and then adding them up. The “experiment” we are running is now not a single coin toss, but 20 coin tosses together. The outcome of this experiment is neither heads nor tails, but the sum of all the heads in all those coin tosses. It turns out that this “experiment” is a probability distribution in its own right, and it is called the Binomial distribution. The Bernoulli distribution is just a specific case of the Binomial distribution (the case in which we only toss 1 coin). You can read more about this distribution if you go to the help menu for this function (type "?rbinom).</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="introduction-to-probability.html#cb12-1" aria-hidden="true"></a><span class="kw">sum</span>(<span class="kw">rbinom</span>(<span class="dv">20</span>,<span class="dv">1</span>,<span class="fl">0.5</span>))</span></code></pre></div>
+<pre><code>## [1] 8</code></pre>
+<p>Turns out there’s a short-hand way of performing the same experiment, i.e. tossing a bunch of coins - each a Bernoulli random variable - observing their outcomes and adding them up, without using the sum() function at all. Here’s where the second input parameter - size - of the rbinom() function comes into play. So far, we’ve always left it equal to 1 in all our command lines above, but we can set it to any positive integer:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="introduction-to-probability.html#cb14-1" aria-hidden="true"></a><span class="kw">rbinom</span>(<span class="dv">1</span>,<span class="dv">20</span>,<span class="fl">0.5</span>)</span></code></pre></div>
+<pre><code>## [1] 11</code></pre>
+<p>The above code is equivalent to taking 20 Bernoulli trials, and then adding their outcomes up. The “experiment” we are running is now not a single coin toss, but 20 coin tosses together. The outcome of this experiment is neither heads nor tails, but the sum of all the heads in all those coin tosses. It turns out that this “experiment” is a probability distribution in its own right, and it is called the Binomial distribution. It has two parameters: the size of the experiment (how many tosses we perform) and the probability of heads for each toss (the prob parameter). The Bernoulli distribution is just a specific case of the Binomial distribution (the case in which we only toss 1 coin, i.e. size = 1). You can read more about this distribution if you go to the help menu for this function (type "?rbinom).</p>
+<p>We can take the average of multiple Binomial trials as well. Let’s try adding the results of 5 Binomial trials, each with size 20 (how many Bernoulli trials is this equivalent to?):</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="introduction-to-probability.html#cb16-1" aria-hidden="true"></a>n &lt;-<span class="st"> </span><span class="dv">5</span></span>
+<span id="cb16-2"><a href="introduction-to-probability.html#cb16-2" aria-hidden="true"></a>size &lt;-<span class="st"> </span><span class="dv">20</span></span>
+<span id="cb16-3"><a href="introduction-to-probability.html#cb16-3" aria-hidden="true"></a>prob &lt;-<span class="st"> </span><span class="fl">0.5</span></span>
+<span id="cb16-4"><a href="introduction-to-probability.html#cb16-4" aria-hidden="true"></a>X &lt;-<span class="st"> </span><span class="kw">rbinom</span>(n,size,prob)</span>
+<span id="cb16-5"><a href="introduction-to-probability.html#cb16-5" aria-hidden="true"></a>X</span></code></pre></div>
+<pre><code>## [1] 11  9  7 10 10</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="introduction-to-probability.html#cb18-1" aria-hidden="true"></a>Xsum &lt;-<span class="st"> </span><span class="kw">sum</span>(X)</span>
+<span id="cb18-2"><a href="introduction-to-probability.html#cb18-2" aria-hidden="true"></a>Xsum</span></code></pre></div>
+<pre><code>## [1] 47</code></pre>
+<p>To get the average, we divide by the total number of trials (remember here that the number of Binomial trials is 5):</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="introduction-to-probability.html#cb20-1" aria-hidden="true"></a>Xave &lt;-<span class="st"> </span>Xsum <span class="op">/</span><span class="st"> </span>n</span>
+<span id="cb20-2"><a href="introduction-to-probability.html#cb20-2" aria-hidden="true"></a>Xave</span></code></pre></div>
+<pre><code>## [1] 9.4</code></pre>
+<p>A shorthand for obtaining the mean is the function mean(). This should give you the same result:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="introduction-to-probability.html#cb22-1" aria-hidden="true"></a>Xave &lt;-<span class="st"> </span><span class="kw">mean</span>(X)</span>
+<span id="cb22-2"><a href="introduction-to-probability.html#cb22-2" aria-hidden="true"></a>Xave</span></code></pre></div>
+<pre><code>## [1] 9.4</code></pre>
+<p>Note that the mean need not be an integer, even if each Binomial trial <em>must</em> be an integer.</p>
+<p>Now, try repeating the same exercise but using 100 Binomial trials, and then 100 thousand Binomial trials. What numbers do you get? What number do we expect to get as we increase the number of Binomial trials?</p>
+<p>This number is called the <em>Expectation</em> of a random variable. In the case of a variable X that follows the Binomial distribution, the expectation is equal to the product of size and prob, often symbolized as: <span class="math display">\[E[X] = n * p\]</span> (note that the n here refers to the size of a single Binomial trial).</p>
+<p>This should make intuitive sense: if we throw a bunch of coins and add up their results, the number we expect to get should be approximately equal to the probability of heads times the number of tosses we perform. Note that this equality only holds approximately: for any given Binomial trial, we can get any number between 0 and the size of the Binomial. If we take an average over many Binomial experiments, we’ll approach this expectation ever more accurately. The average (also called “sample mean” ) over a series of experiments is thus an approximation to the expectation, which is often unknown in real life. The sample mean is often representing by a letter with a bar on top: <span class="math display">\[\bar{x} = \frac{\sum_{i}^{n}x_{i}}{n}\]</span></p>
+<p>There is another important property of a distribution: its <em>Variance</em>. This reflects how much variation we expect to get among different instances of an experiment. In the case of a variable X that follows the Binomial distribution: <span class="math display">\[Var[X] = n * p * (1-p)\]</span></p>
+<p>A measurable approximation to the <em>Variance</em> is called the “sample variance” and can be computed as follows: <span class="math display">\[s = \frac{\sum_{i}^{n}(x_{i} - \bar{x})^{2}}{n}\]</span></p>
+<p>Just as we can compute the sample mean of a set of trials using the function mean(), we can easily compute the variance of a set of trials using the function var():</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="introduction-to-probability.html#cb24-1" aria-hidden="true"></a>n &lt;-<span class="st"> </span><span class="dv">5</span></span>
+<span id="cb24-2"><a href="introduction-to-probability.html#cb24-2" aria-hidden="true"></a>size &lt;-<span class="st"> </span><span class="dv">20</span></span>
+<span id="cb24-3"><a href="introduction-to-probability.html#cb24-3" aria-hidden="true"></a>prob &lt;-<span class="st"> </span><span class="fl">0.5</span></span>
+<span id="cb24-4"><a href="introduction-to-probability.html#cb24-4" aria-hidden="true"></a>X &lt;-<span class="st"> </span><span class="kw">rbinom</span>(n,size,prob)</span>
+<span id="cb24-5"><a href="introduction-to-probability.html#cb24-5" aria-hidden="true"></a>X</span></code></pre></div>
+<pre><code>## [1] 13 11 13 13 15</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="introduction-to-probability.html#cb26-1" aria-hidden="true"></a><span class="kw">mean</span>(X)</span></code></pre></div>
+<pre><code>## [1] 13</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="introduction-to-probability.html#cb28-1" aria-hidden="true"></a><span class="kw">var</span>(X)</span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
 
 </div>
 </div>
@@ -277,6 +312,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

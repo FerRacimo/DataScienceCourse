@@ -18,3 +18,6 @@ pca-using-ggplot
 pca-under-the-hood
 nmds
 exercise-3-interpreting-nmds-plots
+tossing-a-coin-the-bernoulli-distribution
+adding-up-many-coin-tosses-the-binomial-distribution
+introduction-to-probability

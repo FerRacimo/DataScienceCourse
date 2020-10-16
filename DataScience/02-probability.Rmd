@@ -1,3 +1,135 @@
-# Probability
+# Introduction to Probability
 
-We'll begin with probability.
+---
+title: "Introduction to Probability"
+author: 'Fernando Racimo'
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 4
+    theme: united
+    highlight: tango
+    code_folding: show
+    code_download: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Tossing a coin (the Bernoulli distribution)
+
+We can "virtually" toss a coin in our R console, using the rbinom() function:
+
+```{r}
+rbinom(1, 1,.5)
+```
+
+Try copying the above chunk to your R console and running it multiple times. Do you always get the same result?
+
+This function has 3 required input parameters: n, size and prob. The first parameter (n) determines the number of trials we are telling R to perform, in other words, the number of coin tosses we want to generate:
+
+```{r}
+rbinom(20, 1,0.5)
+```
+
+Here, we generate 20 toin cosses, and the zeroes and ones represent whether we got a heads or a tails in each trial. For now, we will ignore the second parameter (size) and fixed it at 1, but we'll revisit it in a moment. The third parameter (prob) dictates how biased the coin is. If we set it to 0.9, we'll get the outcomes of a biased coin toss, in particular biased towards heads:
+
+```{r}
+rbinom(20, 1,0.9)
+```
+
+What happens when you set prob to 0.1? Or 0.999? Why?
+
+What we are really doing here is simulating outcomes of a random variable that is governed by a particular probability distribution (in this case, the Bernoulli distribution). We can assign a name to this variable for storage and manipulation later on:
+
+```{r}
+X <- rbinom(1, 1,0.9)
+```
+
+If you type this in your console, X will now store the value of the outcome of a biased coin toss (either 0 or 1), which you can use later in your code.
+
+How can we verify that R is really doing what we think it is doing? Well, if we think we have a fair coin and we throw it many times, then, on average, we should get the same number of heads and tails, right? This experiment should be more accurate the more trials we have. We can compute the average of our coin tosses by using the function sum(), which adds the elements of a vector, and then dividing by the total number of trials.
+
+Let's create a new variable (n) that will determine how many trials we attempt, say 20.
+
+```{r}
+n <- 20
+sum(rbinom(n,1,0.5)) / n
+```
+
+Try copying this into your console. Do you get the same number as I do? Do you get exactly 0.5? If not, why not? Try the same exercise but with 100 trials, 1000 trials and 100000 trials. What happens as we increase the number of trials?
+
+This should illustrate how powerful R can be. We just threw 100 thousand coins into the air without even lifting our fingers! Try to repeat the exercise above, but this time, set the Bernoulli prob parameter to be equal to a number of your choice (between 0 and 1). What is the average of all your coin tosses? 
+
+## Adding up many coin tosses (the Binomial distribution)
+
+Let's say we are now not interested in any particular coin toss, but in the sum of our coin tosses. Each toss is represented by a 0 or a 1, so the sum of all our tosses cannot be smaller than 0 or larger than the total number of tosses we perform.
+
+Try running the below code 5 times. What numbers do you obtain?
+
+```{r}
+sum(rbinom(20,1,0.5))
+```
+
+Turns out there's a short-hand way of performing the same experiment, i.e. tossing a bunch of coins - each a Bernoulli random variable - observing their outcomes and adding them up, without using the sum() function at all. Here's where the second input parameter - size - of the rbinom() function comes into play. So far, we've always left it equal to 1 in all our command lines above, but we can set it to any positive integer:
+
+```{r}
+rbinom(1,20,0.5)
+```
+
+The above code is equivalent to taking 20 Bernoulli trials, and then adding their outcomes up. The "experiment" we are running is now not a single coin toss, but 20 coin tosses together. The outcome of this experiment is neither heads nor tails, but the sum of all the heads in all those coin tosses. It turns out that this "experiment" is a probability distribution in its own right, and it is called the Binomial distribution. It has two parameters: the size of the experiment (how many tosses we perform) and the probability of heads for each toss (the prob parameter). The Bernoulli distribution is just a specific case of the Binomial distribution (the case in which we only toss 1 coin, i.e. size = 1). You can read more about this distribution if you go to the help menu for this function (type "?rbinom).
+
+We can take the average of multiple Binomial trials as well. Let's try adding the results of 5 Binomial trials, each with size 20 (how many Bernoulli trials is this equivalent to?):
+
+```{r}
+n <- 5
+size <- 20
+prob <- 0.5
+X <- rbinom(n,size,prob)
+X
+Xsum <- sum(X)
+Xsum
+```
+
+To get the average, we divide by the total number of trials (remember here that the number of Binomial trials is 5):
+
+```{r}
+Xave <- Xsum / n
+Xave
+```
+
+A shorthand for obtaining the mean is the function mean(). This should give you the same result:
+
+```{r}
+Xave <- mean(X)
+Xave
+```
+
+Note that the mean need not be an integer, even if each Binomial trial *must* be an integer.
+
+Now, try repeating the same exercise but using 100 Binomial trials, and then 100 thousand Binomial trials. What numbers do you get? What number do we expect to get as we increase the number of Binomial trials?
+
+This number is called the *Expectation* of a random variable. In the case of a variable X that follows the Binomial distribution, the expectation is equal to the product of size and prob, often symbolized as: $$E[X] = n * p$$ (note that the n here refers to the size of a single Binomial trial).
+
+This should make intuitive sense: if we throw a bunch of coins and add up their results, the number we expect to get should be approximately equal to the probability of heads times the number of tosses we perform. Note that this equality only holds approximately: for any given Binomial trial, we can get any number between 0 and the size of the Binomial. If we take an average over many Binomial experiments, we'll approach this expectation ever more accurately. The average (also called "sample mean" ) over a series of experiments is thus an approximation to the expectation, which is often unknown in real life. The sample mean is often representing by a letter with a bar on top: $$\bar{x} = \frac{\sum_{i}^{n}x_{i}}{n}$$
+
+
+There is another important property of a distribution: its *Variance*. This reflects how much variation we expect to get among different instances of an experiment. In the case of a variable X that follows the Binomial distribution: $$Var[X] = n * p * (1-p)$$
+
+A measurable approximation to the *Variance* is called the "sample variance" and can be computed as follows: $$s = \frac{\sum_{i}^{n}(x_{i} - \bar{x})^{2}}{n}$$
+
+Just as we can compute the sample mean of a set of trials using the function mean(), we can easily compute the variance of a set of trials using the function var():
+
+```{r}
+n <- 5
+size <- 20
+prob <- 0.5
+X <- rbinom(n,size,prob)
+X
+mean(X)
+var(X)
+```
+
+
