@@ -1,22 +1,3 @@
----
-title: "Ordination"
-subtitle: "adapted from notes by Marco Plebani and Steven Holland"
-author: 'Fernando Racimo'
-output: 
-  html_document:
-    toc: true
-    toc_float: true
-    toc_depth: 4
-    theme: united
-    highlight: tango
-    code_folding: show
-    code_download: true
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 # Ordination
 
 ## Libraries and Data

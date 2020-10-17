@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Introduction | Ordination</title>
+  <title>Chapter 2 Getting Started with Data Analysis | Data Science Course</title>
   <meta name="description" content="This is a guide for the Globe Data Science Course." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Introduction | Ordination" />
+  <meta property="og:title" content="Chapter 2 Getting Started with Data Analysis | Data Science Course" />
   <meta property="og:type" content="book" />
   
   
@@ -16,23 +16,23 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Introduction | Ordination" />
+  <meta name="twitter:title" content="Chapter 2 Getting Started with Data Analysis | Data Science Course" />
   
   <meta name="twitter:description" content="This is a guide for the Globe Data Science Course." />
   
 
-<meta name="author" content="adapted from notes by Marco Plebani and Steven Holland" />
+<meta name="author" content="Fernando Racimo" />
 
 
-<meta name="date" content="2020-10-14" />
+<meta name="date" content="2020-10-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="probability.html"/>
+<link rel="prev" href="introduction.html"/>
+<link rel="next" href="prob.html"/>
 <script src="libs/header-attrs-2.4/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -133,32 +133,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">A Minimal Book Example</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
-<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
-<li class="chapter" data-level="3" data-path="probability.html"><a href="probability.html"><i class="fa fa-check"></i><b>3</b> Probability</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Getting Started with Data Analysis</a></li>
+<li class="chapter" data-level="3" data-path="prob.html"><a href="prob.html"><i class="fa fa-check"></i><b>3</b> Probability</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="prob.html"><a href="prob.html#tossing-a-coin-the-bernoulli-distribution"><i class="fa fa-check"></i><b>3.1</b> Tossing a coin: the Bernoulli distribution</a></li>
+<li class="chapter" data-level="3.2" data-path="prob.html"><a href="prob.html#adding-up-many-coin-tosses-the-binomial-distribution"><i class="fa fa-check"></i><b>3.2</b> Adding up many coin tosses: the Binomial distribution</a></li>
+<li class="chapter" data-level="3.3" data-path="prob.html"><a href="prob.html#the-expectation-of-a-random-variable"><i class="fa fa-check"></i><b>3.3</b> The expectation of a random variable</a></li>
+<li class="chapter" data-level="3.4" data-path="prob.html"><a href="prob.html#our-first-probability-mass-function"><i class="fa fa-check"></i><b>3.4</b> Our first probability mass function</a></li>
+<li class="chapter" data-level="3.5" data-path="prob.html"><a href="prob.html#the-variance-of-a-random-variable"><i class="fa fa-check"></i><b>3.5</b> The variance of a random variable</a></li>
+</ul></li>
 <li class="chapter" data-level="4" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>4</b> Linear Models</a></li>
-<li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a>
+<li class="chapter" data-level="5" data-path="ordination.html"><a href="ordination.html"><i class="fa fa-check"></i><b>5</b> Ordination</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>5.1</b> Example one</a></li>
-<li class="chapter" data-level="5.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>5.2</b> Example two</a></li>
+<li class="chapter" data-level="5.1" data-path="ordination.html"><a href="ordination.html#libraries-and-data"><i class="fa fa-check"></i><b>5.1</b> Libraries and Data</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="ordination.html"><a href="ordination.html#exercise-1-visualizing-the-data"><i class="fa fa-check"></i><b>5.1.1</b> Exercise 1: Visualizing the data</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
-<li class="chapter" data-level="7" data-path="ordination.html"><a href="ordination.html"><i class="fa fa-check"></i><b>7</b> Ordination</a>
+<li class="chapter" data-level="5.2" data-path="ordination.html"><a href="ordination.html#principal-component-analysis-pca"><i class="fa fa-check"></i><b>5.2</b> Principal component analysis (PCA)</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="ordination.html"><a href="ordination.html#libraries-and-data"><i class="fa fa-check"></i><b>7.1</b> Libraries and Data</a>
-<ul>
-<li class="chapter" data-level="7.1.1" data-path="ordination.html"><a href="ordination.html#exercise-1-visualizing-the-data"><i class="fa fa-check"></i><b>7.1.1</b> Exercise 1: Visualizing the data</a></li>
+<li class="chapter" data-level="5.2.1" data-path="ordination.html"><a href="ordination.html#biplots"><i class="fa fa-check"></i><b>5.2.1</b> Biplots</a></li>
+<li class="chapter" data-level="5.2.2" data-path="ordination.html"><a href="ordination.html#exercise-2-interpreting-biplots"><i class="fa fa-check"></i><b>5.2.2</b> Exercise 2: Interpreting biplots</a></li>
+<li class="chapter" data-level="5.2.3" data-path="ordination.html"><a href="ordination.html#pca-using-ggplot"><i class="fa fa-check"></i><b>5.2.3</b> PCA using ggplot</a></li>
+<li class="chapter" data-level="5.2.4" data-path="ordination.html"><a href="ordination.html#pca-under-the-hood"><i class="fa fa-check"></i><b>5.2.4</b> PCA under the hood</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="ordination.html"><a href="ordination.html#principal-component-analysis-pca"><i class="fa fa-check"></i><b>7.2</b> Principal component analysis (PCA)</a>
+<li class="chapter" data-level="5.3" data-path="ordination.html"><a href="ordination.html#nmds"><i class="fa fa-check"></i><b>5.3</b> NMDS</a>
 <ul>
-<li class="chapter" data-level="7.2.1" data-path="ordination.html"><a href="ordination.html#biplots"><i class="fa fa-check"></i><b>7.2.1</b> Biplots</a></li>
-<li class="chapter" data-level="7.2.2" data-path="ordination.html"><a href="ordination.html#exercise-2-interpreting-biplots"><i class="fa fa-check"></i><b>7.2.2</b> Exercise 2: Interpreting biplots</a></li>
-<li class="chapter" data-level="7.2.3" data-path="ordination.html"><a href="ordination.html#pca-using-ggplot"><i class="fa fa-check"></i><b>7.2.3</b> PCA using ggplot</a></li>
-<li class="chapter" data-level="7.2.4" data-path="ordination.html"><a href="ordination.html#pca-under-the-hood"><i class="fa fa-check"></i><b>7.2.4</b> PCA under the hood</a></li>
-</ul></li>
-<li class="chapter" data-level="7.3" data-path="ordination.html"><a href="ordination.html#nmds"><i class="fa fa-check"></i><b>7.3</b> NMDS</a>
-<ul>
-<li class="chapter" data-level="7.3.1" data-path="ordination.html"><a href="ordination.html#exercise-3-interpreting-nmds-plots"><i class="fa fa-check"></i><b>7.3.1</b> Exercise 3: interpreting NMDS plots</a></li>
+<li class="chapter" data-level="5.3.1" data-path="ordination.html"><a href="ordination.html#exercise-3-interpreting-nmds-plots"><i class="fa fa-check"></i><b>5.3.1</b> Exercise 3: interpreting NMDS plots</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -174,7 +175,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Ordination</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Science Course</a>
           </h1>
         </div>
 
@@ -183,11 +184,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="intro" class="section level1" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Introduction</h1>
+<h1><span class="header-section-number">Chapter 2</span> Getting Started with Data Analysis</h1>
 <p>You can label chapter and section titles using <code>{#label}</code> after them, e.g., we can reference Chapter <a href="intro.html#intro">2</a>. If you do not manually label them, there will be automatic labels anyway, e.g., Chapter <a href="#methods"><strong>??</strong></a>.</p>
 <p>Figures and tables with captions will be placed in <code>figure</code> and <code>table</code> environments, respectively.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="intro.html#cb2-1" aria-hidden="true"></a><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="fl">.1</span>, <span class="fl">.1</span>))</span>
-<span id="cb2-2"><a href="intro.html#cb2-2" aria-hidden="true"></a><span class="kw">plot</span>(pressure, <span class="dt">type =</span> <span class="st">&#39;b&#39;</span>, <span class="dt">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="intro.html#cb1-1" aria-hidden="true"></a><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="fl">.1</span>, <span class="fl">.1</span>))</span>
+<span id="cb1-2"><a href="intro.html#cb1-2" aria-hidden="true"></a><span class="kw">plot</span>(pressure, <span class="dt">type =</span> <span class="st">&#39;b&#39;</span>, <span class="dt">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:nice-fig"></span>
 <img src="DataScience_files/figure-html/nice-fig-1.png" alt="Here is a nice figure!" width="80%" />
 <p class="caption">
@@ -195,10 +196,10 @@ Figure 2.1: Here is a nice figure!
 </p>
 </div>
 <p>Reference a figure by its code chunk label with the <code>fig:</code> prefix, e.g., see Figure <a href="intro.html#fig:nice-fig">2.1</a>. Similarly, you can reference tables generated from <code>knitr::kable()</code>, e.g., see Table <a href="intro.html#tab:nice-tab">2.1</a>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="intro.html#cb3-1" aria-hidden="true"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
-<span id="cb3-2"><a href="intro.html#cb3-2" aria-hidden="true"></a>  <span class="kw">head</span>(iris, <span class="dv">20</span>), <span class="dt">caption =</span> <span class="st">&#39;Here is a nice table!&#39;</span>,</span>
-<span id="cb3-3"><a href="intro.html#cb3-3" aria-hidden="true"></a>  <span class="dt">booktabs =</span> <span class="ot">TRUE</span></span>
-<span id="cb3-4"><a href="intro.html#cb3-4" aria-hidden="true"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="intro.html#cb2-1" aria-hidden="true"></a>knitr<span class="op">::</span><span class="kw">kable</span>(</span>
+<span id="cb2-2"><a href="intro.html#cb2-2" aria-hidden="true"></a>  <span class="kw">head</span>(iris, <span class="dv">20</span>), <span class="dt">caption =</span> <span class="st">&#39;Here is a nice table!&#39;</span>,</span>
+<span id="cb2-3"><a href="intro.html#cb2-3" aria-hidden="true"></a>  <span class="dt">booktabs =</span> <span class="ot">TRUE</span></span>
+<span id="cb2-4"><a href="intro.html#cb2-4" aria-hidden="true"></a>)</span></code></pre></div>
 <table>
 <caption><span id="tab:nice-tab">Table 2.1: </span>Here is a nice table!</caption>
 <thead>
@@ -370,8 +371,8 @@ Figure 2.1: Here is a nice figure!
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="probability.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="prob.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
