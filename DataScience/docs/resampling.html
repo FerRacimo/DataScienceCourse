@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 12 Resampling | Data Analysis and Statistical Thinking: An R Workbook</title>
+  <meta name="description" content="This is a guide for the Globe Data Science Course." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 12 Resampling | Data Analysis and Statistical Thinking: An R Workbook" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a guide for the Globe Data Science Course." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 12 Resampling | Data Analysis and Statistical Thinking: An R Workbook" />
+  
+  <meta name="twitter:description" content="This is a guide for the Globe Data Science Course." />
+  
+
+<meta name="author" content="Fernando Racimo, …" />
+
+
+<meta name="date" content="2021-01-22" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="model-assessment.html"/>
+<link rel="next" href="mixed-models.html"/>
+<script src="libs/header-attrs-2.4/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Analysis and Statistical Thinking</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Getting Started with Data Analysis</a></li>
+<li class="chapter" data-level="3" data-path="prob1.html"><a href="prob1.html"><i class="fa fa-check"></i><b>3</b> Probability Part 1</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="prob1.html"><a href="prob1.html#tossing-a-coin"><i class="fa fa-check"></i><b>3.1</b> Tossing a coin</a></li>
+<li class="chapter" data-level="3.2" data-path="prob1.html"><a href="prob1.html#adding-up-coin-tosses"><i class="fa fa-check"></i><b>3.2</b> Adding up coin tosses</a></li>
+<li class="chapter" data-level="3.3" data-path="prob1.html"><a href="prob1.html#the-expectation"><i class="fa fa-check"></i><b>3.3</b> The expectation</a></li>
+<li class="chapter" data-level="3.4" data-path="prob1.html"><a href="prob1.html#our-first-probability-mass-function"><i class="fa fa-check"></i><b>3.4</b> Our first probability mass function</a></li>
+<li class="chapter" data-level="3.5" data-path="prob1.html"><a href="prob1.html#the-variance"><i class="fa fa-check"></i><b>3.5</b> The variance</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="probability-part-2.html"><a href="probability-part-2.html"><i class="fa fa-check"></i><b>4</b> Probability Part 2</a></li>
+<li class="chapter" data-level="5" data-path="probability-part-3.html"><a href="probability-part-3.html"><i class="fa fa-check"></i><b>5</b> Probability Part 3</a></li>
+<li class="chapter" data-level="6" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>6</b> Linear Models</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="linear-models.html"><a href="linear-models.html#the-data"><i class="fa fa-check"></i><b>6.1</b> The data</a></li>
+<li class="chapter" data-level="6.2" data-path="linear-models.html"><a href="linear-models.html#running-and-interpreting-a-simple-linear-regression"><i class="fa fa-check"></i><b>6.2</b> Running and interpreting a simple linear regression</a></li>
+<li class="chapter" data-level="6.3" data-path="linear-models.html"><a href="linear-models.html#a-multivariate-linear-regression"><i class="fa fa-check"></i><b>6.3</b> A multivariate linear regression</a></li>
+<li class="chapter" data-level="6.4" data-path="linear-models.html"><a href="linear-models.html#simulating-data-from-a-linear-model"><i class="fa fa-check"></i><b>6.4</b> Simulating data from a linear model</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html"><i class="fa fa-check"></i><b>7</b> Properties of Estimators and Inference</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#properties-of-point-estimators"><i class="fa fa-check"></i><b>7.1</b> Properties of point estimators</a></li>
+<li class="chapter" data-level="7.2" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#builidng-confidence-intervals"><i class="fa fa-check"></i><b>7.2</b> Builidng confidence intervals</a></li>
+<li class="chapter" data-level="7.3" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#roc-curve"><i class="fa fa-check"></i><b>7.3</b> ROC curve</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="frequentist-inference.html"><a href="frequentist-inference.html"><i class="fa fa-check"></i><b>8</b> Frequentist inference</a></li>
+<li class="chapter" data-level="9" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>9</b> Bayesian Inference</a></li>
+<li class="chapter" data-level="10" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>10</b> Classification</a></li>
+<li class="chapter" data-level="11" data-path="model-assessment.html"><a href="model-assessment.html"><i class="fa fa-check"></i><b>11</b> Model Assessment</a></li>
+<li class="chapter" data-level="12" data-path="resampling.html"><a href="resampling.html"><i class="fa fa-check"></i><b>12</b> Resampling</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="resampling.html"><a href="resampling.html#the-bootstrap"><i class="fa fa-check"></i><b>12.1</b> The bootstrap</a></li>
+<li class="chapter" data-level="12.2" data-path="resampling.html"><a href="resampling.html#permutation-test"><i class="fa fa-check"></i><b>12.2</b> Permutation test</a></li>
+<li class="chapter" data-level="12.3" data-path="resampling.html"><a href="resampling.html#validation"><i class="fa fa-check"></i><b>12.3</b> Validation</a></li>
+<li class="chapter" data-level="12.4" data-path="resampling.html"><a href="resampling.html#cross-validation"><i class="fa fa-check"></i><b>12.4</b> Cross-validation</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="mixed-models.html"><a href="mixed-models.html"><i class="fa fa-check"></i><b>13</b> Mixed Models</a></li>
+<li class="chapter" data-level="14" data-path="ordination.html"><a href="ordination.html"><i class="fa fa-check"></i><b>14</b> Ordination</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ordination.html"><a href="ordination.html#libraries-and-data"><i class="fa fa-check"></i><b>14.1</b> Libraries and Data</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="ordination.html"><a href="ordination.html#exercise-1-visualizing-the-data"><i class="fa fa-check"></i><b>14.1.1</b> Exercise 1: Visualizing the data</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="ordination.html"><a href="ordination.html#principal-component-analysis-pca"><i class="fa fa-check"></i><b>14.2</b> Principal component analysis (PCA)</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="ordination.html"><a href="ordination.html#biplots"><i class="fa fa-check"></i><b>14.2.1</b> Biplots</a></li>
+<li class="chapter" data-level="14.2.2" data-path="ordination.html"><a href="ordination.html#exercise-2-interpreting-biplots"><i class="fa fa-check"></i><b>14.2.2</b> Exercise 2: Interpreting biplots</a></li>
+<li class="chapter" data-level="14.2.3" data-path="ordination.html"><a href="ordination.html#pca-using-ggplot"><i class="fa fa-check"></i><b>14.2.3</b> PCA using ggplot</a></li>
+<li class="chapter" data-level="14.2.4" data-path="ordination.html"><a href="ordination.html#pca-under-the-hood"><i class="fa fa-check"></i><b>14.2.4</b> PCA under the hood</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="ordination.html"><a href="ordination.html#nmds"><i class="fa fa-check"></i><b>14.3</b> NMDS</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="ordination.html"><a href="ordination.html#exercise-3-interpreting-nmds-plots"><i class="fa fa-check"></i><b>14.3.1</b> Exercise 3: interpreting NMDS plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>15</b> Clustering</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Analysis and Statistical Thinking: An R Workbook</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="resampling" class="section level1" number="12">
+<h1><span class="header-section-number">Chapter 12</span> Resampling</h1>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="resampling.html#cb78-1" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
+<div id="the-bootstrap" class="section level2" number="12.1">
+<h2><span class="header-section-number">12.1</span> The bootstrap</h2>
+<p>We’ll work with a subset of the Allison et al. data. We’ll start by using the body and brain weight measurements from all the species, after log-scaling them. Later on, we’ll also use the TotalSleep variable as well, so let’s remove any rows that have missing data for any of these 3 variables.</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="resampling.html#cb79-1" aria-hidden="true"></a><span class="co"># Load table</span></span>
+<span id="cb79-2"><a href="resampling.html#cb79-2" aria-hidden="true"></a>allisontab &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="kw">read.csv</span>(<span class="st">&quot;Data_allison.csv&quot;</span>))</span>
+<span id="cb79-3"><a href="resampling.html#cb79-3" aria-hidden="true"></a><span class="co"># Remove rows with missing data in columns of interest </span></span>
+<span id="cb79-4"><a href="resampling.html#cb79-4" aria-hidden="true"></a>allisontab &lt;-<span class="st"> </span><span class="kw">filter</span>(allisontab,<span class="op">!</span><span class="kw">is.na</span>(BrainWt) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(BodyWt) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">is.na</span>(TotalSleep))</span>
+<span id="cb79-5"><a href="resampling.html#cb79-5" aria-hidden="true"></a><span class="co"># Log-scale body and brain weight</span></span>
+<span id="cb79-6"><a href="resampling.html#cb79-6" aria-hidden="true"></a>allisontab &lt;-<span class="st"> </span><span class="kw">mutate</span>(allisontab,<span class="dt">logBody=</span><span class="kw">log10</span>(BodyWt), <span class="dt">logBrain=</span><span class="kw">log10</span>(BrainWt))</span></code></pre></div>
+<p>Below is a function to obtain a single bootstrapped sample from an input data. Take a close look at each step.</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="resampling.html#cb80-1" aria-hidden="true"></a>bootstrap &lt;-<span class="st"> </span><span class="cf">function</span>(tab){</span>
+<span id="cb80-2"><a href="resampling.html#cb80-2" aria-hidden="true"></a>  <span class="co"># Preliminary check: if the table is a vector with a single variable, turn it into a matrix</span></span>
+<span id="cb80-3"><a href="resampling.html#cb80-3" aria-hidden="true"></a>  <span class="cf">if</span>(<span class="kw">is.null</span>(<span class="kw">dim</span>(tab))){tab &lt;-<span class="st"> </span><span class="kw">matrix</span>(tab,<span class="dt">ncol=</span><span class="dv">1</span>)}</span>
+<span id="cb80-4"><a href="resampling.html#cb80-4" aria-hidden="true"></a>  <span class="co"># Count the number of elements in our data</span></span>
+<span id="cb80-5"><a href="resampling.html#cb80-5" aria-hidden="true"></a>  numelem &lt;-<span class="st"> </span><span class="kw">nrow</span>(tab)</span>
+<span id="cb80-6"><a href="resampling.html#cb80-6" aria-hidden="true"></a>  <span class="co"># Sample indexes with replacement</span></span>
+<span id="cb80-7"><a href="resampling.html#cb80-7" aria-hidden="true"></a>  bootsidx &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>numelem, <span class="dt">replace=</span><span class="ot">TRUE</span>)</span>
+<span id="cb80-8"><a href="resampling.html#cb80-8" aria-hidden="true"></a>  <span class="co"># Obtain a boostrapped sample by selecting the bootstrapped indexes from the original sample</span></span>
+<span id="cb80-9"><a href="resampling.html#cb80-9" aria-hidden="true"></a>  final &lt;-<span class="st"> </span>tab[bootsidx,]</span>
+<span id="cb80-10"><a href="resampling.html#cb80-10" aria-hidden="true"></a>  <span class="co"># Produce bootstrapped sample as output</span></span>
+<span id="cb80-11"><a href="resampling.html#cb80-11" aria-hidden="true"></a>  <span class="kw">return</span>(final)</span>
+<span id="cb80-12"><a href="resampling.html#cb80-12" aria-hidden="true"></a>}</span></code></pre></div>
+<p>Let’s see what happens when we run this function on our data.</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="resampling.html#cb81-1" aria-hidden="true"></a>boots &lt;-<span class="st"> </span><span class="kw">bootstrap</span>(allisontab)</span>
+<span id="cb81-2"><a href="resampling.html#cb81-2" aria-hidden="true"></a><span class="kw">plot</span>(boots<span class="op">$</span>logBrain,boots<span class="op">$</span>logBody)</span></code></pre></div>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p>Repeat the above command lines multiple times. What happens?</p>
+<p>Let’s estimate a parameter: the slope coefficient in a linear regression of log brain weight on log body weight:</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="resampling.html#cb82-1" aria-hidden="true"></a>estimate &lt;-<span class="st"> </span><span class="kw">lm</span>(logBrain <span class="op">~</span><span class="st"> </span>logBody, <span class="dt">data=</span>allisontab)<span class="op">$</span>coeff[<span class="dv">2</span>]</span>
+<span id="cb82-2"><a href="resampling.html#cb82-2" aria-hidden="true"></a>estimate</span></code></pre></div>
+<pre><code>##   logBody 
+## 0.7591064</code></pre>
+<p><strong>Exercise</strong>: try estimating the same parameter from a series of 100 bootstrapped samples of our original data, and collecting each of the bootstrapped parameters into a vector called “bootsvec”. Hint: you might want to use a for loop or a vectorized sapply() function.</p>
+<p>Let’s plot the ecdf of all our estimates, using the function ecdf().</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="resampling.html#cb84-1" aria-hidden="true"></a><span class="kw">plot</span>(<span class="kw">ecdf</span>(bootsvec))</span>
+<span id="cb84-2"><a href="resampling.html#cb84-2" aria-hidden="true"></a><span class="kw">abline</span>(<span class="dt">v=</span>estimate,<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p>We are now ready to obtain confidence intervals (CIs) of our original parameter estimate, using our bootstrapped distribution. There are multiple ways to obtain CIs from a bootstrapped distribution. Some of these assume that the ECDF has particular properties, while others are more generally applicable:<br />
+a) Standard error approach - assumes ECDF is normal<br />
+b) Percentile approach - assumes ECDF is symmetric and median-unbiased<br />
+c) Pivotal approach - most general, makes very few assumptions.<br />
+These three approaches generally result in very similar CIs, but they differ (slightly) in methodology. The most widely used method is the pivotal approach, though the motivation for its construction is a bit long-winded. In the interest of time, we’ll demonstrate how to run the first two approaches in R. We’ll leave the third approach as an exercise you can do at home (read Box 8-1 in the Edge book for an explanation of it, and a code example).</p>
+</div>
+<div id="permutation-test" class="section level2" number="12.2">
+<h2><span class="header-section-number">12.2</span> Permutation test</h2>
+<p>Let’s evaluate the relationship that there is no relationship between logBrain and logBody. Recall that one way to do it would be by using a linear model, and testing whether the value of the fitted slope is significantly different from zero, using a t-test:</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="resampling.html#cb85-1" aria-hidden="true"></a><span class="kw">summary</span>(<span class="kw">lm</span>(logBrain <span class="op">~</span><span class="st"> </span>logBody, <span class="dt">data=</span>allisontab))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = logBrain ~ logBody, data = allisontab)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.75701 -0.21266 -0.03618  0.19059  0.82489 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.93507    0.04302   21.73   &lt;2e-16 ***
+## logBody      0.75911    0.03026   25.09   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.3071 on 56 degrees of freedom
+## Multiple R-squared:  0.9183, Adjusted R-squared:  0.9168 
+## F-statistic: 629.2 on 1 and 56 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>This test, however, makes assumptions on our data that sometimes may not be warranted, like large sample sizes and homogeneity of variance. We can perform a more general test that makes less a priori assumptions on our data - a permutation test - as long as we are careful in permuting the appropriate variables for the relationship we are trying to test. In this case, we only have two variables, and we are trying to test whether there is a significant relationship between them. If we randomly shuffle one variable with respect to the other, we should obtain a randomized sample of our data. We can use the following function, which takes in a tibble and a variable of interest, and returns a new tibble in which that particular variable’s values are randomly shuffled.</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="resampling.html#cb87-1" aria-hidden="true"></a>permute &lt;-<span class="st"> </span><span class="cf">function</span>(tab,vartoshuffle){</span>
+<span id="cb87-2"><a href="resampling.html#cb87-2" aria-hidden="true"></a>  <span class="co"># Extract column we wish to shuffle as a vector</span></span>
+<span id="cb87-3"><a href="resampling.html#cb87-3" aria-hidden="true"></a>  toshuffle &lt;-<span class="st"> </span><span class="kw">unlist</span>(tab[,vartoshuffle],<span class="dt">use.names=</span><span class="ot">FALSE</span>)</span>
+<span id="cb87-4"><a href="resampling.html#cb87-4" aria-hidden="true"></a>  <span class="co"># The function sample() serves to randomize the order of elements in a vector</span></span>
+<span id="cb87-5"><a href="resampling.html#cb87-5" aria-hidden="true"></a>  shuffled &lt;-<span class="st"> </span><span class="kw">sample</span>(toshuffle)</span>
+<span id="cb87-6"><a href="resampling.html#cb87-6" aria-hidden="true"></a>  <span class="co"># Replace vector in new table (use !! to refer to a dynamic variable name)</span></span>
+<span id="cb87-7"><a href="resampling.html#cb87-7" aria-hidden="true"></a>  newtab &lt;-<span class="st"> </span><span class="kw">mutate</span>(tab, <span class="op">!!</span><span class="dt">vartoshuffle :=</span> shuffled )</span>
+<span id="cb87-8"><a href="resampling.html#cb87-8" aria-hidden="true"></a>  <span class="kw">return</span>(newtab)</span>
+<span id="cb87-9"><a href="resampling.html#cb87-9" aria-hidden="true"></a>}</span></code></pre></div>
+<p>Now we can obtain a permuted version of our original data, and compute the slope estimate on this dataset instead:</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="resampling.html#cb88-1" aria-hidden="true"></a>permuted &lt;-<span class="st"> </span><span class="kw">permute</span>(allisontab, <span class="st">&quot;logBrain&quot;</span>)</span>
+<span id="cb88-2"><a href="resampling.html#cb88-2" aria-hidden="true"></a><span class="kw">plot</span>(permuted<span class="op">$</span>logBody,permuted<span class="op">$</span>logBrain)</span></code></pre></div>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="resampling.html#cb89-1" aria-hidden="true"></a>permest &lt;-<span class="st"> </span><span class="kw">lm</span>(logBrain <span class="op">~</span><span class="st"> </span>logBody, <span class="dt">data=</span>permuted)<span class="op">$</span>coeff[<span class="dv">2</span>]</span>
+<span id="cb89-2"><a href="resampling.html#cb89-2" aria-hidden="true"></a>permest</span></code></pre></div>
+<pre><code>##    logBody 
+## 0.01977291</code></pre>
+<p><strong>Exercise</strong>: try estimating the same parameter from a series of 100 permuted versions of our original data, and collecting each of the permuted parameters into a vector called “permvec”.</p>
+<p>We now have a distribution of the parameter estimate under the assumption that there is no relationship between these two variables:</p>
+<p><strong>Exercise</strong>: obtain an empirical one-tailed P-value from this distribution by counting how many of the permuted samples are as large as our original estimate, and dividing by the total number of permuted samples we have. Note: you should add a 1 to the denominator of this ratio, in case there are no permuted samples that are as large as the original estimate, so as not to get an infinite number.</p>
+</div>
+<div id="validation" class="section level2" number="12.3">
+<h2><span class="header-section-number">12.3</span> Validation</h2>
+<p>We’ll perform a validation exercise to evaluate the error of various models on the data. In this case, we’ll create a predictor for TotalSleep as a function of logBody, using a linear model, and then test how well it does. We’ll first divide our data into a “training” partition - which we’ll use to fit our model - and a separate “test” partition - which we’ll use to test how well our model is doing, and avoid over-fitting. Each partition will be one half of our original data.</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="resampling.html#cb91-1" aria-hidden="true"></a><span class="co"># Obtain the number of data points we have</span></span>
+<span id="cb91-2"><a href="resampling.html#cb91-2" aria-hidden="true"></a>numdat &lt;-<span class="st"> </span><span class="kw">dim</span>(allisontab)[<span class="dv">1</span>]</span>
+<span id="cb91-3"><a href="resampling.html#cb91-3" aria-hidden="true"></a><span class="co"># For the training set, randomly sample 50% of the data indexes</span></span>
+<span id="cb91-4"><a href="resampling.html#cb91-4" aria-hidden="true"></a>trainset &lt;-<span class="st"> </span><span class="kw">sample</span>(numdat, <span class="kw">round</span>(numdat<span class="op">*</span><span class="fl">0.5</span>))</span>
+<span id="cb91-5"><a href="resampling.html#cb91-5" aria-hidden="true"></a><span class="co"># For the test set, obtain all indexes that are not in training set</span></span>
+<span id="cb91-6"><a href="resampling.html#cb91-6" aria-hidden="true"></a>testset &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>,numdat)[<span class="op">-</span>trainset]</span></code></pre></div>
+<p>Let’s begin by calculating the mean squared error (MSE) between our observatiosn and our predictions in our test partition, after fitting a linear model to our training partition:</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="resampling.html#cb92-1" aria-hidden="true"></a><span class="co"># Fit the linear model to the training subset of the data</span></span>
+<span id="cb92-2"><a href="resampling.html#cb92-2" aria-hidden="true"></a>fit1 &lt;-<span class="st"> </span><span class="kw">lm</span>(TotalSleep <span class="op">~</span><span class="st"> </span>logBody, <span class="dt">data=</span>allisontab,<span class="dt">subset=</span>trainset)</span>
+<span id="cb92-3"><a href="resampling.html#cb92-3" aria-hidden="true"></a><span class="co"># Predict all observations using the fitted linear model</span></span>
+<span id="cb92-4"><a href="resampling.html#cb92-4" aria-hidden="true"></a>predall &lt;-<span class="st"> </span><span class="kw">predict</span>(fit1,allisontab)</span>
+<span id="cb92-5"><a href="resampling.html#cb92-5" aria-hidden="true"></a><span class="co"># Compute mean squared differences between observations and predictions</span></span>
+<span id="cb92-6"><a href="resampling.html#cb92-6" aria-hidden="true"></a>sqdiff &lt;-<span class="st"> </span>(allisontab<span class="op">$</span>logBrain <span class="op">-</span><span class="st"> </span>predall)<span class="op">^</span><span class="dv">2</span> </span>
+<span id="cb92-7"><a href="resampling.html#cb92-7" aria-hidden="true"></a><span class="co"># Extract the differences for the test partition</span></span>
+<span id="cb92-8"><a href="resampling.html#cb92-8" aria-hidden="true"></a>sqdiff.test &lt;-<span class="st"> </span>sqdiff[testset]</span>
+<span id="cb92-9"><a href="resampling.html#cb92-9" aria-hidden="true"></a><span class="co"># Compute the mean squared error</span></span>
+<span id="cb92-10"><a href="resampling.html#cb92-10" aria-hidden="true"></a>mse1 &lt;-<span class="st"> </span><span class="kw">mean</span>(sqdiff.test)</span></code></pre></div>
+<p>Now, we’ll try to fit our data to two more complex models: a quadratic model and a cubic model, using the function <code>poly</code>:</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="resampling.html#cb93-1" aria-hidden="true"></a>fit2 &lt;-<span class="st"> </span><span class="kw">lm</span>(TotalSleep <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(logBody,<span class="dv">2</span>), <span class="dt">data=</span>allisontab,<span class="dt">subset=</span>trainset)</span>
+<span id="cb93-2"><a href="resampling.html#cb93-2" aria-hidden="true"></a>mse2 &lt;-<span class="st"> </span><span class="kw">mean</span>(((allisontab<span class="op">$</span>logBrain <span class="op">-</span><span class="st"> </span><span class="kw">predict</span>(fit2,allisontab))<span class="op">^</span><span class="dv">2</span>)[testset])</span>
+<span id="cb93-3"><a href="resampling.html#cb93-3" aria-hidden="true"></a></span>
+<span id="cb93-4"><a href="resampling.html#cb93-4" aria-hidden="true"></a>fit3 &lt;-<span class="st"> </span><span class="kw">lm</span>(TotalSleep <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(logBody,<span class="dv">3</span>), <span class="dt">data=</span>allisontab,<span class="dt">subset=</span>trainset)</span>
+<span id="cb93-5"><a href="resampling.html#cb93-5" aria-hidden="true"></a>mse3 &lt;-<span class="st"> </span><span class="kw">mean</span>(((allisontab<span class="op">$</span>logBrain <span class="op">-</span><span class="st"> </span><span class="kw">predict</span>(fit3,allisontab))<span class="op">^</span><span class="dv">2</span>)[testset])</span></code></pre></div>
+<p>We can see that the MSE appears to increase for the more complex models. This suggests a simple linear fit performs better at predicting values that were not included in the training set.</p>
+<p><strong>Exercise</strong>: compute the MSE on the training partition. Compare the resulting values to the MSE on the test partition. What do you observe? Is the difference in errors between the three models as large as when computing the MSE on the test partition? Why do you think this is?</p>
+</div>
+<div id="cross-validation" class="section level2" number="12.4">
+<h2><span class="header-section-number">12.4</span> Cross-validation</h2>
+<p>We’ll now perform a cross-validation exercise. If you haven’t installed it, you’ll need to install the library <code>boot</code> before loading it.</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="resampling.html#cb94-1" aria-hidden="true"></a><span class="cf">if</span>(<span class="kw">require</span>(<span class="st">&quot;boot&quot;</span>) <span class="op">==</span><span class="st"> </span><span class="ot">FALSE</span>){<span class="kw">install.packages</span>(<span class="st">&quot;boot&quot;</span>)}</span></code></pre></div>
+<pre><code>## Loading required package: boot</code></pre>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="resampling.html#cb96-1" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">&quot;boot&quot;</span>)</span></code></pre></div>
+<p>The function <code>cv.glm()</code> from the library <code>boot</code> can be used to compute a cross-validation error. This function is designed to work with the <code>glm()</code> function for fitting generalized linear models in R, but we can compute a simple linear regression using <code>glm()</code> as well, and then feed the result into <code>cv.glm()</code>:</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="resampling.html#cb97-1" aria-hidden="true"></a>fit1=<span class="kw">glm</span>( TotalSleep <span class="op">~</span><span class="st"> </span>logBody, <span class="dt">data=</span>allisontab )</span>
+<span id="cb97-2"><a href="resampling.html#cb97-2" aria-hidden="true"></a><span class="co"># The LOOCV error is computed using the function cv.glm()</span></span>
+<span id="cb97-3"><a href="resampling.html#cb97-3" aria-hidden="true"></a>cv.err=<span class="kw">cv.glm</span>(allisontab,fit1)</span></code></pre></div>
+<p>The value of the cross-validation error is stored in the second element of the attribute <code>delta</code> of the output of <code>cv.glm</code>. By default, this is a “leave-one-out” cross-validation (LOOCV) error, meaning it computes error by leaving 1 data point out of the fitting and evaluating the error at that data point. The process is iterated over all data points, and the errors are then averaged together. We can obtain the value of the LOOCV error by writing:</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="resampling.html#cb98-1" aria-hidden="true"></a>cv.err<span class="op">$</span>delta[<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>## [1] 15.97798</code></pre>
+<p>Now, let’s compute the LOOCV error for increasingly complex polynomial models (linear, quadratic, cubic, etc.):</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="resampling.html#cb100-1" aria-hidden="true"></a>CVerr=<span class="kw">rep</span>(<span class="dv">0</span>,<span class="dv">5</span>)</span>
+<span id="cb100-2"><a href="resampling.html#cb100-2" aria-hidden="true"></a><span class="cf">for</span>(m <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>){</span>
+<span id="cb100-3"><a href="resampling.html#cb100-3" aria-hidden="true"></a>  fit=<span class="kw">glm</span>(TotalSleep <span class="op">~</span><span class="st"> </span><span class="kw">poly</span>(logBody,m), <span class="dt">data=</span>allisontab)</span>
+<span id="cb100-4"><a href="resampling.html#cb100-4" aria-hidden="true"></a>  CVerr[m]=<span class="kw">cv.glm</span>(allisontab,fit)<span class="op">$</span>delta[<span class="dv">1</span>]</span>
+<span id="cb100-5"><a href="resampling.html#cb100-5" aria-hidden="true"></a>}</span></code></pre></div>
+<p><strong>Exercise</strong>: Plot the results of this cross-validation exercise. Which model has the lowest LOOCV error?</p>
+<p><strong>Exercise</strong>: Take a look at the help function for <code>cv.glm</code>. Which argument would you modify to be able to compute the 10-fold cross-validation error, instead of the LOOCV error. Can you do this for the five models we tested above?</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="model-assessment.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="mixed-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["DataScience.pdf", "DataScience.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

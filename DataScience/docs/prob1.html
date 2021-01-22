@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Probability Part 1 | Data Analysis and Statistical Thinking: An R Workbook</title>
+  <meta name="description" content="This is a guide for the Globe Data Science Course." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Probability Part 1 | Data Analysis and Statistical Thinking: An R Workbook" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a guide for the Globe Data Science Course." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Probability Part 1 | Data Analysis and Statistical Thinking: An R Workbook" />
+  
+  <meta name="twitter:description" content="This is a guide for the Globe Data Science Course." />
+  
+
+<meta name="author" content="Fernando Racimo, …" />
+
+
+<meta name="date" content="2021-01-22" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="intro.html"/>
+<link rel="next" href="probability-part-2.html"/>
+<script src="libs/header-attrs-2.4/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Analysis and Statistical Thinking</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Getting Started with Data Analysis</a></li>
+<li class="chapter" data-level="3" data-path="prob1.html"><a href="prob1.html"><i class="fa fa-check"></i><b>3</b> Probability Part 1</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="prob1.html"><a href="prob1.html#tossing-a-coin"><i class="fa fa-check"></i><b>3.1</b> Tossing a coin</a></li>
+<li class="chapter" data-level="3.2" data-path="prob1.html"><a href="prob1.html#adding-up-coin-tosses"><i class="fa fa-check"></i><b>3.2</b> Adding up coin tosses</a></li>
+<li class="chapter" data-level="3.3" data-path="prob1.html"><a href="prob1.html#the-expectation"><i class="fa fa-check"></i><b>3.3</b> The expectation</a></li>
+<li class="chapter" data-level="3.4" data-path="prob1.html"><a href="prob1.html#our-first-probability-mass-function"><i class="fa fa-check"></i><b>3.4</b> Our first probability mass function</a></li>
+<li class="chapter" data-level="3.5" data-path="prob1.html"><a href="prob1.html#the-variance"><i class="fa fa-check"></i><b>3.5</b> The variance</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="probability-part-2.html"><a href="probability-part-2.html"><i class="fa fa-check"></i><b>4</b> Probability Part 2</a></li>
+<li class="chapter" data-level="5" data-path="probability-part-3.html"><a href="probability-part-3.html"><i class="fa fa-check"></i><b>5</b> Probability Part 3</a></li>
+<li class="chapter" data-level="6" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>6</b> Linear Models</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="linear-models.html"><a href="linear-models.html#the-data"><i class="fa fa-check"></i><b>6.1</b> The data</a></li>
+<li class="chapter" data-level="6.2" data-path="linear-models.html"><a href="linear-models.html#running-and-interpreting-a-simple-linear-regression"><i class="fa fa-check"></i><b>6.2</b> Running and interpreting a simple linear regression</a></li>
+<li class="chapter" data-level="6.3" data-path="linear-models.html"><a href="linear-models.html#a-multivariate-linear-regression"><i class="fa fa-check"></i><b>6.3</b> A multivariate linear regression</a></li>
+<li class="chapter" data-level="6.4" data-path="linear-models.html"><a href="linear-models.html#simulating-data-from-a-linear-model"><i class="fa fa-check"></i><b>6.4</b> Simulating data from a linear model</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html"><i class="fa fa-check"></i><b>7</b> Properties of Estimators and Inference</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#properties-of-point-estimators"><i class="fa fa-check"></i><b>7.1</b> Properties of point estimators</a></li>
+<li class="chapter" data-level="7.2" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#builidng-confidence-intervals"><i class="fa fa-check"></i><b>7.2</b> Builidng confidence intervals</a></li>
+<li class="chapter" data-level="7.3" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#roc-curve"><i class="fa fa-check"></i><b>7.3</b> ROC curve</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="frequentist-inference.html"><a href="frequentist-inference.html"><i class="fa fa-check"></i><b>8</b> Frequentist inference</a></li>
+<li class="chapter" data-level="9" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>9</b> Bayesian Inference</a></li>
+<li class="chapter" data-level="10" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>10</b> Classification</a></li>
+<li class="chapter" data-level="11" data-path="model-assessment.html"><a href="model-assessment.html"><i class="fa fa-check"></i><b>11</b> Model Assessment</a></li>
+<li class="chapter" data-level="12" data-path="resampling.html"><a href="resampling.html"><i class="fa fa-check"></i><b>12</b> Resampling</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="resampling.html"><a href="resampling.html#the-bootstrap"><i class="fa fa-check"></i><b>12.1</b> The bootstrap</a></li>
+<li class="chapter" data-level="12.2" data-path="resampling.html"><a href="resampling.html#permutation-test"><i class="fa fa-check"></i><b>12.2</b> Permutation test</a></li>
+<li class="chapter" data-level="12.3" data-path="resampling.html"><a href="resampling.html#validation"><i class="fa fa-check"></i><b>12.3</b> Validation</a></li>
+<li class="chapter" data-level="12.4" data-path="resampling.html"><a href="resampling.html#cross-validation"><i class="fa fa-check"></i><b>12.4</b> Cross-validation</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="mixed-models.html"><a href="mixed-models.html"><i class="fa fa-check"></i><b>13</b> Mixed Models</a></li>
+<li class="chapter" data-level="14" data-path="ordination.html"><a href="ordination.html"><i class="fa fa-check"></i><b>14</b> Ordination</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ordination.html"><a href="ordination.html#libraries-and-data"><i class="fa fa-check"></i><b>14.1</b> Libraries and Data</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="ordination.html"><a href="ordination.html#exercise-1-visualizing-the-data"><i class="fa fa-check"></i><b>14.1.1</b> Exercise 1: Visualizing the data</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="ordination.html"><a href="ordination.html#principal-component-analysis-pca"><i class="fa fa-check"></i><b>14.2</b> Principal component analysis (PCA)</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="ordination.html"><a href="ordination.html#biplots"><i class="fa fa-check"></i><b>14.2.1</b> Biplots</a></li>
+<li class="chapter" data-level="14.2.2" data-path="ordination.html"><a href="ordination.html#exercise-2-interpreting-biplots"><i class="fa fa-check"></i><b>14.2.2</b> Exercise 2: Interpreting biplots</a></li>
+<li class="chapter" data-level="14.2.3" data-path="ordination.html"><a href="ordination.html#pca-using-ggplot"><i class="fa fa-check"></i><b>14.2.3</b> PCA using ggplot</a></li>
+<li class="chapter" data-level="14.2.4" data-path="ordination.html"><a href="ordination.html#pca-under-the-hood"><i class="fa fa-check"></i><b>14.2.4</b> PCA under the hood</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="ordination.html"><a href="ordination.html#nmds"><i class="fa fa-check"></i><b>14.3</b> NMDS</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="ordination.html"><a href="ordination.html#exercise-3-interpreting-nmds-plots"><i class="fa fa-check"></i><b>14.3.1</b> Exercise 3: interpreting NMDS plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>15</b> Clustering</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Analysis and Statistical Thinking: An R Workbook</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="prob1" class="section level1" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Probability Part 1</h1>
+<div id="tossing-a-coin" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Tossing a coin</h2>
+<p>We can “virtually” toss a coin in our R console, using the rbinom() function:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="prob1.html#cb1-1" aria-hidden="true"></a><span class="kw">rbinom</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">0.5</span>)</span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<p>Try copying the above chunk to your R console and running it multiple times. Do you always get the same result?</p>
+<p>This function has 3 required input parameters: n, size and prob. The first parameter (n) determines the number of trials we are telling R to perform, in other words, the number of coin tosses we want to generate:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="prob1.html#cb3-1" aria-hidden="true"></a><span class="kw">rbinom</span>(<span class="dv">20</span>, <span class="dv">1</span>, <span class="fl">0.5</span>)</span></code></pre></div>
+<pre><code>##  [1] 0 0 0 1 1 0 1 0 0 0 1 1 0 0 1 1 1 0 0 1</code></pre>
+<p>Here, we generate 20 toin cosses, and the zeroes and ones represent whether we got a heads or a tails in each trial. For now, we will ignore the second parameter (size) and fix it at 1, but we’ll revisit it in a moment. The third parameter (prob) dictates how biased the coin is. If we set it to 0.9, we’ll get the outcomes of a biased coin toss, in particular biased towards heads:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="prob1.html#cb5-1" aria-hidden="true"></a><span class="kw">rbinom</span>(<span class="dv">20</span>, <span class="dv">1</span>, <span class="fl">0.9</span>)</span></code></pre></div>
+<pre><code>##  [1] 1 1 1 1 1 0 1 1 1 0 1 1 0 1 1 1 1 1 1 1</code></pre>
+<p><strong>Exercise</strong>: What happens when you set prob to 0.1? Or 0.999? Why?</p>
+<p>What we are really doing here is simulating outcomes of a random variable that is governed by a particular probability distribution - in this case, the Bernoulli distribution. We can assign a name to this variable for storage and manipulation later on:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="prob1.html#cb7-1" aria-hidden="true"></a>X &lt;-<span class="st"> </span><span class="kw">rbinom</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">0.9</span>)</span></code></pre></div>
+<p>If you type this in your console, X will now store the value of the outcome of a biased coin toss (either 0 or 1), which you can use later in your code.</p>
+<p>How can we verify that R is really doing what we think it is doing? Well, if we think we have a fair coin and we throw it many times, then, on average, we should get the same number of heads and tails, right? This experiment should be more accurate the more trials we have. We can compute the average of our coin tosses by using the function sum(), which adds the elements of a vector, and then dividing by the total number of trials.</p>
+<p>Let’s create a new variable (n) that will determine how many trials we attempt, say 20.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="prob1.html#cb8-1" aria-hidden="true"></a>n &lt;-<span class="st"> </span><span class="dv">20</span></span>
+<span id="cb8-2"><a href="prob1.html#cb8-2" aria-hidden="true"></a><span class="kw">sum</span>(<span class="kw">rbinom</span>(n, <span class="dv">1</span>, <span class="fl">0.5</span>)) <span class="op">/</span><span class="st"> </span>n</span></code></pre></div>
+<pre><code>## [1] 0.55</code></pre>
+<p><strong>Exercise</strong>: Run the chunk of code above, in your own console. Do you get the same number as I do? Do you get exactly 0.5? If not, why not? Try the same exercise but with 100 trials, 1000 trials and 100000 trials. What happens as we increase the number of trials? This should illustrate how powerful R can be. We just threw 100 thousand coins into the air without even lifting our fingers! Try to repeat the exercise, but this time, set the Bernoulli prob parameter to be equal to a number of your choice (between 0 and 1). What is the average of all your coin tosses?</p>
+</div>
+<div id="adding-up-coin-tosses" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Adding up coin tosses</h2>
+<p>Let’s say we are now not interested in any particular coin toss, but in the sum of several coin tosses. Each toss is represented by a 0 or a 1, so the sum of all our tosses cannot be smaller than 0 or larger than the total number of tosses we perform.</p>
+<p>Try running the code below 5 times. What numbers do you obtain?</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="prob1.html#cb10-1" aria-hidden="true"></a><span class="kw">sum</span>(<span class="kw">rbinom</span>(<span class="dv">20</span>, <span class="dv">1</span>, <span class="fl">0.5</span>))</span></code></pre></div>
+<pre><code>## [1] 7</code></pre>
+<p>Turns out there’s a short-hand way of performing the same experiment, i.e. tossing a bunch of coins - each a Bernoulli random variable - observing their outcomes and adding them up, without using the sum() function at all. Here’s where the second input parameter - size - of the rbinom() function comes into play. So far, we’ve always left it equal to 1 in all our command lines above, but we can set it to any positive integer:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="prob1.html#cb12-1" aria-hidden="true"></a><span class="kw">rbinom</span>(<span class="dv">1</span>, <span class="dv">20</span>, <span class="fl">0.5</span>)</span></code></pre></div>
+<pre><code>## [1] 11</code></pre>
+<p>The above code is equivalent to taking 20 Bernoulli trials, and then adding their outcomes up. The “experiment” we are running is now not a single coin toss, but 20 coin tosses together. The outcome of this experiment is neither heads nor tails, but the sum of all the heads in all those coin tosses. It turns out that this “experiment” is a probability distribution in its own right, and it is called the Binomial distribution. It has two parameters: the size of the experiment (how many tosses we perform) and the probability of heads for each toss (the prob parameter). The Bernoulli distribution is just a specific case of the Binomial distribution (the case in which we only toss 1 coin, i.e. size = 1). You can read more about this distribution if you go to the help menu for this function (type "?rbinom).</p>
+<p>The Binomial and Bernoulli distributions are examples of distributions for discrete random variables, meaning random variables whose values can only take discrete values (0, 1, 2, 3, etc.). There are other types of distributions we’ll study later, some of which can also take continuous values. For example, these could be any real number, or any real number between 2.4 and 8.3, or any positive number, etc. but we need not worry about these other distributions for now.</p>
+</div>
+<div id="the-expectation" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> The expectation</h2>
+<p>We can compute the average of multiple Binomial trials. Let’s try adding the results of 5 Binomial trials, each with size 20 (how many Bernoulli trials is this equivalent to?):</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="prob1.html#cb14-1" aria-hidden="true"></a>n &lt;-<span class="st"> </span><span class="dv">5</span></span>
+<span id="cb14-2"><a href="prob1.html#cb14-2" aria-hidden="true"></a>size &lt;-<span class="st"> </span><span class="dv">20</span></span>
+<span id="cb14-3"><a href="prob1.html#cb14-3" aria-hidden="true"></a>prob &lt;-<span class="st"> </span><span class="fl">0.5</span></span>
+<span id="cb14-4"><a href="prob1.html#cb14-4" aria-hidden="true"></a>X &lt;-<span class="st"> </span><span class="kw">rbinom</span>(n, size, prob)</span>
+<span id="cb14-5"><a href="prob1.html#cb14-5" aria-hidden="true"></a>X</span></code></pre></div>
+<pre><code>## [1] 11 10  8 11  9</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="prob1.html#cb16-1" aria-hidden="true"></a>Xsum &lt;-<span class="st"> </span><span class="kw">sum</span>(X)</span>
+<span id="cb16-2"><a href="prob1.html#cb16-2" aria-hidden="true"></a>Xsum</span></code></pre></div>
+<pre><code>## [1] 49</code></pre>
+<p>To get the average, we divide by the total number of trials. Remember here that the number of Binomial trials is 5:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="prob1.html#cb18-1" aria-hidden="true"></a>Xave &lt;-<span class="st"> </span>Xsum <span class="op">/</span><span class="st"> </span>n</span>
+<span id="cb18-2"><a href="prob1.html#cb18-2" aria-hidden="true"></a>Xave</span></code></pre></div>
+<pre><code>## [1] 9.8</code></pre>
+<p>A shorthand for obtaining the mean is the function mean(). This should give you the same result:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="prob1.html#cb20-1" aria-hidden="true"></a>Xave &lt;-<span class="st"> </span><span class="kw">mean</span>(X)</span>
+<span id="cb20-2"><a href="prob1.html#cb20-2" aria-hidden="true"></a>Xave</span></code></pre></div>
+<pre><code>## [1] 9.8</code></pre>
+<p>Note that the mean need not be an integer, even though the outcome of each Binomial trial <em>must</em> be an integer.</p>
+<p><strong>Exercise</strong>: Try repeating the same exercise but using 100 Binomial trials, and then 100 thousand Binomial trials. What numbers do you get? What number do we expect to get as we increase the number of Binomial trials?</p>
+<p>This number is called the <em>Expectation</em> of a random variable. For discrete random variables, it is defined as follows:</p>
+<p><span class="math display">\[E[X] = \sum_{i}x_iP[X=x_i]\]</span></p>
+<p>Here the sum is over all possible values that the random variable X can take. In other words, it is equal to the sum of each of these values, weighted by the probability that the random variable takes that value.</p>
+<p>In the case of a variable that follows the Binomial distribution, the expectation happens to be equal to the product of size and prob:</p>
+<p><span class="math display">\[E[X] = np\]</span></p>
+<p>Note that the n here refers to the size of a single Binomial trial.</p>
+<p>This should make intuitive sense: if we throw a bunch of coins and add up their results, the number we expect to get should be approximately equal to the probability of heads times the number of tosses we perform. Note that this equality only holds approximately: for any given Binomial trial, we can get any number between 0 and the size of the Binomial experiment. If we take an average over many Binomial experiments, we’ll approach this expectation ever more accurately. The average (also called “sample mean”) over a series of n experiments is thus an approximation to the expectation, which is often unknown in real life. The sample mean is often represented by a letter with a bar on top:</p>
+<p><span class="math display">\[\bar{x} = \frac{\sum_{j=1}^{n}x_{i}}{n}\]</span></p>
+<p>You can also think of the expectation as the mean over an infinite number of trials.</p>
+</div>
+<div id="our-first-probability-mass-function" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Our first probability mass function</h2>
+<p>Ok, all this talk of Bernoulli and Binomial is great. But what is the point of it? The nice thing about probability theory is that it allows us to better think about processes in nature, by codifying these processes into mathematical equations.</p>
+<p>For example, going back to our coin tossing example, if someone asked you how many heads you’d expect among 20 tosses, your best bet would be to give the mean of a Binomial distribution with size 20 and probability of heads equal to 0.5: <span class="math inline">\(0.5*20=10\)</span>.</p>
+<p>But this is a fairly intuitive answer. You didn’t need probability theory to tell you that about half the coins would turn out heads. Plus, we all know that one might not get 10 heads: we might get 9, 13 or even 0 if we’re very unlucky. What is then, the probability that we would get 10 heads? In other words, if we were to repeat our Binomial experiment of 20 tosses a large number of times, how many of those experiments would yield exactly 10 heads? This is a much harder question to answer. Do you have a guess?</p>
+<p>It turns out that probability theory can come to the rescue. The Binomial distribution has a very neat equation called its “Probability Mass Function” (or PMF, for short), which answers this question exactly:</p>
+<p><span class="math display">\[P[ X = k ] = {n \choose k}p^{k}(1-p)^{n-k}\]</span></p>
+<p>If we let k = 10, and plug in our values for the sample size and probability of heads, we get an exact answer:</p>
+<p><span class="math display">\[P[ X = 10 ] = {20 \choose 10}0.5^{10}0.5^{10} = 0.1762...\]</span></p>
+<p>So in about 17% of all Binomial experiments of size 20 that we might perform, we should get that 10 out of the 20 tosses are heads.</p>
+<p>Let’s unpack this equation a bit. You can see that it has 3 terms, which are multiplied together. We’ll ignore the first term for now. Let’s focus on the second term: <span class="math inline">\(p^{k}\)</span>. This is simply equivalent to multiplying our probability of heads k times. In other words, this means that we need k of the tosses to be heads, and the probability of this happening is just the product of the probability of heads in each of the total (n) tosses. In our case, <span class="math inline">\(k=10\)</span>, because we need 10 tosses, and <span class="math inline">\(n=20\)</span> because we tossed the coin 20 times. So far, so good.</p>
+<p>The third term is very similar. We not only need 10 heads, but also 10 tails (because we need exactly 10 of the tosses to be heads, no more, no less). The probability of this happening is the product of the probability of getting tails <span class="math inline">\((1-p)\)</span> multiplied <span class="math inline">\(n-k\)</span> times. In our case, <span class="math inline">\(n-k\)</span> happens to also be equal to 10.</p>
+<p>But what about the first term: <span class="math inline">\(n \choose k\)</span> ? This is called a binomial coefficient. It is used to represent the ways in which one can choose an unordered subset of k elements from a fixed set of n elements. In our case, we need 10 of our 20 tosses to be heads, but we don’t need to specify exactly which of the tosses will be heads. It could be that we get 10 heads followed by 10 tails, or 10 tails followed by 10 heads, or 1 head and 1 tail interspersed one after the other, or any other arbitrary combination of 10 heads and 10 tails. The binomial coefficient gives us the number of all these combinations. It is defined as:</p>
+<p><span class="math display">\[{n \choose k} = \frac{n!}{k!(n-k)!}\]</span></p>
+<p>where</p>
+<p><span class="math display">\[a! = a(a-1)(a-2)(a-3) ...1\]</span>
+<strong>Exercise</strong>: Plug in other values of k into the Probability Mass Function of the Binomial distribution. What probabilities do you get? How do these change as the numbers are closer or farther away from the expectation (<span class="math inline">\(n*p=10\)</span>)?</p>
+<p>Ok, this is very neat, but how can we check this equation is correct? Well, we can use simulations! We can generate a large number of Binomial trials in R, and check how many of those are exactly equal to our choice of k. The fraction of all trials that are equal to k should approximate <span class="math inline">\(P[X=k]\)</span>. Let’s try this for <span class="math inline">\(k=10\)</span> and 500 trials.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="prob1.html#cb22-1" aria-hidden="true"></a>n &lt;-<span class="st"> </span><span class="dv">500</span></span>
+<span id="cb22-2"><a href="prob1.html#cb22-2" aria-hidden="true"></a>size &lt;-<span class="st"> </span><span class="dv">20</span></span>
+<span id="cb22-3"><a href="prob1.html#cb22-3" aria-hidden="true"></a>prob &lt;-<span class="st"> </span><span class="fl">0.5</span></span>
+<span id="cb22-4"><a href="prob1.html#cb22-4" aria-hidden="true"></a>binomvec &lt;-<span class="st"> </span><span class="kw">rbinom</span>(n, size, prob)</span>
+<span id="cb22-5"><a href="prob1.html#cb22-5" aria-hidden="true"></a>binomvec</span></code></pre></div>
+<pre><code>##   [1] 14 13  8  9 13  9 10  9  6  8  8  9  9  7  8  8 10  9 10 15 12  9  9  6  8
+##  [26] 12  9 10 10  9  9 11 12 11  8  6 13 10  7 11  8 10  8 10  8  9 11  8 10  9
+##  [51]  7  9 12  9 12  8 13 10 10 14  9  7  5 11 11 11  9 12 12 11  7 13  9  6 13
+##  [76]  9  8 11 11 11 15 11  9  6  9 11 13  8  8  9 13  7  9 11  9 11 11  7  7  9
+## [101] 10 10 10  7 13  5 11  8 11  9  9  9 10 10 11 10  9 11  6 11  9  9  8 13 10
+## [126]  7 13  5 10 12 14  9 13 12  8 11 12 12 12 14 11  9 10 12 11 13 13 10  9  7
+## [151]  5  9  9 11  9  8  8 11 12 11 11  7 11 13 13 11 12  7  6  5  9 12 11 10 11
+## [176] 13 10  5  6 10  9 12 14 13  8  6 13 12 10 10  9 12  8 11  9 12 11 12 12 10
+## [201] 14  7 11 13 12  9 10 10  7 14 12 11  8 10  7 13  7 12 12 10 13 12  8 12  9
+## [226]  9 14 11  9 10 12 12 13 10 10 14 10  9 12  8 11  9 15  9  9 10 13 11 11 11
+## [251]  9  7 11  9 12 10 11 10  9  8  7 12 16  7 16 10  7 11 12  8  9 12 10 11 10
+## [276] 13 11 11 10  7 13 12  7  9  8 10 13 13 12  9  6  8  9 16 13  6 10 11  8 10
+## [301]  8  4  8 10 13  9  5 12 10 10 11  7  6 11  9 12 12 10 10 12 13 12  8 12 11
+## [326] 12 12 15  7 11 14 10 10  8 14  7  8  6  9 12  8 14  9  7  8  7 11 10 17  9
+## [351] 11 16  9  7 12  8 12 12 10  9 15 11  8  7  9 11 12 10 10  9  9 10 12  9 10
+## [376]  8  4  4  9 11 10 14 10  7  8 10  7 13 12 11 11 15  8 13  9 11 10 13 11  6
+## [401]  9 10  6 13  7 12 14  9 10 10 12 12 10  9  9  9 11  9  7  8  7  8  9 13 11
+## [426] 16  8 11 11 12 10 11 11 10  9 15 11 10 14  7  9  8 11 15 11  7 10  6 10 10
+## [451]  8  9 11 10  7  9 11 14 14  8  9  9  9 10 13 13 12 12  9  9 12 11 12 10 11
+## [476] 10  6 12 12 12  9  8  8  7 12  5 13 10 11 12  8 14 13 10 13  6 11 12 12  8</code></pre>
+<p>We can determine which of these trials was equal to 10 using the “==” symbol:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="prob1.html#cb24-1" aria-hidden="true"></a>verify &lt;-<span class="st"> </span>(binomvec <span class="op">==</span><span class="st"> </span><span class="dv">10</span>)</span>
+<span id="cb24-2"><a href="prob1.html#cb24-2" aria-hidden="true"></a>verify</span></code></pre></div>
+<pre><code>##   [1] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+##  [13] FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+##  [25] FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [37] FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE
+##  [49]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE
+##  [61] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [73] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [85] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [97] FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
+## [109] FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE
+## [121] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+## [133] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+## [145] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [157] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [169] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE  TRUE
+## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE
+## [193] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+## [205] FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+## [217] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [229] FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE
+## [241] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+## [253] FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+## [265] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE
+## [277] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+## [289] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE
+## [301] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE
+## [313] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
+## [325] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE
+## [337] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+## [349] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+## [361] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE
+## [373] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE
+## [385] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [397]  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+## [409]  TRUE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [421] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+## [433] FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+## [445] FALSE FALSE  TRUE FALSE  TRUE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE
+## [457] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+## [469] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE
+## [481] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+## [493] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<p>This returns a new vector in which each element is equal to TRUE if the corresponding element in “binomvec” is equal to 10, and FALSE otherwise. The nice thing is that R considers the value of TRUE to also be equal to 1, and the value of FALSE to also be equal to 0, so we can actually apply the function sum() to this vector!</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="prob1.html#cb26-1" aria-hidden="true"></a>how_many_tens &lt;-<span class="st"> </span><span class="kw">sum</span>(verify)</span>
+<span id="cb26-2"><a href="prob1.html#cb26-2" aria-hidden="true"></a>how_many_tens</span></code></pre></div>
+<pre><code>## [1] 78</code></pre>
+<p>Finally, to get at the fraction of all trials that were equal to 10, we simply divide by the number of trials:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="prob1.html#cb28-1" aria-hidden="true"></a>proportion_of_tens &lt;-<span class="st"> </span>how_many_tens <span class="op">/</span><span class="st"> </span>n</span>
+<span id="cb28-2"><a href="prob1.html#cb28-2" aria-hidden="true"></a>proportion_of_tens</span></code></pre></div>
+<pre><code>## [1] 0.156</code></pre>
+<p>You should have gotten a number pretty close to 17.62%. You can imagine that the more trials we perform, the more accurate this number will approximate the exact probability given by the PMF.</p>
+<p><strong>Exercise</strong>: Try repeating the above procedure but using a different value of k, between 0 and 20. Is your resulting probability lower or higher than P[X=10]?</p>
+<p><strong>Exercise</strong>: Plot a histogram of the vector “binomvec” using the function hist(). What do you observe?</p>
+</div>
+<div id="the-variance" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> The variance</h2>
+<p>There is another important property of a distribution: its <em>Variance</em>. This reflects how much variation we expect to get among different instances of an experiment:</p>
+<p><span class="math display">\[Var[X] = E[(X-E[X])^{2}]\]</span></p>
+<p>The variance is the expectation of <span class="math inline">\((X-E[X])^{2}\)</span>. This term represents the squared difference between the variable and it expectation, and so the variance is the expected value of this squared difference.</p>
+<p>It turns out that the expectation of a function of a random variable is simply the sum of the function of each value the random variable can take, weighted by the probability that the random variable actually takes that value:</p>
+<p><span class="math display">\[E[f(x)] = \sum_{i}f(x_i)P[X=x_i]\]</span></p>
+<p>For a discrete random variable, we can thus write the variance as:</p>
+<p><span class="math display">\[Var[X] = \sum_{i}(x_i-E[X])^{2}P[X=x_i]\]</span></p>
+<p>In the particular case of a discrete random variable that follows the Binomial distribution, the variance is a simple function of n and p:</p>
+<p><span class="math display">\[Var[X] = n p(1-p)\]</span></p>
+<p>A measurable approximation to the <em>variance</em> is called the “sample variance” and can be computed from n samples of an experiment as follows:</p>
+<p><span class="math display">\[s = \frac{\sum_{j=1}^{n}(x_{j} - \bar{x})^{2}}{n-1}\]</span></p>
+<p>Just as we can compute the sample mean of a set of trials using the function mean(), we can easily compute the variance of a set of trials using the function var():</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="prob1.html#cb30-1" aria-hidden="true"></a>n &lt;-<span class="st"> </span><span class="dv">5</span></span>
+<span id="cb30-2"><a href="prob1.html#cb30-2" aria-hidden="true"></a>size &lt;-<span class="st"> </span><span class="dv">100</span></span>
+<span id="cb30-3"><a href="prob1.html#cb30-3" aria-hidden="true"></a>prob &lt;-<span class="st"> </span><span class="fl">0.5</span></span>
+<span id="cb30-4"><a href="prob1.html#cb30-4" aria-hidden="true"></a>X &lt;-<span class="st"> </span><span class="kw">rbinom</span>(n, size, prob)</span>
+<span id="cb30-5"><a href="prob1.html#cb30-5" aria-hidden="true"></a>X</span></code></pre></div>
+<pre><code>## [1] 49 52 46 53 53</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="prob1.html#cb32-1" aria-hidden="true"></a><span class="kw">mean</span>(X)</span></code></pre></div>
+<pre><code>## [1] 50.6</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="prob1.html#cb34-1" aria-hidden="true"></a><span class="kw">var</span>(X)</span></code></pre></div>
+<pre><code>## [1] 9.3</code></pre>
+<p><strong>Exercise</strong>: Compute the variance of a set of 5 Binomial trials of size 100, for different values of the probability of heads. This is equivalent to performing 5 100-toss experiments, with different types of biased coins in each experiment. For what value of the binomial probability is the variance maximized? Does this agree with the variance equation for a binomially-distributed random variable?</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="probability-part-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["DataScience.pdf", "DataScience.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

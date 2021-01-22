@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 14 Ordination | Data Analysis and Statistical Thinking: An R Workbook</title>
+  <meta name="description" content="This is a guide for the Globe Data Science Course." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 14 Ordination | Data Analysis and Statistical Thinking: An R Workbook" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a guide for the Globe Data Science Course." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 14 Ordination | Data Analysis and Statistical Thinking: An R Workbook" />
+  
+  <meta name="twitter:description" content="This is a guide for the Globe Data Science Course." />
+  
+
+<meta name="author" content="Fernando Racimo, …" />
+
+
+<meta name="date" content="2021-01-22" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="mixed-models.html"/>
+<link rel="next" href="clustering.html"/>
+<script src="libs/header-attrs-2.4/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Analysis and Statistical Thinking</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Getting Started with Data Analysis</a></li>
+<li class="chapter" data-level="3" data-path="prob1.html"><a href="prob1.html"><i class="fa fa-check"></i><b>3</b> Probability Part 1</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="prob1.html"><a href="prob1.html#tossing-a-coin"><i class="fa fa-check"></i><b>3.1</b> Tossing a coin</a></li>
+<li class="chapter" data-level="3.2" data-path="prob1.html"><a href="prob1.html#adding-up-coin-tosses"><i class="fa fa-check"></i><b>3.2</b> Adding up coin tosses</a></li>
+<li class="chapter" data-level="3.3" data-path="prob1.html"><a href="prob1.html#the-expectation"><i class="fa fa-check"></i><b>3.3</b> The expectation</a></li>
+<li class="chapter" data-level="3.4" data-path="prob1.html"><a href="prob1.html#our-first-probability-mass-function"><i class="fa fa-check"></i><b>3.4</b> Our first probability mass function</a></li>
+<li class="chapter" data-level="3.5" data-path="prob1.html"><a href="prob1.html#the-variance"><i class="fa fa-check"></i><b>3.5</b> The variance</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="probability-part-2.html"><a href="probability-part-2.html"><i class="fa fa-check"></i><b>4</b> Probability Part 2</a></li>
+<li class="chapter" data-level="5" data-path="probability-part-3.html"><a href="probability-part-3.html"><i class="fa fa-check"></i><b>5</b> Probability Part 3</a></li>
+<li class="chapter" data-level="6" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>6</b> Linear Models</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="linear-models.html"><a href="linear-models.html#the-data"><i class="fa fa-check"></i><b>6.1</b> The data</a></li>
+<li class="chapter" data-level="6.2" data-path="linear-models.html"><a href="linear-models.html#running-and-interpreting-a-simple-linear-regression"><i class="fa fa-check"></i><b>6.2</b> Running and interpreting a simple linear regression</a></li>
+<li class="chapter" data-level="6.3" data-path="linear-models.html"><a href="linear-models.html#a-multivariate-linear-regression"><i class="fa fa-check"></i><b>6.3</b> A multivariate linear regression</a></li>
+<li class="chapter" data-level="6.4" data-path="linear-models.html"><a href="linear-models.html#simulating-data-from-a-linear-model"><i class="fa fa-check"></i><b>6.4</b> Simulating data from a linear model</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html"><i class="fa fa-check"></i><b>7</b> Properties of Estimators and Inference</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#properties-of-point-estimators"><i class="fa fa-check"></i><b>7.1</b> Properties of point estimators</a></li>
+<li class="chapter" data-level="7.2" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#builidng-confidence-intervals"><i class="fa fa-check"></i><b>7.2</b> Builidng confidence intervals</a></li>
+<li class="chapter" data-level="7.3" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#roc-curve"><i class="fa fa-check"></i><b>7.3</b> ROC curve</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="frequentist-inference.html"><a href="frequentist-inference.html"><i class="fa fa-check"></i><b>8</b> Frequentist inference</a></li>
+<li class="chapter" data-level="9" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>9</b> Bayesian Inference</a></li>
+<li class="chapter" data-level="10" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>10</b> Classification</a></li>
+<li class="chapter" data-level="11" data-path="model-assessment.html"><a href="model-assessment.html"><i class="fa fa-check"></i><b>11</b> Model Assessment</a></li>
+<li class="chapter" data-level="12" data-path="resampling.html"><a href="resampling.html"><i class="fa fa-check"></i><b>12</b> Resampling</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="resampling.html"><a href="resampling.html#the-bootstrap"><i class="fa fa-check"></i><b>12.1</b> The bootstrap</a></li>
+<li class="chapter" data-level="12.2" data-path="resampling.html"><a href="resampling.html#permutation-test"><i class="fa fa-check"></i><b>12.2</b> Permutation test</a></li>
+<li class="chapter" data-level="12.3" data-path="resampling.html"><a href="resampling.html#validation"><i class="fa fa-check"></i><b>12.3</b> Validation</a></li>
+<li class="chapter" data-level="12.4" data-path="resampling.html"><a href="resampling.html#cross-validation"><i class="fa fa-check"></i><b>12.4</b> Cross-validation</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="mixed-models.html"><a href="mixed-models.html"><i class="fa fa-check"></i><b>13</b> Mixed Models</a></li>
+<li class="chapter" data-level="14" data-path="ordination.html"><a href="ordination.html"><i class="fa fa-check"></i><b>14</b> Ordination</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ordination.html"><a href="ordination.html#libraries-and-data"><i class="fa fa-check"></i><b>14.1</b> Libraries and Data</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="ordination.html"><a href="ordination.html#exercise-1-visualizing-the-data"><i class="fa fa-check"></i><b>14.1.1</b> Exercise 1: Visualizing the data</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="ordination.html"><a href="ordination.html#principal-component-analysis-pca"><i class="fa fa-check"></i><b>14.2</b> Principal component analysis (PCA)</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="ordination.html"><a href="ordination.html#biplots"><i class="fa fa-check"></i><b>14.2.1</b> Biplots</a></li>
+<li class="chapter" data-level="14.2.2" data-path="ordination.html"><a href="ordination.html#exercise-2-interpreting-biplots"><i class="fa fa-check"></i><b>14.2.2</b> Exercise 2: Interpreting biplots</a></li>
+<li class="chapter" data-level="14.2.3" data-path="ordination.html"><a href="ordination.html#pca-using-ggplot"><i class="fa fa-check"></i><b>14.2.3</b> PCA using ggplot</a></li>
+<li class="chapter" data-level="14.2.4" data-path="ordination.html"><a href="ordination.html#pca-under-the-hood"><i class="fa fa-check"></i><b>14.2.4</b> PCA under the hood</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="ordination.html"><a href="ordination.html#nmds"><i class="fa fa-check"></i><b>14.3</b> NMDS</a>
+<ul>
+<li class="chapter" data-level="14.3.1" data-path="ordination.html"><a href="ordination.html#exercise-3-interpreting-nmds-plots"><i class="fa fa-check"></i><b>14.3.1</b> Exercise 3: interpreting NMDS plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>15</b> Clustering</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Analysis and Statistical Thinking: An R Workbook</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ordination" class="section level1" number="14">
+<h1><span class="header-section-number">Chapter 14</span> Ordination</h1>
+<div id="libraries-and-data" class="section level2" number="14.1">
+<h2><span class="header-section-number">14.1</span> Libraries and Data</h2>
+<p>Today, we will work with the package vegan (useful for ordination techniques) and the packages ggplot2 and ggbiplot (useful for fancy plotting). Make sure all these libraries are installed before you begin. To install the package “ggbiplot”, do the following:</p>
+<p>install.packages(“devtools”)</p>
+<p>library(“devtools”)</p>
+<p>install_github(“vqv/ggbiplot”)</p>
+<p>Let’s begin by loading the necessary libraries:</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="ordination.html#cb101-1" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">&quot;vegan&quot;</span>)</span></code></pre></div>
+<pre><code>## Loading required package: permute</code></pre>
+<pre><code>## 
+## Attaching package: &#39;permute&#39;</code></pre>
+<pre><code>## The following object is masked _by_ &#39;.GlobalEnv&#39;:
+## 
+##     permute</code></pre>
+<pre><code>## The following object is masked from &#39;package:recipes&#39;:
+## 
+##     check</code></pre>
+<pre><code>## The following object is masked from &#39;package:devtools&#39;:
+## 
+##     check</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## 
+## Attaching package: &#39;lattice&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:boot&#39;:
+## 
+##     melanoma</code></pre>
+<pre><code>## Registered S3 method overwritten by &#39;vegan&#39;:
+##   method          from   
+##   print.nullmodel parsnip</code></pre>
+<pre><code>## This is vegan 2.5-6</code></pre>
+<pre><code>## 
+## Attaching package: &#39;vegan&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:parsnip&#39;:
+## 
+##     nullmodel</code></pre>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="ordination.html#cb114-1" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
+<span id="cb114-2"><a href="ordination.html#cb114-2" aria-hidden="true"></a><span class="kw">library</span>(<span class="st">&quot;ggbiplot&quot;</span>)</span></code></pre></div>
+<pre><code>## Loading required package: plyr</code></pre>
+<pre><code>## ------------------------------------------------------------------------------</code></pre>
+<pre><code>## You have loaded plyr after dplyr - this is likely to cause problems.
+## If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
+## library(plyr); library(dplyr)</code></pre>
+<pre><code>## ------------------------------------------------------------------------------</code></pre>
+<pre><code>## 
+## Attaching package: &#39;plyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     arrange, count, desc, failwith, id, mutate, rename, summarise,
+##     summarize</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     compact</code></pre>
+<pre><code>## Loading required package: grid</code></pre>
+<p>We will use a dataset on measurements of particular parts of the iris plant, across individuals from three different species.</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="ordination.html#cb123-1" aria-hidden="true"></a><span class="kw">data</span>(iris)</span></code></pre></div>
+<div id="exercise-1-visualizing-the-data" class="section level3" number="14.1.1">
+<h3><span class="header-section-number">14.1.1</span> Exercise 1: Visualizing the data</h3>
+<p>Take a look at the iris data matrix. How many samples does it have? How many variables? What happens when you run the function plot() on this matrix? Which variables are most strongly correlated? (use the cor() function to answer this). Why do you think this could be?</p>
+</div>
+</div>
+<div id="principal-component-analysis-pca" class="section level2" number="14.2">
+<h2><span class="header-section-number">14.2</span> Principal component analysis (PCA)</h2>
+<p>Perform a PCA of the data. The function prcomp() performs the PCA, and we can assign the result of this function to a new variable (let’s call it “fit”). We must first remove the last column to whatever we give as input to prcomp, as the species names are a non-linear (categorical) variable and we don’t have (for now) any natural measures of distance for species. The option scale=T standardizes the variables to the same relative scale, so that some variables do not become dominant just because of their large measurement unit.</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="ordination.html#cb124-1" aria-hidden="true"></a>fit&lt;-<span class="kw">prcomp</span>(iris[<span class="op">-</span><span class="dv">5</span>], <span class="dt">scale=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<p>If we run the summary function on fit, it indicates that four PCs where created: the number
+of possible PCs always equals the number of original variables.</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="ordination.html#cb125-1" aria-hidden="true"></a><span class="kw">summary</span>(fit)</span></code></pre></div>
+<pre><code>## Importance of components:
+##                           PC1    PC2     PC3     PC4
+## Standard deviation     1.7084 0.9560 0.38309 0.14393
+## Proportion of Variance 0.7296 0.2285 0.03669 0.00518
+## Cumulative Proportion  0.7296 0.9581 0.99482 1.00000</code></pre>
+<p>How much of the variance is explained by PC1? How much is explained by PC2?</p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="ordination.html#cb127-1" aria-hidden="true"></a><span class="kw">plot</span>(fit,<span class="dt">type=</span><span class="st">&quot;lines&quot;</span>)</span></code></pre></div>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
+<p>The “Rotation” matrix (fit[2]) contains the “loadings” of each of the original variables on the newly created PCs. Take a look at this matrix. The larger the absolute value of a variable in each PC, the more that variable contributes to that PC.</p>
+<div id="biplots" class="section level3" number="14.2.1">
+<h3><span class="header-section-number">14.2.1</span> Biplots</h3>
+<p>We can use the function “biplot” to plot the first two PCs of our data. The plotted arrows provide a graphical rendition of the loadings of each of the original variables on the two PCs.</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="ordination.html#cb128-1" aria-hidden="true"></a><span class="kw">biplot</span>(fit)</span></code></pre></div>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+</div>
+<div id="exercise-2-interpreting-biplots" class="section level3" number="14.2.2">
+<h3><span class="header-section-number">14.2.2</span> Exercise 2: Interpreting biplots</h3>
+<p>Across this reduced dimensional space, we can see that particular variables tend to co-vary quite strongly. Which ones? We can also see a separation into two groups on PC1. Which variables do you think would be most different between samples in one group and in the other?</p>
+</div>
+<div id="pca-using-ggplot" class="section level3" number="14.2.3">
+<h3><span class="header-section-number">14.2.3</span> PCA using ggplot</h3>
+<p>We can make prettier plots using ggplot2 and ggbiplot.</p>
+<p>We first extract the variances of the principal components and then plot them:</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="ordination.html#cb129-1" aria-hidden="true"></a>variances &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">variances=</span>fit<span class="op">$</span>sdev<span class="op">**</span><span class="dv">2</span>, <span class="dt">pcomp=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(fit<span class="op">$</span>sdev))</span>
+<span id="cb129-2"><a href="ordination.html#cb129-2" aria-hidden="true"></a>varPlot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(variances, <span class="kw">aes</span>(pcomp, variances)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">fill=</span><span class="st">&quot;gray&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>()</span>
+<span id="cb129-3"><a href="ordination.html#cb129-3" aria-hidden="true"></a>varPlot</span></code></pre></div>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-58-1.png" width="672" /></p>
+<p>We can also plot the first two PCs, like we had done before in base R, but now coloring the samples by their corresponding species. How are the species distributed along PC1?</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="ordination.html#cb130-1" aria-hidden="true"></a>Species&lt;-iris<span class="op">$</span>Species</span>
+<span id="cb130-2"><a href="ordination.html#cb130-2" aria-hidden="true"></a>iris_pca &lt;-<span class="st"> </span><span class="kw">ggbiplot</span>(fit,<span class="dt">obs.scale =</span> <span class="dv">1</span>, </span>
+<span id="cb130-3"><a href="ordination.html#cb130-3" aria-hidden="true"></a>         <span class="dt">var.scale=</span><span class="dv">1</span>,<span class="dt">groups=</span>Species,<span class="dt">ellipse=</span>F,<span class="dt">circle=</span>F,<span class="dt">varname.size=</span><span class="dv">3</span>)</span>
+<span id="cb130-4"><a href="ordination.html#cb130-4" aria-hidden="true"></a>iris_pca</span></code></pre></div>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-59-1.png" width="672" /></p>
+</div>
+<div id="pca-under-the-hood" class="section level3" number="14.2.4">
+<h3><span class="header-section-number">14.2.4</span> PCA under the hood</h3>
+<p>Rather than just using a ready-made function to compute a PCA, let’s take a longer route to understand exactly what’s happening under the hood of the prcomp() function.</p>
+<p>First, let’s standardize each column of our data so that each column has mean 0 and variance 1</p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="ordination.html#cb131-1" aria-hidden="true"></a>irisdat &lt;-<span class="st"> </span>iris[<span class="op">-</span><span class="dv">5</span>]</span>
+<span id="cb131-2"><a href="ordination.html#cb131-2" aria-hidden="true"></a>irisstandard &lt;-<span class="st"> </span><span class="kw">apply</span>(irisdat,<span class="dv">2</span>,<span class="cf">function</span>(x){(x<span class="op">-</span><span class="kw">mean</span>(x))<span class="op">/</span><span class="kw">sd</span>(x)})</span></code></pre></div>
+<p>Now, calculate the covariance matrix. Because the data has been standardized, this is equivalent to calculating the correlation matrix of the pre-standardized data.</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="ordination.html#cb132-1" aria-hidden="true"></a>cormat &lt;-<span class="st"> </span><span class="kw">cov</span>(irisstandard)</span></code></pre></div>
+<p>Then, extract the eigenvalues and eigenvectors of correlation matrix:</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="ordination.html#cb133-1" aria-hidden="true"></a>myEig &lt;-<span class="st"> </span><span class="kw">eigen</span>(cormat)</span></code></pre></div>
+<p>Now, we’ll manually obtain certain values that were automatically computed by the prcomp function when we ran it earlier. We’ll calculate the singular values (square root of eigenvalues) and also obtain the eigenvectors, also called loadings.</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="ordination.html#cb134-1" aria-hidden="true"></a>sdLONG &lt;-<span class="st"> </span><span class="kw">sqrt</span>(myEig<span class="op">$</span>values)</span>
+<span id="cb134-2"><a href="ordination.html#cb134-2" aria-hidden="true"></a>loadingsLONG &lt;-<span class="st"> </span>myEig<span class="op">$</span>vectors</span>
+<span id="cb134-3"><a href="ordination.html#cb134-3" aria-hidden="true"></a><span class="kw">rownames</span>(loadingsLONG) &lt;-<span class="st"> </span><span class="kw">colnames</span>(irisstandard)</span></code></pre></div>
+<p>Using the loadings, we can plot our original (standardized) data matrix into the new PC-space, by multiplying the data matrix by the matrix of loadings. Plotting the first two rows of the resulting product should reveal the location of our data points in the first two principal components (like we had before):</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="ordination.html#cb135-1" aria-hidden="true"></a>scoresLONG &lt;-<span class="st"> </span>irisstandard <span class="op">%*%</span><span class="st"> </span>loadingsLONG</span>
+<span id="cb135-2"><a href="ordination.html#cb135-2" aria-hidden="true"></a><span class="kw">plot</span>(scoresLONG[,<span class="dv">1</span>],scoresLONG[,<span class="dv">2</span>])</span></code></pre></div>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-64-1.png" width="672" /></p>
+<p>You can compare the results from the first section (using the ready-made function prcomp) and this section (taking a longer road), to check that the results are equivalent: the minimum and maximum differences in values for the loadings, the scores and standard deviations of the PCs are infinitesimally small.</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="ordination.html#cb136-1" aria-hidden="true"></a><span class="kw">range</span>(fit<span class="op">$</span>sdev <span class="op">-</span><span class="st"> </span>sdLONG)</span></code></pre></div>
+<pre><code>## [1] -6.661338e-16  2.220446e-16</code></pre>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="ordination.html#cb138-1" aria-hidden="true"></a><span class="kw">range</span>(fit<span class="op">$</span>rotation <span class="op">-</span><span class="st"> </span>loadingsLONG)</span></code></pre></div>
+<pre><code>## [1] -6.661338e-16  7.771561e-16</code></pre>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="ordination.html#cb140-1" aria-hidden="true"></a><span class="kw">range</span>(fit<span class="op">$</span>x <span class="op">-</span><span class="st"> </span>scoresLONG) </span></code></pre></div>
+<pre><code>## [1] -2.359224e-15  3.108624e-15</code></pre>
+</div>
+</div>
+<div id="nmds" class="section level2" number="14.3">
+<h2><span class="header-section-number">14.3</span> NMDS</h2>
+<p>We’ll now perform non-metric multidimensional scaling. Let’s first take a look at the raw data we will use. This is a data matrix containing information about dune meadow vegetation. There are 30 species and 20 sites. Each cell corresponds to the number of specimens of a particular species that has been observed at a particular site (Jongman et al. 1987). As one can see, there are many sites where some species are completely absent (the cell value equals 0):</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="ordination.html#cb142-1" aria-hidden="true"></a><span class="kw">data</span>(dune)</span>
+<span id="cb142-2"><a href="ordination.html#cb142-2" aria-hidden="true"></a>dune</span></code></pre></div>
+<pre><code>##    Achimill Agrostol Airaprae Alopgeni Anthodor Bellpere Bromhord Chenalbu
+## 1         1        0        0        0        0        0        0        0
+## 2         3        0        0        2        0        3        4        0
+## 3         0        4        0        7        0        2        0        0
+## 4         0        8        0        2        0        2        3        0
+## 5         2        0        0        0        4        2        2        0
+## 6         2        0        0        0        3        0        0        0
+## 7         2        0        0        0        2        0        2        0
+## 8         0        4        0        5        0        0        0        0
+## 9         0        3        0        3        0        0        0        0
+## 10        4        0        0        0        4        2        4        0
+## 11        0        0        0        0        0        0        0        0
+## 12        0        4        0        8        0        0        0        0
+## 13        0        5        0        5        0        0        0        1
+## 14        0        4        0        0        0        0        0        0
+## 15        0        4        0        0        0        0        0        0
+## 16        0        7        0        4        0        0        0        0
+## 17        2        0        2        0        4        0        0        0
+## 18        0        0        0        0        0        2        0        0
+## 19        0        0        3        0        4        0        0        0
+## 20        0        5        0        0        0        0        0        0
+##    Cirsarve Comapalu Eleopalu Elymrepe Empenigr Hyporadi Juncarti Juncbufo
+## 1         0        0        0        4        0        0        0        0
+## 2         0        0        0        4        0        0        0        0
+## 3         0        0        0        4        0        0        0        0
+## 4         2        0        0        4        0        0        0        0
+## 5         0        0        0        4        0        0        0        0
+## 6         0        0        0        0        0        0        0        0
+## 7         0        0        0        0        0        0        0        2
+## 8         0        0        4        0        0        0        4        0
+## 9         0        0        0        6        0        0        4        4
+## 10        0        0        0        0        0        0        0        0
+## 11        0        0        0        0        0        2        0        0
+## 12        0        0        0        0        0        0        0        4
+## 13        0        0        0        0        0        0        0        3
+## 14        0        2        4        0        0        0        0        0
+## 15        0        2        5        0        0        0        3        0
+## 16        0        0        8        0        0        0        3        0
+## 17        0        0        0        0        0        2        0        0
+## 18        0        0        0        0        0        0        0        0
+## 19        0        0        0        0        2        5        0        0
+## 20        0        0        4        0        0        0        4        0
+##    Lolipere Planlanc Poaprat Poatriv Ranuflam Rumeacet Sagiproc Salirepe
+## 1         7        0       4       2        0        0        0        0
+## 2         5        0       4       7        0        0        0        0
+## 3         6        0       5       6        0        0        0        0
+## 4         5        0       4       5        0        0        5        0
+## 5         2        5       2       6        0        5        0        0
+## 6         6        5       3       4        0        6        0        0
+## 7         6        5       4       5        0        3        0        0
+## 8         4        0       4       4        2        0        2        0
+## 9         2        0       4       5        0        2        2        0
+## 10        6        3       4       4        0        0        0        0
+## 11        7        3       4       0        0        0        2        0
+## 12        0        0       0       4        0        2        4        0
+## 13        0        0       2       9        2        0        2        0
+## 14        0        0       0       0        2        0        0        0
+## 15        0        0       0       0        2        0        0        0
+## 16        0        0       0       2        2        0        0        0
+## 17        0        2       1       0        0        0        0        0
+## 18        2        3       3       0        0        0        0        3
+## 19        0        0       0       0        0        0        3        3
+## 20        0        0       0       0        4        0        0        5
+##    Scorautu Trifprat Trifrepe Vicilath Bracruta Callcusp
+## 1         0        0        0        0        0        0
+## 2         5        0        5        0        0        0
+## 3         2        0        2        0        2        0
+## 4         2        0        1        0        2        0
+## 5         3        2        2        0        2        0
+## 6         3        5        5        0        6        0
+## 7         3        2        2        0        2        0
+## 8         3        0        2        0        2        0
+## 9         2        0        3        0        2        0
+## 10        3        0        6        1        2        0
+## 11        5        0        3        2        4        0
+## 12        2        0        3        0        4        0
+## 13        2        0        2        0        0        0
+## 14        2        0        6        0        0        4
+## 15        2        0        1        0        4        0
+## 16        0        0        0        0        4        3
+## 17        2        0        0        0        0        0
+## 18        5        0        2        1        6        0
+## 19        6        0        2        0        3        0
+## 20        2        0        0        0        4        3</code></pre>
+<p>Note that this data is non-linear, so our first instinct should not be to perform PCA on it. Because NMDS relies on “distances”, we need to specify a distance metric that we’ll use. The function for performing NMDS in the package ‘vegan’ is called metaMDS() and its default distance metric is “bray”, which corresponds to the Bray-Curtis dissimilarity: a statistic used to quantify the compositional dissimilarity between two different sites, based on counts at each site</p>
+<p>Let’s perform NMDS ordination using the Bray-Curtis dissimilarity. Remember that, unlike PCA, NMDS requires us to specify the number of dimensions (k) a priori (the default in vegan is 2). It also performs a series of transformations on the data that are appropriate for ecological data (default: autotransform=TRUE). The trymax option ensures that the algorithm is started from different points (in our case, 50) to avoid local minima.</p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="ordination.html#cb144-1" aria-hidden="true"></a>ord &lt;-<span class="st"> </span><span class="kw">metaMDS</span>(dune, <span class="dt">k=</span><span class="dv">2</span>, <span class="dt">autotransform =</span> <span class="ot">TRUE</span>, <span class="dt">trymax=</span><span class="dv">50</span>)</span></code></pre></div>
+<pre><code>## Run 0 stress 0.1192678 
+## Run 1 stress 0.1192678 
+## ... New best solution
+## ... Procrustes: rmse 3.579236e-05  max resid 0.0001031411 
+## ... Similar to previous best
+## Run 2 stress 0.1808913 
+## Run 3 stress 0.1192679 
+## ... Procrustes: rmse 0.0001317613  max resid 0.00035 
+## ... Similar to previous best
+## Run 4 stress 0.1192682 
+## ... Procrustes: rmse 0.0002923245  max resid 0.0008893682 
+## ... Similar to previous best
+## Run 5 stress 0.1183187 
+## ... New best solution
+## ... Procrustes: rmse 0.02027487  max resid 0.06500982 
+## Run 6 stress 0.1192681 
+## Run 7 stress 0.1980527 
+## Run 8 stress 0.1192679 
+## Run 9 stress 0.1922244 
+## Run 10 stress 0.1192684 
+## Run 11 stress 0.1192678 
+## Run 12 stress 0.1183186 
+## ... New best solution
+## ... Procrustes: rmse 5.640452e-05  max resid 0.0001599663 
+## ... Similar to previous best
+## Run 13 stress 0.1192683 
+## Run 14 stress 0.1192678 
+## Run 15 stress 0.1183186 
+## ... New best solution
+## ... Procrustes: rmse 9.881256e-05  max resid 0.0002670525 
+## ... Similar to previous best
+## Run 16 stress 0.1812935 
+## Run 17 stress 0.1183186 
+## ... Procrustes: rmse 5.593967e-05  max resid 0.0001848075 
+## ... Similar to previous best
+## Run 18 stress 0.1183186 
+## ... Procrustes: rmse 0.0001121892  max resid 0.0003676583 
+## ... Similar to previous best
+## Run 19 stress 0.1192685 
+## Run 20 stress 0.1192678 
+## *** Solution reached</code></pre>
+<p>As you can see, the function goes through a series of steps until convergence is reached. Let’s plot the results:</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="ordination.html#cb146-1" aria-hidden="true"></a><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb146-2"><a href="ordination.html#cb146-2" aria-hidden="true"></a><span class="kw">plot</span>(ord,<span class="dt">display=</span><span class="st">&quot;sites&quot;</span>,<span class="dt">main=</span><span class="st">&quot;NMDS ordination of sites&quot;</span>,<span class="dt">type=</span><span class="st">&quot;t&quot;</span>)</span>
+<span id="cb146-3"><a href="ordination.html#cb146-3" aria-hidden="true"></a><span class="kw">plot</span>(ord,<span class="dt">display=</span><span class="st">&quot;species&quot;</span>,<span class="dt">main=</span><span class="st">&quot;NMDS ordination of species&quot;</span>,<span class="dt">type=</span><span class="st">&quot;t&quot;</span>)</span></code></pre></div>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="ordination.html#cb147-1" aria-hidden="true"></a><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
+<div id="exercise-3-interpreting-nmds-plots" class="section level3" number="14.3.1">
+<h3><span class="header-section-number">14.3.1</span> Exercise 3: interpreting NMDS plots</h3>
+<p>What do these plots tell you about the distribution of species across sites? Which species tend to co-occcur with each other? Which sites tend to have similar species compositions?</p>
+<p>Try changing the number of dimensions or the distance metric used. You can take a look at the list of possible distances and their definitions using “?vegdist”. Do the results change? Why?</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="mixed-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="clustering.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["DataScience.pdf", "DataScience.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
