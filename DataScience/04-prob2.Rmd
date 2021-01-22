@@ -1,0 +1,14 @@
+# Probability Part 2
+
+<!-- 
+
+SHYAM WILL TAKE CARE OF THIS ONE
+
+## Continuous Random Variables
+
+## Probability density function
+
+## The Normal distribution
+
+
+-->

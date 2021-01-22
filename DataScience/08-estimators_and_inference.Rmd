@@ -1,0 +1,7 @@
+# Properties of Estimators and Inference
+
+## Properties of point estimators
+
+## Builidng confidence intervals
+
+## ROC curve

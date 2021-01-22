@@ -1,6 +1,6 @@
 --- 
-title: "Data Science Course"
-author: "Fernando Racimo"
+title: "Data Analysis and Statistical Thinking: An R Workbook"
+author: "Fernando Racimo, ..."
 date: "`r Sys.Date()`"
 bibliography:
 - book.bib

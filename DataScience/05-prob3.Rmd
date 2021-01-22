@@ -1,0 +1,25 @@
+# Probability Part 3
+
+<!-- 
+## The Poisson distribution
+
+Limit of binomial
+
+## The geometric distribution
+
+
+## The exponential distribution
+
+Limit of geometric
+
+## Competing exponentials
+
+## Time to first event
+
+## Convolution
+
+## Combining distributions
+
+Number of events until an outcome
+
+-->

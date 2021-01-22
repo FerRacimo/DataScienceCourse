@@ -1,4 +1,7 @@
 # Introduction
 
+<!-- 
+
 To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.org/tinytex/>.
 
+-->

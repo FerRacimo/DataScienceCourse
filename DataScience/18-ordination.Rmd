@@ -4,9 +4,9 @@
 
 Today, we will work with the package vegan (useful for ordination techniques) and the packages ggplot2 and ggbiplot (useful for fancy plotting). Make sure all these libraries are installed before you begin. To install the package "ggbiplot", do the following:
 
-install.packages(devtools)
+install.packages("devtools")
 
-library(devtools)
+library("devtools")
 
 install_github("vqv/ggbiplot")
 

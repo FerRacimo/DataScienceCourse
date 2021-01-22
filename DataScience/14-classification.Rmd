@@ -1,0 +1,10 @@
+# Classification
+
+<!-- 
+## Logistic regression
+
+Explain logistic regression as a special case of a generalized linear model
+
+## Linear discriminant analysis
+
+-->

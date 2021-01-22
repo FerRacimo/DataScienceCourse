@@ -1,3 +1,0 @@
-# Linear Models
-
-We describe linear models in this chapter.

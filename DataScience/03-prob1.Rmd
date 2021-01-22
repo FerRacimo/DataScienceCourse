@@ -1,4 +1,4 @@
-# Probability Basics {#probbasics}
+# Probability Part 1 {#prob1}
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -221,4 +221,4 @@ mean(X)
 var(X)
 ```
 
-**Exercise**: Compute the variance of a set of 5 Binomial trials of size 100, for different values of the probability of heads. For what value of this probability is this variance maximized? Does this agree with the variance equation for a Binomially distributed random variable?
+**Exercise**: Compute the variance of a set of 5 Binomial trials of size 100, for different values of the probability of heads. This is equivalent to performing 5 100-toss experiments, with different types of biased coins in each experiment. For what value of the binomial probability is the variance maximized? Does this agree with the variance equation for a binomially-distributed random variable?
