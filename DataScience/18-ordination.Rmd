@@ -2,20 +2,16 @@
 
 ## Libraries and Data
 
-Today, we will work with the package vegan (useful for ordination techniques) and the packages ggplot2 and ggbiplot (useful for fancy plotting). Make sure all these libraries are installed before you begin. To install the package "ggbiplot", do the following:
+Today, we will work with the package vegan (useful for ordination techniques) and the packages ggplot2 and ggbiplot (useful for fancy plotting). Make sure all these libraries are installed before you begin. 
 
-install.packages("devtools")
-
-library("devtools")
-
-install_github("vqv/ggbiplot")
-
-Let's begin by loading the necessary libraries:
+Let's begin by installing and loading the necessary libraries:
 
 ```{r}
-library("vegan")
-library("ggplot2")
-library("ggbiplot")
+if (!require("vegan")) install.packages("vegan")
+if (!require("devtools")) install.packages("devtools")
+if (!require("ggplot2")) install.packages("ggplot2")
+if (!require("ggbiplot")){ library("devtools"); install_github("vqv/ggbiplot") }
+if (!require("palmerpenguins")){ library("devtools"); install_github("allisonhorst/palmerpenguins")}
 ```
 
 We will use a dataset on measurements of particular parts of the iris plant, across individuals from three different species.
@@ -26,11 +22,11 @@ data(iris)
 
 ### Exercise 1: Visualizing the data
 
-Take a look at the iris data matrix. How many samples does it have? How many variables? What happens when you run the function plot() on this matrix? Which variables are most strongly correlated? (use the cor() function to answer this). Why do you think this could be?
+Take a look at the iris data matrix. How many samples does it have? How many variables? What happens when you run the function `plot()` on this matrix? Which variables seem to be strongly correlated? (you can use the function cor() to compute the strength of correlations). Speculate as to why some of these variables could be strongly correlated.
 
 ## Principal component analysis (PCA)
 
-Perform a PCA of the data. The function prcomp() performs the PCA, and we can assign the result of this function to a new variable (let's call it "fit"). We must first remove the last column to whatever we give as input to prcomp, as the species names are a non-linear (categorical) variable and we don't have (for now) any natural measures of distance for species. The option scale=T standardizes the variables to the same relative scale, so that some variables do not become dominant just because of their large measurement unit.
+We'll perform a PCA of the data. The function prcomp() performs the PCA, and we can assign the result of this function to a new variable (let's call it "fit"). We must first remove the last column to whatever we give as input to prcomp, as the species names are a non-linear (categorical) variable and we don't have (for now) any natural measures of distance for species. The option scale=T standardizes the variables to the same relative scale, so that some variables do not become dominant just because of their large measurement unit.
 
 ```{r}
 fit<-prcomp(iris[-5], scale=TRUE)
