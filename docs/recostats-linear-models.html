@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 6 Linear Models | Data Analysis and Statistical Thinking: An R Workbook</title>
+  <title>Chapter 16 REcoStats: Linear Models | Data Analysis and Statistical Thinking: An R Workbook</title>
   <meta name="description" content="This is a guide for the Globe Data Science Course." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 6 Linear Models | Data Analysis and Statistical Thinking: An R Workbook" />
+  <meta property="og:title" content="Chapter 16 REcoStats: Linear Models | Data Analysis and Statistical Thinking: An R Workbook" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 6 Linear Models | Data Analysis and Statistical Thinking: An R Workbook" />
+  <meta name="twitter:title" content="Chapter 16 REcoStats: Linear Models | Data Analysis and Statistical Thinking: An R Workbook" />
   
   <meta name="twitter:description" content="This is a guide for the Globe Data Science Course." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="probability-part-3.html"/>
-<link rel="next" href="properties-of-estimators-and-inference.html"/>
+<link rel="prev" href="references.html"/>
+
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -216,42 +216,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="linear-models" class="section level1" number="6">
-<h1><span class="header-section-number">Chapter 6</span> Linear Models</h1>
+<div id="recostats-linear-models" class="section level1" number="16">
+<h1><span class="header-section-number">Chapter 16</span> REcoStats: Linear Models</h1>
 <p>We describe linear models in this chapter. First we need to load some libraries (and install them if necessary).</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="linear-models.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;tidyverse&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
-<pre><code>## Loading required package: tidyverse</code></pre>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
-<pre><code>## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
-## ✓ tibble  3.0.4     ✓ dplyr   1.0.2
-## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
-## ✓ readr   1.4.0     ✓ forcats 0.5.0</code></pre>
-<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="linear-models.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;stargazer&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;stargazer&quot;</span>)</span></code></pre></div>
-<pre><code>## Loading required package: stargazer</code></pre>
-<pre><code>## 
-## Please cite as:</code></pre>
-<pre><code>##  Hlavac, Marek (2018). stargazer: Well-Formatted Regression and Summary Statistics Tables.</code></pre>
-<pre><code>##  R package version 5.2.2. https://CRAN.R-project.org/package=stargazer</code></pre>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="linear-models.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;devtools&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span></code></pre></div>
-<pre><code>## Loading required package: devtools</code></pre>
-<pre><code>## Loading required package: usethis</code></pre>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="linear-models.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;report&quot;</span>)) devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;easystats/report&quot;</span>)</span></code></pre></div>
-<pre><code>## Loading required package: report</code></pre>
-<pre><code>## report is in alpha - help us improve by reporting bugs on github.com/easystats/report/issues</code></pre>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="linear-models.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># Library for data analysis</span></span>
-<span id="cb52-2"><a href="linear-models.html#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;report&quot;</span>) <span class="co"># Library for producing nice verbose reports of linear models</span></span>
-<span id="cb52-3"><a href="linear-models.html#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;stargazer&quot;</span>) <span class="co"># Library for producing pretty tables of estimates from linear models</span></span></code></pre></div>
-<div id="the-data" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> The data</h2>
-<p>We’ll use a dataset published by Allison and Cicchetti (1976). In this study, the authors studied the relationship between sleep and various ecological and morphological variables across a set of mammalian species:
-<a href="https://science.sciencemag.org/content/194/4266/732" class="uri">https://science.sciencemag.org/content/194/4266/732</a></p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="recostats-linear-models.html#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;tidyverse&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
+<span id="cb148-2"><a href="recostats-linear-models.html#cb148-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;stargazer&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;stargazer&quot;</span>)</span>
+<span id="cb148-3"><a href="recostats-linear-models.html#cb148-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;devtools&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
+<span id="cb148-4"><a href="recostats-linear-models.html#cb148-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;report&quot;</span>)) devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;easystats/report&quot;</span>)</span>
+<span id="cb148-5"><a href="recostats-linear-models.html#cb148-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb148-6"><a href="recostats-linear-models.html#cb148-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># Library for data analysis</span></span>
+<span id="cb148-7"><a href="recostats-linear-models.html#cb148-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;report&quot;</span>) <span class="co"># Library for producing nice verbose reports of linear models</span></span>
+<span id="cb148-8"><a href="recostats-linear-models.html#cb148-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;stargazer&quot;</span>) <span class="co"># Library for producing pretty tables of estimates from linear models</span></span></code></pre></div>
+<div id="the-data-1" class="section level2" number="16.1">
+<h2><span class="header-section-number">16.1</span> The data</h2>
+<p>We’ll use a dataset published by Allison and Cicchetti (1976). In this study, the authors studied the relationship between sleep and various ecological and morphological variables across a set of mammalian species: <a href="https://science.sciencemag.org/content/194/4266/732" class="uri">https://science.sciencemag.org/content/194/4266/732</a></p>
 <p>Let’s start by loading the data into a table:</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="linear-models.html#cb53-1" aria-hidden="true" tabindex="-1"></a>allisontab <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Data_allison.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="recostats-linear-models.html#cb149-1" aria-hidden="true" tabindex="-1"></a>allisontab <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Data_allison.csv&quot;</span>)</span></code></pre></div>
 <p>This dataset contains several variables related to various body measurements and measures of sleep in different species. Note that some of these are continuous, while others are discrete and ordinal.</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="linear-models.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(allisontab)</span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="recostats-linear-models.html#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(allisontab)</span></code></pre></div>
 <pre><code>##    Species              BodyWt            BrainWt         NonDreaming    
 ##  Length:62          Min.   :   0.005   Min.   :   0.14   Min.   : 2.100  
 ##  Class :character   1st Qu.:   0.600   1st Qu.:   4.25   1st Qu.: 6.250  
@@ -277,32 +259,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  Max.   :5.000   Max.   :5.000   Max.   :5.000  
 ## </code></pre>
 </div>
-<div id="running-and-interpreting-a-simple-linear-regression" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Running and interpreting a simple linear regression</h2>
+<div id="running-and-interpreting-a-simple-linear-regression-1" class="section level2" number="16.2">
+<h2><span class="header-section-number">16.2</span> Running and interpreting a simple linear regression</h2>
 <p>We’ll begin by focusing on the relationship between two of the continuous variables: body size (in kg) and total amount of sleep (in hours). Let’s plot these to see what they look like:</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="linear-models.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(allisontab) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>BodyWt,<span class="at">y=</span>TotalSleep))</span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="recostats-linear-models.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(allisontab) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>BodyWt,<span class="at">y=</span>TotalSleep))</span></code></pre></div>
 <pre><code>## Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-72-1.png" width="672" /></p>
 <p>Hmmm this looks weird. We have many measurements of body weight around 0 (small values) and a few very large values of thousands of kilograms. This is not surprising: given that this dataset spans several different species, the measurements spans several orders of magnitude (from elephants to molerats). To account for this, variables involving body measurements (like weight or length) are traditionally converted into a log-scale when fitted into a linear model. Let’s see what happens when we log-scale the body weight variable:</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="linear-models.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(allisontab) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(BodyWt),<span class="at">y=</span>TotalSleep))</span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="recostats-linear-models.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(allisontab) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(BodyWt),<span class="at">y=</span>TotalSleep))</span></code></pre></div>
 <pre><code>## Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-73-1.png" width="672" /></p>
 <p>A pattern appears to emerge now. There seems to be a negative correlation between the log of body weight and the amount of sleep a species has. Indeed, we can measure this correlation using the <code>cor()</code> function:</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="linear-models.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">log</span>(allisontab<span class="sc">$</span>BodyWt), allisontab<span class="sc">$</span>TotalSleep, <span class="at">use=</span><span class="st">&quot;complete.obs&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="recostats-linear-models.html#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">log</span>(allisontab<span class="sc">$</span>BodyWt), allisontab<span class="sc">$</span>TotalSleep, <span class="at">use=</span><span class="st">&quot;complete.obs&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] -0.5328345</code></pre>
 <p>Let’s build a simple linear model to explain total sleep, as a function of body weight. In R, the standard way to fit a linear model is using the function <code>lm()</code>. We do so by following the following formula:</p>
 <p><code>fit &lt;- lm(formula, data)</code></p>
 <p>The formula within an <code>lm()</code> function is typically written as</p>
-<p><span class="math display">\[\bf{y} \sim \bf{x_1} + \bf{x_2} + ... + \bf{x_k}\]</span>
-Where <span class="math inline">\(y\)</span> is the response variable and <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, etc. are the predictor variables. This formula is a shorthand way that R uses for writing the linear regression formula:</p>
-<p><span class="math display">\[\bf{Y} = \beta_0 + \beta_1 \bf{x_1} + \beta_2 \bf{x_2} + ... + \beta_k \bf{x_k} + \bf{\epsilon}\]</span>
-In other words, R implicitly knows that each predictor variable will have an associated <span class="math inline">\(\beta\)</span> coefficient that we’re trying to estimate. Note that here <span class="math inline">\(\bf{y}\)</span>, <span class="math inline">\(\bf{x_1}\)</span>, <span class="math inline">\(\bf{x_2}\)</span>, <span class="math inline">\(\bf{\epsilon}\)</span>, etc. represent lists (vectors) of variables. We don’t need to specify additional terms for the <span class="math inline">\(\beta_0\)</span> (intercept) and <span class="math inline">\(\bf{\epsilon}\)</span> (error) terms. The <code>lm()</code> function automatically accounts for the fact that a regression should have an intercept, and that there will necessarily exist errors (residuals) between our fit and the the observed value of <span class="math inline">\(\bf{Y}\)</span>.</p>
+<p><span class="math display">\[\bf{y} \sim \bf{x_1} + \bf{x_2} + ... + \bf{x_k}\]</span> Where <span class="math inline">\(y\)</span> is the response variable and <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, etc. are the predictor variables. This formula is a shorthand way that R uses for writing the linear regression formula:</p>
+<p><span class="math display">\[\bf{Y} = \beta_0 + \beta_1 \bf{x_1} + \beta_2 \bf{x_2} + ... + \beta_k \bf{x_k} + \bf{\epsilon}\]</span> In other words, R implicitly knows that each predictor variable will have an associated <span class="math inline">\(\beta\)</span> coefficient that we’re trying to estimate. Note that here <span class="math inline">\(\bf{y}\)</span>, <span class="math inline">\(\bf{x_1}\)</span>, <span class="math inline">\(\bf{x_2}\)</span>, <span class="math inline">\(\bf{\epsilon}\)</span>, etc. represent lists (vectors) of variables. We don’t need to specify additional terms for the <span class="math inline">\(\beta_0\)</span> (intercept) and <span class="math inline">\(\bf{\epsilon}\)</span> (error) terms. The <code>lm()</code> function automatically accounts for the fact that a regression should have an intercept, and that there will necessarily exist errors (residuals) between our fit and the the observed value of <span class="math inline">\(\bf{Y}\)</span>.</p>
 <p>We can also write this exact same equation by focusing on a single (example) variable, say <span class="math inline">\(y_i\)</span>:</p>
-<p><span class="math display">\[y_i = \beta_0 + \beta_1 x_{1,i} + \beta_2 x_{2,i} + ... + \beta_k x_{k,i} + \epsilon_i\]</span>
-In general, when we talk about vectors of variables, we’ll use boldface, unlike when referring to a single variable.</p>
+<p><span class="math display">\[y_i = \beta_0 + \beta_1 x_{1,i} + \beta_2 x_{2,i} + ... + \beta_k x_{k,i} + \epsilon_i\]</span> In general, when we talk about vectors of variables, we’ll use boldface, unlike when referring to a single variable.</p>
 <p>In our case, we’ll attempt to fit total sleep as a function of the log of body weight, plus some noise:</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="linear-models.html#cb62-1" aria-hidden="true" tabindex="-1"></a>myfirstmodel <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="fu">log</span>(BodyWt), <span class="at">data=</span>allisontab) </span>
-<span id="cb62-2"><a href="linear-models.html#cb62-2" aria-hidden="true" tabindex="-1"></a>myfirstmodel</span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="recostats-linear-models.html#cb158-1" aria-hidden="true" tabindex="-1"></a>myfirstmodel <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="fu">log</span>(BodyWt), <span class="at">data=</span>allisontab) </span>
+<span id="cb158-2"><a href="recostats-linear-models.html#cb158-2" aria-hidden="true" tabindex="-1"></a>myfirstmodel</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = TotalSleep ~ log(BodyWt), data = allisontab)
@@ -311,10 +290,9 @@ In general, when we talk about vectors of variables, we’ll use boldface, unlik
 ## (Intercept)  log(BodyWt)  
 ##     11.4377      -0.7931</code></pre>
 <p>This way, we are fitting the following model:</p>
-<p><span class="math display">\[\bf{TotalSleep} = \beta_0 + \beta_1 \bf{log(BodyWt)} + \bf{\epsilon}\]</span>
-Remember that the <span class="math inline">\(\beta_0\)</span> coefficient is implicitly assumed by the <code>lm()</code> function. We can be more explicit and incorporate it into our equation, by simply adding a value of 1 (a constant). This will result in exactly the same output as before:</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="linear-models.html#cb64-1" aria-hidden="true" tabindex="-1"></a>myfirstmodel <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">log</span>(BodyWt), <span class="at">data=</span>allisontab)  </span>
-<span id="cb64-2"><a href="linear-models.html#cb64-2" aria-hidden="true" tabindex="-1"></a>myfirstmodel</span></code></pre></div>
+<p><span class="math display">\[\bf{TotalSleep} = \beta_0 + \beta_1 \bf{log(BodyWt)} + \bf{\epsilon}\]</span> Remember that the <span class="math inline">\(\beta_0\)</span> coefficient is implicitly assumed by the <code>lm()</code> function. We can be more explicit and incorporate it into our equation, by simply adding a value of 1 (a constant). This will result in exactly the same output as before:</p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="recostats-linear-models.html#cb160-1" aria-hidden="true" tabindex="-1"></a>myfirstmodel <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">log</span>(BodyWt), <span class="at">data=</span>allisontab)  </span>
+<span id="cb160-2"><a href="recostats-linear-models.html#cb160-2" aria-hidden="true" tabindex="-1"></a>myfirstmodel</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = TotalSleep ~ 1 + log(BodyWt), data = allisontab)
@@ -323,7 +301,7 @@ Remember that the <span class="math inline">\(\beta_0\)</span> coefficient is im
 ## (Intercept)  log(BodyWt)  
 ##     11.4377      -0.7931</code></pre>
 <p>We can obtain information about our model’s fit using the function <code>summary()</code>:</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="linear-models.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(myfirstmodel)</span></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="recostats-linear-models.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(myfirstmodel)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = TotalSleep ~ 1 + log(BodyWt), data = allisontab)
@@ -348,7 +326,7 @@ Remember that the <span class="math inline">\(\beta_0\)</span> coefficient is im
 <p>Finally, the last few lines are overall measures of the fit of the model. ‘Multiple R-squared’ is the fraction of the variance in <span class="math inline">\(\bf{TotalSleep}\)</span> explained by the fitted model. Generally, we want this number to be high, but it is possible to have very complex models with very high R-squared but lots of parameters, and therefore we run the risk of “over-fitting” our data. ‘Adjusted R-squared’ is a modified version of R-squared that attempts to penalize very complex models. The ‘residual standard error’ is the sum of the squares of the residuals (errors) over all observed data points, scaled by the degrees of freedom of the linear model, which is equal to n – k – 1 where n = total observations and k = total model parameters. Finally, the F-statistic is a test for whether <em>any</em> of the explanatory variables included in the model have a relationship to the outcome. In this case, we only have a single explanatory variable (<span class="math inline">\(\bf{log(BodyWt)}\)</span>), and so the P-value of this test is simply equal to the P-value of the t-test for the slope of <span class="math inline">\(\bf{log(BodyWt)}\)</span>.</p>
 <p><strong>Exercise</strong>: the function <code>attributes()</code> allows us to unpack all the components of the object outputted by the function <code>lm()</code> (and many other objects in R). Try inputting your model output into this function. We can observe that one of the attributes of the object is called <code>coefficients</code>. If we type <code>ourfirstmodel$coefficients</code>, we obtain a vector with the value of our two fitted coefficients (<span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>). Using the values from this vector, try plotting the line of best fit on top of the data. Hint: use the <code>geom_abline()</code> function from the <code>ggplot2</code> library.</p>
 <p>We can use the function <code>report()</code> from the library <code>easystats</code> (<a href="https://github.com/easystats/report" class="uri">https://github.com/easystats/report</a>) to get a more verbose report than the <code>summary()</code> function provides.</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="linear-models.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(myfirstmodel)</span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="recostats-linear-models.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(myfirstmodel)</span></code></pre></div>
 <pre><code>## Formula contains log- or sqrt-terms. See help(&quot;standardize&quot;) for how such terms are standardized.
 ## Formula contains log- or sqrt-terms. See help(&quot;standardize&quot;) for how such terms are standardized.</code></pre>
 <pre><code>## We fitted a linear model (estimated using OLS) to predict TotalSleep with BodyWt (formula: TotalSleep ~ 1 + log(BodyWt)). The model explains a significant and substantial proportion of variance (R2 = 0.28, F(1, 56) = 22.20, p &lt; .001, adj. R2 = 0.27). The model&#39;s intercept, corresponding to BodyWt = 0, is at 11.44 (95% CI [10.33, 12.54], t(56) = 20.76, p &lt; .001). Within this model:
@@ -358,7 +336,7 @@ Remember that the <span class="math inline">\(\beta_0\)</span> coefficient is im
 ## Standardized parameters were obtained by fitting the model on a standardized version of the dataset.</code></pre>
 <p>Note that this function “standardizes” the input variables before providing a summary of the output, which makes the estimates’ value to be slightly different than those stored in the output of <code>lm()</code>. This makes interpretation of the coefficients easier, as they are now expressed in terms of standard deviations from the mean.</p>
 <p>Another way to summarize our output is via a summary table in , which can be easily constructed using the function <code>stargazer()</code> from the library <code>stargazer</code> (<a href="https://cran.r-project.org/web/packages/stargazer/index.html" class="uri">https://cran.r-project.org/web/packages/stargazer/index.html</a>).</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="linear-models.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(myfirstmodel, <span class="at">type=</span><span class="st">&quot;text&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="recostats-linear-models.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(myfirstmodel, <span class="at">type=</span><span class="st">&quot;text&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ## ===============================================
 ##                         Dependent variable:    
@@ -383,202 +361,96 @@ Remember that the <span class="math inline">\(\beta_0\)</span> coefficient is im
 <p><strong>Exercise</strong>: try fitting a linear model for <span class="math inline">\(\bf{TotalSleep}\)</span> as a function of brain weight (<span class="math inline">\(\bf{BrainWt}\)</span>). Keep in mind that this is a size measurement that might span multiple orders of magnitude, just like body weight. What are the estimated slope and intercept coefficients? Which coefficients are significantly different from zero? What is the proportion of explained variance? How does this compare to our previous model including <span class="math inline">\(\bf{BodyWt}\)</span>?</p>
 <p><strong>Exercise</strong>: Plot the linear regression line of the above exercise on top of your data.</p>
 </div>
-<div id="a-multivariate-linear-regression" class="section level2" number="6.3">
-<h2><span class="header-section-number">6.3</span> A multivariate linear regression</h2>
-<p>Now we can start making our model a bit more complex. Let’s say we want to incorporate another variable - life span (in years) - into the model predicting sleep:</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="linear-models.html#cb73-1" aria-hidden="true" tabindex="-1"></a>twopredmodelA <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">log</span>(BodyWt) <span class="sc">+</span> LifeSpan, <span class="at">data=</span>allisontab)</span>
-<span id="cb73-2"><a href="linear-models.html#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(twopredmodelA)</span></code></pre></div>
+<div id="hypothesis-testing-and-permutation-testing" class="section level2" number="16.3">
+<h2><span class="header-section-number">16.3</span> Hypothesis testing and permutation testing</h2>
+<p>Let’s evaluate again the hypothesis that there is no relationship between TotalSleep and log(BodyWt). Recall that one way to do it would be by using a linear model, and testing whether the value of the fitted slope is significantly different from zero, using a t-test:</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="recostats-linear-models.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="fu">log</span>(BodyWt), <span class="at">data=</span>allisontab))</span></code></pre></div>
 <pre><code>## 
 ## Call:
-## lm(formula = TotalSleep ~ 1 + log(BodyWt) + LifeSpan, data = allisontab)
+## lm(formula = TotalSleep ~ log(BodyWt), data = allisontab)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -6.9130 -3.1805 -0.1834  2.0354  9.2555 
+## -6.6990 -2.6264 -0.2441  2.1700  9.9095 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 11.88156    0.81936  14.501  &lt; 2e-16 ***
-## log(BodyWt) -0.69097    0.22420  -3.082  0.00331 ** 
-## LifeSpan    -0.02972    0.03766  -0.789  0.43375    
+## (Intercept)  11.4377     0.5510  20.759  &lt; 2e-16 ***
+## log(BodyWt)  -0.7931     0.1683  -4.712 1.66e-05 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 4.015 on 51 degrees of freedom
-##   (8 observations deleted due to missingness)
-## Multiple R-squared:  0.2989, Adjusted R-squared:  0.2714 
-## F-statistic: 10.87 on 2 and 51 DF,  p-value: 0.000117</code></pre>
-<p>In this model, we are now fitting <span class="math inline">\(\bf{TotalSleep}\)</span> as a linear function of two variables <span class="math inline">\(\bf{log(BodyWt)}\)</span> and <span class="math inline">\(\bf{LifeSpan}\)</span>. The fitted coefficient for the <span class="math inline">\(\bf{LifeSpan}\)</span> variable is not significantly different from zero. The proportion of explained variance or the residual error have not changed much, relative to our earlier simpler (1-parameter) model. It seems like this new variable is not very useful for modeling <span class="math inline">\(\bf{TotalSleep}\)</span>.</p>
-<p>In their paper, Allison et al. found that the log of the gestation time in years was a very good predictor of the amount of sleep in a species. Let’s what happens when we add this variable into our model instead:</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="linear-models.html#cb75-1" aria-hidden="true" tabindex="-1"></a>twopredmodelB <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">log</span>(BodyWt) <span class="sc">+</span> <span class="fu">log</span>(Gestation), <span class="at">data=</span>allisontab)</span>
-<span id="cb75-2"><a href="linear-models.html#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(twopredmodelB)</span></code></pre></div>
+## Residual standard error: 3.933 on 56 degrees of freedom
+##   (4 observations deleted due to missingness)
+## Multiple R-squared:  0.2839, Adjusted R-squared:  0.2711 
+## F-statistic:  22.2 on 1 and 56 DF,  p-value: 1.664e-05</code></pre>
+<p>Take a look at the P-values for the intercept and the slope. If you look at the help page <code>?summary.lm</code>, you can see that the P-values from these values come from a two-sided t-test. t-tests are usually deployed to compare the means of two populations, or to assess whether the mean of a population has a value specified by a hypothesis. In the case of the slope, for example, we’re assessing whether our parameter estimate for the slope has a value specified by the null hypothesis, which in our case is zero. In other words, we’re testing whether the value of the slope is consistent with there being no relationship between the two variables (such that if we had an infinite number of data points, their estimated slope would be zero)</p>
+<p>The above t-test makes assumptions on our data that sometimes may not be warranted. Most importantly, the t-test assumes we have a large number of samples, which might not always be the case. We can perform a more robust test that makes less a priori assumptions on our data - a permutation test. To do so, we need to be careful to permute the appropriate variables relevant to the relationship we are trying to test. In this case, we only have two variables ( TotalSleep and log(BodyWt) ), and we are trying to test whether there is a significant relationship between them. If we randomly shuffle one variable with respect to the other, we should obtain a randomized sample of our data. We can use the following function, which takes in a tibble and a variable of interest, and returns a new tibble in which that particular variable’s values are randomly shuffled.</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="recostats-linear-models.html#cb171-1" aria-hidden="true" tabindex="-1"></a>permute <span class="ot">&lt;-</span> <span class="cf">function</span>(tab,vartoshuffle){</span>
+<span id="cb171-2"><a href="recostats-linear-models.html#cb171-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract column we wish to shuffle as a vector</span></span>
+<span id="cb171-3"><a href="recostats-linear-models.html#cb171-3" aria-hidden="true" tabindex="-1"></a>  toshuffle <span class="ot">&lt;-</span> <span class="fu">unlist</span>(tab[,vartoshuffle],<span class="at">use.names=</span><span class="cn">FALSE</span>)</span>
+<span id="cb171-4"><a href="recostats-linear-models.html#cb171-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The function sample() serves to randomize the order of elements in a vector</span></span>
+<span id="cb171-5"><a href="recostats-linear-models.html#cb171-5" aria-hidden="true" tabindex="-1"></a>  shuffled <span class="ot">&lt;-</span> <span class="fu">sample</span>(toshuffle)</span>
+<span id="cb171-6"><a href="recostats-linear-models.html#cb171-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace vector in new table (use !! to refer to a dynamic variable name)</span></span>
+<span id="cb171-7"><a href="recostats-linear-models.html#cb171-7" aria-hidden="true" tabindex="-1"></a>  newtab <span class="ot">&lt;-</span> <span class="fu">mutate</span>(tab, <span class="sc">!!</span><span class="at">vartoshuffle :=</span> shuffled )</span>
+<span id="cb171-8"><a href="recostats-linear-models.html#cb171-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(newtab)</span>
+<span id="cb171-9"><a href="recostats-linear-models.html#cb171-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Now we can obtain a permuted version of our original data, and compute the slope estimate on this dataset instead:</p>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="recostats-linear-models.html#cb172-1" aria-hidden="true" tabindex="-1"></a>permuted <span class="ot">&lt;-</span> <span class="fu">permute</span>(allisontab, <span class="st">&quot;TotalSleep&quot;</span>)</span>
+<span id="cb172-2"><a href="recostats-linear-models.html#cb172-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(permuted<span class="sc">$</span>TotalSleep,<span class="fu">log</span>(permuted<span class="sc">$</span>BodyWt))</span></code></pre></div>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="recostats-linear-models.html#cb173-1" aria-hidden="true" tabindex="-1"></a>permest <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="fu">log</span>(BodyWt), <span class="at">data=</span>permuted)<span class="sc">$</span>coeff[<span class="dv">2</span>]</span>
+<span id="cb173-2"><a href="recostats-linear-models.html#cb173-2" aria-hidden="true" tabindex="-1"></a>permest</span></code></pre></div>
+<pre><code>## log(BodyWt) 
+##  -0.7931139</code></pre>
+<p><strong>Exercise</strong>: try estimating the same parameter from a series of 100 permuted versions of our original data, and collecting each of the permuted parameters into a vector called “permvec.”</p>
+<p>We now have a distribution of the parameter estimate under the assumption that there is no relationship between these two variables:</p>
+<p><strong>Exercise</strong>: obtain an empirical one-tailed P-value from this distribution by counting how many of the permuted samples are as extreme or more extreme (in the negative or positive direction, than our original estimate, and dividing by the total number of permuted samples we have. Note: you should add a 1 to both the denominator and the numerator of this ratio, in case there are no permuted samples that are as large as the original estimate, so as not to get an infinite number.</p>
+<p>The R package <code>coin</code> provides a handy way to apply permutation tests to a wide variety of problems.</p>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="recostats-linear-models.html#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;coin&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;coin&quot;</span>)</span></code></pre></div>
+<pre><code>## Loading required package: coin</code></pre>
+<pre><code>## Loading required package: survival</code></pre>
 <pre><code>## 
-## Call:
-## lm(formula = TotalSleep ~ 1 + log(BodyWt) + log(Gestation), data = allisontab)
+## Attaching package: &#39;survival&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:boot&#39;:
 ## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -6.6216 -2.6310 -0.0214  1.9363  7.7286 
+##     aml</code></pre>
+<pre><code>## 
+## Attaching package: &#39;coin&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:infer&#39;:
 ## 
-## Coefficients:
-##                Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)     20.4156     2.8242   7.229 2.37e-09 ***
-## log(BodyWt)     -0.3592     0.2246  -1.599  0.11591    
-## log(Gestation)  -2.1502     0.6745  -3.188  0.00245 ** 
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+##     chisq_test</code></pre>
+<pre><code>## The following object is masked from &#39;package:scales&#39;:
 ## 
-## Residual standard error: 3.44 on 51 degrees of freedom
-##   (8 observations deleted due to missingness)
-## Multiple R-squared:  0.4672, Adjusted R-squared:  0.4463 
-## F-statistic: 22.36 on 2 and 51 DF,  p-value: 1.067e-07</code></pre>
-<p>We can see that in a model including both the log of body weight and the log of gestation time, the body weight’s regression coefficient is no longer significantly different from zero, but the gestation time’s coefficient is. The R-squared and adjusted R-squared values are now much larger than what we’ve seen before (around 45%!) and the residula standard error is also smaller than before (3.44). It seems like in a model containing both variables, we no longer need body weight to explain sleep duration, we’ve found a better explanatory variable!</p>
-<p><strong>Exercise</strong>: what happens if we use all three variables (<span class="math inline">\(\bf{LifeSpan}\)</span>, <span class="math inline">\(\bf{log(BodyWt)}\)</span> and <span class="math inline">\(\bf{log(Gestation)}\)</span>) as explanatory variables? Do we get a much better model fit than we using only two? What if we use <span class="math inline">\(\bf{log(Gestation)}\)</span> as the only explanatory variable?</p>
-<p>Keep in mind that we generally want a good fit with as simple a model as possible (Occam’s Razor). There will always generally be a trade-off between how much variance the model can explain and how complex the model is (how many parameters it has). How can we say whether a slight increase in explained variance justifies the addition of one or more explanatory variables? In later lectures, we’ll look at ways of comparing models while accounting for these two competing interests.</p>
-</div>
-<div id="simulating-data-from-a-linear-model" class="section level2" number="6.4">
-<h2><span class="header-section-number">6.4</span> Simulating data from a linear model</h2>
-<p>It is often useful to simulate data from a model to understand how its parameters relate to features of the data, and to see what happens when we change those parameters. We will now create a function that can simulate data from a simple 1-parameter linear model. We will then feed this function different values of the parameters, and see what the data simulated under a given model looks like.</p>
-<p>Let’s start by first creating the simulation function. We’ll simulate data from a linear model. The model simulation function needs to be told:
-1) The number (<span class="math inline">\(n\)</span>) of data points we will simulate
-1) How the explanatory variables are distributed: we’ll use a normal distribution to specify this.
-2) What the intercept (<span class="math inline">\(beta_0\)</span>) and slope (<span class="math inline">\(beta_1\)</span>) for the linear relationship between the explanatory and response variables are
-3) How departures (errors) from linearity for the response variables will be modeled: we’ll use another normal distribution for that as well, and assume errors are heteroscedastic for now.</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="linear-models.html#cb77-1" aria-hidden="true" tabindex="-1"></a>linearmodsim <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n=</span><span class="dv">2</span>, <span class="at">beta_0=</span><span class="dv">0</span>, <span class="at">beta_1=</span><span class="dv">1</span>, <span class="at">sigma.res=</span><span class="dv">1</span>, <span class="at">mu.explan=</span><span class="dv">5</span>, <span class="at">sigma.explan=</span><span class="dv">1</span>, <span class="at">rerror=</span>rnorm, <span class="at">r_explan =</span> rnorm, <span class="at">hetero =</span> <span class="dv">0</span> ){</span>
-<span id="cb77-2"><a href="linear-models.html#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulate explanatory variables</span></span>
-<span id="cb77-3"><a href="linear-models.html#cb77-3" aria-hidden="true" tabindex="-1"></a>  explan <span class="ot">&lt;-</span> <span class="fu">r_explan</span>(n,mu.explan,sigma.explan)</span>
-<span id="cb77-4"><a href="linear-models.html#cb77-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sort the simulated explanatory values from smallest to largest</span></span>
-<span id="cb77-5"><a href="linear-models.html#cb77-5" aria-hidden="true" tabindex="-1"></a>  explan <span class="ot">&lt;-</span> <span class="fu">sort</span>(explan)</span>
-<span id="cb77-6"><a href="linear-models.html#cb77-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Standardize the response variables so that they are  mean-centered and scaled by their standard deviation</span></span>
-<span id="cb77-7"><a href="linear-models.html#cb77-7" aria-hidden="true" tabindex="-1"></a>  explan.scaled <span class="ot">&lt;-</span> <span class="fu">scale</span>(explan)</span>
-<span id="cb77-8"><a href="linear-models.html#cb77-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># OPTIONAL: If errors are not heteroscedastic (hetero does not equal 0), then their standard deviation will not be constant, and will depend on the explanatory variables </span></span>
-<span id="cb77-9"><a href="linear-models.html#cb77-9" aria-hidden="true" tabindex="-1"></a>  sdev.err <span class="ot">&lt;-</span> <span class="fu">sapply</span>(sigma.res <span class="sc">+</span> explan.scaled<span class="sc">*</span>hetero,max,<span class="dv">0</span>)</span>
-<span id="cb77-10"><a href="linear-models.html#cb77-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulate the error values using the above-specified standard deviation</span></span>
-<span id="cb77-11"><a href="linear-models.html#cb77-11" aria-hidden="true" tabindex="-1"></a>  error <span class="ot">&lt;-</span> <span class="fu">rerror</span>(n,<span class="dv">0</span>,sdev.err)</span>
-<span id="cb77-12"><a href="linear-models.html#cb77-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulate response variables via the linear model</span></span>
-<span id="cb77-13"><a href="linear-models.html#cb77-13" aria-hidden="true" tabindex="-1"></a>  response <span class="ot">&lt;-</span> beta_0 <span class="sc">+</span> beta_1 <span class="sc">*</span> explan <span class="sc">+</span> error</span>
-<span id="cb77-14"><a href="linear-models.html#cb77-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Output a table containing the explanatory values and their corresponding response values</span></span>
-<span id="cb77-15"><a href="linear-models.html#cb77-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cbind</span>(<span class="fu">data.frame</span>(explan,response))</span>
-<span id="cb77-16"><a href="linear-models.html#cb77-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p><strong>Exercise</strong>:</p>
-<ol style="list-style-type: lower-alpha">
-<li>Carefully read the code for the function above. Make sure you understand every step in the function.<br />
-</li>
-<li>Plot the output of a simulated linear model with 40 data points, an intercept of 1.5 and a slope of 3. Simulate from the same model one more time, and plot the output again.<br />
-</li>
-<li>Now, fit the data from your latest simulation using the <code>lm()</code> function. Does your fit match your simulations?<br />
-</li>
-<li>Try increasing the sample size (say, to 200 data points), and repeat the <code>lm()</code> fitting. How does this influence the accuracy of your fitted model? Try simulating and fitting multiple times to get an idea of how well you can estimate the parameters.<br />
-</li>
-<li>Try changing the standard deviation of the simulated errors (make it smaller or larger), and repeat the <code>lm()</code> fitting. How does this influence the accuracy of your fitted model?</li>
-</ol>
-<!-- 
-
-## Hypothesis testing
-
-## Interactions
-
-
-```r
-interactionmodel <- lm(TotalSleep ~ 1 + log(BodyWt) + log(Gestation) + log(BodyWt)*log(Gestation), data=allisontab) 
-summary(interactionmodel)
-```
-
-```
+##     pvalue</code></pre>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="recostats-linear-models.html#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;coin&quot;</span>) <span class="co"># Library with pre-written permutation tests</span></span></code></pre></div>
+<p>The <code>spearman_test()</code> function runs a permutation test of independence between two numeric variables, like the one in the <code>permute()</code> function we coded above. The advantage is that we don’t need to actually code the function, we can just run the pre-made function in the <code>coin</code> package directly, as long as we know what type of dependency we’re testing. In this case, we perform a test using 1000 permutations (the more permutations, the more exact the test):</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="recostats-linear-models.html#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spearman_test</span>(TotalSleep <span class="sc">~</span> <span class="fu">log</span>(BodyWt), <span class="at">data=</span>allisontab, <span class="at">distribution=</span><span class="fu">approximate</span>(<span class="at">nresample=</span><span class="dv">1000</span>)) </span></code></pre></div>
+<pre><code>## 
+##  Approximative Spearman Correlation Test
 ## 
-## Call:
-## lm(formula = TotalSleep ~ 1 + log(BodyWt) + log(Gestation) + 
-##     log(BodyWt) * log(Gestation), data = allisontab)
+## data:  TotalSleep by log(BodyWt)
+## Z = -3.8188, p-value &lt; 0.001
+## alternative hypothesis: true rho is not equal to 0</code></pre>
+<p><strong>Exercise</strong>: Perform a permutation test to assess whether there is a significant relationship between log(BrainWt) and TotalSleep. Compare this to a t-test testing the same relationship.</p>
+<p>Let’s perform a different type of permutation test. In this case, we’ll test whether the mean scores of two categories (for example, the math exam scores from two classrooms) are equal to each other.</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="recostats-linear-models.html#cb186-1" aria-hidden="true" tabindex="-1"></a>mathscore <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">114</span>, <span class="dv">90</span>, <span class="dv">110</span>, <span class="dv">116</span>, <span class="dv">114</span>, <span class="dv">128</span>, <span class="dv">110</span>, <span class="dv">124</span>, <span class="dv">130</span>)</span>
+<span id="cb186-2"><a href="recostats-linear-models.html#cb186-2" aria-hidden="true" tabindex="-1"></a>classroom <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;X&quot;</span>,<span class="dv">5</span>), <span class="fu">rep</span>(<span class="st">&quot;Y&quot;</span>,<span class="dv">5</span>)))</span>
+<span id="cb186-3"><a href="recostats-linear-models.html#cb186-3" aria-hidden="true" tabindex="-1"></a>scoretab <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(classroom, mathscore)</span></code></pre></div>
+<p>The standard way to test this is using a t-test, which assumes we have many observations from the two classrooms (do we?) and that these observations come from distributions that have the same variance:</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="recostats-linear-models.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(mathscore<span class="sc">~</span>classroom, <span class="at">data=</span>scoretab, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## 
+##  Two Sample t-test
 ## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -6.4123 -2.3591 -0.0327  1.7054  7.3174 
-## 
-## Coefficients:
-##                            Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)                 19.6560     2.8919   6.797 1.25e-08 ***
-## log(BodyWt)                  0.4218     0.7153   0.590  0.55809    
-## log(Gestation)              -1.9008     0.7065  -2.690  0.00968 ** 
-## log(BodyWt):log(Gestation)  -0.1670     0.1453  -1.150  0.25581    
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 3.429 on 50 degrees of freedom
-##   (8 observations deleted due to missingness)
-## Multiple R-squared:  0.4809, Adjusted R-squared:  0.4497 
-## F-statistic: 15.44 on 3 and 50 DF,  p-value: 3.085e-07
-```
-
-## ANOVA
--->
-<!-- 
-
-## Working with tidymodels
-
-Tidymodels version:
-
-library("tidymodels")
-
-
-```r
-if (!require("tidymodels")) install.packages("tidymodels")
-```
-
-```
-## Loading required package: tidymodels
-```
-
-```
-## ── Attaching packages ────────────────────────────────────── tidymodels 0.1.1 ──
-```
-
-```
-## ✓ broom     0.7.2      ✓ recipes   0.1.14
-## ✓ dials     0.0.9      ✓ rsample   0.0.8 
-## ✓ infer     0.5.3      ✓ tune      0.1.1 
-## ✓ modeldata 0.0.2      ✓ workflows 0.2.1 
-## ✓ parsnip   0.1.3      ✓ yardstick 0.0.7
-```
-
-```
-## ── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──
-## x recipes::check()  masks devtools::check()
-## x scales::discard() masks purrr::discard()
-## x dplyr::filter()   masks stats::filter()
-## x recipes::fixed()  masks stringr::fixed()
-## x dplyr::lag()      masks stats::lag()
-## x yardstick::spec() masks readr::spec()
-## x recipes::step()   masks stats::step()
-```
-
-```r
-library("tidymodels")
-```
-
-
-
-```r
-lm_fit <- 
-  linear_reg() %>% 
-  set_engine("lm") %>%
-  fit(TotalSleep ~ log(BodyWt) + LifeSpan, data=allisontab)
-lm_fit
-```
-
-```
-## parsnip model object
-## 
-## Fit time:  3ms 
-## 
-## Call:
-## stats::lm(formula = TotalSleep ~ log(BodyWt) + LifeSpan, data = data)
-## 
-## Coefficients:
-## (Intercept)  log(BodyWt)     LifeSpan  
-##    11.88156     -0.69097     -0.02972
-```
-
--->
+## data:  mathscore by classroom
+## t = -2.345, df = 8, p-value = 0.04705
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -38.081091  -0.318909
+## sample estimates:
+## mean in group X mean in group Y 
+##           102.0           121.2</code></pre>
+<p><strong>Exercise</strong>: look at the help menu for the <code>oneway_test</code> in the <code>coin</code> package and find a way to carry out the same type of statistical test as above, but using a permutation procedure. Apply it to the <code>scoretab</code> data defined above. Do you see any difference between the P-values from the t-test and the permutation-based test. Why?</p>
 
 </div>
 </div>
@@ -587,8 +459,8 @@ lm_fit
           </div>
         </div>
       </div>
-<a href="probability-part-3.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="properties-of-estimators-and-inference.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="references.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

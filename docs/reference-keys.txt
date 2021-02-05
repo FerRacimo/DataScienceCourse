@@ -38,3 +38,7 @@ pca-under-the-hood
 nmds
 exercise-3-interpreting-nmds-plots
 clustering
+recostats-linear-models
+the-data-1
+running-and-interpreting-a-simple-linear-regression-1
+hypothesis-testing-and-permutation-testing

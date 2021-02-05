@@ -116,10 +116,7 @@ This package also supports LaTeX and HTML/CSS format (see the `type` option in `
 
 **Exercise**: try fitting a linear model for $\bf{TotalSleep}$ as a function of brain weight ($\bf{BrainWt}$). Keep in mind that this is a size measurement that might span multiple orders of magnitude, just like body weight. What are the estimated slope and intercept coefficients? Which coefficients are significantly different from zero? What is the proportion of explained variance? How does this compare to our previous model including $\bf{BodyWt}$?
 
-<!-- 
-## Under the hood: the least squares equations
--->
-
+**Exercise**: Plot the linear regression line of the above exercise on top of your data.
 
 
 ## A multivariate linear regression

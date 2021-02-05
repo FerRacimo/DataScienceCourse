@@ -125,7 +125,7 @@ names(permvec) <- c()
 
 We now have a distribution of the parameter estimate under the assumption that there is no relationship between these two variables:
 
-**Exercise**: obtain an empirical one-tailed P-value from this distribution by counting how many of the permuted samples are as large as our original estimate, and dividing by the total number of permuted samples we have. Note: you should add a 1 to the denominator of this ratio, in case there are no permuted samples that are as large as the original estimate, so as not to get an infinite number.
+**Exercise**: obtain an empirical one-tailed P-value from this distribution by counting how many of the permuted samples are as large as our original estimate, and dividing by the total number of permuted samples we have. Note: you should add a 1 to both the denominator and the numerator of this ratio, in case there are no permuted samples that are as large as the original estimate, so as not to get an infinite number.
 
 ## Validation
 
