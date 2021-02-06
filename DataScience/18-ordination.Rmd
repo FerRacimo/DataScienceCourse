@@ -11,7 +11,6 @@ if (!require("vegan")) install.packages("vegan")
 if (!require("devtools")) install.packages("devtools")
 if (!require("ggplot2")) install.packages("ggplot2")
 if (!require("ggbiplot")){ library("devtools"); install_github("vqv/ggbiplot") }
-if (!require("palmerpenguins")){ library("devtools"); install_github("allisonhorst/palmerpenguins")}
 ```
 
 We will use a dataset on measurements of particular parts of the iris plant, across individuals from three different species.
@@ -20,9 +19,7 @@ We will use a dataset on measurements of particular parts of the iris plant, acr
 data(iris)
 ```
 
-### Exercise 1: Visualizing the data
-
-Take a look at the iris data matrix. How many samples does it have? How many variables? What happens when you run the function `plot()` on this matrix? Which variables seem to be strongly correlated? (you can use the function cor() to compute the strength of correlations). Speculate as to why some of these variables could be strongly correlated.
+**Exercise**: Take a look at the iris data matrix. How many samples does it have? How many variables? What happens when you run the function `plot()` on this matrix? Which variables seem to be strongly correlated? (you can use the function cor() to compute the strength of correlations). Speculate as to why some of these variables could be strongly correlated.
 
 ## Principal component analysis (PCA)
 
@@ -32,8 +29,7 @@ We'll perform a PCA of the data. The function prcomp() performs the PCA, and we 
 fit<-prcomp(iris[-5], scale=TRUE)
 ```
 
-If we run the summary function on fit, it indicates that four PCs where created: the number 
-of possible PCs always equals the number of original variables.
+If we run the summary function on fit, it indicates that four PCs where created: the number of possible PCs always equals the number of original variables.
 
 ```{r}
 summary(fit)
@@ -47,19 +43,13 @@ plot(fit,type="lines")
 
 The "Rotation" matrix (fit[2]) contains the "loadings" of each of the original variables on the newly created PCs. Take a look at this matrix. The larger the absolute value of a variable in each PC, the more that variable contributes to that PC.
 
-### Biplots
-
 We can use the function "biplot" to plot the first two PCs of our data. The plotted arrows provide a graphical rendition of the loadings of each of the original variables on the two PCs. 
 
 ```{r}
 biplot(fit)
 ```
 
-### Exercise 2: Interpreting biplots
-
-Across this reduced dimensional space, we can see that particular variables tend to co-vary quite strongly. Which ones? We can also see a separation into two groups on PC1. Which variables do you think would be most different between samples in one group and in the other?
-
-### PCA using ggplot
+**Exercise**: Across this reduced dimensional space, we can see that particular variables tend to co-vary quite strongly. Which ones? We can also see a separation into two groups on PC1. Which variables do you think would be most different between samples in one group and in the other?
 
 We can make prettier plots using ggplot2 and ggbiplot.
 
@@ -80,7 +70,7 @@ iris_pca <- ggbiplot(fit,obs.scale = 1,
 iris_pca
 ```
 
-### PCA under the hood
+## PCA under the hood
 
 Rather than just using a ready-made function to compute a PCA, let's take a longer route to understand exactly what's happening under the hood of the prcomp() function.
 
@@ -151,8 +141,6 @@ plot(ord,display="species",main="NMDS ordination of species",type="t")
 par(mfrow=c(1,1))
 ```
 
-### Exercise 3: interpreting NMDS plots
+**Exercise**: What do these plots tell you about the distribution of species across sites? Which species tend to co-occcur with each other? Which sites tend to have similar species compositions?
 
-What do these plots tell you about the distribution of species across sites? Which species tend to co-occcur with each other? Which sites tend to have similar species compositions?
-
-Try changing the number of dimensions or the distance metric used. You can take a look at the list of possible distances and their definitions using "?vegdist". Do the results change? Why?
+**Exercise**: Try changing the number of dimensions or the distance metric used. You can take a look at the list of possible distances and their definitions using "?vegdist". Do the results change? Why?

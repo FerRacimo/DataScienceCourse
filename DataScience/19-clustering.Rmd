@@ -1,1 +1,49 @@
-# Clustering
+# Distances and Clustering
+
+
+## Libraries and Data
+
+```{r}
+if (!require("cluster")) install.packages("cluster")
+if (!require("NbClust")) install.packages("NbClust")
+if (!require("flexclust")) install.packages("flexclust")
+if (!require("fMultivar")) install.packages("fMultivar")
+if (!require("rattle")) install.packages("rattle")
+if (!require("tidyverse")) install.packages("tidyverse")
+```
+
+```{r}
+data(iris)
+```
+
+## Distances
+
+```{r}
+d <- dist(iris[,1:4])
+d <- as.matrix(d)
+```
+
+## K-means clustering
+
+```{r}
+df <- scale(iris[,1:4])
+```
+
+We'll use the function `NbClust` which runs 26 different methods on our data for assessing the best number of clusters. We'll choose the number of clusters that is proposed by the largest number of methods
+
+```{r}
+numclust <- NbClust(df, min.nc=2, max.nc=15, distance="euclidean", method="kmeans")
+table(numclust$Best.n[1,])
+```
+
+It seems like 10 of the methods suggest that the best number of clusters should be 2. There is also considerable (but smaller) number of methods (6), that suggest it should be 3.
+
+
+```{r}
+barplot(table(numclust$Best.n[1,]),
+xlab="Number of Clusters", ylab="Number of Criteria", main="Number of Clusters Chosen by 26 Criteria")
+```
+
+```{r}
+fit.kmeans <- kmeans(df, 2, nstart=25)
+```

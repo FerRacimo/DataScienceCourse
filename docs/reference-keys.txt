@@ -46,3 +46,7 @@ hypothesis-testing
 interactions
 anova
 working-with-tidymodels
+distances-and-clustering
+libraries-and-data-1
+distances
+k-means-clustering

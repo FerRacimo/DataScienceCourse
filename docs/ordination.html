@@ -176,21 +176,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13" data-path="mixed-models.html"><a href="mixed-models.html"><i class="fa fa-check"></i><b>13</b> Mixed Models</a></li>
 <li class="chapter" data-level="14" data-path="ordination.html"><a href="ordination.html"><i class="fa fa-check"></i><b>14</b> Ordination</a>
 <ul>
-<li class="chapter" data-level="14.1" data-path="ordination.html"><a href="ordination.html#libraries-and-data"><i class="fa fa-check"></i><b>14.1</b> Libraries and Data</a>
-<ul>
-<li class="chapter" data-level="14.1.1" data-path="ordination.html"><a href="ordination.html#exercise-1-visualizing-the-data"><i class="fa fa-check"></i><b>14.1.1</b> Exercise 1: Visualizing the data</a></li>
-</ul></li>
-<li class="chapter" data-level="14.2" data-path="ordination.html"><a href="ordination.html#principal-component-analysis-pca"><i class="fa fa-check"></i><b>14.2</b> Principal component analysis (PCA)</a>
-<ul>
-<li class="chapter" data-level="14.2.1" data-path="ordination.html"><a href="ordination.html#biplots"><i class="fa fa-check"></i><b>14.2.1</b> Biplots</a></li>
-<li class="chapter" data-level="14.2.2" data-path="ordination.html"><a href="ordination.html#exercise-2-interpreting-biplots"><i class="fa fa-check"></i><b>14.2.2</b> Exercise 2: Interpreting biplots</a></li>
-<li class="chapter" data-level="14.2.3" data-path="ordination.html"><a href="ordination.html#pca-using-ggplot"><i class="fa fa-check"></i><b>14.2.3</b> PCA using ggplot</a></li>
-<li class="chapter" data-level="14.2.4" data-path="ordination.html"><a href="ordination.html#pca-under-the-hood"><i class="fa fa-check"></i><b>14.2.4</b> PCA under the hood</a></li>
-</ul></li>
-<li class="chapter" data-level="14.3" data-path="ordination.html"><a href="ordination.html#nmds"><i class="fa fa-check"></i><b>14.3</b> NMDS</a>
-<ul>
-<li class="chapter" data-level="14.3.1" data-path="ordination.html"><a href="ordination.html#exercise-3-interpreting-nmds-plots"><i class="fa fa-check"></i><b>14.3.1</b> Exercise 3: interpreting NMDS plots</a></li>
-</ul></li>
+<li class="chapter" data-level="14.1" data-path="ordination.html"><a href="ordination.html#libraries-and-data"><i class="fa fa-check"></i><b>14.1</b> Libraries and Data</a></li>
+<li class="chapter" data-level="14.2" data-path="ordination.html"><a href="ordination.html#principal-component-analysis-pca"><i class="fa fa-check"></i><b>14.2</b> Principal component analysis (PCA)</a></li>
+<li class="chapter" data-level="14.3" data-path="ordination.html"><a href="ordination.html#pca-under-the-hood"><i class="fa fa-check"></i><b>14.3</b> PCA under the hood</a></li>
+<li class="chapter" data-level="14.4" data-path="ordination.html"><a href="ordination.html#nmds"><i class="fa fa-check"></i><b>14.4</b> NMDS</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>15</b> Clustering</a></li>
 <li class="chapter" data-level="16" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html"><i class="fa fa-check"></i><b>16</b> REcoStats: Linear Models</a>
@@ -250,17 +239,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## Loading required package: palmerpenguins</code></pre>
 <p>We will use a dataset on measurements of particular parts of the iris plant, across individuals from three different species.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="ordination.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span></code></pre></div>
-<div id="exercise-1-visualizing-the-data" class="section level3" number="14.1.1">
-<h3><span class="header-section-number">14.1.1</span> Exercise 1: Visualizing the data</h3>
-<p>Take a look at the iris data matrix. How many samples does it have? How many variables? What happens when you run the function <code>plot()</code> on this matrix? Which variables seem to be strongly correlated? (you can use the function cor() to compute the strength of correlations). Speculate as to why some of these variables could be strongly correlated.</p>
-</div>
+<p><strong>Exercise</strong>: Take a look at the iris data matrix. How many samples does it have? How many variables? What happens when you run the function <code>plot()</code> on this matrix? Which variables seem to be strongly correlated? (you can use the function cor() to compute the strength of correlations). Speculate as to why some of these variables could be strongly correlated.</p>
 </div>
 <div id="principal-component-analysis-pca" class="section level2" number="14.2">
 <h2><span class="header-section-number">14.2</span> Principal component analysis (PCA)</h2>
 <p>We’ll perform a PCA of the data. The function prcomp() performs the PCA, and we can assign the result of this function to a new variable (let’s call it “fit”). We must first remove the last column to whatever we give as input to prcomp, as the species names are a non-linear (categorical) variable and we don’t have (for now) any natural measures of distance for species. The option scale=T standardizes the variables to the same relative scale, so that some variables do not become dominant just because of their large measurement unit.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="ordination.html#cb21-1" aria-hidden="true" tabindex="-1"></a>fit<span class="ot">&lt;-</span><span class="fu">prcomp</span>(iris[<span class="sc">-</span><span class="dv">5</span>], <span class="at">scale=</span><span class="cn">TRUE</span>)</span></code></pre></div>
-<p>If we run the summary function on fit, it indicates that four PCs where created: the number
-of possible PCs always equals the number of original variables.</p>
+<p>If we run the summary function on fit, it indicates that four PCs where created: the number of possible PCs always equals the number of original variables.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="ordination.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div>
 <pre><code>## Importance of components:
 ##                           PC1    PC2     PC3     PC4
@@ -271,18 +256,10 @@ of possible PCs always equals the number of original variables.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="ordination.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit,<span class="at">type=</span><span class="st">&quot;lines&quot;</span>)</span></code></pre></div>
 <p><img src="DataScience_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>The “Rotation” matrix (fit[2]) contains the “loadings” of each of the original variables on the newly created PCs. Take a look at this matrix. The larger the absolute value of a variable in each PC, the more that variable contributes to that PC.</p>
-<div id="biplots" class="section level3" number="14.2.1">
-<h3><span class="header-section-number">14.2.1</span> Biplots</h3>
 <p>We can use the function “biplot” to plot the first two PCs of our data. The plotted arrows provide a graphical rendition of the loadings of each of the original variables on the two PCs.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="ordination.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">biplot</span>(fit)</span></code></pre></div>
 <p><img src="DataScience_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-</div>
-<div id="exercise-2-interpreting-biplots" class="section level3" number="14.2.2">
-<h3><span class="header-section-number">14.2.2</span> Exercise 2: Interpreting biplots</h3>
-<p>Across this reduced dimensional space, we can see that particular variables tend to co-vary quite strongly. Which ones? We can also see a separation into two groups on PC1. Which variables do you think would be most different between samples in one group and in the other?</p>
-</div>
-<div id="pca-using-ggplot" class="section level3" number="14.2.3">
-<h3><span class="header-section-number">14.2.3</span> PCA using ggplot</h3>
+<p><strong>Exercise</strong>: Across this reduced dimensional space, we can see that particular variables tend to co-vary quite strongly. Which ones? We can also see a separation into two groups on PC1. Which variables do you think would be most different between samples in one group and in the other?</p>
 <p>We can make prettier plots using ggplot2 and ggbiplot.</p>
 <p>We first extract the variances of the principal components and then plot them:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="ordination.html#cb26-1" aria-hidden="true" tabindex="-1"></a>variances <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">variances=</span>fit<span class="sc">$</span>sdev<span class="sc">**</span><span class="dv">2</span>, <span class="at">pcomp=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(fit<span class="sc">$</span>sdev))</span>
@@ -296,8 +273,8 @@ of possible PCs always equals the number of original variables.</p>
 <span id="cb27-4"><a href="ordination.html#cb27-4" aria-hidden="true" tabindex="-1"></a>iris_pca</span></code></pre></div>
 <p><img src="DataScience_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>
-<div id="pca-under-the-hood" class="section level3" number="14.2.4">
-<h3><span class="header-section-number">14.2.4</span> PCA under the hood</h3>
+<div id="pca-under-the-hood" class="section level2" number="14.3">
+<h2><span class="header-section-number">14.3</span> PCA under the hood</h2>
 <p>Rather than just using a ready-made function to compute a PCA, let’s take a longer route to understand exactly what’s happening under the hood of the prcomp() function.</p>
 <p>First, let’s standardize each column of our data so that each column has mean 0 and variance 1</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="ordination.html#cb28-1" aria-hidden="true" tabindex="-1"></a>irisdat <span class="ot">&lt;-</span> iris[<span class="sc">-</span><span class="dv">5</span>]</span>
@@ -322,9 +299,8 @@ of possible PCs always equals the number of original variables.</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="ordination.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(fit<span class="sc">$</span>x <span class="sc">-</span> scoresLONG) </span></code></pre></div>
 <pre><code>## [1] -2.359224e-15  3.108624e-15</code></pre>
 </div>
-</div>
-<div id="nmds" class="section level2" number="14.3">
-<h2><span class="header-section-number">14.3</span> NMDS</h2>
+<div id="nmds" class="section level2" number="14.4">
+<h2><span class="header-section-number">14.4</span> NMDS</h2>
 <p>We’ll now perform non-metric multidimensional scaling. Let’s first take a look at the raw data we will use. This is a data matrix containing information about dune meadow vegetation. There are 30 species and 20 sites. Each cell corresponds to the number of specimens of a particular species that has been observed at a particular site (Jongman et al. 1987). As one can see, there are many sites where some species are completely absent (the cell value equals 0):</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="ordination.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(dune)</span>
 <span id="cb39-2"><a href="ordination.html#cb39-2" aria-hidden="true" tabindex="-1"></a>dune</span></code></pre></div>
@@ -418,40 +394,37 @@ of possible PCs always equals the number of original variables.</p>
 <pre><code>## Run 0 stress 0.1192678 
 ## Run 1 stress 0.1183186 
 ## ... New best solution
-## ... Procrustes: rmse 0.02026932  max resid 0.06494921 
-## Run 2 stress 0.1808914 
-## Run 3 stress 0.1192678 
-## Run 4 stress 0.1183186 
-## ... Procrustes: rmse 5.362476e-05  max resid 0.0001535876 
+## ... Procrustes: rmse 0.02026972  max resid 0.06495626 
+## Run 2 stress 0.1183186 
+## ... Procrustes: rmse 3.981609e-05  max resid 0.0001175092 
 ## ... Similar to previous best
-## Run 5 stress 0.1812939 
-## Run 6 stress 0.1183186 
-## ... Procrustes: rmse 1.706075e-05  max resid 4.868108e-05 
+## Run 3 stress 0.1183186 
+## ... New best solution
+## ... Procrustes: rmse 6.600842e-06  max resid 1.181305e-05 
 ## ... Similar to previous best
+## Run 4 stress 0.1889648 
+## Run 5 stress 0.1183186 
+## ... Procrustes: rmse 4.259186e-05  max resid 0.0001283695 
+## ... Similar to previous best
+## Run 6 stress 0.1192679 
 ## Run 7 stress 0.1192679 
-## Run 8 stress 0.1192679 
-## Run 9 stress 0.1183186 
-## ... New best solution
-## ... Procrustes: rmse 1.041259e-05  max resid 3.75159e-05 
+## Run 8 stress 0.1183186 
+## ... Procrustes: rmse 1.335139e-05  max resid 4.111237e-05 
 ## ... Similar to previous best
-## Run 10 stress 0.2518326 
-## Run 11 stress 0.1183186 
-## ... Procrustes: rmse 7.631663e-05  max resid 0.000266725 
+## Run 9 stress 0.119268 
+## Run 10 stress 0.1183186 
+## ... Procrustes: rmse 1.826012e-05  max resid 5.19427e-05 
 ## ... Similar to previous best
+## Run 11 stress 0.1192679 
 ## Run 12 stress 0.1192679 
-## Run 13 stress 0.1192681 
-## Run 14 stress 0.1183186 
-## ... New best solution
-## ... Procrustes: rmse 3.961245e-06  max resid 9.639641e-06 
-## ... Similar to previous best
-## Run 15 stress 0.1192679 
-## Run 16 stress 0.2869938 
-## Run 17 stress 0.119268 
-## Run 18 stress 0.1183186 
-## ... Procrustes: rmse 1.352564e-05  max resid 3.50664e-05 
-## ... Similar to previous best
-## Run 19 stress 0.1192679 
-## Run 20 stress 0.1808913 
+## Run 13 stress 0.1812944 
+## Run 14 stress 0.1192684 
+## Run 15 stress 0.1192678 
+## Run 16 stress 0.1192687 
+## Run 17 stress 0.2075713 
+## Run 18 stress 0.1192678 
+## Run 19 stress 0.1808917 
+## Run 20 stress 0.1886532 
 ## *** Solution reached</code></pre>
 <p>As you can see, the function goes through a series of steps until convergence is reached. Let’s plot the results:</p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="ordination.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
@@ -459,12 +432,9 @@ of possible PCs always equals the number of original variables.</p>
 <span id="cb43-3"><a href="ordination.html#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord,<span class="at">display=</span><span class="st">&quot;species&quot;</span>,<span class="at">main=</span><span class="st">&quot;NMDS ordination of species&quot;</span>,<span class="at">type=</span><span class="st">&quot;t&quot;</span>)</span></code></pre></div>
 <p><img src="DataScience_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="ordination.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
-<div id="exercise-3-interpreting-nmds-plots" class="section level3" number="14.3.1">
-<h3><span class="header-section-number">14.3.1</span> Exercise 3: interpreting NMDS plots</h3>
-<p>What do these plots tell you about the distribution of species across sites? Which species tend to co-occcur with each other? Which sites tend to have similar species compositions?</p>
-<p>Try changing the number of dimensions or the distance metric used. You can take a look at the list of possible distances and their definitions using “?vegdist.” Do the results change? Why?</p>
+<p><strong>Exercise</strong>: What do these plots tell you about the distribution of species across sites? Which species tend to co-occcur with each other? Which sites tend to have similar species compositions?</p>
+<p><strong>Exercise</strong>: Try changing the number of dimensions or the distance metric used. You can take a look at the list of possible distances and their definitions using “?vegdist.” Do the results change? Why?</p>
 
-</div>
 </div>
 </div>
             </section>
