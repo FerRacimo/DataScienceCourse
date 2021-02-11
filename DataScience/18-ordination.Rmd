@@ -107,7 +107,7 @@ scoresLONG <- irisstandard %*% loadingsLONG
 plot(scoresLONG[,1],scoresLONG[,2])
 ```
 
-You can compare the results from the first section (using the ready-made function prcomp) and this section (taking a longer road), to check that the results are equivalent: the minimum and maximum differences in values for the loadings, the scores and standard deviations of the PCs are infinitesimally small.
+You can compare the results from the first section (using the ready-made function prcomp) and this section (taking a longer road), to check that the results are equivalent: the minimum and maximum differences in values for the loadings, the scores and the standard deviations of the PCs are all infinitesimally small (effectively zero).
 
 ```{r}
 range(fit$sdev - sdLONG)

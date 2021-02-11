@@ -118,7 +118,7 @@
 
 \title{Data Analysis and Statistical Thinking: An R Workbook}
 \author{Fernando Racimo, \ldots{}}
-\date{2021-02-05}
+\date{2021-02-11}
 
 \begin{document}
 \maketitle
@@ -148,7 +148,7 @@ We can ``virtually'' toss a coin in our R console, using the rbinom() function:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0
+## [1] 1
 \end{verbatim}
 
 Try copying the above chunk to your R console and running it multiple times. Do you always get the same result?
@@ -162,7 +162,7 @@ This function has 3 required input parameters: n, size and prob. The first param
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 1 0 0 1 0 1 0 0 0 0 1 1 0 0 1 1 0 0 1 1
+##  [1] 1 1 1 1 0 1 0 0 0 0 1 1 0 0 0 0 0 0 0 1
 \end{verbatim}
 
 Here, we generate 20 toin cosses, and the zeroes and ones represent whether we got a heads or a tails in each trial. For now, we will ignore the second parameter (size) and fix it at 1, but we'll revisit it in a moment. The third parameter (prob) dictates how biased the coin is. If we set it to 0.9, we'll get the outcomes of a biased coin toss, in particular biased towards heads:
@@ -174,7 +174,7 @@ Here, we generate 20 toin cosses, and the zeroes and ones represent whether we g
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [1] 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 \end{verbatim}
 
 \textbf{Exercise}: What happens when you set prob to 0.1? Or 0.999? Why?
@@ -201,7 +201,7 @@ Let's create a new variable (n) that will determine how many trials we attempt, 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.7
+## [1] 0.5
 \end{verbatim}
 
 \textbf{Exercise}: Run the chunk of code above, in your own console. Do you get the same number as I do? Do you get exactly 0.5? If not, why not? Try the same exercise but with 100 trials, 1000 trials and 100000 trials. What happens as we increase the number of trials? This should illustrate how powerful R can be. We just threw 100 thousand coins into the air without even lifting our fingers! Try to repeat the exercise, but this time, set the Bernoulli prob parameter to be equal to a number of your choice (between 0 and 1). What is the average of all your coin tosses?
@@ -220,7 +220,7 @@ Try running the code below 5 times. What numbers do you obtain?
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 11
+## [1] 8
 \end{verbatim}
 
 Turns out there's a short-hand way of performing the same experiment, i.e.~tossing a bunch of coins - each a Bernoulli random variable - observing their outcomes and adding them up, without using the sum() function at all. Here's where the second input parameter - size - of the rbinom() function comes into play. So far, we've always left it equal to 1 in all our command lines above, but we can set it to any positive integer:
@@ -255,7 +255,7 @@ We can compute the average of multiple Binomial trials. Let's try adding the res
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  8  5  8 13 13
+## [1] 14 10 10  9 15
 \end{verbatim}
 
 \begin{Shaded}
@@ -266,7 +266,7 @@ We can compute the average of multiple Binomial trials. Let's try adding the res
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 47
+## [1] 58
 \end{verbatim}
 
 To get the average, we divide by the total number of trials. Remember here that the number of Binomial trials is 5:
@@ -279,7 +279,7 @@ To get the average, we divide by the total number of trials. Remember here that 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 9.4
+## [1] 11.6
 \end{verbatim}
 
 A shorthand for obtaining the mean is the function mean(). This should give you the same result:
@@ -292,7 +292,7 @@ A shorthand for obtaining the mean is the function mean(). This should give you 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 9.4
+## [1] 11.6
 \end{verbatim}
 
 Note that the mean need not be an integer, even though the outcome of each Binomial trial \emph{must} be an integer.
@@ -362,26 +362,26 @@ Ok, this is very neat, but how can we check this equation is correct? Well, we c
 \end{Shaded}
 
 \begin{verbatim}
-##   [1]  7  9  9  8 11  9 10 12 12  9 13  9 10  7  7 11 10  9  9 12 11  7  9  7  8
-##  [26]  7 14 10 11 11 13 13  8 11  9  9  7  9 11  7  8  8 14 10  8 11 10 15 11 10
-##  [51]  9  9  9 12 13 10 10 15 10 11  7 10 11 11  9  8  7  8 13 13  7 10  9  9  9
-##  [76]  9 12  8  9 12 14  9 10 13 11 10  7 11 10  8  7  7 10 12  9 11 13 11 11  6
-## [101] 15  9  8  7 12 12 14  6 10 11 10 11 12 11 12  8  6 12  8  9 10 13 12 12 14
-## [126] 12 10  7  9  4 11 12  9 13 14  6 10 11 12  9 10  8 10 11 11  8  7  9 12 11
-## [151]  7  5 14  9 10 10  9  9 11 10 13  9  9 13 12 12  8 12 10  8 12  7 12 12 12
-## [176]  9 13  8 10  9 10  9 11  9 11  6 10 12  9 10 11 12  4 12  7  8  4  7 13  9
-## [201]  6  7 11  9  9  8 12  6 13  9 10  9 16 13  7 10 12 11 13 11  9 10  8 13 10
-## [226] 10 11  9  8 12 11 13 11  6 12 10 10 11  9 11 11 11 12 15 12 11 10 10  8  8
-## [251]  8 12 10 12 13 12  5  8  9 13  6 11 12  8 13  8 10  9 12 13 12  7  6 11 11
-## [276]  9  7 10 13 10 14  5 12  9  9  4 10 14 10  8 11 11 16  8  9  8  7  8 11  5
-## [301] 13 11  7  9 12 11 10 10 13 10 11 10 12  6 10  9  8 12 14 10 11  8 11  9 10
-## [326]  6  9  7 14  8  9 13  8  6  8  7 13 10 12  8  7 11 10  6 12  8 10 12  7 11
-## [351] 10 10 12 12  8  9 11  8 11 10  6  9  9  6 11 14  9 11 12  8 10 10  5 14  7
-## [376]  9 12  5 13 10 10 10  9  8 10  7  8 11 10  9 10 10  8 11 10 12 10 11 11  8
-## [401] 12 10 12  6 10  8  9  9 12  4 12  7  9  8  8 12  7  7  7 11 12  8 15  7 12
-## [426]  9 10 10 11  8  7 12 11  7 10 12  6 11 14 11 12 10  8 12  8 10  6  8  9 12
-## [451]  9  7  7  8  8  9 12 11 10 11  9 12 12 10  9 11  9  6 12 11  8  9 11 14  8
-## [476]  9  8  6 10 11  8  8 13 12 11  9  9 12 10 10 11  7 10 10  7 10 13 12  9 12
+##   [1] 12 11  9 11 10  9 14  9  7  7  4 10  9  8 11  8  5 11  8  9 15 10  7 11  6
+##  [26]  9 14 11  9  9  9 13 10  7  6 10  8  8  9  7 12 11 12 12 11 12  6  8  9 11
+##  [51] 11 11 11  9 11 12 15  8  8  8 10 10 12 10 13  8  8  6  9 11 10  9  7 13 10
+##  [76] 14 10 13 11 11  9 11 13 12  9 12  8 15  8 10 10 10  7 10 12 10 10  7 10  9
+## [101] 11 15 10  9 10 10 10 10 15 11 10  8  8 12  9 11 10 10 11  7  9 11  8 12  6
+## [126] 12 11 12 13  7 10  6  7  9  9 10 10  9  6  8 11 10  8 12 10 10 11 10 12  8
+## [151]  9  8 12  6  9 10  9  9  5 11 10 13  7 10 10 12  9 13  5  8 10 15 11 10 10
+## [176] 10 10  9 15  9  7 11 10 10 10  8 10 10  9 12  6  8 11 10  9  6 13  7  9 11
+## [201]  9 11  8 12 12  9  8  8 12 11  9 10 11 14  7 11 10 10 10 10  7  8 10  9 11
+## [226]  9 11  9 11 10 10  8 12  9 13 12 12 10 13 12  8 10  7 12  7 10 11 10  7 10
+## [251]  9 12  8 12 14 10  6  9  7 11 11  8 11 13  9  4 11  7  9 10  9 10 11 12 11
+## [276]  9 10 10 10  8  6 11 11 10 10 12 12 12 10  6 13  9 12  8  8 12 12  6 11 11
+## [301] 10 14  9 13 13 11  6 11 11 11 13  9 12 12  6 11 13 12 11  8 11 10  8 10 10
+## [326]  8  8 11 10 10 12  9 11  7 10  8 11 14 11  6 14 13 11  8  9  9 12  8  8  9
+## [351]  9 11  7  8 10  8 12  8 11  7 13  7  7 10 13 14  9 12 10  9  8 13 10 11 11
+## [376] 10 11 12 11  7 11 12 11 11  9  8 10 11 14  6 10 12  8 10 11 11  9  8 12 12
+## [401] 12 11 10  8 12  8  9 14 11 14 10 10 10 10 14 12  4 10  9  6  9 17  5 11 11
+## [426] 10 11 11 11 14  9  7  8 10 14 15  1 12 11 11  9  5  7  8  8 13 11 11 13  7
+## [451]  9 13  7  9  7 10 11 10 12  7  6  8 10  7  8  9  8 10  9 13 11  6 14 10 11
+## [476] 11 12 14  9 11 11 10 11 10  8 10 15  7  7 10 11  8 10 12  9  8 11  8  5 15
 \end{verbatim}
 
 We can determine which of these trials was equal to 10 using the ``=='' symbol:
@@ -394,48 +394,48 @@ We can determine which of these trials was equal to 10 using the ``=='' symbol:
 \end{Shaded}
 
 \begin{verbatim}
-##   [1] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
-##  [13]  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [25] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE
-##  [49] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE
-##  [61] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
-##  [73] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
-##  [85] FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
-##  [97] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [109]  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [121]  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
-## [133] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE
-## [145] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE
-## [157] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [169]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
-## [181]  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE
-## [193] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [205] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE
-## [217] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE
-## [229] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE
-## [241] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE
-## [253]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [265] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [277] FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+##   [1] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+##  [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+##  [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE
+##  [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [49] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [61]  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+##  [73] FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [85] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE
+##  [97]  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE
+## [109] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE
+## [121] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+## [133] FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+## [145]  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+## [157] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE
+## [169] FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE
+## [181] FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE
+## [193] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [205] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+## [217]  TRUE  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+## [229] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+## [241] FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE
+## [253] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [265] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE
+## [277]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE
 ## [289]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [301] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE  TRUE
-## [313] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
-## [325]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [337] FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE
-## [349] FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
-## [361] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE
-## [373] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE
-## [385]  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE
-## [397]  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE
-## [409] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [421] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE
-## [433] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
-## [445] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [457] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
-## [469] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
-## [481] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE
-## [493]  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE
+## [301]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [313] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE
+## [325]  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE
+## [337] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [349] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+## [361] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+## [373]  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [385] FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE
+## [397] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+## [409] FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE
+## [421] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+## [433] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [445] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+## [457] FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE
+## [469] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+## [481] FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE
+## [493]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 \end{verbatim}
 
 This returns a new vector in which each element is equal to TRUE if the corresponding element in ``binomvec'' is equal to 10, and FALSE otherwise. The nice thing is that R considers the value of TRUE to also be equal to 1, and the value of FALSE to also be equal to 0, so we can actually apply the function sum() to this vector!
@@ -448,7 +448,7 @@ This returns a new vector in which each element is equal to TRUE if the correspo
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 85
+## [1] 103
 \end{verbatim}
 
 Finally, to get at the fraction of all trials that were equal to 10, we simply divide by the number of trials:
@@ -461,7 +461,7 @@ Finally, to get at the fraction of all trials that were equal to 10, we simply d
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.17
+## [1] 0.206
 \end{verbatim}
 
 You should have gotten a number pretty close to 17.62\%. You can imagine that the more trials we perform, the more accurate this number will approximate the exact probability given by the PMF.
@@ -508,7 +508,7 @@ Just as we can compute the sample mean of a set of trials using the function mea
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 56 50 51 59 51
+## [1] 51 47 56 46 58
 \end{verbatim}
 
 \begin{Shaded}
@@ -518,7 +518,7 @@ Just as we can compute the sample mean of a set of trials using the function mea
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 53.4
+## [1] 51.6
 \end{verbatim}
 
 \begin{Shaded}
@@ -528,7 +528,7 @@ Just as we can compute the sample mean of a set of trials using the function mea
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 15.3
+## [1] 28.3
 \end{verbatim}
 
 \textbf{Exercise}: Compute the variance of a set of 5 Binomial trials of size 100, for different values of the probability of heads. This is equivalent to performing 5 100-toss experiments, with different types of biased coins in each experiment. For what value of the binomial probability is the variance maximized? Does this agree with the variance equation for a binomially-distributed random variable?
@@ -546,7 +546,7 @@ We describe linear models in this chapter. First we need to load some libraries 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{) }\CommentTok{\# Library for data analysis}
 \end{Highlighting}
 \end{Shaded}
 
@@ -573,7 +573,7 @@ We describe linear models in this chapter. First we need to load some libraries 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"stargazer"}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"stargazer"}\NormalTok{)}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"stargazer"}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"stargazer"}\NormalTok{) }\CommentTok{\# Library for producing pretty tables of estimates from linear models}
 \end{Highlighting}
 \end{Shaded}
 
@@ -610,7 +610,7 @@ We describe linear models in this chapter. First we need to load some libraries 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"report"}\NormalTok{)) devtools}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"easystats/report"}\NormalTok{)}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"report"}\NormalTok{)) devtools}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"easystats/report"}\NormalTok{) }\CommentTok{\# Library for producing nice verbose reports of linear models}
 \end{Highlighting}
 \end{Shaded}
 
@@ -621,14 +621,6 @@ We describe linear models in this chapter. First we need to load some libraries 
 \begin{verbatim}
 ## report is in alpha - help us improve by reporting bugs on github.com/easystats/report/issues
 \end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{) }\CommentTok{\# Library for data analysis}
-\FunctionTok{library}\NormalTok{(}\StringTok{"report"}\NormalTok{) }\CommentTok{\# Library for producing nice verbose reports of linear models}
-\FunctionTok{library}\NormalTok{(}\StringTok{"stargazer"}\NormalTok{) }\CommentTok{\# Library for producing pretty tables of estimates from linear models}
-\end{Highlighting}
-\end{Shaded}
 
 \hypertarget{the-data}{%
 \section{The data}\label{the-data}}
@@ -1183,8 +1175,8 @@ Now we can obtain a permuted version of our original data, and compute the slope
 \end{Shaded}
 
 \begin{verbatim}
-##   logBody 
-## 0.1027778
+##    logBody 
+## 0.03461287
 \end{verbatim}
 
 \textbf{Exercise}: try estimating the same parameter from a series of 100 permuted versions of our original data, and collecting each of the permuted parameters into a vector called ``permvec''.
@@ -1310,21 +1302,19 @@ Now, let's compute the LOOCV error for increasingly complex polynomial models (l
 \hypertarget{libraries-and-data}{%
 \section{Libraries and Data}\label{libraries-and-data}}
 
-Today, we will work with the package vegan (useful for ordination techniques) and the packages ggplot2 and ggbiplot (useful for fancy plotting). Make sure all these libraries are installed before you begin. To install the package ``ggbiplot'', do the following:
+Today, we will work with the package vegan (useful for ordination techniques) and the packages ggplot2 and ggbiplot (useful for fancy plotting). Make sure all these libraries are installed before you begin.
 
-install.packages(``devtools'')
-
-library(``devtools'')
-
-install\_github(``vqv/ggbiplot'')
-
-Let's begin by loading the necessary libraries:
+Let's begin by installing and loading the necessary libraries:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(}\StringTok{"vegan"}\NormalTok{)}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"vegan"}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"vegan"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## Loading required package: vegan
+\end{verbatim}
 
 \begin{verbatim}
 ## Loading required package: permute
@@ -1391,10 +1381,15 @@ Let's begin by loading the necessary libraries:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)}
-\FunctionTok{library}\NormalTok{(}\StringTok{"ggbiplot"}\NormalTok{)}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"devtools"}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{)}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{)}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"ggbiplot"}\NormalTok{))\{ }\FunctionTok{library}\NormalTok{(}\StringTok{"devtools"}\NormalTok{); }\FunctionTok{install\_github}\NormalTok{(}\StringTok{"vqv/ggbiplot"}\NormalTok{) \}}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## Loading required package: ggbiplot
+\end{verbatim}
 
 \begin{verbatim}
 ## Loading required package: plyr
@@ -1444,15 +1439,12 @@ We will use a dataset on measurements of particular parts of the iris plant, acr
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{exercise-1-visualizing-the-data}{%
-\subsection{Exercise 1: Visualizing the data}\label{exercise-1-visualizing-the-data}}
-
-Take a look at the iris data matrix. How many samples does it have? How many variables? What happens when you run the function plot() on this matrix? Which variables are most strongly correlated? (use the cor() function to answer this). Why do you think this could be?
+\textbf{Exercise}: Take a look at the iris data matrix. How many samples does it have? How many variables? What happens when you run the function \texttt{plot()} on this matrix? Which variables seem to be strongly correlated? (you can use the function cor() to compute the strength of correlations). Speculate as to why some of these variables could be strongly correlated.
 
 \hypertarget{principal-component-analysis-pca}{%
 \section{Principal component analysis (PCA)}\label{principal-component-analysis-pca}}
 
-Perform a PCA of the data. The function prcomp() performs the PCA, and we can assign the result of this function to a new variable (let's call it ``fit''). We must first remove the last column to whatever we give as input to prcomp, as the species names are a non-linear (categorical) variable and we don't have (for now) any natural measures of distance for species. The option scale=T standardizes the variables to the same relative scale, so that some variables do not become dominant just because of their large measurement unit.
+We'll perform a PCA of the data. The function prcomp() performs the PCA, and we can assign the result of this function to a new variable (let's call it ``fit''). We must first remove the last column to whatever we give as input to prcomp, as the species names are a non-linear (categorical) variable and we don't have (for now) any natural measures of distance for species. The option scale=T standardizes the variables to the same relative scale, so that some variables do not become dominant just because of their large measurement unit.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1460,8 +1452,7 @@ Perform a PCA of the data. The function prcomp() performs the PCA, and we can as
 \end{Highlighting}
 \end{Shaded}
 
-If we run the summary function on fit, it indicates that four PCs where created: the number
-of possible PCs always equals the number of original variables.
+If we run the summary function on fit, it indicates that four PCs where created: the number of possible PCs always equals the number of original variables.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1489,9 +1480,6 @@ How much of the variance is explained by PC1? How much is explained by PC2?
 
 The ``Rotation'' matrix (fit{[}2{]}) contains the ``loadings'' of each of the original variables on the newly created PCs. Take a look at this matrix. The larger the absolute value of a variable in each PC, the more that variable contributes to that PC.
 
-\hypertarget{biplots}{%
-\subsection{Biplots}\label{biplots}}
-
 We can use the function ``biplot'' to plot the first two PCs of our data. The plotted arrows provide a graphical rendition of the loadings of each of the original variables on the two PCs.
 
 \begin{Shaded}
@@ -1502,13 +1490,7 @@ We can use the function ``biplot'' to plot the first two PCs of our data. The pl
 
 \includegraphics{DataScience_files/figure-latex/unnamed-chunk-57-1.pdf}
 
-\hypertarget{exercise-2-interpreting-biplots}{%
-\subsection{Exercise 2: Interpreting biplots}\label{exercise-2-interpreting-biplots}}
-
-Across this reduced dimensional space, we can see that particular variables tend to co-vary quite strongly. Which ones? We can also see a separation into two groups on PC1. Which variables do you think would be most different between samples in one group and in the other?
-
-\hypertarget{pca-using-ggplot}{%
-\subsection{PCA using ggplot}\label{pca-using-ggplot}}
+\textbf{Exercise}: Across this reduced dimensional space, we can see that particular variables tend to co-vary quite strongly. Which ones? We can also see a separation into two groups on PC1. Which variables do you think would be most different between samples in one group and in the other?
 
 We can make prettier plots using ggplot2 and ggbiplot.
 
@@ -1538,7 +1520,7 @@ We can also plot the first two PCs, like we had done before in base R, but now c
 \includegraphics{DataScience_files/figure-latex/unnamed-chunk-59-1.pdf}
 
 \hypertarget{pca-under-the-hood}{%
-\subsection{PCA under the hood}\label{pca-under-the-hood}}
+\section{PCA under the hood}\label{pca-under-the-hood}}
 
 Rather than just using a ready-made function to compute a PCA, let's take a longer route to understand exactly what's happening under the hood of the prcomp() function.
 
@@ -1588,7 +1570,7 @@ Using the loadings, we can plot our original (standardized) data matrix into the
 
 \includegraphics{DataScience_files/figure-latex/unnamed-chunk-64-1.pdf}
 
-You can compare the results from the first section (using the ready-made function prcomp) and this section (taking a longer road), to check that the results are equivalent: the minimum and maximum differences in values for the loadings, the scores and standard deviations of the PCs are infinitesimally small.
+You can compare the results from the first section (using the ready-made function prcomp) and this section (taking a longer road), to check that the results are equivalent: the minimum and maximum differences in values for the loadings, the scores and the standard deviations of the PCs are all infinitesimally small (effectively zero).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1731,51 +1713,46 @@ Let's perform NMDS ordination using the Bray-Curtis dissimilarity. Remember that
 
 \begin{verbatim}
 ## Run 0 stress 0.1192678 
-## Run 1 stress 0.1183186 
-## ... New best solution
-## ... Procrustes: rmse 0.02026735  max resid 0.0649504 
-## Run 2 stress 0.1192684 
-## Run 3 stress 0.1192682 
-## Run 4 stress 0.1889662 
-## Run 5 stress 0.1183186 
-## ... New best solution
-## ... Procrustes: rmse 1.430137e-05  max resid 4.335852e-05 
+## Run 1 stress 0.2035424 
+## Run 2 stress 0.1192682 
+## ... Procrustes: rmse 0.0003582157  max resid 0.001101256 
 ## ... Similar to previous best
-## Run 6 stress 0.1192678 
+## Run 3 stress 0.1192684 
+## ... Procrustes: rmse 0.0003648123  max resid 0.001104681 
+## ... Similar to previous best
+## Run 4 stress 0.1183186 
+## ... New best solution
+## ... Procrustes: rmse 0.02026797  max resid 0.06494661 
+## Run 5 stress 0.1808915 
+## Run 6 stress 0.1901536 
 ## Run 7 stress 0.1183186 
-## ... Procrustes: rmse 7.645563e-05  max resid 0.0002376151 
+## ... New best solution
+## ... Procrustes: rmse 2.901258e-05  max resid 9.264717e-05 
 ## ... Similar to previous best
 ## Run 8 stress 0.1183186 
-## ... Procrustes: rmse 3.126523e-06  max resid 1.008763e-05 
+## ... Procrustes: rmse 5.274589e-05  max resid 0.000170189 
 ## ... Similar to previous best
-## Run 9 stress 0.1192678 
-## Run 10 stress 0.1183186 
-## ... Procrustes: rmse 1.471486e-05  max resid 3.635168e-05 
-## ... Similar to previous best
-## Run 11 stress 0.1183186 
-## ... Procrustes: rmse 3.225859e-06  max resid 1.026124e-05 
-## ... Similar to previous best
-## Run 12 stress 0.1183186 
-## ... Procrustes: rmse 1.949649e-05  max resid 5.969469e-05 
-## ... Similar to previous best
-## Run 13 stress 0.1183186 
-## ... Procrustes: rmse 9.282421e-05  max resid 0.0002440785 
-## ... Similar to previous best
+## Run 9 stress 0.1192679 
+## Run 10 stress 0.2075713 
+## Run 11 stress 0.1192678 
+## Run 12 stress 0.1192681 
+## Run 13 stress 0.1192681 
 ## Run 14 stress 0.1183186 
-## ... Procrustes: rmse 8.192576e-05  max resid 0.0002693317 
+## ... Procrustes: rmse 2.552995e-05  max resid 6.652173e-05 
 ## ... Similar to previous best
-## Run 15 stress 0.3223145 
-## Run 16 stress 0.2086914 
-## Run 17 stress 0.1183186 
-## ... Procrustes: rmse 3.465341e-05  max resid 0.0001231117 
+## Run 15 stress 0.1183186 
+## ... Procrustes: rmse 8.482063e-05  max resid 0.0002752667 
 ## ... Similar to previous best
+## Run 16 stress 0.1192687 
+## Run 17 stress 0.1809577 
 ## Run 18 stress 0.1183186 
-## ... Procrustes: rmse 4.144627e-05  max resid 0.0001249198 
+## ... New best solution
+## ... Procrustes: rmse 1.285144e-05  max resid 4.234314e-05 
 ## ... Similar to previous best
-## Run 19 stress 0.1183186 
-## ... Procrustes: rmse 3.520491e-05  max resid 0.0001080336 
+## Run 19 stress 0.1192679 
+## Run 20 stress 0.1183186 
+## ... Procrustes: rmse 9.814589e-05  max resid 0.0002351413 
 ## ... Similar to previous best
-## Run 20 stress 0.2064901 
 ## *** Solution reached
 \end{verbatim}
 
@@ -1797,15 +1774,199 @@ As you can see, the function goes through a series of steps until convergence is
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{exercise-3-interpreting-nmds-plots}{%
-\subsection{Exercise 3: interpreting NMDS plots}\label{exercise-3-interpreting-nmds-plots}}
+\textbf{Exercise}: What do these plots tell you about the distribution of species across sites? Which species tend to co-occcur with each other? Which sites tend to have similar species compositions?
 
-What do these plots tell you about the distribution of species across sites? Which species tend to co-occcur with each other? Which sites tend to have similar species compositions?
-
-Try changing the number of dimensions or the distance metric used. You can take a look at the list of possible distances and their definitions using ``?vegdist''. Do the results change? Why?
+\textbf{Exercise}: Try changing the number of dimensions or the distance metric used. You can take a look at the list of possible distances and their definitions using ``?vegdist''. Do the results change? Why?
 
 \hypertarget{clustering}{%
 \chapter{Clustering}\label{clustering}}
+
+Today, we'll perform a clustering of the iris dataset, using the K-means clustering method.
+
+\hypertarget{libraries-and-data-1}{%
+\section{Libraries and Data}\label{libraries-and-data-1}}
+
+We'll use the following libraries for clustering:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"cluster"}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"cluster"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: cluster
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"NbClust"}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"NbClust"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: NbClust
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Now, load the iris dataset using the \texttt{data()} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(iris)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{distances}{%
+\section{Distances}\label{distances}}
+
+The variables we will use to cluster our data are the four flower measurements in the iris dataset. They all represent the measured length of a segment between two points (e.g.~sepal length, petal width), the Euclidean distance is an obvious choice of distance for clustering our observation. The clustering method we will apply to our data (and the ordination methods we applied before) implicitly use the function \texttt{dist()} to calculate distances between observations.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d }\OtherTok{\textless{}{-}} \FunctionTok{dist}\NormalTok{(iris[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{], }\AttributeTok{method=}\StringTok{"euclidean"}\NormalTok{)}
+\NormalTok{d }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(d)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Exercise}: Under the chosen distance metric, what is the most disparate observation from observation 1? What is the distance between this observation and observation 1? Do they belong to different species?
+
+\textbf{Exercise}: Under the chosen distance metric, what is the pair of observations that are most disparate from each other, among all pairs? What is the distance between them? Do they belong to different species?
+
+\hypertarget{k-means-clustering}{%
+\section{K-means clustering}\label{k-means-clustering}}
+
+Ok, we're almost ready to cluster our data. There are just a few preliminary details to keep in mind.
+The first of these details is that our variables lie on different scales: some span a wider range of variation than others. A common practice in clustering is to scale all variables in our data such that they are mean-centered and have a standard deviation of 1, before performing the clustering. This ensures that all variables have the same ``vote'' in the clustering. If we don't scale, then variables that have large amounts of variation (large standard deviations) will disproportionately affect the Euclidean distance, and therefore our clustering will be highly influenced by those variables to the detriment of other variables. This is not inherently wrong, but it is important to keep in mind that unscaled data might result in different clusters than scaled data. To scale our data, we use the function \texttt{scale()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{scale}\NormalTok{(iris[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Exercise}: what's the mean and standard deviation of each of the four variables in the iris dataset before scaling? what is their mean and standard deviation after scaling?
+
+Ok, now on to the second preliminary detail. Clustering methods require the specification of the number of clusters that we a priori choose to fit the data to. Deciding on what is the ``best'' number of clusters depends on a number of criteria (e.g.~minimizes the total within-cluster variance, homogenizing per-cluster variance, etc), and there are many methods with different criteria. We'll use the function \texttt{NbClust} which runs 26 of these different methods on our data for assessing the ``best'' number of clusters. We'll then choose to use the number of clusters that is recommended by the largest number of methods.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{numclust }\OtherTok{\textless{}{-}} \FunctionTok{NbClust}\NormalTok{(df, }\AttributeTok{min.nc=}\DecValTok{2}\NormalTok{, }\AttributeTok{max.nc=}\DecValTok{15}\NormalTok{, }\AttributeTok{distance=}\StringTok{"euclidean"}\NormalTok{, }\AttributeTok{method=}\StringTok{"kmeans"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-74-1.pdf}
+
+\begin{verbatim}
+## *** : The Hubert index is a graphical method of determining the number of clusters.
+##                 In the plot of Hubert index, we seek a significant knee that corresponds to a 
+##                 significant increase of the value of the measure i.e the significant peak in Hubert
+##                 index second differences plot. 
+## 
+\end{verbatim}
+
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-74-2.pdf}
+
+\begin{verbatim}
+## *** : The D index is a graphical method of determining the number of clusters. 
+##                 In the plot of D index, we seek a significant knee (the significant peak in Dindex
+##                 second differences plot) that corresponds to a significant increase of the value of
+##                 the measure. 
+##  
+## ******************************************************************* 
+## * Among all indices:                                                
+## * 10 proposed 2 as the best number of clusters 
+## * 6 proposed 3 as the best number of clusters 
+## * 1 proposed 4 as the best number of clusters 
+## * 1 proposed 5 as the best number of clusters 
+## * 3 proposed 12 as the best number of clusters 
+## * 1 proposed 14 as the best number of clusters 
+## * 2 proposed 15 as the best number of clusters 
+## 
+##                    ***** Conclusion *****                            
+##  
+## * According to the majority rule, the best number of clusters is  2 
+##  
+##  
+## *******************************************************************
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(numclust}\SpecialCharTok{$}\NormalTok{Best.n[}\DecValTok{1}\NormalTok{,])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  0  2  3  4  5 12 14 15 
+##  2 10  6  1  1  3  1  2
+\end{verbatim}
+
+It seems like ten of the methods suggest that the best number of clusters should be 2. There is also a considerable (but smaller) number of methods (six), that suggest it should be 3.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{barplot}\NormalTok{(}\FunctionTok{table}\NormalTok{(numclust}\SpecialCharTok{$}\NormalTok{Best.n[}\DecValTok{1}\NormalTok{,]),}
+\AttributeTok{xlab=}\StringTok{"Number of Clusters"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"Number of Criteria"}\NormalTok{, }\AttributeTok{main=}\StringTok{"Number of Clusters Chosen by 26 Criteria"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-75-1.pdf}
+
+Let's go with 2 clusters then. We are now finally ready to perform a K-means clustering. We do so as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit.kmeans }\OtherTok{\textless{}{-}} \FunctionTok{kmeans}\NormalTok{(df, }\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The cluster assignments for all observations are stored in the ``cluster'' attribute of the resulting object:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{clustassig }\OtherTok{\textless{}{-}}\NormalTok{ fit.kmeans}\SpecialCharTok{$}\NormalTok{cluster}
+\NormalTok{clustassig}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   [1] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+##  [38] 2 2 2 2 2 2 2 2 2 2 2 2 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [75] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+## [112] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+## [149] 1 1
+\end{verbatim}
+
+We can use this vector to plot our data, colored by the resulting clusters.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{clustassig }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(clustassig) }\CommentTok{\# Treat the cluster assignments as discrete factors}
+\NormalTok{irisclust }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(iris,clustassig) }\CommentTok{\# Combine data with cluster assignments}
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length,}\AttributeTok{y=}\NormalTok{Sepal.Width,}\AttributeTok{color=}\NormalTok{clustassig)) }\CommentTok{\# Plot sepal variables}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-78-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Petal.Length,}\AttributeTok{y=}\NormalTok{Petal.Width,}\AttributeTok{color=}\NormalTok{clustassig)) }\CommentTok{\# Plot petal variables}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-78-2.pdf}
+
+\textbf{Exercise}: Now try computing a K-means clustering on the data yourself, this time using 3 clusters. Plot the result using a different color for each cluster.
+
+\textbf{Exercise}: How well do the clusters from the previous exercise correspond to the 3 iris species? Are they perfectly matched? Why? Why not?
 
 \hypertarget{recostats-linear-models}{%
 \chapter{REcoStats: Linear Models}\label{recostats-linear-models}}
@@ -1814,14 +1975,10 @@ We describe linear models in this chapter. First we need to load some libraries 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)}
-\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"stargazer"}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"stargazer"}\NormalTok{)}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{) }\CommentTok{\# Library for data analysis}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"stargazer"}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"stargazer"}\NormalTok{) }\CommentTok{\# Library for producing pretty tables of estimates from linear models}
 \ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"devtools"}\NormalTok{)) }\FunctionTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{)}
-\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"report"}\NormalTok{)) devtools}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"easystats/report"}\NormalTok{)}
-
-\FunctionTok{library}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{) }\CommentTok{\# Library for data analysis}
-\FunctionTok{library}\NormalTok{(}\StringTok{"report"}\NormalTok{) }\CommentTok{\# Library for producing nice verbose reports of linear models}
-\FunctionTok{library}\NormalTok{(}\StringTok{"stargazer"}\NormalTok{) }\CommentTok{\# Library for producing pretty tables of estimates from linear models}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"report"}\NormalTok{)) devtools}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"easystats/report"}\NormalTok{) }\CommentTok{\# Library for producing nice verbose reports of linear models}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1888,7 +2045,7 @@ We'll begin by focusing on the relationship between two of the continuous variab
 ## Warning: Removed 4 rows containing missing values (geom_point).
 \end{verbatim}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-72-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-82-1.pdf}
 
 Hmmm this looks weird. We have many measurements of body weight around 0 (small values) and a few very large values of thousands of kilograms. This is not surprising: given that this dataset spans several different species, the measurements spans several orders of magnitude (from elephants to molerats). To account for this, variables involving body measurements (like weight or length) are traditionally converted into a log-scale when fitted into a linear model. Let's see what happens when we log-scale the body weight variable:
 
@@ -1902,7 +2059,7 @@ Hmmm this looks weird. We have many measurements of body weight around 0 (small 
 ## Warning: Removed 4 rows containing missing values (geom_point).
 \end{verbatim}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-73-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-83-1.pdf}
 
 A pattern appears to emerge now. There seems to be a negative correlation between the log of body weight and the amount of sleep a species has. Indeed, we can measure this correlation using the \texttt{cor()} function:
 
@@ -2128,7 +2285,7 @@ Now we can obtain a permuted version of our original data, and compute the slope
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-82-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-92-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
