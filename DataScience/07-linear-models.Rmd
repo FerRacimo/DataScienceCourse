@@ -125,7 +125,7 @@ It is often useful to simulate data from a model to understand how its parameter
 Let's start by first creating the simulation function. We'll simulate data from a linear model. The model simulation function needs to be told:
 1) The number ($n$) of data points we will simulate
 1) How the explanatory variables are distributed: we'll use a normal distribution to specify this.
-2) What the intercept ($beta_0$) and slope ($beta_1$) for the linear relationship between the explanatory and response variables are
+2) What the intercept ($\beta_0$) and slope ($\beta_1$) for the linear relationship between the explanatory and response variables are
 3) How departures (errors) from linearity for the response variables will be modeled: we'll use another normal distribution for that as well, and assume errors are heteroscedastic for now.
 
 ```{r}
