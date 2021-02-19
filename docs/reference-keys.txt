@@ -9,9 +9,8 @@ the-variance
 probability-part-2
 probability-part-3
 linear-models
-the-data
-running-and-interpreting-a-simple-linear-regression
-a-multivariate-linear-regression
+fitting-a-simple-linear-regression
+interpreting-a-simple-linear-regression
 simulating-data-from-a-linear-model
 properties-of-estimators-and-inference
 properties-of-point-estimators
@@ -37,9 +36,6 @@ libraries-and-data-1
 distances
 k-means-clustering
 recostats-linear-models
-the-data-1
-running-and-interpreting-a-simple-linear-regression-1
+the-data
+running-and-interpreting-a-simple-linear-regression
 hypothesis-testing-and-permutation-testing
-fitting-a-simple-linear-regression
-interpreting-a-simple-linear-regression
-hypothesis-testing
