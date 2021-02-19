@@ -40,3 +40,6 @@ recostats-linear-models
 the-data-1
 running-and-interpreting-a-simple-linear-regression-1
 hypothesis-testing-and-permutation-testing
+fitting-a-simple-linear-regression
+interpreting-a-simple-linear-regression
+hypothesis-testing
