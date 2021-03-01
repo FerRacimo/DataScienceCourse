@@ -39,3 +39,10 @@ recostats-linear-models
 the-data
 running-and-interpreting-a-simple-linear-regression
 hypothesis-testing-and-permutation-testing
+optional-a-multivariate-linear-regression
+hypothesis-testing
+interactions
+anova
+working-with-tidymodels
+fitting-a-simple-linear-regression-1
+interpreting-a-simple-linear-regression-1

@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-02-19" />
+<meta name="date" content="2021-03-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -150,6 +150,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.1" data-path="linear-models.html"><a href="linear-models.html#fitting-a-simple-linear-regression"><i class="fa fa-check"></i><b>6.1</b> Fitting a simple linear regression</a></li>
 <li class="chapter" data-level="6.2" data-path="linear-models.html"><a href="linear-models.html#interpreting-a-simple-linear-regression"><i class="fa fa-check"></i><b>6.2</b> Interpreting a simple linear regression</a></li>
 <li class="chapter" data-level="6.3" data-path="linear-models.html"><a href="linear-models.html#simulating-data-from-a-linear-model"><i class="fa fa-check"></i><b>6.3</b> Simulating data from a linear model</a></li>
+<li class="chapter" data-level="6.4" data-path="linear-models.html"><a href="linear-models.html#optional-a-multivariate-linear-regression"><i class="fa fa-check"></i><b>6.4</b> Optional: A multivariate linear regression</a></li>
+<li class="chapter" data-level="6.5" data-path="linear-models.html"><a href="linear-models.html#hypothesis-testing"><i class="fa fa-check"></i><b>6.5</b> Hypothesis testing</a></li>
+<li class="chapter" data-level="6.6" data-path="linear-models.html"><a href="linear-models.html#interactions"><i class="fa fa-check"></i><b>6.6</b> Interactions</a></li>
+<li class="chapter" data-level="6.7" data-path="linear-models.html"><a href="linear-models.html#anova"><i class="fa fa-check"></i><b>6.7</b> ANOVA</a></li>
+<li class="chapter" data-level="6.8" data-path="linear-models.html"><a href="linear-models.html#working-with-tidymodels"><i class="fa fa-check"></i><b>6.8</b> Working with tidymodels</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html"><i class="fa fa-check"></i><b>7</b> Properties of Estimators and Inference</a>
 <ul>
@@ -184,8 +189,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="16" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html"><i class="fa fa-check"></i><b>16</b> REcoStats: Linear Models</a>
 <ul>
-<li class="chapter" data-level="16.1" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html#the-data"><i class="fa fa-check"></i><b>16.1</b> The data</a></li>
-<li class="chapter" data-level="16.2" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html#running-and-interpreting-a-simple-linear-regression"><i class="fa fa-check"></i><b>16.2</b> Running and interpreting a simple linear regression</a></li>
+<li class="chapter" data-level="16.1" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html#fitting-a-simple-linear-regression-1"><i class="fa fa-check"></i><b>16.1</b> Fitting a simple linear regression</a></li>
+<li class="chapter" data-level="16.2" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html#interpreting-a-simple-linear-regression-1"><i class="fa fa-check"></i><b>16.2</b> Interpreting a simple linear regression</a></li>
 <li class="chapter" data-level="16.3" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html#hypothesis-testing-and-permutation-testing"><i class="fa fa-check"></i><b>16.3</b> Hypothesis testing and permutation testing</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -212,17 +217,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="recostats-linear-models" class="section level1" number="16">
 <h1><span class="header-section-number">Chapter 16</span> REcoStats: Linear Models</h1>
 <p>We describe linear models in this chapter. First we need to load some libraries (and install them if necessary).</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="recostats-linear-models.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;tidyverse&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># Library for data analysis</span></span>
-<span id="cb164-2"><a href="recostats-linear-models.html#cb164-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;stargazer&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;stargazer&quot;</span>) <span class="co"># Library for producing pretty tables of estimates from linear models</span></span>
-<span id="cb164-3"><a href="recostats-linear-models.html#cb164-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;devtools&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
-<span id="cb164-4"><a href="recostats-linear-models.html#cb164-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;report&quot;</span>)) devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;easystats/report&quot;</span>) <span class="co"># Library for producing nice verbose reports of linear models</span></span></code></pre></div>
-<div id="the-data" class="section level2" number="16.1">
-<h2><span class="header-section-number">16.1</span> The data</h2>
-<p>We’ll use a dataset published by Allison and Cicchetti (1976). In this study, the authors studied the relationship between sleep and various ecological and morphological variables across a set of mammalian species: <a href="https://science.sciencemag.org/content/194/4266/732" class="uri">https://science.sciencemag.org/content/194/4266/732</a></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="recostats-linear-models.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;tidyverse&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>) <span class="co"># Library for data analysis</span></span></code></pre></div>
+<pre><code>## Loading required package: tidyverse</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
+## ✓ tibble  3.0.4     ✓ dplyr   1.0.2
+## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
+## ✓ readr   1.4.0     ✓ forcats 0.5.0</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="recostats-linear-models.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;stargazer&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;stargazer&quot;</span>) <span class="co"># Library for producing pretty tables of estimates from linear models</span></span></code></pre></div>
+<pre><code>## Loading required package: stargazer</code></pre>
+<pre><code>## 
+## Please cite as:</code></pre>
+<pre><code>##  Hlavac, Marek (2018). stargazer: Well-Formatted Regression and Summary Statistics Tables.</code></pre>
+<pre><code>##  R package version 5.2.2. https://CRAN.R-project.org/package=stargazer</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="recostats-linear-models.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;devtools&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span></code></pre></div>
+<pre><code>## Loading required package: devtools</code></pre>
+<pre><code>## Loading required package: usethis</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="recostats-linear-models.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;report&quot;</span>)) devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;easystats/report&quot;</span>) <span class="co"># Library for producing nice verbose reports of linear models</span></span></code></pre></div>
+<pre><code>## Loading required package: report</code></pre>
+<pre><code>## report is in alpha - help us improve by reporting bugs on github.com/easystats/report/issues</code></pre>
+<div id="fitting-a-simple-linear-regression-1" class="section level2" number="16.1">
+<h2><span class="header-section-number">16.1</span> Fitting a simple linear regression</h2>
+<p>We’ll use a dataset published by Allison and Cicchetti (1976). In this study, the authors studied the relationship between sleep and various ecological and morphological variables across a set of mammalian species:
+<a href="https://science.sciencemag.org/content/194/4266/732" class="uri">https://science.sciencemag.org/content/194/4266/732</a></p>
 <p>Let’s start by loading the data into a table:</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="recostats-linear-models.html#cb165-1" aria-hidden="true" tabindex="-1"></a>allisontab <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Data_allison.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="recostats-linear-models.html#cb17-1" aria-hidden="true" tabindex="-1"></a>allisontab <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Data_allison.csv&quot;</span>)</span></code></pre></div>
 <p>This dataset contains several variables related to various body measurements and measures of sleep in different species. Note that some of these are continuous, while others are discrete and ordinal.</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="recostats-linear-models.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(allisontab)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="recostats-linear-models.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(allisontab)</span></code></pre></div>
 <pre><code>##    Species              BodyWt            BrainWt         NonDreaming    
 ##  Length:62          Min.   :   0.005   Min.   :   0.14   Min.   : 2.100  
 ##  Class :character   1st Qu.:   0.600   1st Qu.:   4.25   1st Qu.: 6.250  
@@ -247,30 +271,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  3rd Qu.:4.000   3rd Qu.:4.000   3rd Qu.:4.000  
 ##  Max.   :5.000   Max.   :5.000   Max.   :5.000  
 ## </code></pre>
-</div>
-<div id="running-and-interpreting-a-simple-linear-regression" class="section level2" number="16.2">
-<h2><span class="header-section-number">16.2</span> Running and interpreting a simple linear regression</h2>
 <p>We’ll begin by focusing on the relationship between two of the continuous variables: body size (in kg) and total amount of sleep (in hours). Let’s plot these to see what they look like:</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="recostats-linear-models.html#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(allisontab) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>BodyWt,<span class="at">y=</span>TotalSleep))</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="recostats-linear-models.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(allisontab) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>BodyWt,<span class="at">y=</span>TotalSleep))</span></code></pre></div>
 <pre><code>## Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Hmmm this looks weird. We have many measurements of body weight around 0 (small values) and a few very large values of thousands of kilograms. This is not surprising: given that this dataset spans several different species, the measurements spans several orders of magnitude (from elephants to molerats). To account for this, variables involving body measurements (like weight or length) are traditionally converted into a log-scale when fitted into a linear model. Let’s see what happens when we log-scale the body weight variable:</p>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="recostats-linear-models.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(allisontab) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(BodyWt),<span class="at">y=</span>TotalSleep))</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="recostats-linear-models.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(allisontab) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(BodyWt),<span class="at">y=</span>TotalSleep))</span></code></pre></div>
 <pre><code>## Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>A pattern appears to emerge now. There seems to be a negative correlation between the log of body weight and the amount of sleep a species has. Indeed, we can measure this correlation using the <code>cor()</code> function:</p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="recostats-linear-models.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">log</span>(allisontab<span class="sc">$</span>BodyWt), allisontab<span class="sc">$</span>TotalSleep, <span class="at">use=</span><span class="st">&quot;complete.obs&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="recostats-linear-models.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">log</span>(allisontab<span class="sc">$</span>BodyWt), allisontab<span class="sc">$</span>TotalSleep, <span class="at">use=</span><span class="st">&quot;complete.obs&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] -0.5328345</code></pre>
 <p>Let’s build a simple linear model to explain total sleep, as a function of body weight. In R, the standard way to fit a linear model is using the function <code>lm()</code>. We do so by following the following formula:</p>
 <p><code>fit &lt;- lm(formula, data)</code></p>
-<p>The formula within an <code>lm()</code> function is typically written as</p>
-<p><span class="math display">\[\bf{y} \sim \bf{x_1} + \bf{x_2} + ... + \bf{x_k}\]</span> Where <span class="math inline">\(y\)</span> is the response variable and <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, etc. are the predictor variables. This formula is a shorthand way that R uses for writing the linear regression formula:</p>
-<p><span class="math display">\[\bf{Y} = \beta_0 + \beta_1 \bf{x_1} + \beta_2 \bf{x_2} + ... + \beta_k \bf{x_k} + \bf{\epsilon}\]</span> In other words, R implicitly knows that each predictor variable will have an associated <span class="math inline">\(\beta\)</span> coefficient that we’re trying to estimate. Note that here <span class="math inline">\(\bf{y}\)</span>, <span class="math inline">\(\bf{x_1}\)</span>, <span class="math inline">\(\bf{x_2}\)</span>, <span class="math inline">\(\bf{\epsilon}\)</span>, etc. represent lists (vectors) of variables. We don’t need to specify additional terms for the <span class="math inline">\(\beta_0\)</span> (intercept) and <span class="math inline">\(\bf{\epsilon}\)</span> (error) terms. The <code>lm()</code> function automatically accounts for the fact that a regression should have an intercept, and that there will necessarily exist errors (residuals) between our fit and the the observed value of <span class="math inline">\(\bf{Y}\)</span>.</p>
+<p>The formula within an <code>lm()</code> function for a simple linear regression is:</p>
+<p><span class="math display">\[\bf{y} \sim \bf{x_1}\]</span>
+Where <span class="math inline">\(y\)</span> is the response variable and <span class="math inline">\(x_1\)</span> is the predictor variable. This formula is a shorthand way that R uses for writing the linear regression formula:</p>
+<p><span class="math display">\[\bf{Y} = \beta_0 + \beta_1 \bf{x_1} + \bf{\epsilon}\]</span>
+In other words, R implicitly knows that each predictor variable will have an associated <span class="math inline">\(\beta\)</span> coefficient that we’re trying to estimate. Note that here <span class="math inline">\(\bf{y}\)</span>, <span class="math inline">\(\bf{x_1}\)</span>, <span class="math inline">\(\bf{\epsilon}\)</span>, etc. represent lists (vectors) of variables. We don’t need to specify additional terms for the <span class="math inline">\(\beta_0\)</span> (intercept) and <span class="math inline">\(\bf{\epsilon}\)</span> (error) terms. The <code>lm()</code> function automatically accounts for the fact that a regression should have an intercept, and that there will necessarily exist errors (residuals) between our fit and the the observed value of <span class="math inline">\(\bf{Y}\)</span>.</p>
 <p>We can also write this exact same equation by focusing on a single (example) variable, say <span class="math inline">\(y_i\)</span>:</p>
-<p><span class="math display">\[y_i = \beta_0 + \beta_1 x_{1,i} + \beta_2 x_{2,i} + ... + \beta_k x_{k,i} + \epsilon_i\]</span> In general, when we talk about vectors of variables, we’ll use boldface, unlike when referring to a single variable.</p>
+<p><span class="math display">\[y_i = \beta_0 + \beta_1 x_{1,i} + \epsilon_i\]</span>
+In general, when we talk about vectors of variables, we’ll use boldface, unlike when referring to a single variable.</p>
 <p>In our case, we’ll attempt to fit total sleep as a function of the log of body weight, plus some noise:</p>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="recostats-linear-models.html#cb174-1" aria-hidden="true" tabindex="-1"></a>myfirstmodel <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="fu">log</span>(BodyWt), <span class="at">data=</span>allisontab) </span>
-<span id="cb174-2"><a href="recostats-linear-models.html#cb174-2" aria-hidden="true" tabindex="-1"></a>myfirstmodel</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="recostats-linear-models.html#cb26-1" aria-hidden="true" tabindex="-1"></a>myfirstmodel <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="fu">log</span>(BodyWt), <span class="at">data=</span>allisontab) </span>
+<span id="cb26-2"><a href="recostats-linear-models.html#cb26-2" aria-hidden="true" tabindex="-1"></a>myfirstmodel</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = TotalSleep ~ log(BodyWt), data = allisontab)
@@ -279,9 +303,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## (Intercept)  log(BodyWt)  
 ##     11.4377      -0.7931</code></pre>
 <p>This way, we are fitting the following model:</p>
-<p><span class="math display">\[\bf{TotalSleep} = \beta_0 + \beta_1 \bf{log(BodyWt)} + \bf{\epsilon}\]</span> Remember that the <span class="math inline">\(\beta_0\)</span> coefficient is implicitly assumed by the <code>lm()</code> function. We can be more explicit and incorporate it into our equation, by simply adding a value of 1 (a constant). This will result in exactly the same output as before:</p>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="recostats-linear-models.html#cb176-1" aria-hidden="true" tabindex="-1"></a>myfirstmodel <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">log</span>(BodyWt), <span class="at">data=</span>allisontab)  </span>
-<span id="cb176-2"><a href="recostats-linear-models.html#cb176-2" aria-hidden="true" tabindex="-1"></a>myfirstmodel</span></code></pre></div>
+<p><span class="math display">\[\bf{TotalSleep} = \beta_0 + \beta_1 \bf{log(BodyWt)} + \bf{\epsilon}\]</span>
+Remember that the <span class="math inline">\(\beta_0\)</span> coefficient is implicitly assumed by the <code>lm()</code> function. We can be more explicit and incorporate it into our equation, by simply adding a value of 1 (a constant). This will result in exactly the same output as before:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="recostats-linear-models.html#cb28-1" aria-hidden="true" tabindex="-1"></a>myfirstmodel <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">log</span>(BodyWt), <span class="at">data=</span>allisontab)  </span>
+<span id="cb28-2"><a href="recostats-linear-models.html#cb28-2" aria-hidden="true" tabindex="-1"></a>myfirstmodel</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = TotalSleep ~ 1 + log(BodyWt), data = allisontab)
@@ -289,8 +314,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Coefficients:
 ## (Intercept)  log(BodyWt)  
 ##     11.4377      -0.7931</code></pre>
+<p><strong>Exercise</strong>: the function <code>attributes()</code> allows us to unpack all the components of the object outputted by the function <code>lm()</code> (and many other objects in R). Try inputting your model output into this function. We can observe that one of the attributes of the object is called <code>coefficients</code>. If we type <code>ourfirstmodel$coefficients</code>, we obtain a vector with the value of our two fitted coefficients (<span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>). Using the values from this vector, try plotting the line of best fit on top of the data. Hint: use the <code>geom_abline()</code> function from the <code>ggplot2</code> library.</p>
+</div>
+<div id="interpreting-a-simple-linear-regression-1" class="section level2" number="16.2">
+<h2><span class="header-section-number">16.2</span> Interpreting a simple linear regression</h2>
 <p>We can obtain information about our model’s fit using the function <code>summary()</code>:</p>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="recostats-linear-models.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(myfirstmodel)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="recostats-linear-models.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(myfirstmodel)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = TotalSleep ~ 1 + log(BodyWt), data = allisontab)
@@ -313,9 +342,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The <code>summary()</code> function provides a summary of the output of <code>lm()</code> after it’s been given some data and a model to fit. Let’s pause and analyze the output here. The first line just re-states the formula we have provided to fit our model. Below that, we get a summary (min, max, median, etc.) of all the residuals (error terms) between our linear fit and the observed values of <span class="math inline">\(\bf{TotalSleep}\)</span>.</p>
 <p>Below that, we can see a table with point estimates, standard errors, and a few other properties of our estimated coefficients: the intercept (<span class="math inline">\(\beta_0\)</span>, first line) and the slope (<span class="math inline">\(\beta_1\)</span>, second line). The standard error is a measure of how confident we are about our point estimate (we’ll revisit this in later lectures). The “t value” corresponds to the statistic for a “t-test” which serves to determine whether the estimate can be considered as significantly different from zero. The last column is the P-value from this test. We can see that both estimates are quite significantly different from zero (P &lt; 0.001), meaning we can reject the hypothesis that these estimates are equivalent to zero.</p>
 <p>Finally, the last few lines are overall measures of the fit of the model. ‘Multiple R-squared’ is the fraction of the variance in <span class="math inline">\(\bf{TotalSleep}\)</span> explained by the fitted model. Generally, we want this number to be high, but it is possible to have very complex models with very high R-squared but lots of parameters, and therefore we run the risk of “over-fitting” our data. ‘Adjusted R-squared’ is a modified version of R-squared that attempts to penalize very complex models. The ‘residual standard error’ is the sum of the squares of the residuals (errors) over all observed data points, scaled by the degrees of freedom of the linear model, which is equal to n – k – 1 where n = total observations and k = total model parameters. Finally, the F-statistic is a test for whether <em>any</em> of the explanatory variables included in the model have a relationship to the outcome. In this case, we only have a single explanatory variable (<span class="math inline">\(\bf{log(BodyWt)}\)</span>), and so the P-value of this test is simply equal to the P-value of the t-test for the slope of <span class="math inline">\(\bf{log(BodyWt)}\)</span>.</p>
-<p><strong>Exercise</strong>: the function <code>attributes()</code> allows us to unpack all the components of the object outputted by the function <code>lm()</code> (and many other objects in R). Try inputting your model output into this function. We can observe that one of the attributes of the object is called <code>coefficients</code>. If we type <code>ourfirstmodel$coefficients</code>, we obtain a vector with the value of our two fitted coefficients (<span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>). Using the values from this vector, try plotting the line of best fit on top of the data. Hint: use the <code>geom_abline()</code> function from the <code>ggplot2</code> library.</p>
 <p>We can use the function <code>report()</code> from the library <code>easystats</code> (<a href="https://github.com/easystats/report" class="uri">https://github.com/easystats/report</a>) to get a more verbose report than the <code>summary()</code> function provides.</p>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="recostats-linear-models.html#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(myfirstmodel)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="recostats-linear-models.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">report</span>(myfirstmodel)</span></code></pre></div>
 <pre><code>## Formula contains log- or sqrt-terms. See help(&quot;standardize&quot;) for how such terms are standardized.
 ## Formula contains log- or sqrt-terms. See help(&quot;standardize&quot;) for how such terms are standardized.</code></pre>
 <pre><code>## We fitted a linear model (estimated using OLS) to predict TotalSleep with BodyWt (formula: TotalSleep ~ 1 + log(BodyWt)). The model explains a significant and substantial proportion of variance (R2 = 0.28, F(1, 56) = 22.20, p &lt; .001, adj. R2 = 0.27). The model&#39;s intercept, corresponding to BodyWt = 0, is at 11.44 (95% CI [10.33, 12.54], t(56) = 20.76, p &lt; .001). Within this model:
@@ -325,7 +353,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Standardized parameters were obtained by fitting the model on a standardized version of the dataset.</code></pre>
 <p>Note that this function “standardizes” the input variables before providing a summary of the output, which makes the estimates’ value to be slightly different than those stored in the output of <code>lm()</code>. This makes interpretation of the coefficients easier, as they are now expressed in terms of standard deviations from the mean.</p>
 <p>Another way to summarize our output is via a summary table in , which can be easily constructed using the function <code>stargazer()</code> from the library <code>stargazer</code> (<a href="https://cran.r-project.org/web/packages/stargazer/index.html" class="uri">https://cran.r-project.org/web/packages/stargazer/index.html</a>).</p>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="recostats-linear-models.html#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(myfirstmodel, <span class="at">type=</span><span class="st">&quot;text&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="recostats-linear-models.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(myfirstmodel, <span class="at">type=</span><span class="st">&quot;text&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ## ===============================================
 ##                         Dependent variable:    
@@ -353,7 +381,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="hypothesis-testing-and-permutation-testing" class="section level2" number="16.3">
 <h2><span class="header-section-number">16.3</span> Hypothesis testing and permutation testing</h2>
 <p>Let’s evaluate again the hypothesis that there is no relationship between TotalSleep and log(BodyWt). Recall that one way to do it would be by using a linear model, and testing whether the value of the fitted slope is significantly different from zero, using a t-test:</p>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="recostats-linear-models.html#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="fu">log</span>(BodyWt), <span class="at">data=</span>allisontab))</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="recostats-linear-models.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="fu">log</span>(BodyWt), <span class="at">data=</span>allisontab))</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = TotalSleep ~ log(BodyWt), data = allisontab)
@@ -375,46 +403,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## F-statistic:  22.2 on 1 and 56 DF,  p-value: 1.664e-05</code></pre>
 <p>Take a look at the P-values for the intercept and the slope. If you look at the help page <code>?summary.lm</code>, you can see that the P-values from these values come from a two-sided t-test. t-tests are usually deployed to compare the means of two populations, or to assess whether the mean of a population has a value specified by a hypothesis. In the case of the slope, for example, we’re assessing whether our parameter estimate for the slope has a value specified by the null hypothesis, which in our case is zero. In other words, we’re testing whether the value of the slope is consistent with there being no relationship between the two variables (such that if we had an infinite number of data points, their estimated slope would be zero)</p>
 <p>The above t-test makes assumptions on our data that sometimes may not be warranted. Most importantly, the t-test assumes we have a large number of samples, which might not always be the case. We can perform a more robust test that makes less a priori assumptions on our data - a permutation test. To do so, we need to be careful to permute the appropriate variables relevant to the relationship we are trying to test. In this case, we only have two variables ( TotalSleep and log(BodyWt) ), and we are trying to test whether there is a significant relationship between them. If we randomly shuffle one variable with respect to the other, we should obtain a randomized sample of our data. We can use the following function, which takes in a tibble and a variable of interest, and returns a new tibble in which that particular variable’s values are randomly shuffled.</p>
-<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="recostats-linear-models.html#cb187-1" aria-hidden="true" tabindex="-1"></a>permute <span class="ot">&lt;-</span> <span class="cf">function</span>(tab,vartoshuffle){</span>
-<span id="cb187-2"><a href="recostats-linear-models.html#cb187-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract column we wish to shuffle as a vector</span></span>
-<span id="cb187-3"><a href="recostats-linear-models.html#cb187-3" aria-hidden="true" tabindex="-1"></a>  toshuffle <span class="ot">&lt;-</span> <span class="fu">unlist</span>(tab[,vartoshuffle],<span class="at">use.names=</span><span class="cn">FALSE</span>)</span>
-<span id="cb187-4"><a href="recostats-linear-models.html#cb187-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The function sample() serves to randomize the order of elements in a vector</span></span>
-<span id="cb187-5"><a href="recostats-linear-models.html#cb187-5" aria-hidden="true" tabindex="-1"></a>  shuffled <span class="ot">&lt;-</span> <span class="fu">sample</span>(toshuffle)</span>
-<span id="cb187-6"><a href="recostats-linear-models.html#cb187-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace vector in new table (use !! to refer to a dynamic variable name)</span></span>
-<span id="cb187-7"><a href="recostats-linear-models.html#cb187-7" aria-hidden="true" tabindex="-1"></a>  newtab <span class="ot">&lt;-</span> <span class="fu">mutate</span>(tab, <span class="sc">!!</span><span class="at">vartoshuffle :=</span> shuffled )</span>
-<span id="cb187-8"><a href="recostats-linear-models.html#cb187-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(newtab)</span>
-<span id="cb187-9"><a href="recostats-linear-models.html#cb187-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="recostats-linear-models.html#cb39-1" aria-hidden="true" tabindex="-1"></a>permute <span class="ot">&lt;-</span> <span class="cf">function</span>(tab,vartoshuffle){</span>
+<span id="cb39-2"><a href="recostats-linear-models.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract column we wish to shuffle as a vector</span></span>
+<span id="cb39-3"><a href="recostats-linear-models.html#cb39-3" aria-hidden="true" tabindex="-1"></a>  toshuffle <span class="ot">&lt;-</span> <span class="fu">unlist</span>(tab[,vartoshuffle],<span class="at">use.names=</span><span class="cn">FALSE</span>)</span>
+<span id="cb39-4"><a href="recostats-linear-models.html#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The function sample() serves to randomize the order of elements in a vector</span></span>
+<span id="cb39-5"><a href="recostats-linear-models.html#cb39-5" aria-hidden="true" tabindex="-1"></a>  shuffled <span class="ot">&lt;-</span> <span class="fu">sample</span>(toshuffle)</span>
+<span id="cb39-6"><a href="recostats-linear-models.html#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace vector in new table (use !! to refer to a dynamic variable name)</span></span>
+<span id="cb39-7"><a href="recostats-linear-models.html#cb39-7" aria-hidden="true" tabindex="-1"></a>  newtab <span class="ot">&lt;-</span> <span class="fu">mutate</span>(tab, <span class="sc">!!</span><span class="at">vartoshuffle :=</span> shuffled )</span>
+<span id="cb39-8"><a href="recostats-linear-models.html#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(newtab)</span>
+<span id="cb39-9"><a href="recostats-linear-models.html#cb39-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Now we can obtain a permuted version of our original data, and compute the slope estimate on this dataset instead:</p>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="recostats-linear-models.html#cb188-1" aria-hidden="true" tabindex="-1"></a>permuted <span class="ot">&lt;-</span> <span class="fu">permute</span>(allisontab, <span class="st">&quot;TotalSleep&quot;</span>)</span>
-<span id="cb188-2"><a href="recostats-linear-models.html#cb188-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(permuted<span class="sc">$</span>TotalSleep,<span class="fu">log</span>(permuted<span class="sc">$</span>BodyWt))</span></code></pre></div>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-92-1.png" width="672" /></p>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="recostats-linear-models.html#cb189-1" aria-hidden="true" tabindex="-1"></a>permest <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="fu">log</span>(BodyWt), <span class="at">data=</span>permuted)<span class="sc">$</span>coeff[<span class="dv">2</span>]</span>
-<span id="cb189-2"><a href="recostats-linear-models.html#cb189-2" aria-hidden="true" tabindex="-1"></a>permest</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="recostats-linear-models.html#cb40-1" aria-hidden="true" tabindex="-1"></a>permuted <span class="ot">&lt;-</span> <span class="fu">permute</span>(allisontab, <span class="st">&quot;TotalSleep&quot;</span>)</span>
+<span id="cb40-2"><a href="recostats-linear-models.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(permuted<span class="sc">$</span>TotalSleep,<span class="fu">log</span>(permuted<span class="sc">$</span>BodyWt))</span></code></pre></div>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="recostats-linear-models.html#cb41-1" aria-hidden="true" tabindex="-1"></a>permest <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="fu">log</span>(BodyWt), <span class="at">data=</span>permuted)<span class="sc">$</span>coeff[<span class="dv">2</span>]</span>
+<span id="cb41-2"><a href="recostats-linear-models.html#cb41-2" aria-hidden="true" tabindex="-1"></a>permest</span></code></pre></div>
 <pre><code>## log(BodyWt) 
-##  -0.7931139</code></pre>
+##  -0.2482268</code></pre>
 <p><strong>Exercise</strong>: try estimating the same parameter from a series of 100 permuted versions of our original data, and collecting each of the permuted parameters into a vector called “permvec.”</p>
 <p>We now have a distribution of the parameter estimate under the assumption that there is no relationship between these two variables:</p>
 <p><strong>Exercise</strong>: obtain an empirical one-tailed P-value from this distribution by counting how many of the permuted samples are as extreme or more extreme (in the negative or positive direction, than our original estimate, and dividing by the total number of permuted samples we have. Note: you should add a 1 to both the denominator and the numerator of this ratio, in case there are no permuted samples that are as large as the original estimate, so as not to get an infinite number.</p>
 <p>The R package <code>coin</code> provides a handy way to apply permutation tests to a wide variety of problems.</p>
-<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="recostats-linear-models.html#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;coin&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;coin&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="recostats-linear-models.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;coin&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;coin&quot;</span>)</span></code></pre></div>
 <pre><code>## Loading required package: coin</code></pre>
 <pre><code>## Loading required package: survival</code></pre>
-<pre><code>## 
-## Attaching package: &#39;survival&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:boot&#39;:
-## 
-##     aml</code></pre>
-<pre><code>## 
-## Attaching package: &#39;coin&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:infer&#39;:
-## 
-##     chisq_test</code></pre>
-<pre><code>## The following object is masked from &#39;package:scales&#39;:
-## 
-##     pvalue</code></pre>
-<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="recostats-linear-models.html#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;coin&quot;</span>) <span class="co"># Library with pre-written permutation tests</span></span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="recostats-linear-models.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;coin&quot;</span>) <span class="co"># Library with pre-written permutation tests</span></span></code></pre></div>
 <p>The <code>spearman_test()</code> function runs a permutation test of independence between two numeric variables, like the one in the <code>permute()</code> function we coded above. The advantage is that we don’t need to actually code the function, we can just run the pre-made function in the <code>coin</code> package directly, as long as we know what type of dependency we’re testing. In this case, we perform a test using 1000 permutations (the more permutations, the more exact the test):</p>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="recostats-linear-models.html#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spearman_test</span>(TotalSleep <span class="sc">~</span> <span class="fu">log</span>(BodyWt), <span class="at">data=</span>allisontab, <span class="at">distribution=</span><span class="fu">approximate</span>(<span class="at">nresample=</span><span class="dv">1000</span>)) </span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="recostats-linear-models.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spearman_test</span>(TotalSleep <span class="sc">~</span> <span class="fu">log</span>(BodyWt), <span class="at">data=</span>allisontab, <span class="at">distribution=</span><span class="fu">approximate</span>(<span class="at">nresample=</span><span class="dv">1000</span>)) </span></code></pre></div>
 <pre><code>## 
 ##  Approximative Spearman Correlation Test
 ## 
@@ -423,11 +438,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## alternative hypothesis: true rho is not equal to 0</code></pre>
 <p><strong>Exercise</strong>: Perform a permutation test to assess whether there is a significant relationship between log(BrainWt) and TotalSleep. Compare this to a t-test testing the same relationship.</p>
 <p>Let’s perform a different type of permutation test. In this case, we’ll test whether the mean scores of two categories (for example, the math exam scores from two classrooms) are equal to each other.</p>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="recostats-linear-models.html#cb202-1" aria-hidden="true" tabindex="-1"></a>mathscore <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">114</span>, <span class="dv">90</span>, <span class="dv">110</span>, <span class="dv">116</span>, <span class="dv">114</span>, <span class="dv">128</span>, <span class="dv">110</span>, <span class="dv">124</span>, <span class="dv">130</span>)</span>
-<span id="cb202-2"><a href="recostats-linear-models.html#cb202-2" aria-hidden="true" tabindex="-1"></a>classroom <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;X&quot;</span>,<span class="dv">5</span>), <span class="fu">rep</span>(<span class="st">&quot;Y&quot;</span>,<span class="dv">5</span>)))</span>
-<span id="cb202-3"><a href="recostats-linear-models.html#cb202-3" aria-hidden="true" tabindex="-1"></a>scoretab <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(classroom, mathscore)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="recostats-linear-models.html#cb49-1" aria-hidden="true" tabindex="-1"></a>mathscore <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">114</span>, <span class="dv">90</span>, <span class="dv">110</span>, <span class="dv">116</span>, <span class="dv">114</span>, <span class="dv">128</span>, <span class="dv">110</span>, <span class="dv">124</span>, <span class="dv">130</span>)</span>
+<span id="cb49-2"><a href="recostats-linear-models.html#cb49-2" aria-hidden="true" tabindex="-1"></a>classroom <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;X&quot;</span>,<span class="dv">5</span>), <span class="fu">rep</span>(<span class="st">&quot;Y&quot;</span>,<span class="dv">5</span>)))</span>
+<span id="cb49-3"><a href="recostats-linear-models.html#cb49-3" aria-hidden="true" tabindex="-1"></a>scoretab <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(classroom, mathscore)</span></code></pre></div>
 <p>The standard way to test this is using a t-test, which assumes we have many observations from the two classrooms (do we?) and that these observations come from distributions that have the same variance:</p>
-<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="recostats-linear-models.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(mathscore<span class="sc">~</span>classroom, <span class="at">data=</span>scoretab, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="recostats-linear-models.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(mathscore<span class="sc">~</span>classroom, <span class="at">data=</span>scoretab, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Two Sample t-test
 ## 
