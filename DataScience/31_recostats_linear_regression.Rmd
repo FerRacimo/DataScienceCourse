@@ -118,6 +118,45 @@ This package also supports LaTeX and HTML/CSS format (see the `type` option in `
 
 **Exercise**: Plot the linear regression line of the above exercise on top of your data.
 
+
+## Simulating data from a linear model
+
+It is often useful to simulate data from a model to understand how its parameters relate to features of the data, and to see what happens when we change those parameters. We will now create a function that can simulate data from a simple 1-parameter linear model. We will then feed this function different values of the parameters, and see what the data simulated under a given model looks like.
+
+Let's start by first creating the simulation function. We'll simulate data from a linear model. The model simulation function needs to be told:
+1) The number ($n$) of data points we will simulate
+1) How the explanatory variables are distributed: we'll use a normal distribution to specify this.
+2) What the intercept ($\beta_0$) and slope ($\beta_1$) for the linear relationship between the explanatory and response variables are
+3) How departures (errors) from linearity for the response variables will be modeled: we'll use another normal distribution for that as well, and assume errors are heteroscedastic for now.
+
+```{r}
+linearmodsim <- function(n=2, beta_0=0, beta_1=1, sigma.res=1, mu.explan=5, sigma.explan=1, rerror=rnorm, r_explan = rnorm, hetero = 0 ){
+  # Simulate explanatory variables
+  explan <- r_explan(n,mu.explan,sigma.explan)
+  # Sort the simulated explanatory values from smallest to largest
+  explan <- sort(explan)
+  # Standardize the response variables so that they are  mean-centered and scaled by their standard deviation
+  explan.scaled <- scale(explan)
+  # OPTIONAL: If errors are not heteroscedastic (hetero does not equal 0), then their standard deviation will not be constant, and will depend on the explanatory variables 
+  sdev.err <- sapply(sigma.res + explan.scaled*hetero,max,0)
+  # Simulate the error values using the above-specified standard deviation
+  error <- rerror(n,0,sdev.err)
+  # Simulate response variables via the linear model
+  response <- beta_0 + beta_1 * explan + error
+  # Output a table containing the explanatory values and their corresponding response values
+  cbind(data.frame(explan,response))
+}
+```
+
+**Exercise**:
+
+a) Carefully read the code for the function above. Make sure you understand every step in the function. \
+b) Plot the output of a simulated linear model with 40 data points, an intercept of 1.5 and a slope of 3. Simulate from the same model one more time, and plot the output again.\
+c) Now, fit the  data from your latest simulation using the `lm()` function. Does your fit match your simulations? \
+d) Try increasing the sample size (say, to 200 data points), and repeat the `lm()` fitting. How does this influence the accuracy of your fitted model? Try simulating and fitting multiple times to get an idea of how well you can estimate the parameters. \
+e) Try changing the standard deviation of the simulated errors (make it smaller or larger), and repeat the `lm()` fitting. How does this influence the accuracy of your fitted model?
+
+
 ## Hypothesis testing and permutation testing
 
 Let's evaluate again the hypothesis that there is no relationship between TotalSleep and log(BodyWt). Recall that one way to do it would be by using a linear model, and testing whether the value of the fitted slope is significantly different from zero, using a t-test:

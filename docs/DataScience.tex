@@ -148,7 +148,7 @@ We can ``virtually'' toss a coin in our R console, using the rbinom() function:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0
+## [1] 1
 \end{verbatim}
 
 Try copying the above chunk to your R console and running it multiple times. Do you always get the same result?
@@ -162,7 +162,7 @@ This function has 3 required input parameters: n, size and prob. The first param
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 1 0 0 1 0 1 1 1 0 1 0 1 1 0 1 1 1 1 1 0
+##  [1] 0 1 0 1 0 0 0 0 1 0 0 0 1 1 0 0 1 0 1 0
 \end{verbatim}
 
 Here, we generate 20 toin cosses, and the zeroes and ones represent whether we got a heads or a tails in each trial. For now, we will ignore the second parameter (size) and fix it at 1, but we'll revisit it in a moment. The third parameter (prob) dictates how biased the coin is. If we set it to 0.9, we'll get the outcomes of a biased coin toss, in particular biased towards heads:
@@ -174,7 +174,7 @@ Here, we generate 20 toin cosses, and the zeroes and ones represent whether we g
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 1 1 1
+##  [1] 1 1 1 0 1 1 1 1 1 0 1 1 1 0 1 1 0 1 1 1
 \end{verbatim}
 
 \textbf{Exercise}: What happens when you set prob to 0.1? Or 0.999? Why?
@@ -220,7 +220,7 @@ Try running the code below 5 times. What numbers do you obtain?
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 13
+## [1] 7
 \end{verbatim}
 
 Turns out there's a short-hand way of performing the same experiment, i.e.~tossing a bunch of coins - each a Bernoulli random variable - observing their outcomes and adding them up, without using the sum() function at all. Here's where the second input parameter - size - of the rbinom() function comes into play. So far, we've always left it equal to 1 in all our command lines above, but we can set it to any positive integer:
@@ -255,7 +255,7 @@ We can compute the average of multiple Binomial trials. Let's try adding the res
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 12  8 12 11 12
+## [1]  9 12  9 13  8
 \end{verbatim}
 
 \begin{Shaded}
@@ -266,7 +266,7 @@ We can compute the average of multiple Binomial trials. Let's try adding the res
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 55
+## [1] 51
 \end{verbatim}
 
 To get the average, we divide by the total number of trials. Remember here that the number of Binomial trials is 5:
@@ -279,7 +279,7 @@ To get the average, we divide by the total number of trials. Remember here that 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 11
+## [1] 10.2
 \end{verbatim}
 
 A shorthand for obtaining the mean is the function mean(). This should give you the same result:
@@ -292,7 +292,7 @@ A shorthand for obtaining the mean is the function mean(). This should give you 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 11
+## [1] 10.2
 \end{verbatim}
 
 Note that the mean need not be an integer, even though the outcome of each Binomial trial \emph{must} be an integer.
@@ -362,26 +362,26 @@ Ok, this is very neat, but how can we check this equation is correct? Well, we c
 \end{Shaded}
 
 \begin{verbatim}
-##   [1]  8 11 11 13  8 10  5  9  6  9  8 10  9  5  6 11 10  9  9  8  8 12 12 10 10
-##  [26] 12 15 10  9 12  9 10 14  9  9  7  8  8 11 11 12 12  9  9 10  9  9 13 11 10
-##  [51] 10  6 13  6  7 13 12 13  8 11 11 11  9 10 10 11 11  4 12  9 11  9 13 11  8
-##  [76] 12 10 13 11  8  7 10  9 10 12 10  7 13  8 14 11 11 11 11  7  8 11 12  9  9
-## [101]  7 11  6  8 12 11 12  8 11 12 11  9  8 11 10 15  9  9 11  8  9  8 11  9  9
-## [126]  5 10  8 10 11 11 14 14 11 13 10  8 12  9  9 10 12  4 10  5 10  8 16  8  9
-## [151] 10  7  5 11  9 10  9 11  9  9 10 11 12  7  8  7 12 13  9  8  9  8  8  7 11
-## [176]  7  9 11 10 11 10  8  9 13  8 10  6 12 12  9 10  7  9 11 11 10  5  7 12  9
-## [201]  9  7 13 12 10 11 11  5 11 13  9  7  6 10 10 10 14  9  6  7 10  9  8 12 16
-## [226]  9  7 10 12 10 10 11  7 11 13 13  9  9  7  9 10 10  8  8 11 12  7 10  8 11
-## [251]  9 10  9 13  9 12  9 13 12 14 12  9 14 10  9 11 10  7  8  7  6 10 11 11  9
-## [276] 13 10 10  9 11 11  6  8  8 12 17 10 13 11  9 12 11 10  9 10  7  9 12 10  7
-## [301] 11 12 13 12  8 10  9  9  7  7 11 10 11 10 12  7 15  9 13 12 12 12  8 11 11
-## [326] 10 10 11 11 14 12 10 10 10 12 10 10  9  9  9 13  7 10 11  7 14 10  9  7 10
-## [351] 13 15 10  8  8  9  6 12 13  7  9 10 11  9 11  8  9 10 11 11  8 12 13  9 12
-## [376] 10 12 10  8 11  9 10 12 13 13  8 11 11 11 10 10  9  9  9 10  9  9 12 11  7
-## [401]  9 13  8 10 11 10  9  7 11 12  9  9 10 11 12 10 12  9 11  9 12 10  9 11 13
-## [426] 13 11 12 12 10 12  8 10  7  8  9  6  9 11 11  7  7 11  8  8 12 11 10 10 14
-## [451]  9  7  8 11 12  8  8  8 10 10 11 12  9 11  9 10 11 12 10 14  7  7 11  7 12
-## [476]  9 11 12 11  9  9  9 13  9 11 11 10  9 12  7 10  9 13  7 11 12 14  8  8 12
+##   [1]  9  9  8  6  8  8  8 10  9 11 10  7 11 10  7  9 11  8 12  6 11  8  9  9 10
+##  [26] 12  8 13 12  9  9  8  8  9 14  9 13  8  7  9  7 12 11  8 12 10 11 10 12  9
+##  [51]  9 12 11 10 12 15 16 11 13 11  9  8 11  8 11  8  6  6 11  8  9  9  9  9 14
+##  [76] 11 13 15 12  8 10 12  8  8  4  8 11  9 10  8 12  8  9 12 12  9  8 13 10  8
+## [101]  7 12  5 10 11  9 13 10  7 11  8 11  8 10 11 10  8  7  8 11 13 11 14 11  9
+## [126]  9 10  8 11 10 10  5 12 12  7 11  5 10 12  6 13  9 16  4 10 12  8  8 13  8
+## [151] 10 10 12  5 11  8 11 11  8  7 12  8 10 10 11  7  9 11  7 11 10 12 10  9 11
+## [176] 11 10 11 13  6  8  9 15  9  7  9  8  8 11  7 13  7 10 13  9 12 12  8  7 13
+## [201] 13  7 10  9  9 11 15 15 12 11  7 12  9 10 12  9 11 14  9  8  8  7 11 10  9
+## [226]  7 12 10 14 10 10 10 10 11  8  9  6  9 13  5  9  8 13  7  7  7 11 10  8 12
+## [251] 12  9 10  8 12 10  8 11 12  9 10  9 15 11 10 12 14 13 11 10  6 12 13 11 14
+## [276]  7  9 11  9  9  7  8  9  8 11  9  9 10 11  7  9 10  9  8  9 13 10  8  9  5
+## [301] 11  8 12  8 12  7 10 10  8  8  8 14 10 12  7 16 11  8 12 11 14 10 10 13 10
+## [326] 10 10 10  7  7  7  7 10 11 11  7 13  4 15 11 10 10 12 11 11 12  9  9 12 12
+## [351] 12 11  8 11 11 10  9 10  5  7 11  8  9 10  8 11 11 11 10 11 11  8  9 12 11
+## [376]  8 12 10 10  9 15  9  9  8 11  7  9 10  7  9 10 15  8 12  9  8  9 10 13 10
+## [401] 11 11  7 10  9  9 11  9 14 10  9  9 11  7 10 10 12 14  9  5 11  8 10  8 15
+## [426]  9 12 10 14 12  7  9  9 10 10  7  7  9 11  8  8 12  9 13  9  9  9 12  8  9
+## [451] 10 11 10 10  7 10  6 10  8 11 10 11 10 10 11  8 13  8  9  8 11 11  8 10 10
+## [476]  8 10 11  9 13  8  9  7 13  9 10  9  9  7 12  8  8 13 10 11 13  9  7 13 10
 \end{verbatim}
 
 We can determine which of these trials was equal to 10 using the ``=='' symbol:
@@ -394,48 +394,48 @@ We can determine which of these trials was equal to 10 using the ``=='' symbol:
 \end{Shaded}
 
 \begin{verbatim}
-##   [1] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE
-##  [13] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
-##  [25]  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
-##  [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
-##  [49] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [61] FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [73] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE
-##  [85] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [97] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [109] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
-## [121] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE
-## [133] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE
-## [145] FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE
-## [157] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [169] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
-## [181]  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE
-## [193] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [205]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE
-## [217] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
-## [229] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [241]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE
-## [253] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
-## [265] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
-## [277]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
-## [289] FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE
-## [301] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE
-## [313] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [325] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE
-## [337]  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE
-## [349] FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [361] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
-## [373] FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE
-## [385] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE  TRUE FALSE
-## [397] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE
-## [409] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
-## [421] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
-## [433]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [445] FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [457] FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
-## [469]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [481] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE
-## [493] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##   [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE
+##  [13] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [25]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE
+##  [49] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [61] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [73] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+##  [85] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [97] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE
+## [109] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE
+## [121] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE FALSE
+## [133] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+## [145]  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE
+## [157] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE
+## [169] FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+## [181] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [193]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+## [205] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+## [217] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE
+## [229] FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [241] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+## [253]  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+## [265]  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+## [277] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+## [289] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+## [301] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE
+## [313]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE
+## [325]  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+## [337] FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+## [349] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE
+## [361] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+## [373] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
+## [385] FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+## [397] FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+## [409] FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE
+## [421] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+## [433] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [445] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE FALSE  TRUE
+## [457] FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE
+## [469] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE
+## [481] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+## [493] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE
 \end{verbatim}
 
 This returns a new vector in which each element is equal to TRUE if the corresponding element in ``binomvec'' is equal to 10, and FALSE otherwise. The nice thing is that R considers the value of TRUE to also be equal to 1, and the value of FALSE to also be equal to 0, so we can actually apply the function sum() to this vector!
@@ -448,7 +448,7 @@ This returns a new vector in which each element is equal to TRUE if the correspo
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 89
+## [1] 88
 \end{verbatim}
 
 Finally, to get at the fraction of all trials that were equal to 10, we simply divide by the number of trials:
@@ -461,7 +461,7 @@ Finally, to get at the fraction of all trials that were equal to 10, we simply d
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.178
+## [1] 0.176
 \end{verbatim}
 
 You should have gotten a number pretty close to 17.62\%. You can imagine that the more trials we perform, the more accurate this number will approximate the exact probability given by the PMF.
@@ -508,7 +508,7 @@ Just as we can compute the sample mean of a set of trials using the function mea
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 50 47 51 46 45
+## [1] 48 46 52 55 49
 \end{verbatim}
 
 \begin{Shaded}
@@ -518,7 +518,7 @@ Just as we can compute the sample mean of a set of trials using the function mea
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 47.8
+## [1] 50
 \end{verbatim}
 
 \begin{Shaded}
@@ -528,7 +528,7 @@ Just as we can compute the sample mean of a set of trials using the function mea
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 6.7
+## [1] 12.5
 \end{verbatim}
 
 \textbf{Exercise}: Compute the variance of a set of 5 Binomial trials of size 100, for different values of the probability of heads. This is equivalent to performing 5 100-toss experiments, with different types of biased coins in each experiment. For what value of the binomial probability is the variance maximized? Does this agree with the variance equation for a binomially-distributed random variable?
@@ -1100,8 +1100,8 @@ Now we can obtain a permuted version of our original data, and compute the slope
 \end{Shaded}
 
 \begin{verbatim}
-##    logBody 
-## 0.08237048
+##   logBody 
+## 0.1269916
 \end{verbatim}
 
 \textbf{Exercise}: try estimating the same parameter from a series of 100 permuted versions of our original data, and collecting each of the permuted parameters into a vector called ``permvec''.
@@ -1638,51 +1638,41 @@ Let's perform NMDS ordination using the Bray-Curtis dissimilarity. Remember that
 
 \begin{verbatim}
 ## Run 0 stress 0.1192678 
-## Run 1 stress 0.1183186 
-## ... New best solution
-## ... Procrustes: rmse 0.02026669  max resid 0.0649395 
-## Run 2 stress 0.1809578 
-## Run 3 stress 0.1192683 
-## Run 4 stress 0.1183186 
-## ... Procrustes: rmse 4.461091e-05  max resid 0.0001179544 
+## Run 1 stress 0.1192681 
+## ... Procrustes: rmse 0.0002886995  max resid 0.0008843855 
 ## ... Similar to previous best
+## Run 2 stress 0.1183186 
+## ... New best solution
+## ... Procrustes: rmse 0.02027201  max resid 0.06496324 
+## Run 3 stress 0.1889653 
+## Run 4 stress 0.2075713 
 ## Run 5 stress 0.1183186 
 ## ... New best solution
-## ... Procrustes: rmse 4.013069e-05  max resid 0.000127058 
+## ... Procrustes: rmse 1.602892e-05  max resid 4.319392e-05 
 ## ... Similar to previous best
-## Run 6 stress 0.1192681 
-## Run 7 stress 0.119268 
+## Run 6 stress 0.1183186 
+## ... Procrustes: rmse 1.078983e-05  max resid 3.531281e-05 
+## ... Similar to previous best
+## Run 7 stress 0.1809578 
 ## Run 8 stress 0.1183186 
-## ... New best solution
-## ... Procrustes: rmse 1.532413e-05  max resid 3.241202e-05 
+## ... Procrustes: rmse 1.790996e-05  max resid 5.68235e-05 
 ## ... Similar to previous best
-## Run 9 stress 0.1183186 
-## ... Procrustes: rmse 9.667969e-06  max resid 2.014613e-05 
-## ... Similar to previous best
-## Run 10 stress 0.1183186 
-## ... Procrustes: rmse 1.255572e-05  max resid 4.395128e-05 
-## ... Similar to previous best
-## Run 11 stress 0.2075713 
+## Run 9 stress 0.1192684 
+## Run 10 stress 0.1192678 
+## Run 11 stress 0.1192678 
 ## Run 12 stress 0.1183186 
-## ... Procrustes: rmse 3.314637e-05  max resid 9.558513e-05 
+## ... Procrustes: rmse 2.814207e-05  max resid 9.006326e-05 
 ## ... Similar to previous best
-## Run 13 stress 0.1939206 
-## Run 14 stress 0.1808929 
-## Run 15 stress 0.1183186 
-## ... New best solution
-## ... Procrustes: rmse 9.034392e-06  max resid 2.476793e-05 
-## ... Similar to previous best
-## Run 16 stress 0.1183186 
-## ... Procrustes: rmse 2.02038e-05  max resid 6.630851e-05 
-## ... Similar to previous best
-## Run 17 stress 0.2035424 
+## Run 13 stress 0.1192682 
+## Run 14 stress 0.1192685 
+## Run 15 stress 0.1192678 
+## Run 16 stress 0.1192679 
+## Run 17 stress 0.1192679 
 ## Run 18 stress 0.1183186 
-## ... Procrustes: rmse 6.151015e-05  max resid 0.0001801476 
+## ... Procrustes: rmse 3.520508e-05  max resid 0.000108158 
 ## ... Similar to previous best
-## Run 19 stress 0.1183186 
-## ... Procrustes: rmse 1.556896e-05  max resid 4.913145e-05 
-## ... Similar to previous best
-## Run 20 stress 0.2034377 
+## Run 19 stress 0.2930675 
+## Run 20 stress 0.1192678 
 ## *** Solution reached
 \end{verbatim}
 
@@ -2160,6 +2150,55 @@ This package also supports LaTeX and HTML/CSS format (see the \texttt{type} opti
 
 \textbf{Exercise}: Plot the linear regression line of the above exercise on top of your data.
 
+\hypertarget{simulating-data-from-a-linear-model-1}{%
+\section{Simulating data from a linear model}\label{simulating-data-from-a-linear-model-1}}
+
+It is often useful to simulate data from a model to understand how its parameters relate to features of the data, and to see what happens when we change those parameters. We will now create a function that can simulate data from a simple 1-parameter linear model. We will then feed this function different values of the parameters, and see what the data simulated under a given model looks like.
+
+Let's start by first creating the simulation function. We'll simulate data from a linear model. The model simulation function needs to be told:
+1) The number (\(n\)) of data points we will simulate
+1) How the explanatory variables are distributed: we'll use a normal distribution to specify this.
+2) What the intercept (\(\beta_0\)) and slope (\(\beta_1\)) for the linear relationship between the explanatory and response variables are
+3) How departures (errors) from linearity for the response variables will be modeled: we'll use another normal distribution for that as well, and assume errors are heteroscedastic for now.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{linearmodsim }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{n=}\DecValTok{2}\NormalTok{, }\AttributeTok{beta\_0=}\DecValTok{0}\NormalTok{, }\AttributeTok{beta\_1=}\DecValTok{1}\NormalTok{, }\AttributeTok{sigma.res=}\DecValTok{1}\NormalTok{, }\AttributeTok{mu.explan=}\DecValTok{5}\NormalTok{, }\AttributeTok{sigma.explan=}\DecValTok{1}\NormalTok{, }\AttributeTok{rerror=}\NormalTok{rnorm, }\AttributeTok{r\_explan =}\NormalTok{ rnorm, }\AttributeTok{hetero =} \DecValTok{0}\NormalTok{ )\{}
+  \CommentTok{\# Simulate explanatory variables}
+\NormalTok{  explan }\OtherTok{\textless{}{-}} \FunctionTok{r\_explan}\NormalTok{(n,mu.explan,sigma.explan)}
+  \CommentTok{\# Sort the simulated explanatory values from smallest to largest}
+\NormalTok{  explan }\OtherTok{\textless{}{-}} \FunctionTok{sort}\NormalTok{(explan)}
+  \CommentTok{\# Standardize the response variables so that they are  mean{-}centered and scaled by their standard deviation}
+\NormalTok{  explan.scaled }\OtherTok{\textless{}{-}} \FunctionTok{scale}\NormalTok{(explan)}
+  \CommentTok{\# OPTIONAL: If errors are not heteroscedastic (hetero does not equal 0), then their standard deviation will not be constant, and will depend on the explanatory variables }
+\NormalTok{  sdev.err }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(sigma.res }\SpecialCharTok{+}\NormalTok{ explan.scaled}\SpecialCharTok{*}\NormalTok{hetero,max,}\DecValTok{0}\NormalTok{)}
+  \CommentTok{\# Simulate the error values using the above{-}specified standard deviation}
+\NormalTok{  error }\OtherTok{\textless{}{-}} \FunctionTok{rerror}\NormalTok{(n,}\DecValTok{0}\NormalTok{,sdev.err)}
+  \CommentTok{\# Simulate response variables via the linear model}
+\NormalTok{  response }\OtherTok{\textless{}{-}}\NormalTok{ beta\_0 }\SpecialCharTok{+}\NormalTok{ beta\_1 }\SpecialCharTok{*}\NormalTok{ explan }\SpecialCharTok{+}\NormalTok{ error}
+  \CommentTok{\# Output a table containing the explanatory values and their corresponding response values}
+  \FunctionTok{cbind}\NormalTok{(}\FunctionTok{data.frame}\NormalTok{(explan,response))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Exercise}:
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\tightlist
+\item
+  Carefully read the code for the function above. Make sure you understand every step in the function.\\
+\item
+  Plot the output of a simulated linear model with 40 data points, an intercept of 1.5 and a slope of 3. Simulate from the same model one more time, and plot the output again.\\
+\item
+  Now, fit the data from your latest simulation using the \texttt{lm()} function. Does your fit match your simulations?\\
+\item
+  Try increasing the sample size (say, to 200 data points), and repeat the \texttt{lm()} fitting. How does this influence the accuracy of your fitted model? Try simulating and fitting multiple times to get an idea of how well you can estimate the parameters.\\
+\item
+  Try changing the standard deviation of the simulated errors (make it smaller or larger), and repeat the \texttt{lm()} fitting. How does this influence the accuracy of your fitted model?
+\end{enumerate}
+
 \hypertarget{hypothesis-testing-and-permutation-testing}{%
 \section{Hypothesis testing and permutation testing}\label{hypothesis-testing-and-permutation-testing}}
 
@@ -2220,7 +2259,7 @@ Now we can obtain a permuted version of our original data, and compute the slope
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-92-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-93-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]

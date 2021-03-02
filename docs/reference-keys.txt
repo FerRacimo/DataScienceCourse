@@ -38,4 +38,5 @@ k-means-clustering
 recostats-linear-models
 fitting-a-simple-linear-regression-1
 interpreting-a-simple-linear-regression-1
+simulating-data-from-a-linear-model-1
 hypothesis-testing-and-permutation-testing
