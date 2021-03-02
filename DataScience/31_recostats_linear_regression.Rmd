@@ -121,7 +121,7 @@ This package also supports LaTeX and HTML/CSS format (see the `type` option in `
 
 ## Simulating data from a linear model
 
-It is often useful to simulate data from a model to understand how its parameters relate to features of the data, and to see what happens when we change those parameters. We will now create a function that can simulate data from a simple 1-parameter linear model. We will then feed this function different values of the parameters, and see what the data simulated under a given model looks like.
+It is often useful to simulate data from a model to understand how its parameters relate to features of the data, and to see what happens when we change those parameters. We will now create a function that can simulate data from a simple linear model. We will then feed this function different values of the parameters, and see what the data simulated under a given model looks like.
 
 Let's start by first creating the simulation function. We'll simulate data from a linear model. The model simulation function needs to be told:
 1) The number ($n$) of data points we will simulate
