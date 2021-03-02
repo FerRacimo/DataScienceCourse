@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-02-19" />
+<meta name="date" content="2021-03-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -184,8 +184,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="16" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html"><i class="fa fa-check"></i><b>16</b> REcoStats: Linear Models</a>
 <ul>
-<li class="chapter" data-level="16.1" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html#the-data"><i class="fa fa-check"></i><b>16.1</b> The data</a></li>
-<li class="chapter" data-level="16.2" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html#running-and-interpreting-a-simple-linear-regression"><i class="fa fa-check"></i><b>16.2</b> Running and interpreting a simple linear regression</a></li>
+<li class="chapter" data-level="16.1" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html#fitting-a-simple-linear-regression-1"><i class="fa fa-check"></i><b>16.1</b> Fitting a simple linear regression</a></li>
+<li class="chapter" data-level="16.2" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html#interpreting-a-simple-linear-regression-1"><i class="fa fa-check"></i><b>16.2</b> Interpreting a simple linear regression</a></li>
 <li class="chapter" data-level="16.3" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html#hypothesis-testing-and-permutation-testing"><i class="fa fa-check"></i><b>16.3</b> Hypothesis testing and permutation testing</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -419,48 +419,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Let’s perform NMDS ordination using the Bray-Curtis dissimilarity. Remember that, unlike PCA, NMDS requires us to specify the number of dimensions (k) a priori (the default in vegan is 2). It also performs a series of transformations on the data that are appropriate for ecological data (default: autotransform=TRUE). The trymax option ensures that the algorithm is started from different points (in our case, 50) to avoid local minima.</p>
 <div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="ordination.html#cb141-1" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(dune, <span class="at">k=</span><span class="dv">2</span>, <span class="at">autotransform =</span> <span class="cn">TRUE</span>, <span class="at">trymax=</span><span class="dv">50</span>)</span></code></pre></div>
 <pre><code>## Run 0 stress 0.1192678 
-## Run 1 stress 0.1192679 
-## ... Procrustes: rmse 0.0001774632  max resid 0.0005517039 
-## ... Similar to previous best
-## Run 2 stress 0.1183186 
+## Run 1 stress 0.1183186 
 ## ... New best solution
-## ... Procrustes: rmse 0.02025462  max resid 0.06488906 
-## Run 3 stress 0.1192691 
-## Run 4 stress 0.1183186 
-## ... New best solution
-## ... Procrustes: rmse 9.204248e-05  max resid 0.0002446029 
-## ... Similar to previous best
-## Run 5 stress 0.1183186 
-## ... Procrustes: rmse 7.43172e-05  max resid 0.0002433121 
-## ... Similar to previous best
-## Run 6 stress 0.1183186 
-## ... Procrustes: rmse 4.33054e-05  max resid 0.0001258749 
-## ... Similar to previous best
+## ... Procrustes: rmse 0.02027293  max resid 0.06496809 
+## Run 2 stress 0.1192679 
+## Run 3 stress 0.1192682 
+## Run 4 stress 0.1192678 
+## Run 5 stress 0.1192678 
+## Run 6 stress 0.1812956 
 ## Run 7 stress 0.1183186 
-## ... Procrustes: rmse 3.869036e-05  max resid 0.0001039883 
+## ... Procrustes: rmse 7.555256e-05  max resid 0.0002329556 
 ## ... Similar to previous best
-## Run 8 stress 0.1901527 
-## Run 9 stress 0.1192678 
-## Run 10 stress 0.1192678 
-## Run 11 stress 0.1192679 
+## Run 8 stress 0.1192679 
+## Run 9 stress 0.1192679 
+## Run 10 stress 0.1183186 
+## ... Procrustes: rmse 4.224485e-05  max resid 0.0001383883 
+## ... Similar to previous best
+## Run 11 stress 0.1192678 
 ## Run 12 stress 0.1183186 
-## ... Procrustes: rmse 4.083816e-05  max resid 0.0001117299 
+## ... Procrustes: rmse 4.005665e-05  max resid 0.0001242993 
 ## ... Similar to previous best
-## Run 13 stress 0.1192681 
-## Run 14 stress 0.1192679 
-## Run 15 stress 0.1183186 
-## ... Procrustes: rmse 6.988772e-05  max resid 0.0002191847 
+## Run 13 stress 0.1183186 
+## ... Procrustes: rmse 4.59141e-05  max resid 0.0001478066 
 ## ... Similar to previous best
-## Run 16 stress 0.1192678 
-## Run 17 stress 0.1192678 
-## Run 18 stress 0.1183186 
-## ... Procrustes: rmse 3.026339e-05  max resid 8.967611e-05 
+## Run 14 stress 0.300995 
+## Run 15 stress 0.1808911 
+## Run 16 stress 0.1183186 
+## ... Procrustes: rmse 8.47237e-05  max resid 0.0002958297 
 ## ... Similar to previous best
-## Run 19 stress 0.1192678 
-## Run 20 stress 0.1183186 
+## Run 17 stress 0.1183186 
 ## ... New best solution
-## ... Procrustes: rmse 2.123741e-05  max resid 7.012777e-05 
+## ... Procrustes: rmse 2.064948e-05  max resid 7.134044e-05 
 ## ... Similar to previous best
+## Run 18 stress 0.1192683 
+## Run 19 stress 0.1808911 
+## Run 20 stress 0.1192679 
 ## *** Solution reached</code></pre>
 <p>As you can see, the function goes through a series of steps until convergence is reached. Let’s plot the results:</p>
 <div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="ordination.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>

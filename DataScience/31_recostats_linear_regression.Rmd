@@ -80,7 +80,7 @@ myfirstmodel <- lm(TotalSleep ~ 1 + log(BodyWt), data=allisontab)
 myfirstmodel
 ```
 
-**Exercise**: the function `attributes()` allows us to unpack all the components of the object outputted by the function `lm()` (and many other objects in R). Try inputting your model output into this function. We can observe that one of the attributes of the object is called `coefficients`. If we type `ourfirstmodel$coefficients`, we obtain a vector with the value of our two fitted coefficients ($\beta_0$ and $\beta_1$). Using the values from this vector, try plotting the line of best fit on top of the data. Hint: use the `geom_abline()` function from the `ggplot2` library.
+**Exercise**: the function `attributes()` allows us to unpack all the components of the object outputted by the function `lm()` (and many other objects in R). Try inputting your model output into this function. We can observe that one of the attributes of the object is called `coefficients`. If we type `myfirstmodel$coefficients`, we obtain a vector with the value of our two fitted coefficients ($\beta_0$ and $\beta_1$). Using the values from this vector, try plotting the line of best fit on top of the data. Hint: use the `geom_abline()` function from the `ggplot2` library.
 
 
 ## Interpreting a simple linear regression

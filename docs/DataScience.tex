@@ -118,7 +118,7 @@
 
 \title{Data Analysis and Statistical Thinking: An R Workbook}
 \author{Fernando Racimo, \ldots{}}
-\date{2021-02-19}
+\date{2021-03-02}
 
 \begin{document}
 \maketitle
@@ -162,7 +162,7 @@ This function has 3 required input parameters: n, size and prob. The first param
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0 1 1 0 1 0 0 0 0 1 0 1 0 1 1 0 1 1 1 1
+##  [1] 1 0 0 1 0 1 1 1 0 1 0 1 1 0 1 1 1 1 1 0
 \end{verbatim}
 
 Here, we generate 20 toin cosses, and the zeroes and ones represent whether we got a heads or a tails in each trial. For now, we will ignore the second parameter (size) and fix it at 1, but we'll revisit it in a moment. The third parameter (prob) dictates how biased the coin is. If we set it to 0.9, we'll get the outcomes of a biased coin toss, in particular biased towards heads:
@@ -174,7 +174,7 @@ Here, we generate 20 toin cosses, and the zeroes and ones represent whether we g
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 1 1 1 1 0 1 1 1 1 1 1 0 1 1 1 0 1 1 0 1
+##  [1] 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 1 1 1
 \end{verbatim}
 
 \textbf{Exercise}: What happens when you set prob to 0.1? Or 0.999? Why?
@@ -201,7 +201,7 @@ Let's create a new variable (n) that will determine how many trials we attempt, 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.55
+## [1] 0.35
 \end{verbatim}
 
 \textbf{Exercise}: Run the chunk of code above, in your own console. Do you get the same number as I do? Do you get exactly 0.5? If not, why not? Try the same exercise but with 100 trials, 1000 trials and 100000 trials. What happens as we increase the number of trials? This should illustrate how powerful R can be. We just threw 100 thousand coins into the air without even lifting our fingers! Try to repeat the exercise, but this time, set the Bernoulli prob parameter to be equal to a number of your choice (between 0 and 1). What is the average of all your coin tosses?
@@ -220,7 +220,7 @@ Try running the code below 5 times. What numbers do you obtain?
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 11
+## [1] 13
 \end{verbatim}
 
 Turns out there's a short-hand way of performing the same experiment, i.e.~tossing a bunch of coins - each a Bernoulli random variable - observing their outcomes and adding them up, without using the sum() function at all. Here's where the second input parameter - size - of the rbinom() function comes into play. So far, we've always left it equal to 1 in all our command lines above, but we can set it to any positive integer:
@@ -232,7 +232,7 @@ Turns out there's a short-hand way of performing the same experiment, i.e.~tossi
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 13
+## [1] 9
 \end{verbatim}
 
 The above code is equivalent to taking 20 Bernoulli trials, and then adding their outcomes up. The ``experiment'' we are running is now not a single coin toss, but 20 coin tosses together. The outcome of this experiment is neither heads nor tails, but the sum of all the heads in all those coin tosses. It turns out that this ``experiment'' is a probability distribution in its own right, and it is called the Binomial distribution. It has two parameters: the size of the experiment (how many tosses we perform) and the probability of heads for each toss (the prob parameter). The Bernoulli distribution is just a specific case of the Binomial distribution (the case in which we only toss 1 coin, i.e.~size = 1). You can read more about this distribution if you go to the help menu for this function (type "?rbinom).
@@ -255,7 +255,7 @@ We can compute the average of multiple Binomial trials. Let's try adding the res
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 10  8  9 12  8
+## [1] 12  8 12 11 12
 \end{verbatim}
 
 \begin{Shaded}
@@ -266,7 +266,7 @@ We can compute the average of multiple Binomial trials. Let's try adding the res
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 47
+## [1] 55
 \end{verbatim}
 
 To get the average, we divide by the total number of trials. Remember here that the number of Binomial trials is 5:
@@ -279,7 +279,7 @@ To get the average, we divide by the total number of trials. Remember here that 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 9.4
+## [1] 11
 \end{verbatim}
 
 A shorthand for obtaining the mean is the function mean(). This should give you the same result:
@@ -292,7 +292,7 @@ A shorthand for obtaining the mean is the function mean(). This should give you 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 9.4
+## [1] 11
 \end{verbatim}
 
 Note that the mean need not be an integer, even though the outcome of each Binomial trial \emph{must} be an integer.
@@ -362,26 +362,26 @@ Ok, this is very neat, but how can we check this equation is correct? Well, we c
 \end{Shaded}
 
 \begin{verbatim}
-##   [1]  8  7 12  9  6  9 15  9  9 12 12 10  9 10 10 12 11  9 11  9 10 10 11 10  6
-##  [26] 13 11  7  9  7 11 11 12 12  9  5  7  7 10 10 11 14 11  7 10 10 12  7 12  7
-##  [51]  9  9 11  8  5  8 11  8 14 14  8  5  9 13  8  9  7 11  8 12  9 11 12 14  8
-##  [76] 15 12 10  7  9 11  9 10 10  7 12  8 11 11 12 13  8  9 13  6 10  8 11 11  9
-## [101] 12 10 12  9 13 10 11 10 11  8 12 11 13 10  8 12 13 11  6  7 11  6 11 11  9
-## [126]  9  8  7 12 10 11  9 11 10 10 10 11 11 10 14 13 13 14 10  7  9 11  7  7 11
-## [151] 13  8 12  9 12 12 10  8 12 10 11  8 12  7 13  6  7 11 11  8  7 11 15 11  8
-## [176] 14  8 10 10 11  9  9  8 14 17 16 10 10  8 13  9  8 10 11 10 12 10 10  9 12
-## [201]  8 13 12  7  7 14  7  9  8  5  5 10 13 10 12 10  6  6 10 10 10  4 11  8 13
-## [226]  7  9  8 15 11  7  7  8 10 12 11 11  6 11 11 10  7 11  9  9 12  9  9 12 14
-## [251] 10 11  5  8  8  9 11 12 11 10  9 11  9  8 12  9  9 11 10 12  9 10  8  9  9
-## [276] 10  9 12 11  9  8 13 12  8 12 12  8  6 11 11  9  7  8 11 17  9 13 11 12  8
-## [301]  9  6  9  8  9  9 13  8 10 10  9  9 15 12 13 11  6 13  7 10  7  8 11 13 12
-## [326] 11 10 10 10 11  8 11  9  9  9  9  9  8 10  9  8  7 10 11 13 13 14 12 11 10
-## [351] 10 12  6  6 10 10  7 11 15 14  9 13  9 10  5  8  9  8  9 10 10 12 10  9  8
-## [376]  8 11  9 12  5 14  9  9  7 14 11 10 12 11  8  8  9  7  9  7 10  9  9  9 15
-## [401] 11 10 12 12 10 10  7 12 11 10  7 10  8 11 10 13  8 10  6 12 12  5 10  9 11
-## [426]  8 12 10  7 12 11  9 13  7  9 11  8 12 10  7 11 11 10 11 12  8  8 12 13 11
-## [451]  6 12  9 12 10 11 10  9 10  7  7 11  8 11  9 11  8  9 11  8 13  8 14  9 10
-## [476]  9  7 10 10  8 11  8 12 11  6  8 14 11 11  7 11  9 11  9 11  8 10  9 12 11
+##   [1]  8 11 11 13  8 10  5  9  6  9  8 10  9  5  6 11 10  9  9  8  8 12 12 10 10
+##  [26] 12 15 10  9 12  9 10 14  9  9  7  8  8 11 11 12 12  9  9 10  9  9 13 11 10
+##  [51] 10  6 13  6  7 13 12 13  8 11 11 11  9 10 10 11 11  4 12  9 11  9 13 11  8
+##  [76] 12 10 13 11  8  7 10  9 10 12 10  7 13  8 14 11 11 11 11  7  8 11 12  9  9
+## [101]  7 11  6  8 12 11 12  8 11 12 11  9  8 11 10 15  9  9 11  8  9  8 11  9  9
+## [126]  5 10  8 10 11 11 14 14 11 13 10  8 12  9  9 10 12  4 10  5 10  8 16  8  9
+## [151] 10  7  5 11  9 10  9 11  9  9 10 11 12  7  8  7 12 13  9  8  9  8  8  7 11
+## [176]  7  9 11 10 11 10  8  9 13  8 10  6 12 12  9 10  7  9 11 11 10  5  7 12  9
+## [201]  9  7 13 12 10 11 11  5 11 13  9  7  6 10 10 10 14  9  6  7 10  9  8 12 16
+## [226]  9  7 10 12 10 10 11  7 11 13 13  9  9  7  9 10 10  8  8 11 12  7 10  8 11
+## [251]  9 10  9 13  9 12  9 13 12 14 12  9 14 10  9 11 10  7  8  7  6 10 11 11  9
+## [276] 13 10 10  9 11 11  6  8  8 12 17 10 13 11  9 12 11 10  9 10  7  9 12 10  7
+## [301] 11 12 13 12  8 10  9  9  7  7 11 10 11 10 12  7 15  9 13 12 12 12  8 11 11
+## [326] 10 10 11 11 14 12 10 10 10 12 10 10  9  9  9 13  7 10 11  7 14 10  9  7 10
+## [351] 13 15 10  8  8  9  6 12 13  7  9 10 11  9 11  8  9 10 11 11  8 12 13  9 12
+## [376] 10 12 10  8 11  9 10 12 13 13  8 11 11 11 10 10  9  9  9 10  9  9 12 11  7
+## [401]  9 13  8 10 11 10  9  7 11 12  9  9 10 11 12 10 12  9 11  9 12 10  9 11 13
+## [426] 13 11 12 12 10 12  8 10  7  8  9  6  9 11 11  7  7 11  8  8 12 11 10 10 14
+## [451]  9  7  8 11 12  8  8  8 10 10 11 12  9 11  9 10 11 12 10 14  7  7 11  7 12
+## [476]  9 11 12 11  9  9  9 13  9 11 11 10  9 12  7 10  9 13  7 11 12 14  8  8 12
 \end{verbatim}
 
 We can determine which of these trials was equal to 10 using the ``=='' symbol:
@@ -394,48 +394,48 @@ We can determine which of these trials was equal to 10 using the ``=='' symbol:
 \end{Shaded}
 
 \begin{verbatim}
-##   [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
-##  [13] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE  TRUE
-##  [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [37] FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE
-##  [49] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [61] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-##  [73] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE
-##  [85] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
-##  [97] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE
-## [109] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
-## [121] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
-## [133] FALSE  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE
-## [145] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [157]  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [169] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE
-## [181] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE
-## [193]  TRUE FALSE  TRUE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
-## [205] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE
-## [217] FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [229] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
-## [241]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
-## [253] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
-## [265] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE
-## [277] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [289] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [301] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE
-## [313] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
-## [325] FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [337] FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
-## [349] FALSE  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE
-## [361] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE
-## [373]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [385] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
-## [397] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE
-## [409] FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE
-## [421] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
-## [433] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE
-## [445] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
-## [457]  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [469] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE FALSE
-## [481] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-## [493] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+##   [1] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE
+##  [13] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+##  [25]  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+##  [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+##  [49] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [61] FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [73] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE
+##  [85] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+##  [97] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [109] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+## [121] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE
+## [133] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE
+## [145] FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE
+## [157] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [169] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+## [181]  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE
+## [193] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [205]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE
+## [217] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+## [229] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [241]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE
+## [253] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+## [265] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+## [277]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+## [289] FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE
+## [301] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE
+## [313] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [325] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE
+## [337]  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE
+## [349] FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [361] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+## [373] FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE
+## [385] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE  TRUE FALSE
+## [397] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE
+## [409] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+## [421] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+## [433]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [445] FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [457] FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE
+## [469]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [481] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE
+## [493] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 \end{verbatim}
 
 This returns a new vector in which each element is equal to TRUE if the corresponding element in ``binomvec'' is equal to 10, and FALSE otherwise. The nice thing is that R considers the value of TRUE to also be equal to 1, and the value of FALSE to also be equal to 0, so we can actually apply the function sum() to this vector!
@@ -448,7 +448,7 @@ This returns a new vector in which each element is equal to TRUE if the correspo
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 83
+## [1] 89
 \end{verbatim}
 
 Finally, to get at the fraction of all trials that were equal to 10, we simply divide by the number of trials:
@@ -461,7 +461,7 @@ Finally, to get at the fraction of all trials that were equal to 10, we simply d
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.166
+## [1] 0.178
 \end{verbatim}
 
 You should have gotten a number pretty close to 17.62\%. You can imagine that the more trials we perform, the more accurate this number will approximate the exact probability given by the PMF.
@@ -508,7 +508,7 @@ Just as we can compute the sample mean of a set of trials using the function mea
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 64 48 51 46 50
+## [1] 50 47 51 46 45
 \end{verbatim}
 
 \begin{Shaded}
@@ -518,7 +518,7 @@ Just as we can compute the sample mean of a set of trials using the function mea
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 51.8
+## [1] 47.8
 \end{verbatim}
 
 \begin{Shaded}
@@ -528,7 +528,7 @@ Just as we can compute the sample mean of a set of trials using the function mea
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 50.2
+## [1] 6.7
 \end{verbatim}
 
 \textbf{Exercise}: Compute the variance of a set of 5 Binomial trials of size 100, for different values of the probability of heads. This is equivalent to performing 5 100-toss experiments, with different types of biased coins in each experiment. For what value of the binomial probability is the variance maximized? Does this agree with the variance equation for a binomially-distributed random variable?
@@ -1101,7 +1101,7 @@ Now we can obtain a permuted version of our original data, and compute the slope
 
 \begin{verbatim}
 ##    logBody 
-## -0.1247009
+## 0.08237048
 \end{verbatim}
 
 \textbf{Exercise}: try estimating the same parameter from a series of 100 permuted versions of our original data, and collecting each of the permuted parameters into a vector called ``permvec''.
@@ -1638,46 +1638,51 @@ Let's perform NMDS ordination using the Bray-Curtis dissimilarity. Remember that
 
 \begin{verbatim}
 ## Run 0 stress 0.1192678 
-## Run 1 stress 0.119268 
-## ... Procrustes: rmse 0.000213987  max resid 0.0006594354 
-## ... Similar to previous best
-## Run 2 stress 0.1192681 
-## ... Procrustes: rmse 9.39404e-05  max resid 0.0002124695 
-## ... Similar to previous best
+## Run 1 stress 0.1183186 
+## ... New best solution
+## ... Procrustes: rmse 0.02026669  max resid 0.0649395 
+## Run 2 stress 0.1809578 
 ## Run 3 stress 0.1192683 
-## ... Procrustes: rmse 0.0003874001  max resid 0.001194133 
-## ... Similar to previous best
 ## Run 4 stress 0.1183186 
-## ... New best solution
-## ... Procrustes: rmse 0.02026898  max resid 0.06495039 
-## Run 5 stress 0.1192679 
-## Run 6 stress 0.1183186 
-## ... New best solution
-## ... Procrustes: rmse 1.660002e-06  max resid 2.60687e-06 
+## ... Procrustes: rmse 4.461091e-05  max resid 0.0001179544 
 ## ... Similar to previous best
+## Run 5 stress 0.1183186 
+## ... New best solution
+## ... Procrustes: rmse 4.013069e-05  max resid 0.000127058 
+## ... Similar to previous best
+## Run 6 stress 0.1192681 
 ## Run 7 stress 0.119268 
-## Run 8 stress 0.2003538 
+## Run 8 stress 0.1183186 
+## ... New best solution
+## ... Procrustes: rmse 1.532413e-05  max resid 3.241202e-05 
+## ... Similar to previous best
 ## Run 9 stress 0.1183186 
-## ... Procrustes: rmse 9.022875e-05  max resid 0.0002533852 
+## ... Procrustes: rmse 9.667969e-06  max resid 2.014613e-05 
 ## ... Similar to previous best
 ## Run 10 stress 0.1183186 
-## ... New best solution
-## ... Procrustes: rmse 3.06258e-06  max resid 1.039936e-05 
+## ... Procrustes: rmse 1.255572e-05  max resid 4.395128e-05 
 ## ... Similar to previous best
-## Run 11 stress 0.1192678 
-## Run 12 stress 0.1192679 
-## Run 13 stress 0.1183186 
-## ... Procrustes: rmse 8.019791e-05  max resid 0.0002511457 
+## Run 11 stress 0.2075713 
+## Run 12 stress 0.1183186 
+## ... Procrustes: rmse 3.314637e-05  max resid 9.558513e-05 
 ## ... Similar to previous best
-## Run 14 stress 0.1192679 
+## Run 13 stress 0.1939206 
+## Run 14 stress 0.1808929 
 ## Run 15 stress 0.1183186 
-## ... Procrustes: rmse 1.734093e-05  max resid 5.464127e-05 
+## ... New best solution
+## ... Procrustes: rmse 9.034392e-06  max resid 2.476793e-05 
 ## ... Similar to previous best
-## Run 16 stress 0.1192678 
-## Run 17 stress 0.1192684 
-## Run 18 stress 0.1939202 
-## Run 19 stress 0.119268 
-## Run 20 stress 0.119268 
+## Run 16 stress 0.1183186 
+## ... Procrustes: rmse 2.02038e-05  max resid 6.630851e-05 
+## ... Similar to previous best
+## Run 17 stress 0.2035424 
+## Run 18 stress 0.1183186 
+## ... Procrustes: rmse 6.151015e-05  max resid 0.0001801476 
+## ... Similar to previous best
+## Run 19 stress 0.1183186 
+## ... Procrustes: rmse 1.556896e-05  max resid 4.913145e-05 
+## ... Similar to previous best
+## Run 20 stress 0.2034377 
 ## *** Solution reached
 \end{verbatim}
 
@@ -1907,10 +1912,11 @@ We describe linear models in this chapter. First we need to load some libraries 
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{the-data}{%
-\section{The data}\label{the-data}}
+\hypertarget{fitting-a-simple-linear-regression-1}{%
+\section{Fitting a simple linear regression}\label{fitting-a-simple-linear-regression-1}}
 
-We'll use a dataset published by Allison and Cicchetti (1976). In this study, the authors studied the relationship between sleep and various ecological and morphological variables across a set of mammalian species: \url{https://science.sciencemag.org/content/194/4266/732}
+We'll use a dataset published by Allison and Cicchetti (1976). In this study, the authors studied the relationship between sleep and various ecological and morphological variables across a set of mammalian species:
+\url{https://science.sciencemag.org/content/194/4266/732}
 
 Let's start by loading the data into a table:
 
@@ -1954,9 +1960,6 @@ This dataset contains several variables related to various body measurements and
 ##  Max.   :5.000   Max.   :5.000   Max.   :5.000  
 ## 
 \end{verbatim}
-
-\hypertarget{running-and-interpreting-a-simple-linear-regression}{%
-\section{Running and interpreting a simple linear regression}\label{running-and-interpreting-a-simple-linear-regression}}
 
 We'll begin by focusing on the relationship between two of the continuous variables: body size (in kg) and total amount of sleep (in hours). Let's plot these to see what they look like:
 
@@ -2002,15 +2005,18 @@ Let's build a simple linear model to explain total sleep, as a function of body 
 
 \texttt{fit\ \textless{}-\ lm(formula,\ data)}
 
-The formula within an \texttt{lm()} function is typically written as
+The formula within an \texttt{lm()} function for a simple linear regression is:
 
-\[\bf{y} \sim \bf{x_1} + \bf{x_2} + ... + \bf{x_k}\] Where \(y\) is the response variable and \(x_1\), \(x_2\), etc. are the predictor variables. This formula is a shorthand way that R uses for writing the linear regression formula:
+\[\bf{y} \sim \bf{x_1}\]
+Where \(y\) is the response variable and \(x_1\) is the predictor variable. This formula is a shorthand way that R uses for writing the linear regression formula:
 
-\[\bf{Y} = \beta_0 + \beta_1 \bf{x_1} + \beta_2 \bf{x_2} + ... + \beta_k \bf{x_k} + \bf{\epsilon}\] In other words, R implicitly knows that each predictor variable will have an associated \(\beta\) coefficient that we're trying to estimate. Note that here \(\bf{y}\), \(\bf{x_1}\), \(\bf{x_2}\), \(\bf{\epsilon}\), etc. represent lists (vectors) of variables. We don't need to specify additional terms for the \(\beta_0\) (intercept) and \(\bf{\epsilon}\) (error) terms. The \texttt{lm()} function automatically accounts for the fact that a regression should have an intercept, and that there will necessarily exist errors (residuals) between our fit and the the observed value of \(\bf{Y}\).
+\[\bf{Y} = \beta_0 + \beta_1 \bf{x_1} + \bf{\epsilon}\]
+In other words, R implicitly knows that each predictor variable will have an associated \(\beta\) coefficient that we're trying to estimate. Note that here \(\bf{y}\), \(\bf{x_1}\), \(\bf{\epsilon}\), etc. represent lists (vectors) of variables. We don't need to specify additional terms for the \(\beta_0\) (intercept) and \(\bf{\epsilon}\) (error) terms. The \texttt{lm()} function automatically accounts for the fact that a regression should have an intercept, and that there will necessarily exist errors (residuals) between our fit and the the observed value of \(\bf{Y}\).
 
 We can also write this exact same equation by focusing on a single (example) variable, say \(y_i\):
 
-\[y_i = \beta_0 + \beta_1 x_{1,i} + \beta_2 x_{2,i} + ... + \beta_k x_{k,i} + \epsilon_i\] In general, when we talk about vectors of variables, we'll use boldface, unlike when referring to a single variable.
+\[y_i = \beta_0 + \beta_1 x_{1,i} + \epsilon_i\]
+In general, when we talk about vectors of variables, we'll use boldface, unlike when referring to a single variable.
 
 In our case, we'll attempt to fit total sleep as a function of the log of body weight, plus some noise:
 
@@ -2033,7 +2039,8 @@ In our case, we'll attempt to fit total sleep as a function of the log of body w
 
 This way, we are fitting the following model:
 
-\[\bf{TotalSleep} = \beta_0 + \beta_1 \bf{log(BodyWt)} + \bf{\epsilon}\] Remember that the \(\beta_0\) coefficient is implicitly assumed by the \texttt{lm()} function. We can be more explicit and incorporate it into our equation, by simply adding a value of 1 (a constant). This will result in exactly the same output as before:
+\[\bf{TotalSleep} = \beta_0 + \beta_1 \bf{log(BodyWt)} + \bf{\epsilon}\]
+Remember that the \(\beta_0\) coefficient is implicitly assumed by the \texttt{lm()} function. We can be more explicit and incorporate it into our equation, by simply adding a value of 1 (a constant). This will result in exactly the same output as before:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2051,6 +2058,11 @@ This way, we are fitting the following model:
 ## (Intercept)  log(BodyWt)  
 ##     11.4377      -0.7931
 \end{verbatim}
+
+\textbf{Exercise}: the function \texttt{attributes()} allows us to unpack all the components of the object outputted by the function \texttt{lm()} (and many other objects in R). Try inputting your model output into this function. We can observe that one of the attributes of the object is called \texttt{coefficients}. If we type \texttt{myfirstmodel\$coefficients}, we obtain a vector with the value of our two fitted coefficients (\(\beta_0\) and \(\beta_1\)). Using the values from this vector, try plotting the line of best fit on top of the data. Hint: use the \texttt{geom\_abline()} function from the \texttt{ggplot2} library.
+
+\hypertarget{interpreting-a-simple-linear-regression-1}{%
+\section{Interpreting a simple linear regression}\label{interpreting-a-simple-linear-regression-1}}
 
 We can obtain information about our model's fit using the function \texttt{summary()}:
 
@@ -2087,8 +2099,6 @@ The \texttt{summary()} function provides a summary of the output of \texttt{lm()
 Below that, we can see a table with point estimates, standard errors, and a few other properties of our estimated coefficients: the intercept (\(\beta_0\), first line) and the slope (\(\beta_1\), second line). The standard error is a measure of how confident we are about our point estimate (we'll revisit this in later lectures). The ``t value'' corresponds to the statistic for a ``t-test'' which serves to determine whether the estimate can be considered as significantly different from zero. The last column is the P-value from this test. We can see that both estimates are quite significantly different from zero (P \textless{} 0.001), meaning we can reject the hypothesis that these estimates are equivalent to zero.
 
 Finally, the last few lines are overall measures of the fit of the model. `Multiple R-squared' is the fraction of the variance in \(\bf{TotalSleep}\) explained by the fitted model. Generally, we want this number to be high, but it is possible to have very complex models with very high R-squared but lots of parameters, and therefore we run the risk of ``over-fitting'' our data. `Adjusted R-squared' is a modified version of R-squared that attempts to penalize very complex models. The `residual standard error' is the sum of the squares of the residuals (errors) over all observed data points, scaled by the degrees of freedom of the linear model, which is equal to n -- k -- 1 where n = total observations and k = total model parameters. Finally, the F-statistic is a test for whether \emph{any} of the explanatory variables included in the model have a relationship to the outcome. In this case, we only have a single explanatory variable (\(\bf{log(BodyWt)}\)), and so the P-value of this test is simply equal to the P-value of the t-test for the slope of \(\bf{log(BodyWt)}\).
-
-\textbf{Exercise}: the function \texttt{attributes()} allows us to unpack all the components of the object outputted by the function \texttt{lm()} (and many other objects in R). Try inputting your model output into this function. We can observe that one of the attributes of the object is called \texttt{coefficients}. If we type \texttt{ourfirstmodel\$coefficients}, we obtain a vector with the value of our two fitted coefficients (\(\beta_0\) and \(\beta_1\)). Using the values from this vector, try plotting the line of best fit on top of the data. Hint: use the \texttt{geom\_abline()} function from the \texttt{ggplot2} library.
 
 We can use the function \texttt{report()} from the library \texttt{easystats} (\url{https://github.com/easystats/report}) to get a more verbose report than the \texttt{summary()} function provides.
 

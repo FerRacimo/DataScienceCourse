@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-02-19" />
+<meta name="date" content="2021-03-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -184,8 +184,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="16" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html"><i class="fa fa-check"></i><b>16</b> REcoStats: Linear Models</a>
 <ul>
-<li class="chapter" data-level="16.1" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html#the-data"><i class="fa fa-check"></i><b>16.1</b> The data</a></li>
-<li class="chapter" data-level="16.2" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html#running-and-interpreting-a-simple-linear-regression"><i class="fa fa-check"></i><b>16.2</b> Running and interpreting a simple linear regression</a></li>
+<li class="chapter" data-level="16.1" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html#fitting-a-simple-linear-regression-1"><i class="fa fa-check"></i><b>16.1</b> Fitting a simple linear regression</a></li>
+<li class="chapter" data-level="16.2" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html#interpreting-a-simple-linear-regression-1"><i class="fa fa-check"></i><b>16.2</b> Interpreting a simple linear regression</a></li>
 <li class="chapter" data-level="16.3" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html#hypothesis-testing-and-permutation-testing"><i class="fa fa-check"></i><b>16.3</b> Hypothesis testing and permutation testing</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -294,7 +294,7 @@ These three approaches generally result in very similar CIs, but they differ (sl
 <div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="resampling.html#cb84-1" aria-hidden="true" tabindex="-1"></a>permest <span class="ot">&lt;-</span> <span class="fu">lm</span>(logBrain <span class="sc">~</span> logBody, <span class="at">data=</span>permuted)<span class="sc">$</span>coeff[<span class="dv">2</span>]</span>
 <span id="cb84-2"><a href="resampling.html#cb84-2" aria-hidden="true" tabindex="-1"></a>permest</span></code></pre></div>
 <pre><code>##    logBody 
-## -0.1115394</code></pre>
+## 0.06977713</code></pre>
 <p><strong>Exercise</strong>: try estimating the same parameter from a series of 100 permuted versions of our original data, and collecting each of the permuted parameters into a vector called “permvec.”</p>
 <p>We now have a distribution of the parameter estimate under the assumption that there is no relationship between these two variables:</p>
 <p><strong>Exercise</strong>: obtain an empirical one-tailed P-value from this distribution by counting how many of the permuted samples are as large as our original estimate, and dividing by the total number of permuted samples we have. Note: you should add a 1 to both the denominator and the numerator of this ratio, in case there are no permuted samples that are as large as the original estimate, so as not to get an infinite number.</p>

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015) (preloaded format=xelatex 2015.5.24)  19 FEB 2021 16:10
+This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015) (preloaded format=xelatex 2015.5.24)  2 MAR 2021 09:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1162,369 +1162,369 @@ Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                 on input line 331.
 
 [13]
-Overfull \hbox (22.5pt too wide) in paragraph at lines 385--385
-[]\EU1/lmtt/m/n/10 ##   [1]  8  7 12  9  6  9 15  9  9 12 12 10  9 10 10 12 11 
- 9 11  9 10 10 11 10  6[] 
- []
-
-
-Overfull \hbox (26.0pt too wide) in paragraph at lines 385--385
-[]\EU1/lmtt/m/n/10 ##  [26] 13 11  7  9  7 11 11 12 12  9  5  7  7 10 10 11 14 
-11  7 10 10 12  7 12  7[] 
- []
-
-
 Overfull \hbox (17.25pt too wide) in paragraph at lines 385--385
-[]\EU1/lmtt/m/n/10 ##  [51]  9  9 11  8  5  8 11  8 14 14  8  5  9 13  8  9  7 
-11  8 12  9 11 12 14  8[] 
+[]\EU1/lmtt/m/n/10 ##   [1]  8 11 11 13  8 10  5  9  6  9  8 10  9  5  6 11 10 
+ 9  9  8  8 12 12 10 10[] 
  []
 
 
-Overfull \hbox (26.0pt too wide) in paragraph at lines 385--385
-[]\EU1/lmtt/m/n/10 ##  [76] 15 12 10  7  9 11  9 10 10  7 12  8 11 11 12 13  8 
- 9 13  6 10  8 11 11  9[] 
- []
-
-
-Overfull \hbox (33.0pt too wide) in paragraph at lines 385--385
-[]\EU1/lmtt/m/n/10 ## [101] 12 10 12  9 13 10 11 10 11  8 12 11 13 10  8 12 13 
-11  6  7 11  6 11 11  9[] 
- []
-
-
-Overfull \hbox (31.25pt too wide) in paragraph at lines 385--385
-[]\EU1/lmtt/m/n/10 ## [126]  9  8  7 12 10 11  9 11 10 10 10 11 11 10 14 13 13 
-14 10  7  9 11  7  7 11[] 
+Overfull \hbox (24.25pt too wide) in paragraph at lines 385--385
+[]\EU1/lmtt/m/n/10 ##  [26] 12 15 10  9 12  9 10 14  9  9  7  8  8 11 11 12 12 
+ 9  9 10  9  9 13 11 10[] 
  []
 
 
 Overfull \hbox (27.75pt too wide) in paragraph at lines 385--385
-[]\EU1/lmtt/m/n/10 ## [151] 13  8 12  9 12 12 10  8 12 10 11  8 12  7 13  6  7 
-11 11  8  7 11 15 11  8[] 
+[]\EU1/lmtt/m/n/10 ##  [51] 10  6 13  6  7 13 12 13  8 11 11 11  9 10 10 11 11 
+ 4 12  9 11  9 13 11  8[] 
  []
 
 
-Overfull \hbox (31.25pt too wide) in paragraph at lines 385--385
-[]\EU1/lmtt/m/n/10 ## [176] 14  8 10 10 11  9  9  8 14 17 16 10 10  8 13  9  8 
-10 11 10 12 10 10  9 12[] 
- []
-
-
-Overfull \hbox (24.25pt too wide) in paragraph at lines 385--385
-[]\EU1/lmtt/m/n/10 ## [201]  8 13 12  7  7 14  7  9  8  5  5 10 13 10 12 10  6 
- 6 10 10 10  4 11  8 13[] 
- []
-
-
-Overfull \hbox (24.25pt too wide) in paragraph at lines 385--385
-[]\EU1/lmtt/m/n/10 ## [226]  7  9  8 15 11  7  7  8 10 12 11 11  6 11 11 10  7 
-11  9  9 12  9  9 12 14[] 
- []
-
-
-Overfull \hbox (22.5pt too wide) in paragraph at lines 385--385
-[]\EU1/lmtt/m/n/10 ## [251] 10 11  5  8  8  9 11 12 11 10  9 11  9  8 12  9  9 
-11 10 12  9 10  8  9  9[] 
- []
-
-
-Overfull \hbox (26.0pt too wide) in paragraph at lines 385--385
-[]\EU1/lmtt/m/n/10 ## [276] 10  9 12 11  9  8 13 12  8 12 12  8  6 11 11  9  7 
- 8 11 17  9 13 11 12  8[] 
- []
-
-
-Overfull \hbox (22.5pt too wide) in paragraph at lines 385--385
-[]\EU1/lmtt/m/n/10 ## [301]  9  6  9  8  9  9 13  8 10 10  9  9 15 12 13 11  6 
-13  7 10  7  8 11 13 12[] 
- []
-
-[14]
 Overfull \hbox (27.75pt too wide) in paragraph at lines 385--385
-[]\EU1/lmtt/m/n/10 ## [326] 11 10 10 10 11  8 11  9  9  9  9  9  8 10  9  8  7 
-10 11 13 13 14 12 11 10[] 
+[]\EU1/lmtt/m/n/10 ##  [76] 12 10 13 11  8  7 10  9 10 12 10  7 13  8 14 11 11 
+11 11  7  8 11 12  9  9[] 
  []
 
 
-Overfull \hbox (24.25pt too wide) in paragraph at lines 385--385
-[]\EU1/lmtt/m/n/10 ## [351] 10 12  6  6 10 10  7 11 15 14  9 13  9 10  5  8  9 
- 8  9 10 10 12 10  9  8[] 
+Overfull \hbox (22.5pt too wide) in paragraph at lines 385--385
+[]\EU1/lmtt/m/n/10 ## [101]  7 11  6  8 12 11 12  8 11 12 11  9  8 11 10 15  9 
+ 9 11  8  9  8 11  9  9[] 
+ []
+
+
+Overfull \hbox (27.75pt too wide) in paragraph at lines 385--385
+[]\EU1/lmtt/m/n/10 ## [126]  5 10  8 10 11 11 14 14 11 13 10  8 12  9  9 10 12 
+ 4 10  5 10  8 16  8  9[] 
  []
 
 
 Overfull \hbox (19.0pt too wide) in paragraph at lines 385--385
-[]\EU1/lmtt/m/n/10 ## [376]  8 11  9 12  5 14  9  9  7 14 11 10 12 11  8  8  9 
- 7  9  7 10  9  9  9 15[] 
- []
-
-
-Overfull \hbox (33.0pt too wide) in paragraph at lines 385--385
-[]\EU1/lmtt/m/n/10 ## [401] 11 10 12 12 10 10  7 12 11 10  7 10  8 11 10 13  8 
-10  6 12 12  5 10  9 11[] 
- []
-
-
-Overfull \hbox (29.5pt too wide) in paragraph at lines 385--385
-[]\EU1/lmtt/m/n/10 ## [426]  8 12 10  7 12 11  9 13  7  9 11  8 12 10  7 11 11 
-10 11 12  8  8 12 13 11[] 
+[]\EU1/lmtt/m/n/10 ## [151] 10  7  5 11  9 10  9 11  9  9 10 11 12  7  8  7 12 
+13  9  8  9  8  8  7 11[] 
  []
 
 
 Overfull \hbox (24.25pt too wide) in paragraph at lines 385--385
-[]\EU1/lmtt/m/n/10 ## [451]  6 12  9 12 10 11 10  9 10  7  7 11  8 11  9 11  8 
- 9 11  8 13  8 14  9 10[] 
+[]\EU1/lmtt/m/n/10 ## [176]  7  9 11 10 11 10  8  9 13  8 10  6 12 12  9 10  7 
+ 9 11 11 10  5  7 12  9[] 
  []
 
 
 Overfull \hbox (26.0pt too wide) in paragraph at lines 385--385
-[]\EU1/lmtt/m/n/10 ## [476]  9  7 10 10  8 11  8 12 11  6  8 14 11 11  7 11  9 
-11  9 11  8 10  9 12 11[] 
+[]\EU1/lmtt/m/n/10 ## [201]  9  7 13 12 10 11 11  5 11 13  9  7  6 10 10 10 14 
+ 9  6  7 10  9  8 12 16[] 
+ []
+
+
+Overfull \hbox (26.0pt too wide) in paragraph at lines 385--385
+[]\EU1/lmtt/m/n/10 ## [226]  9  7 10 12 10 10 11  7 11 13 13  9  9  7  9 10 10 
+ 8  8 11 12  7 10  8 11[] 
+ []
+
+
+Overfull \hbox (26.0pt too wide) in paragraph at lines 385--385
+[]\EU1/lmtt/m/n/10 ## [251]  9 10  9 13  9 12  9 13 12 14 12  9 14 10  9 11 10 
+ 7  8  7  6 10 11 11  9[] 
+ []
+
+
+Overfull \hbox (29.5pt too wide) in paragraph at lines 385--385
+[]\EU1/lmtt/m/n/10 ## [276] 13 10 10  9 11 11  6  8  8 12 17 10 13 11  9 12 11 
+10  9 10  7  9 12 10  7[] 
+ []
+
+
+Overfull \hbox (31.25pt too wide) in paragraph at lines 385--385
+[]\EU1/lmtt/m/n/10 ## [301] 11 12 13 12  8 10  9  9  7  7 11 10 11 10 12  7 15 
+ 9 13 12 12 12  8 11 11[] 
+ []
+
+[14]
+Overfull \hbox (33.0pt too wide) in paragraph at lines 385--385
+[]\EU1/lmtt/m/n/10 ## [326] 10 10 11 11 14 12 10 10 10 12 10 10  9  9  9 13  7 
+10 11  7 14 10  9  7 10[] 
+ []
+
+
+Overfull \hbox (26.0pt too wide) in paragraph at lines 385--385
+[]\EU1/lmtt/m/n/10 ## [351] 13 15 10  8  8  9  6 12 13  7  9 10 11  9 11  8  9 
+10 11 11  8 12 13  9 12[] 
+ []
+
+
+Overfull \hbox (29.5pt too wide) in paragraph at lines 385--385
+[]\EU1/lmtt/m/n/10 ## [376] 10 12 10  8 11  9 10 12 13 13  8 11 11 11 10 10  9 
+ 9  9 10  9  9 12 11  7[] 
+ []
+
+
+Overfull \hbox (29.5pt too wide) in paragraph at lines 385--385
+[]\EU1/lmtt/m/n/10 ## [401]  9 13  8 10 11 10  9  7 11 12  9  9 10 11 12 10 12 
+ 9 11  9 12 10  9 11 13[] 
+ []
+
+
+Overfull \hbox (27.75pt too wide) in paragraph at lines 385--385
+[]\EU1/lmtt/m/n/10 ## [426] 13 11 12 12 10 12  8 10  7  8  9  6  9 11 11  7  7 
+11  8  8 12 11 10 10 14[] 
+ []
+
+
+Overfull \hbox (26.0pt too wide) in paragraph at lines 385--385
+[]\EU1/lmtt/m/n/10 ## [451]  9  7  8 11 12  8  8  8 10 10 11 12  9 11  9 10 11 
+12 10 14  7  7 11  7 12[] 
+ []
+
+
+Overfull \hbox (26.0pt too wide) in paragraph at lines 385--385
+[]\EU1/lmtt/m/n/10 ## [476]  9 11 12 11  9  9  9 13  9 11 11 10  9 12  7 10  9 
+13  7 11 12 14  8  8 12[] 
+ []
+
+
+Overfull \hbox (45.25pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ##   [1] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FAL
+SE FALSE FALSE  TRUE[] 
  []
 
 
 Overfull \hbox (47.0pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ##   [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FAL
+[]\EU1/lmtt/m/n/10 ##  [13] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FAL
 SE FALSE FALSE  TRUE[] 
+ []
+
+
+Overfull \hbox (45.25pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ##  [25]  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FAL
+SE FALSE FALSE FALSE[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ##  [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TR
+UE FALSE FALSE FALSE[] 
+ []
+
+
+Overfull \hbox (47.0pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ##  [49] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FAL
+SE FALSE FALSE FALSE[] 
+ []
+
+
+Overfull \hbox (47.0pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ##  [61] FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FAL
+SE FALSE FALSE FALSE[] 
+ []
+
+
+Overfull \hbox (45.25pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ##  [73] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FAL
+SE  TRUE FALSE  TRUE[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ##  [85] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FAL
+SE FALSE FALSE FALSE[] 
+ []
+
+
+Overfull \hbox (50.5pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ##  [97] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FAL
+SE FALSE FALSE FALSE[] 
+ []
+
+
+Overfull \hbox (50.5pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [109] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FAL
+SE FALSE FALSE FALSE[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [121] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TR
+UE FALSE FALSE FALSE[] 
+ []
+
+
+Overfull \hbox (47.0pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [133] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TR
+UE FALSE FALSE  TRUE[] 
+ []
+
+
+Overfull \hbox (47.0pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [145] FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FAL
+SE FALSE FALSE  TRUE[] 
+ []
+
+
+Overfull \hbox (50.5pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [157] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FAL
+SE FALSE FALSE FALSE[] 
+ []
+
+
+Overfull \hbox (50.5pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [169] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FAL
+SE FALSE  TRUE FALSE[] 
+ []
+
+
+Overfull \hbox (47.0pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [181]  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FAL
+SE FALSE  TRUE FALSE[] 
+ []
+
+
+Overfull \hbox (50.5pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [193] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FAL
+SE FALSE FALSE FALSE[] 
+ []
+
+
+Overfull \hbox (45.25pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [205]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FAL
+SE  TRUE  TRUE  TRUE[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [217] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FAL
+SE FALSE FALSE  TRUE[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [229] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FAL
+SE FALSE FALSE FALSE[] 
+ []
+
+
+Overfull \hbox (45.25pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [241]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FAL
+SE FALSE FALSE  TRUE[] 
+ []
+
+
+Overfull \hbox (50.5pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [253] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FAL
+SE FALSE FALSE  TRUE[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [265] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FAL
+SE FALSE FALSE FALSE[] 
+ []
+
+
+Overfull \hbox (47.0pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [277]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FAL
+SE FALSE  TRUE FALSE[] 
+ []
+
+
+Overfull \hbox (47.0pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [289] FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FAL
+SE FALSE  TRUE FALSE[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [301] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FAL
+SE FALSE FALSE  TRUE[] 
+ []
+
+
+Overfull \hbox (50.5pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [313] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FAL
+SE FALSE FALSE FALSE[] 
  []
 
 
 Overfull \hbox (41.75pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ##  [13] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE  TR
+[]\EU1/lmtt/m/n/10 ## [325] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE  TR
 UE  TRUE FALSE  TRUE[] 
  []
 
 
-Overfull \hbox (50.5pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ##  [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FAL
-SE FALSE FALSE FALSE[] 
- []
-
-
-Overfull \hbox (43.5pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ##  [37] FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TR
-UE  TRUE FALSE FALSE[] 
- []
-
-
-Overfull \hbox (50.5pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ##  [49] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FAL
-SE FALSE FALSE FALSE[] 
- []
-
-
-Overfull \hbox (50.5pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ##  [61] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FAL
-SE FALSE FALSE FALSE[] 
- []
-
-
-Overfull \hbox (45.25pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ##  [73] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FAL
-SE FALSE  TRUE  TRUE[] 
- []
-
-
-Overfull \hbox (48.75pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ##  [85] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FAL
-SE FALSE FALSE  TRUE[] 
- []
-
-
-Overfull \hbox (45.25pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ##  [97] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FAL
-SE  TRUE FALSE  TRUE[] 
- []
-
-
-Overfull \hbox (50.5pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [109] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FAL
-SE FALSE FALSE FALSE[] 
- []
-
-
-Overfull \hbox (50.5pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [121] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FAL
-SE  TRUE FALSE FALSE[] 
- []
-
-
-Overfull \hbox (43.5pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [133] FALSE  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE FAL
-SE FALSE FALSE  TRUE[] 
- []
-
-
-Overfull \hbox (52.25pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [145] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FAL
-SE FALSE FALSE FALSE[] 
- []
-
-
-Overfull \hbox (48.75pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [157]  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FAL
-SE FALSE FALSE FALSE[] 
- []
-
-
-Overfull \hbox (48.75pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [169] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FAL
-SE  TRUE  TRUE FALSE[] 
- []
-
-
-Overfull \hbox (48.75pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [181] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FAL
-SE FALSE FALSE FALSE[] 
- []
-
-
-Overfull \hbox (45.25pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [193]  TRUE FALSE  TRUE FALSE  TRUE  TRUE FALSE FALSE FAL
-SE FALSE FALSE FALSE[] 
- []
-
-
 Overfull \hbox (47.0pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [205] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FAL
-SE  TRUE FALSE  TRUE[] 
- []
-
-
-Overfull \hbox (47.0pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [217] FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE FAL
-SE FALSE FALSE FALSE[] 
- []
-
-
-Overfull \hbox (50.5pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [229] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FAL
-SE FALSE FALSE FALSE[] 
- []
-
-
-Overfull \hbox (48.75pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [241]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FAL
+[]\EU1/lmtt/m/n/10 ## [337]  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FAL
 SE FALSE  TRUE FALSE[] 
  []
 
 
-Overfull \hbox (50.5pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [253] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FAL
-SE FALSE FALSE FALSE[] 
- []
-
-
-Overfull \hbox (47.0pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [265] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FAL
-SE FALSE FALSE  TRUE[] 
- []
-
-
-Overfull \hbox (52.25pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [277] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FAL
-SE FALSE FALSE FALSE[] 
- []
-
-
-Overfull \hbox (52.25pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [289] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FAL
+Overfull \hbox (48.75pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [349] FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FAL
 SE FALSE FALSE FALSE[] 
  []
 
 
 Overfull \hbox (48.75pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [301] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TR
-UE  TRUE FALSE FALSE[] 
- []
-
-
-Overfull \hbox (50.5pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [313] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FAL
+[]\EU1/lmtt/m/n/10 ## [361] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FAL
 SE FALSE FALSE FALSE[] 
  []
 
 
 Overfull \hbox (47.0pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [325] FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE FAL
-SE FALSE FALSE FALSE[] 
+[]\EU1/lmtt/m/n/10 ## [373] FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FAL
+SE  TRUE FALSE FALSE[] 
+ []
+
+
+Overfull \hbox (47.0pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [385] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FAL
+SE FALSE  TRUE FALSE[] 
  []
 
 
 Overfull \hbox (48.75pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [337] FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FAL
-SE FALSE FALSE FALSE[] 
- []
-
-
-Overfull \hbox (45.25pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [349] FALSE  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE FAL
-SE FALSE FALSE FALSE[] 
- []
-
-
-Overfull \hbox (47.0pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [361] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FAL
-SE  TRUE  TRUE FALSE[] 
- []
-
-
-Overfull \hbox (50.5pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [373]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FAL
-SE FALSE FALSE FALSE[] 
- []
-
-
-Overfull \hbox (48.75pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [385] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FAL
-SE FALSE FALSE  TRUE[] 
- []
-
-
-Overfull \hbox (47.0pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [397] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TR
-UE  TRUE FALSE FALSE[] 
+[]\EU1/lmtt/m/n/10 ## [397] FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FAL
+SE  TRUE FALSE FALSE[] 
  []
 
 [15]
-Overfull \hbox (45.25pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [409] FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE FALSE FAL
-SE  TRUE FALSE FALSE[] 
- []
-
-
 Overfull \hbox (48.75pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [421] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FAL
+[]\EU1/lmtt/m/n/10 ## [409] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE FAL
 SE FALSE FALSE FALSE[] 
  []
 
 
 Overfull \hbox (48.75pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [433] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FAL
-SE FALSE  TRUE FALSE[] 
+[]\EU1/lmtt/m/n/10 ## [421] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FAL
+SE  TRUE FALSE FALSE[] 
  []
 
 
 Overfull \hbox (50.5pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [445] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FAL
-SE FALSE  TRUE FALSE[] 
+[]\EU1/lmtt/m/n/10 ## [433]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FAL
+SE FALSE FALSE FALSE[] 
  []
 
 
 Overfull \hbox (48.75pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [457]  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FAL
+[]\EU1/lmtt/m/n/10 ## [445] FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FAL
 SE FALSE FALSE FALSE[] 
  []
 
 
 Overfull \hbox (47.0pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [469] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FAL
-SE  TRUE  TRUE FALSE[] 
+[]\EU1/lmtt/m/n/10 ## [457] FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FAL
+SE  TRUE FALSE FALSE[] 
  []
 
 
-Overfull \hbox (52.25pt too wide) in paragraph at lines 439--439
-[]\EU1/lmtt/m/n/10 ## [481] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FAL
+Overfull \hbox (50.5pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [469]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FAL
 SE FALSE FALSE FALSE[] 
+ []
+
+
+Overfull \hbox (48.75pt too wide) in paragraph at lines 439--439
+[]\EU1/lmtt/m/n/10 ## [481] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FAL
+SE FALSE  TRUE FALSE[] 
  []
 
 [16] [17] [18
@@ -1781,19 +1781,19 @@ QTm)
 Underfull \vbox (badness 3965) has occurred while \output is active []
 
 [68]
-Overfull \hbox (80.25pt too wide) in paragraph at lines 1796--1796
+Overfull \hbox (80.25pt too wide) in paragraph at lines 1801--1801
 []\EU1/lmtt/m/n/10 ## *** : The Hubert index is a graphical method of determini
 ng the number of clusters.[] 
  []
 
 
-Overfull \hbox (104.75pt too wide) in paragraph at lines 1796--1796
+Overfull \hbox (104.75pt too wide) in paragraph at lines 1801--1801
 []\EU1/lmtt/m/n/10 ##                 In the plot of Hubert index, we seek a si
 gnificant knee that corresponds to a[] 
  []
 
 
-Overfull \hbox (138.0pt too wide) in paragraph at lines 1796--1796
+Overfull \hbox (138.0pt too wide) in paragraph at lines 1801--1801
 []\EU1/lmtt/m/n/10 ##                 significant increase of the value of the 
 measure i.e the significant peak in Hubert[] 
  []
@@ -1801,31 +1801,31 @@ measure i.e the significant peak in Hubert[]
 File: DataScience_files/figure-latex/unnamed-chunk-74-2.pdf Graphic file (type 
 QTm)
 <use  "DataScience_files/figure-latex/unnamed-chunk-74-2.pdf" >
-Overfull \hbox (54.0pt too wide) in paragraph at lines 1822--1822
+Overfull \hbox (54.0pt too wide) in paragraph at lines 1827--1827
 []\EU1/lmtt/m/n/10 ## *** : The D index is a graphical method of determining th
 e number of clusters.[] 
  []
 
 
-Overfull \hbox (129.25pt too wide) in paragraph at lines 1822--1822
+Overfull \hbox (129.25pt too wide) in paragraph at lines 1827--1827
 []\EU1/lmtt/m/n/10 ##                 In the plot of D index, we seek a signifi
 cant knee (the significant peak in Dindex[] 
  []
 
 
-Overfull \hbox (139.75pt too wide) in paragraph at lines 1822--1822
+Overfull \hbox (139.75pt too wide) in paragraph at lines 1827--1827
 []\EU1/lmtt/m/n/10 ##                 second differences plot) that corresponds
  to a significant increase of the value of[] 
  []
 
 
-Overfull \hbox (20.75pt too wide) in paragraph at lines 1822--1822
+Overfull \hbox (20.75pt too wide) in paragraph at lines 1827--1827
 []\EU1/lmtt/m/n/10 ## *********************************************************
 **********[] 
  []
 
 [69]
-Overfull \hbox (20.75pt too wide) in paragraph at lines 1822--1822
+Overfull \hbox (20.75pt too wide) in paragraph at lines 1827--1827
 []\EU1/lmtt/m/n/10 ## *********************************************************
 **********[] 
  []
@@ -1836,25 +1836,25 @@ QTm)
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [70]
-Overfull \hbox (15.5pt too wide) in paragraph at lines 1870--1870
+Overfull \hbox (15.5pt too wide) in paragraph at lines 1875--1875
 []\EU1/lmtt/m/n/10 ##   [1] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
  2 2 2 2 2 2 2 2 2 2 2[] 
  []
 
 
-Overfull \hbox (17.25pt too wide) in paragraph at lines 1870--1870
+Overfull \hbox (17.25pt too wide) in paragraph at lines 1875--1875
 []\EU1/lmtt/m/n/10 ##  [38] 2 2 2 2 2 2 2 2 2 2 2 2 2 1 1 1 1 1 1 1 1 1 1 1 1 1
  1 1 1 1 1 1 1 1 1 1 1[] 
  []
 
 
-Overfull \hbox (17.25pt too wide) in paragraph at lines 1870--1870
+Overfull \hbox (17.25pt too wide) in paragraph at lines 1875--1875
 []\EU1/lmtt/m/n/10 ##  [75] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
  1 1 1 1 1 1 1 1 1 1 1[] 
  []
 
 
-Overfull \hbox (19.0pt too wide) in paragraph at lines 1870--1870
+Overfull \hbox (19.0pt too wide) in paragraph at lines 1875--1875
 []\EU1/lmtt/m/n/10 ## [112] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
  1 1 1 1 1 1 1 1 1 1 1[] 
  []
@@ -1875,13 +1875,13 @@ Underfull \vbox (badness 3989) has occurred while \output is active []
 ]
 Chapter 16.
 
-Overfull \hbox (5.0pt too wide) in paragraph at lines 1956--1956
+Overfull \hbox (5.0pt too wide) in paragraph at lines 1962--1962
 []\EU1/lmtt/m/n/10 ##  Class :character   1st Qu.:   0.600   1st Qu.:   4.25   
 1st Qu.: 6.250[] 
  []
 
 
-Overfull \hbox (5.0pt too wide) in paragraph at lines 1956--1956
+Overfull \hbox (5.0pt too wide) in paragraph at lines 1962--1962
 []\EU1/lmtt/m/n/10 ##  Mode  :character   Median :   3.342   Median :  17.25   
 Median : 8.350[] 
  []
@@ -1889,41 +1889,23 @@ Median : 8.350[]
 [75]
 File: DataScience_files/figure-latex/unnamed-chunk-82-1.pdf Graphic file (type 
 QTm)
-<use  "DataScience_files/figure-latex/unnamed-chunk-82-1.pdf" >
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[76]
+<use  "DataScience_files/figure-latex/unnamed-chunk-82-1.pdf" > [76]
 File: DataScience_files/figure-latex/unnamed-chunk-83-1.pdf Graphic file (type 
 QTm)
-<use  "DataScience_files/figure-latex/unnamed-chunk-83-1.pdf" >
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (6.94344pt too wide) has occurred while \output is active
-\EU1/lmr/m/sl/10 16.2.  RUNNING AND INTERPRETING A SIMPLE LINEAR REGRESSION \EU
-1/lmr/m/n/10 77
- []
-
-[77] [78]
-Overfull \hbox (6.94344pt too wide) has occurred while \output is active
-\EU1/lmr/m/sl/10 16.2.  RUNNING AND INTERPRETING A SIMPLE LINEAR REGRESSION \EU
-1/lmr/m/n/10 79
- []
-
-[79] [80]
-Overfull \hbox (157.25pt too wide) in paragraph at lines 2104--2104
+<use  "DataScience_files/figure-latex/unnamed-chunk-83-1.pdf" > [77] [78] [79]
+Overfull \hbox (157.25pt too wide) in paragraph at lines 2114--2114
 []\EU1/lmtt/m/n/10 ## Formula contains log- or sqrt-terms. See help("standardiz
 e") for how such terms are standardized.[] 
  []
 
 
-Overfull \hbox (157.25pt too wide) in paragraph at lines 2104--2104
+Overfull \hbox (157.25pt too wide) in paragraph at lines 2114--2114
 []\EU1/lmtt/m/n/10 ## Formula contains log- or sqrt-terms. See help("standardiz
 e") for how such terms are standardized.[] 
  []
 
 
-Overfull \hbox (1564.25pt too wide) in paragraph at lines 2112--2112
+Overfull \hbox (1564.25pt too wide) in paragraph at lines 2122--2122
 []\EU1/lmtt/m/n/10 ## We fitted a linear model (estimated using OLS) to predict
  TotalSleep with BodyWt (formula: TotalSleep ~ 1 + log(BodyWt)). The model expl
 ains a significant and substantial proportion of variance (R2 = 0.28, F(1, 56) 
@@ -1933,47 +1915,38 @@ his model:[]
  []
 
 
-Overfull \hbox (460.0pt too wide) in paragraph at lines 2112--2112
+Overfull \hbox (460.0pt too wide) in paragraph at lines 2122--2122
 []\EU1/lmtt/m/n/10 ##   - The effect of BodyWt [log] is significantly negative 
 (beta = -0.79, 95% CI [-1.13, -0.46], t(56) = -4.71, p < .001; Std. beta = -1.1
 6, 95% CI [-1.91, -0.41])[] 
  []
 
 
-Overfull \hbox (169.5pt too wide) in paragraph at lines 2112--2112
+Overfull \hbox (169.5pt too wide) in paragraph at lines 2122--2122
 []\EU1/lmtt/m/n/10 ## Standardized parameters were obtained by fitting the mode
 l on a standardized version of the dataset.[] 
  []
 
-
-Overfull \hbox (6.94344pt too wide) has occurred while \output is active
-\EU1/lmr/m/sl/10 16.2.  RUNNING AND INTERPRETING A SIMPLE LINEAR REGRESSION \EU
-1/lmr/m/n/10 81
- []
-
-[81] [82]
+[80] [81] [82]
 File: DataScience_files/figure-latex/unnamed-chunk-92-1.pdf Graphic file (type 
 QTm)
-<use  "DataScience_files/figure-latex/unnamed-chunk-92-1.pdf" >
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[83] [84] [85]
+<use  "DataScience_files/figure-latex/unnamed-chunk-92-1.pdf" > [83] [84]
 No file DataScience.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2338.
-[86]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2338.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2348.
+[85]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2348.
 (./DataScience.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 2338.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 2338.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2338.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 2348.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 2348.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2348.
  ) 
 Here is how much of TeX's memory you used:
  29032 strings out of 493706
- 513021 string characters out of 6145769
- 662234 words of memory out of 5000000
+ 513039 string characters out of 6145769
+ 662248 words of memory out of 5000000
  32091 multiletter control sequences out of 15000+600000
  7635 words of font info for 58 fonts, out of 8000000 for 9000
  1328 hyphenation exceptions out of 8191
  58i,6n,103p,10406b,515s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on DataScience.pdf (86 pages).
+Output written on DataScience.pdf (85 pages).
