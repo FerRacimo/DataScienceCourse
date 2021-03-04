@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-03-02" />
+<meta name="date" content="2021-03-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -420,44 +420,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Let’s perform NMDS ordination using the Bray-Curtis dissimilarity. Remember that, unlike PCA, NMDS requires us to specify the number of dimensions (k) a priori (the default in vegan is 2). It also performs a series of transformations on the data that are appropriate for ecological data (default: autotransform=TRUE). The trymax option ensures that the algorithm is started from different points (in our case, 50) to avoid local minima.</p>
 <div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="ordination.html#cb141-1" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(dune, <span class="at">k=</span><span class="dv">2</span>, <span class="at">autotransform =</span> <span class="cn">TRUE</span>, <span class="at">trymax=</span><span class="dv">50</span>)</span></code></pre></div>
 <pre><code>## Run 0 stress 0.1192678 
-## Run 1 stress 0.1192679 
-## ... Procrustes: rmse 0.0001296408  max resid 0.0003973757 
-## ... Similar to previous best
-## Run 2 stress 0.1808911 
-## Run 3 stress 0.1183186 
+## Run 1 stress 0.1808919 
+## Run 2 stress 0.1192678 
 ## ... New best solution
-## ... Procrustes: rmse 0.02026949  max resid 0.06495274 
-## Run 4 stress 0.1183186 
-## ... Procrustes: rmse 3.79475e-05  max resid 0.0001249202 
+## ... Procrustes: rmse 5.475554e-05  max resid 0.0001560314 
 ## ... Similar to previous best
-## Run 5 stress 0.1192684 
-## Run 6 stress 0.2014776 
-## Run 7 stress 0.1183186 
+## Run 3 stress 0.1192679 
+## ... Procrustes: rmse 9.094571e-05  max resid 0.0002647538 
+## ... Similar to previous best
+## Run 4 stress 0.1192678 
 ## ... New best solution
-## ... Procrustes: rmse 2.001224e-06  max resid 4.926634e-06 
+## ... Procrustes: rmse 1.879064e-05  max resid 4.348459e-05 
 ## ... Similar to previous best
-## Run 8 stress 0.1192678 
-## Run 9 stress 0.1192679 
-## Run 10 stress 0.2378847 
+## Run 5 stress 0.1192679 
+## ... Procrustes: rmse 5.335899e-05  max resid 0.0001574552 
+## ... Similar to previous best
+## Run 6 stress 0.1183186 
+## ... New best solution
+## ... Procrustes: rmse 0.02028735  max resid 0.06507455 
+## Run 7 stress 0.1808919 
+## Run 8 stress 0.1183186 
+## ... Procrustes: rmse 2.601564e-05  max resid 6.208347e-05 
+## ... Similar to previous best
+## Run 9 stress 0.2361935 
+## Run 10 stress 0.1183186 
+## ... Procrustes: rmse 3.133991e-05  max resid 0.0001026153 
+## ... Similar to previous best
 ## Run 11 stress 0.1183186 
-## ... Procrustes: rmse 2.394178e-05  max resid 7.165096e-05 
+## ... New best solution
+## ... Procrustes: rmse 1.178309e-05  max resid 3.929543e-05 
 ## ... Similar to previous best
 ## Run 12 stress 0.1192679 
-## Run 13 stress 0.1886532 
-## Run 14 stress 0.1183186 
-## ... Procrustes: rmse 1.047591e-05  max resid 3.557619e-05 
+## Run 13 stress 0.1192688 
+## Run 14 stress 0.1192679 
+## Run 15 stress 0.188965 
+## Run 16 stress 0.1183186 
+## ... Procrustes: rmse 4.051791e-05  max resid 0.0001242628 
 ## ... Similar to previous best
-## Run 15 stress 0.1192679 
-## Run 16 stress 0.1192678 
-## Run 17 stress 0.1183188 
-## ... Procrustes: rmse 7.337798e-05  max resid 0.0002346583 
+## Run 17 stress 0.1808925 
+## Run 18 stress 0.1183186 
+## ... Procrustes: rmse 9.173251e-06  max resid 2.945501e-05 
 ## ... Similar to previous best
-## Run 18 stress 0.1809578 
-## Run 19 stress 0.1192678 
-## Run 20 stress 0.1183186 
-## ... New best solution
-## ... Procrustes: rmse 4.140554e-06  max resid 1.346242e-05 
-## ... Similar to previous best
+## Run 19 stress 0.1192691 
+## Run 20 stress 0.1192678 
 ## *** Solution reached</code></pre>
 <p>As you can see, the function goes through a series of steps until convergence is reached. Let’s plot the results:</p>
 <div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="ordination.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>

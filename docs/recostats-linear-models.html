@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-03-02" />
+<meta name="date" content="2021-03-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -363,23 +363,19 @@ Remember that the <span class="math inline">\(\beta_0\)</span> coefficient is im
 1) The number (<span class="math inline">\(n\)</span>) of data points we will simulate
 1) How the explanatory variables are distributed: we’ll use a normal distribution to specify this.
 2) What the intercept (<span class="math inline">\(\beta_0\)</span>) and slope (<span class="math inline">\(\beta_1\)</span>) for the linear relationship between the explanatory and response variables are
-3) How departures (errors) from linearity for the response variables will be modeled: we’ll use another normal distribution for that as well, and assume errors are heteroscedastic for now.</p>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="recostats-linear-models.html#cb185-1" aria-hidden="true" tabindex="-1"></a>linearmodsim <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n=</span><span class="dv">2</span>, <span class="at">beta_0=</span><span class="dv">0</span>, <span class="at">beta_1=</span><span class="dv">1</span>, <span class="at">sigma.res=</span><span class="dv">1</span>, <span class="at">mu.explan=</span><span class="dv">5</span>, <span class="at">sigma.explan=</span><span class="dv">1</span>, <span class="at">rerror=</span>rnorm, <span class="at">r_explan =</span> rnorm, <span class="at">hetero =</span> <span class="dv">0</span> ){</span>
+3) How departures (errors) from linearity for the response variables will be modeled: we’ll use another normal distribution for that as well, and control the amount of error using a variable called <code>sigma.res</code>. We’ll assume errors are homoscedastic (have the same variance) in this exercise.</p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="recostats-linear-models.html#cb185-1" aria-hidden="true" tabindex="-1"></a>linearmodsim <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n=</span><span class="dv">2</span>, <span class="at">beta_0=</span><span class="dv">0</span>, <span class="at">beta_1=</span><span class="dv">1</span>, <span class="at">sigma.res=</span><span class="dv">1</span>, <span class="at">mu.explan=</span><span class="dv">5</span>, <span class="at">sigma.explan=</span><span class="dv">1</span>, <span class="at">rerror=</span>rnorm, <span class="at">r_explan =</span> rnorm){</span>
 <span id="cb185-2"><a href="recostats-linear-models.html#cb185-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulate explanatory variables</span></span>
 <span id="cb185-3"><a href="recostats-linear-models.html#cb185-3" aria-hidden="true" tabindex="-1"></a>  explan <span class="ot">&lt;-</span> <span class="fu">r_explan</span>(n,mu.explan,sigma.explan)</span>
 <span id="cb185-4"><a href="recostats-linear-models.html#cb185-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sort the simulated explanatory values from smallest to largest</span></span>
 <span id="cb185-5"><a href="recostats-linear-models.html#cb185-5" aria-hidden="true" tabindex="-1"></a>  explan <span class="ot">&lt;-</span> <span class="fu">sort</span>(explan)</span>
-<span id="cb185-6"><a href="recostats-linear-models.html#cb185-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Standardize the response variables so that they are  mean-centered and scaled by their standard deviation</span></span>
-<span id="cb185-7"><a href="recostats-linear-models.html#cb185-7" aria-hidden="true" tabindex="-1"></a>  explan.scaled <span class="ot">&lt;-</span> <span class="fu">scale</span>(explan)</span>
-<span id="cb185-8"><a href="recostats-linear-models.html#cb185-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># OPTIONAL: If errors are not heteroscedastic (hetero does not equal 0), then their standard deviation will not be constant, and will depend on the explanatory variables </span></span>
-<span id="cb185-9"><a href="recostats-linear-models.html#cb185-9" aria-hidden="true" tabindex="-1"></a>  sdev.err <span class="ot">&lt;-</span> <span class="fu">sapply</span>(sigma.res <span class="sc">+</span> explan.scaled<span class="sc">*</span>hetero,max,<span class="dv">0</span>)</span>
-<span id="cb185-10"><a href="recostats-linear-models.html#cb185-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulate the error values using the above-specified standard deviation</span></span>
-<span id="cb185-11"><a href="recostats-linear-models.html#cb185-11" aria-hidden="true" tabindex="-1"></a>  error <span class="ot">&lt;-</span> <span class="fu">rerror</span>(n,<span class="dv">0</span>,sdev.err)</span>
-<span id="cb185-12"><a href="recostats-linear-models.html#cb185-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulate response variables via the linear model</span></span>
-<span id="cb185-13"><a href="recostats-linear-models.html#cb185-13" aria-hidden="true" tabindex="-1"></a>  response <span class="ot">&lt;-</span> beta_0 <span class="sc">+</span> beta_1 <span class="sc">*</span> explan <span class="sc">+</span> error</span>
-<span id="cb185-14"><a href="recostats-linear-models.html#cb185-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Output a table containing the explanatory values and their corresponding response values</span></span>
-<span id="cb185-15"><a href="recostats-linear-models.html#cb185-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cbind</span>(<span class="fu">data.frame</span>(explan,response))</span>
-<span id="cb185-16"><a href="recostats-linear-models.html#cb185-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<span id="cb185-6"><a href="recostats-linear-models.html#cb185-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulate the error values using the specified standard deviation for the residuals</span></span>
+<span id="cb185-7"><a href="recostats-linear-models.html#cb185-7" aria-hidden="true" tabindex="-1"></a>  error <span class="ot">&lt;-</span> <span class="fu">rerror</span>(n,<span class="dv">0</span>,sigma.res)</span>
+<span id="cb185-8"><a href="recostats-linear-models.html#cb185-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Simulate response variables via the linear model</span></span>
+<span id="cb185-9"><a href="recostats-linear-models.html#cb185-9" aria-hidden="true" tabindex="-1"></a>  response <span class="ot">&lt;-</span> beta_0 <span class="sc">+</span> beta_1 <span class="sc">*</span> explan <span class="sc">+</span> error</span>
+<span id="cb185-10"><a href="recostats-linear-models.html#cb185-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Output a table containing the explanatory values and their corresponding response values</span></span>
+<span id="cb185-11"><a href="recostats-linear-models.html#cb185-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cbind</span>(<span class="fu">data.frame</span>(explan,response))</span>
+<span id="cb185-12"><a href="recostats-linear-models.html#cb185-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p><strong>Exercise</strong>:</p>
 <ol style="list-style-type: lower-alpha">
 <li>Carefully read the code for the function above. Make sure you understand every step in the function.<br />
@@ -390,7 +386,7 @@ Remember that the <span class="math inline">\(\beta_0\)</span> coefficient is im
 </li>
 <li>Try increasing the sample size (say, to 200 data points), and repeat the <code>lm()</code> fitting. How does this influence the accuracy of your fitted model? Try simulating and fitting multiple times to get an idea of how well you can estimate the parameters.<br />
 </li>
-<li>Try changing the standard deviation of the simulated errors (make it smaller or larger), and repeat the <code>lm()</code> fitting. How does this influence the accuracy of your fitted model?</li>
+<li>Try changing the standard deviation of the simulated residual errors (make <code>sigma.res</code> smaller or larger), and repeat the <code>lm()</code> fitting. How does this influence the accuracy of your fitted model?</li>
 </ol>
 </div>
 <div id="hypothesis-testing-and-permutation-testing" class="section level2" number="16.4">
