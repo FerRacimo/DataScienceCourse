@@ -1,7 +1,8 @@
 introduction
 intro
 prob1
-tossing-a-coin
+todays-programme
+the-bernoulli-distribution-tossing-a-coin
 adding-up-coin-tosses
 the-expectation
 our-first-probability-mass-function

@@ -182,7 +182,7 @@ Now we can obtain a permuted version of our original data, and compute the slope
 ```{r}
 permuted <- permute(allisontab, "TotalSleep")
 plot(permuted$TotalSleep,log(permuted$BodyWt))
-permest <- lm(TotalSleep ~ log(BodyWt), data=permuted)$coeff[2]
+permest <- lm(TotalSleep ~ log(BodyWt), data = permuted)$coeff[2]
 permest
 ```
 
@@ -203,6 +203,11 @@ We now have a distribution of the parameter estimate under the assumption that t
 
 **Exercise**: obtain an empirical one-tailed P-value from this distribution by counting how many of the permuted samples are as extreme or more extreme (in the negative or positive direction, than our original estimate, and dividing by the total number of permuted samples we have. Note: you should add a 1 to both the denominator and the numerator of this ratio, in case there are no permuted samples that are as large as the original estimate, so as not to get an infinite number.
 
+```{r, echo=FALSE}
+data_est <- lm(TotalSleep ~ log(BodyWt), data=allisontab)$coeff[2]
+approx_pval <- (sum(permvec < data_est) + 1)/(length(permvec) + 1)
+```
+
 The R package `coin` provides a handy way to apply permutation tests to a wide variety of problems.
 
 ```{r}
@@ -216,7 +221,12 @@ The `spearman_test()` function runs a permutation test of independence between t
 spearman_test(TotalSleep ~ log(BodyWt), data=allisontab, distribution=approximate(nresample=1000)) 
 ```
 
-**Exercise**: Perform a permutation test to assess whether there is a significant relationship between log(BrainWt) and TotalSleep. Compare this to a t-test testing the same relationship.
+**Exercise**: Perform a permutation test to assess whether there is a significant relationship between log(BrainWt) and TotalSleep. Compare this to the p-value form the t-statistic testing the same relationship in your fitted linear model.
+
+```{r, echo=FALSE}
+spearman_test(TotalSleep ~ log(BrainWt), data=allisontab, distribution=approximate(nresample=1000)) 
+summary(lm(TotalSleep ~ log(BrainWt), data=allisontab))
+```
 
 Let's perform a different type of permutation test. In this case, we'll test whether the mean scores of two categories (for example, the math exam scores from two classrooms) are equal to each other.
 

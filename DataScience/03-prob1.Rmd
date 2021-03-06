@@ -4,7 +4,20 @@
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Tossing a coin
+## Today's programme
+
+We will try out different R functions for simulating probability distributions and computing summary statistics from the resulting data. 
+
+We will cover the following topics
+
+* Bernoulli distribution
+* Binomial distribution
+* Simulating discrete random variables
+* Expected value
+* Variance
+* Probability mass function
+
+## The Bernoulli distribution: tossing a coin
 
 We can "virtually" toss a coin in our R console, using the rbinom() function:
 

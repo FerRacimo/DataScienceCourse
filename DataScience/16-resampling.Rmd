@@ -127,6 +127,13 @@ We now have a distribution of the parameter estimate under the assumption that t
 
 **Exercise**: obtain an empirical one-tailed P-value from this distribution by counting how many of the permuted samples are as large as our original estimate, and dividing by the total number of permuted samples we have. Note: you should add a 1 to both the denominator and the numerator of this ratio, in case there are no permuted samples that are as large as the original estimate, so as not to get an infinite number.
 
+
+```{r, echo=FALSE}
+data_est <- lm(TotalSleep ~ log(BodyWt), data=allisontab)$coeff[2]
+approx_pval <- (sum(permvec < data_est) + 1)/(length(permvec) + 1)
+```
+
+
 ## Validation
 
 We'll perform a validation exercise to evaluate the error of various models on the data. In this case, we'll create a predictor for TotalSleep as a function of logBody, using a linear model, and then test how well it does. We'll first divide our data into a "training" partition - which we'll use to fit our model - and a separate "test" partition - which we'll use to test how well our model is doing, and avoid over-fitting. Each partition will be one half of our original data.

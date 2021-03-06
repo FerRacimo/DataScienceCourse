@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-03-04" />
+<meta name="date" content="2021-03-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -137,11 +137,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Getting Started with Data Analysis</a></li>
 <li class="chapter" data-level="3" data-path="prob1.html"><a href="prob1.html"><i class="fa fa-check"></i><b>3</b> Probability Part 1</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="prob1.html"><a href="prob1.html#tossing-a-coin"><i class="fa fa-check"></i><b>3.1</b> Tossing a coin</a></li>
-<li class="chapter" data-level="3.2" data-path="prob1.html"><a href="prob1.html#adding-up-coin-tosses"><i class="fa fa-check"></i><b>3.2</b> Adding up coin tosses</a></li>
-<li class="chapter" data-level="3.3" data-path="prob1.html"><a href="prob1.html#the-expectation"><i class="fa fa-check"></i><b>3.3</b> The expectation</a></li>
-<li class="chapter" data-level="3.4" data-path="prob1.html"><a href="prob1.html#our-first-probability-mass-function"><i class="fa fa-check"></i><b>3.4</b> Our first probability mass function</a></li>
-<li class="chapter" data-level="3.5" data-path="prob1.html"><a href="prob1.html#the-variance"><i class="fa fa-check"></i><b>3.5</b> The variance</a></li>
+<li class="chapter" data-level="3.1" data-path="prob1.html"><a href="prob1.html#todays-programme"><i class="fa fa-check"></i><b>3.1</b> Today’s programme</a></li>
+<li class="chapter" data-level="3.2" data-path="prob1.html"><a href="prob1.html#the-bernoulli-distribution-tossing-a-coin"><i class="fa fa-check"></i><b>3.2</b> The Bernoulli distribution: tossing a coin</a></li>
+<li class="chapter" data-level="3.3" data-path="prob1.html"><a href="prob1.html#adding-up-coin-tosses"><i class="fa fa-check"></i><b>3.3</b> Adding up coin tosses</a></li>
+<li class="chapter" data-level="3.4" data-path="prob1.html"><a href="prob1.html#the-expectation"><i class="fa fa-check"></i><b>3.4</b> The expectation</a></li>
+<li class="chapter" data-level="3.5" data-path="prob1.html"><a href="prob1.html#our-first-probability-mass-function"><i class="fa fa-check"></i><b>3.5</b> Our first probability mass function</a></li>
+<li class="chapter" data-level="3.6" data-path="prob1.html"><a href="prob1.html#the-variance"><i class="fa fa-check"></i><b>3.6</b> The variance</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="probability-part-2.html"><a href="probability-part-2.html"><i class="fa fa-check"></i><b>4</b> Probability Part 2</a></li>
 <li class="chapter" data-level="5" data-path="probability-part-3.html"><a href="probability-part-3.html"><i class="fa fa-check"></i><b>5</b> Probability Part 3</a></li>
@@ -252,11 +253,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We’ll begin by focusing on the relationship between two of the continuous variables: body size (in kg) and total amount of sleep (in hours). Let’s plot these to see what they look like:</p>
 <div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="recostats-linear-models.html#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(allisontab) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>BodyWt,<span class="at">y=</span>TotalSleep))</span></code></pre></div>
 <pre><code>## Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
 <p>Hmmm this looks weird. We have many measurements of body weight around 0 (small values) and a few very large values of thousands of kilograms. This is not surprising: given that this dataset spans several different species, the measurements spans several orders of magnitude (from elephants to molerats). To account for this, variables involving body measurements (like weight or length) are traditionally converted into a log-scale when fitted into a linear model. Let’s see what happens when we log-scale the body weight variable:</p>
 <div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="recostats-linear-models.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(allisontab) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(BodyWt),<span class="at">y=</span>TotalSleep))</span></code></pre></div>
 <pre><code>## Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-84-1.png" width="672" /></p>
 <p>A pattern appears to emerge now. There seems to be a negative correlation between the log of body weight and the amount of sleep a species has. Indeed, we can measure this correlation using the <code>cor()</code> function:</p>
 <div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="recostats-linear-models.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">log</span>(allisontab<span class="sc">$</span>BodyWt), allisontab<span class="sc">$</span>TotalSleep, <span class="at">use=</span><span class="st">&quot;complete.obs&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] -0.5328345</code></pre>
@@ -426,8 +427,8 @@ Remember that the <span class="math inline">\(\beta_0\)</span> coefficient is im
 <p>Now we can obtain a permuted version of our original data, and compute the slope estimate on this dataset instead:</p>
 <div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="recostats-linear-models.html#cb189-1" aria-hidden="true" tabindex="-1"></a>permuted <span class="ot">&lt;-</span> <span class="fu">permute</span>(allisontab, <span class="st">&quot;TotalSleep&quot;</span>)</span>
 <span id="cb189-2"><a href="recostats-linear-models.html#cb189-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(permuted<span class="sc">$</span>TotalSleep,<span class="fu">log</span>(permuted<span class="sc">$</span>BodyWt))</span></code></pre></div>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-93-1.png" width="672" /></p>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="recostats-linear-models.html#cb190-1" aria-hidden="true" tabindex="-1"></a>permest <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="fu">log</span>(BodyWt), <span class="at">data=</span>permuted)<span class="sc">$</span>coeff[<span class="dv">2</span>]</span>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-94-1.png" width="672" /></p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="recostats-linear-models.html#cb190-1" aria-hidden="true" tabindex="-1"></a>permest <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="fu">log</span>(BodyWt), <span class="at">data =</span> permuted)<span class="sc">$</span>coeff[<span class="dv">2</span>]</span>
 <span id="cb190-2"><a href="recostats-linear-models.html#cb190-2" aria-hidden="true" tabindex="-1"></a>permest</span></code></pre></div>
 <pre><code>## log(BodyWt) 
 ##  -0.7931139</code></pre>
@@ -460,13 +461,38 @@ Remember that the <span class="math inline">\(\beta_0\)</span> coefficient is im
 ## data:  TotalSleep by log(BodyWt)
 ## Z = -3.8188, p-value &lt; 0.001
 ## alternative hypothesis: true rho is not equal to 0</code></pre>
-<p><strong>Exercise</strong>: Perform a permutation test to assess whether there is a significant relationship between log(BrainWt) and TotalSleep. Compare this to a t-test testing the same relationship.</p>
+<p><strong>Exercise</strong>: Perform a permutation test to assess whether there is a significant relationship between log(BrainWt) and TotalSleep. Compare this to the p-value form the t-statistic testing the same relationship in your fitted linear model.</p>
+<pre><code>## 
+##  Approximative Spearman Correlation Test
+## 
+## data:  TotalSleep by log(BrainWt)
+## Z = -4.2069, p-value &lt; 0.001
+## alternative hypothesis: true rho is not equal to 0</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = TotalSleep ~ log(BrainWt), data = allisontab)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -6.7029 -3.2406  0.0498  2.5162  9.0210 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   13.7245     0.8046  17.058  &lt; 2e-16 ***
+## log(BrainWt)  -1.0571     0.2076  -5.092  4.3e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.842 on 56 degrees of freedom
+##   (4 observations deleted due to missingness)
+## Multiple R-squared:  0.3165, Adjusted R-squared:  0.3043 
+## F-statistic: 25.93 on 1 and 56 DF,  p-value: 4.297e-06</code></pre>
 <p>Let’s perform a different type of permutation test. In this case, we’ll test whether the mean scores of two categories (for example, the math exam scores from two classrooms) are equal to each other.</p>
-<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="recostats-linear-models.html#cb203-1" aria-hidden="true" tabindex="-1"></a>mathscore <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">114</span>, <span class="dv">90</span>, <span class="dv">110</span>, <span class="dv">116</span>, <span class="dv">114</span>, <span class="dv">128</span>, <span class="dv">110</span>, <span class="dv">124</span>, <span class="dv">130</span>)</span>
-<span id="cb203-2"><a href="recostats-linear-models.html#cb203-2" aria-hidden="true" tabindex="-1"></a>classroom <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;X&quot;</span>,<span class="dv">5</span>), <span class="fu">rep</span>(<span class="st">&quot;Y&quot;</span>,<span class="dv">5</span>)))</span>
-<span id="cb203-3"><a href="recostats-linear-models.html#cb203-3" aria-hidden="true" tabindex="-1"></a>scoretab <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(classroom, mathscore)</span></code></pre></div>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="recostats-linear-models.html#cb205-1" aria-hidden="true" tabindex="-1"></a>mathscore <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">114</span>, <span class="dv">90</span>, <span class="dv">110</span>, <span class="dv">116</span>, <span class="dv">114</span>, <span class="dv">128</span>, <span class="dv">110</span>, <span class="dv">124</span>, <span class="dv">130</span>)</span>
+<span id="cb205-2"><a href="recostats-linear-models.html#cb205-2" aria-hidden="true" tabindex="-1"></a>classroom <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;X&quot;</span>,<span class="dv">5</span>), <span class="fu">rep</span>(<span class="st">&quot;Y&quot;</span>,<span class="dv">5</span>)))</span>
+<span id="cb205-3"><a href="recostats-linear-models.html#cb205-3" aria-hidden="true" tabindex="-1"></a>scoretab <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(classroom, mathscore)</span></code></pre></div>
 <p>The standard way to test this is using a t-test, which assumes we have many observations from the two classrooms (do we?) and that these observations come from distributions that have the same variance:</p>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="recostats-linear-models.html#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(mathscore<span class="sc">~</span>classroom, <span class="at">data=</span>scoretab, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="recostats-linear-models.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(mathscore<span class="sc">~</span>classroom, <span class="at">data=</span>scoretab, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Two Sample t-test
 ## 
