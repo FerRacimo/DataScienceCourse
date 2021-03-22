@@ -54,8 +54,8 @@ How can we verify that R is really doing what we think it is doing? Well, if we 
 Let's create a new variable (n) that will determine how many trials we attempt, say 20.
 
 ```{r}
-n <- 20
-sum(rbinom(n, 1, 0.5)) / n
+nsims <- 20
+sum(rbinom(nsims, 1, 0.5)) / nsims
 ```
 
 **Exercise**: Run the chunk of code above, in your own console. Do you get the same number as I do? Do you get exactly 0.5? If not, why not? Try the same exercise but with 100 trials, 1000 trials and 100000 trials. What happens as we increase the number of trials? This should illustrate how powerful R can be. We just threw 100 thousand coins into the air without even lifting our fingers! Try to repeat the exercise, but this time, set the Bernoulli prob parameter to be equal to a number of your choice (between 0 and 1). What is the average of all your coin tosses? 
@@ -64,7 +64,7 @@ sum(rbinom(n, 1, 0.5)) / n
 
 Let's say we are now not interested in any particular coin toss, but in the sum of several coin tosses. Each toss is represented by a 0 or a 1, so the sum of all our tosses cannot be smaller than 0 or larger than the total number of tosses we perform.
 
-Try running the code below 5 times. What numbers do you obtain?
+One way of doing this is by running 20 Bernoulli trials, and then adding them up using the function `sum()`:
 
 ```{r}
 sum(rbinom(20, 1, 0.5))
@@ -76,7 +76,9 @@ Turns out there's a short-hand way of performing the same experiment, i.e. tossi
 rbinom(1, 20, 0.5)
 ```
 
-The above code is equivalent to taking 20 Bernoulli trials, and then adding their outcomes up. The "experiment" we are running is now not a single coin toss, but 20 coin tosses together. The outcome of this experiment is neither heads nor tails, but the sum of all the heads in all those coin tosses. It turns out that this "experiment" is a probability distribution in its own right, and it is called the Binomial distribution. It has two parameters: the size of the experiment (how many tosses we perform) and the probability of heads for each toss (the prob parameter). The Bernoulli distribution is just a specific case of the Binomial distribution (the case in which we only toss 1 coin, i.e. size = 1). You can read more about this distribution if you go to the help menu for this function (type "?rbinom).
+The above code is equivalent to taking 20 Bernoulli trials, and then adding their outcomes up. The "experiment" we are running is now not a single coin toss, but 20 coin tosses together, so the first parameter is now 1 (note: if we had set it to 20, we would have performed 20 20-toss experiments). The outcome of this experiment is neither heads nor tails, but the sum of all the heads in all those coin tosses. 
+
+It turns out that this "experiment" is a probability distribution in its own right, and it is called the Binomial distribution. It has two parameters: the size of the experiment (how many tosses we perform) and the probability of heads for each toss (the prob parameter). The Bernoulli distribution is just a specific case of the Binomial distribution (the case in which we only toss 1 coin, i.e. size = 1). You can read more about this distribution if you go to the help menu for this function (type "?rbinom).
 
 The Binomial and Bernoulli distributions are examples of distributions for discrete random variables, meaning random variables whose values can only take discrete values (0, 1, 2, 3, etc.). There are other types of distributions we'll study later, some of which can also take continuous values. For example, these could be any real number, or any real number between 2.4 and 8.3, or any positive number, etc. but we need not worry about these other distributions for now.
 
@@ -85,10 +87,10 @@ The Binomial and Bernoulli distributions are examples of distributions for discr
 We can compute the average of multiple Binomial trials. Let's try adding the results of 5 Binomial trials, each with size 20 (how many Bernoulli trials is this equivalent to?):
 
 ```{r}
-n <- 5
+nsims <- 5
 size <- 20
 prob <- 0.5
-X <- rbinom(n, size, prob)
+X <- rbinom(nsims, size, prob)
 X
 Xsum <- sum(X)
 Xsum
@@ -97,7 +99,7 @@ Xsum
 To get the average, we divide by the total number of trials. Remember here that the number of Binomial trials is 5:
 
 ```{r}
-Xave <- Xsum / n
+Xave <- Xsum / nsims
 Xave
 ```
 
@@ -112,7 +114,7 @@ Note that the mean need not be an integer, even though the outcome of each Binom
 
 **Exercise**: Try repeating the same exercise but using 100 Binomial trials, and then 100 thousand Binomial trials. What numbers do you get? What number do we expect to get as we increase the number of Binomial trials?
 
-This number is called the *Expectation* of a random variable. For discrete random variables, it is defined as follows:
+The number we "expect" our average to approach as we increase the number of trials is called the *Expectation* of a random variable. For discrete random variables, it is defined as follows:
 
 $$E[X] = \sum_{i}x_iP[X=x_i]$$
 
@@ -122,9 +124,11 @@ In the case of a variable that follows the Binomial distribution, the expectatio
 
 $$E[X] = np$$ 
 
-Note that the n here refers to the size of a single Binomial trial.
+Note that the n here refers to the size of a single Binomial trial. In the case of a variable Y that follows the Bernoulli distribution (which is just a Binomial with size 1), then:
 
-This should make intuitive sense: if we throw a bunch of coins and add up their results, the number we expect to get should be approximately equal to the probability of heads times the number of tosses we perform. Note that this equality only holds approximately: for any given Binomial trial, we can get any number between 0 and the size of the Binomial experiment. If we take an average over many Binomial experiments, we'll approach this expectation ever more accurately. The average (also called "sample mean") over a series of n experiments is thus an approximation to the expectation, which is often unknown in real life. The sample mean is often represented by a letter with a bar on top: 
+$$E[Y] = p$$ 
+
+This should make intuitive sense: if we throw a bunch of coins and add up their results, the number we expect to get should be approximately equal to the probability of heads times the number of tosses we perform. Note that this equality only holds approximately: for any given Binomial trial, we can get any number between 0 and the size of the Binomial experiment. If we take an average over many Binomial experiments, we'll approach this expectation ever more accurately. The average (also called "sample mean") over a series of n experiments is thus an approximation to the expectation, which is often unknown in real life. The sample mean is represented by a letter with a bar on top: 
 
 $$\bar{x} = \frac{\sum_{j=1}^{n}x_{i}}{n}$$
 
@@ -159,22 +163,21 @@ $${n \choose k} = \frac{n!}{k!(n-k)!}$$
 where
 
 $$a! = a(a-1)(a-2)(a-3) ...1$$
-**Exercise**: Plug in other values of k into the Probability Mass Function of the Binomial distribution. What probabilities do you get? How do these change as the numbers are closer or farther away from the expectation ($n*p=10$)?
-
 Ok, this is very neat, but how can we check this equation is correct? Well, we can use simulations! We can generate a large number of Binomial trials in R, and check how many of those are exactly equal to our choice of k. The fraction of all trials that are equal to k should approximate $P[X=k]$. Let's try this for $k=10$ and 500 trials.
 
 ```{r}
-n <- 500
+nsims <- 500
 size <- 20
 prob <- 0.5
-binomvec <- rbinom(n, size, prob)
+binomvec <- rbinom(nsims, size, prob)
 binomvec
 ```
 
 We can determine which of these trials was equal to 10 using the "==" symbol:
 
 ```{r}
-verify <- (binomvec == 10)
+k <- 10
+verify <- (binomvec == k)
 verify
 ```
 
@@ -188,7 +191,7 @@ how_many_tens
 Finally, to get at the fraction of all trials that were equal to 10, we simply divide by the number of trials:
 
 ```{r}
-proportion_of_tens <- how_many_tens / n
+proportion_of_tens <- how_many_tens / nsims
 proportion_of_tens
 ```
 
@@ -225,13 +228,13 @@ $$s = \frac{\sum_{j=1}^{n}(x_{j} - \bar{x})^{2}}{n-1}$$
 Just as we can compute the sample mean of a set of trials using the function mean(), we can easily compute the variance of a set of trials using the function var():
 
 ```{r}
-n <- 5
-size <- 100
+nsims <- 100000
+size <- 10
 prob <- 0.5
-X <- rbinom(n, size, prob)
+X <- rbinom(nsims, size, prob)
 X
 mean(X)
 var(X)
 ```
 
-**Exercise**: Compute the variance of a set of 5 Binomial trials of size 100, for different values of the probability of heads. This is equivalent to performing 5 100-toss experiments, with different types of biased coins in each experiment. For what value of the binomial probability is the variance maximized? Does this agree with the variance equation for a binomially-distributed random variable?
+**Exercise**: Compute the variance of a set of 100,000 Binomial trials, each of size 10, for different values of the probability of heads, ranging from 0 to 1 (in steps of 0.1). This is equivalent to performing one hundred thousand 5-toss experiments, with different types of biased coins in each experiment. For what value of the binomial probability is the variance maximized? Afterwards, try overlaying the theoretical variance of the binomial distribuiton (`size*p*(1-p)`) on top of your plot.

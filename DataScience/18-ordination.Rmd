@@ -23,33 +23,41 @@ data(iris)
 
 ## Principal component analysis (PCA)
 
-We'll perform a PCA of the data. The function prcomp() performs the PCA, and we can assign the result of this function to a new variable (let's call it "fit"). We must first remove the last column to whatever we give as input to prcomp, as the species names are a non-linear (categorical) variable and we don't have (for now) any natural measures of distance for species. The option scale=T standardizes the variables to the same relative scale, so that some variables do not become dominant just because of their large measurement unit.
+We'll perform a PCA of the data. The function prcomp() performs the PCA, and we can assign the result of this function to a new variable (let's call it "fit"). We must first remove the last column to whatever we give as input to prcomp, as the species names are a non-linear (categorical) variable and we don't have (for now) any natural measures of distance for species. The option scale=T standardizes the variables to the same relative scale, so that some variables do not become dominant just because of their large measurement unit. We use
 
 ```{r}
-fit<-prcomp(iris[-5], scale=TRUE)
+irisnumvar <- iris[-5] # Remove the categorical variable
+fit<-prcomp(irisnumvar, scale=TRUE) # Perform PCA
 ```
 
-If we run the summary function on fit, it indicates that four PCs where created: the number of possible PCs always equals the number of original variables.
+**Exercise**: Try using the `summary()` and `plot()` functions to obtain a summary of the resulting PCA object How many principal components were created? (note that the number of PCs always equals the number of original variables). How much variance does the first principal component serve to explain in our data? How much variance does the second component explain? How many PCs would we need to be able to explain at least 95\% of the variation in our data?
 
-```{r}
-summary(fit)
+```{r, echo = FALSE}
+# summary(fit)
+
+# plot(fit,type="lines")
+
 ```
 
-How much of the variance is explained by PC1? How much is explained by PC2?
+The "Rotation" matrix is included inside the `fit` object we just constructed. You can retrieve it by typing `fit[2]$rotation`. This matrix contains the "loadings" of each of the original variables on the newly created PCs.
 
-```{r}
-plot(fit,type="lines")
+**Exercise**: Take a look at the rotation matrix. The larger the absolute value of a variable in each PC, the more that variable contributes to that PC. For each component, use the function `barplot()` to plot the loadings (contributions) of each variable into that component. Which variables contribute most to each component? 
+
+```{r, echo = FALSE}
+#rotmat <- fit[2]$rotation
+#par(mfrow=c(2,2))
+#barplot(rotmat[,1],main="PC1")
+#barplot(rotmat[,2],main="PC2")
+#barplot(rotmat[,3],main="PC3")
+#barplot(rotmat[,4],main="PC4")
+#par(mfrow=c(1,1))
 ```
 
-The "Rotation" matrix (fit[2]) contains the "loadings" of each of the original variables on the newly created PCs. Take a look at this matrix. The larger the absolute value of a variable in each PC, the more that variable contributes to that PC.
+**Exercise**: Use the function "biplot" to plot the first two PCs of our data. The plotted arrows provide a graphical rendition of the loadings of each of the original variables on the two PCs. Across this reduced dimensional space, we can see that particular variables tend to co-vary quite strongly. Which ones? We can also see a separation into two groups on PC1. Based on the previous exercise (looking at the rotation matrix), which variables do you think would be most different between samples in one group and in the other?
 
-We can use the function "biplot" to plot the first two PCs of our data. The plotted arrows provide a graphical rendition of the loadings of each of the original variables on the two PCs. 
-
-```{r}
-biplot(fit)
+```{r, echo = FALSE}
+# biplot(fit)
 ```
-
-**Exercise**: Across this reduced dimensional space, we can see that particular variables tend to co-vary quite strongly. Which ones? We can also see a separation into two groups on PC1. Which variables do you think would be most different between samples in one group and in the other?
 
 We can make prettier plots using ggplot2 and ggbiplot.
 
@@ -107,12 +115,39 @@ scoresLONG <- irisstandard %*% loadingsLONG
 plot(scoresLONG[,1],scoresLONG[,2])
 ```
 
-You can compare the results from the first section (using the ready-made function prcomp) and this section (taking a longer road), to check that the results are equivalent: the minimum and maximum differences in values for the loadings, the scores and the standard deviations of the PCs are all infinitesimally small (effectively zero).
+You can compare the results from the first section (using the ready-made function prcomp) and this section (taking a longer road), to check that the results are equivalent. The function `range()` returns a vector containing the minimum and maximum of a given vector. Using this function, we can observe that the minimum and maximum differences in values for the loadings, the scores and the standard deviations of the PCs are all infinitesimally small (effectively zero).
 
 ```{r}
 range(fit$sdev - sdLONG)
 range(fit$rotation - loadingsLONG)
 range(fit$x - scoresLONG) 
+```
+
+## Principal components as explanatory variables
+
+We can use principal components as explanatory variables to any linear model. In this case, we'll use the first two principal components of the PCA we performed above, to perform a logistic regression on the probability that an individual belongs to the species 'virginica'. First, let's create a new variable that is equal to 1 if an individual belongs to this species, and is 0 otherwise. We'll use this variable as the response variable
+
+```{r}
+isvirginica <-  as.numeric(iris[,5] == "virginica")
+```
+
+We now collate the principal components from the exercise above into a new dataframe that also includes the response variable we just created.
+
+```{r}
+# The PC scores are stored in the fifth element of fit. Here, we could have also used the object scoresLONG which we obtained by fitting a PCA manually.
+PC.scores <- fit[5] 
+newiris <- data.frame(fit[5],cbind(isvirginica))
+colnames(newiris) <- c("PC1","PC2","PC3","PC4","isvirginica")
+head(newiris)
+```
+
+**Exercise**: use the `glm()` function on the newly created `newiris` data-frame, to perform a logistic regression for the probability that an individual belongs to the species virginica, using the first principal component (PC1 and PC2) as explanatory variables. Do both components have fitted effects that are significantly different from 0?  Do these results make sense in light of the PCA biplots created in the sections above? 
+
+**Exercise**: Compare the logistic model to another logistic model, this time using only PC1 as the explanatory variable. Which model has the highest AIC score?
+
+```{r, echo=FALSE}
+#vir.glm.PC1.and.2 <- glm(isvirginica ~ PC1+PC2, family = binomial(link='logit'), data = newiris)
+#vir.glm.PC1 <- glm(isvirginica ~ PC1, family = binomial(link='logit'), data = newiris)
 ```
 
 ## NMDS
@@ -121,7 +156,7 @@ We'll now perform non-metric multidimensional scaling. Let's first take a look a
 
 ```{r}
 data(dune)
-dune
+head(dune)
 ```
 
 Note that this data is non-linear, so our first instinct should not be to perform PCA on it. Because NMDS relies on "distances", we need to specify a distance metric that we'll use. The function for performing NMDS in the package 'vegan' is called metaMDS() and its default distance metric is "bray", which corresponds to the Bray-Curtis dissimilarity: a statistic used to quantify the compositional dissimilarity between two different sites, based on counts at each site

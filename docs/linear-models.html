@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-03-06" />
+<meta name="date" content="2021-03-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -175,7 +175,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.1" data-path="ordination.html"><a href="ordination.html#libraries-and-data"><i class="fa fa-check"></i><b>14.1</b> Libraries and Data</a></li>
 <li class="chapter" data-level="14.2" data-path="ordination.html"><a href="ordination.html#principal-component-analysis-pca"><i class="fa fa-check"></i><b>14.2</b> Principal component analysis (PCA)</a></li>
 <li class="chapter" data-level="14.3" data-path="ordination.html"><a href="ordination.html#pca-under-the-hood"><i class="fa fa-check"></i><b>14.3</b> PCA under the hood</a></li>
-<li class="chapter" data-level="14.4" data-path="ordination.html"><a href="ordination.html#nmds"><i class="fa fa-check"></i><b>14.4</b> NMDS</a></li>
+<li class="chapter" data-level="14.4" data-path="ordination.html"><a href="ordination.html#principal-components-as-explanatory-variables"><i class="fa fa-check"></i><b>14.4</b> Principal components as explanatory variables</a></li>
+<li class="chapter" data-level="14.5" data-path="ordination.html"><a href="ordination.html#nmds"><i class="fa fa-check"></i><b>14.5</b> NMDS</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>15</b> Clustering</a>
 <ul>
@@ -311,7 +312,7 @@ Remember that the <span class="math inline">\(\beta_0\)</span> coefficient is im
 ## Coefficients:
 ## (Intercept)  log(BodyWt)  
 ##     11.4377      -0.7931</code></pre>
-<p><strong>Exercise</strong>: the function <code>attributes()</code> allows us to unpack all the components of the object outputted by the function <code>lm()</code> (and many other objects in R). Try inputting your model output into this function. We can observe that one of the attributes of the object is called <code>coefficients</code>. If we type <code>ourfirstmodel$coefficients</code>, we obtain a vector with the value of our two fitted coefficients (<span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>). Using the values from this vector, try plotting the line of best fit on top of the data. Hint: use the <code>geom_abline()</code> function from the <code>ggplot2</code> library.</p>
+<p><strong>Exercise</strong>: the function <code>attributes()</code> allows us to unpack all the components of the object outputted by the function <code>lm()</code> (and many other objects in R). Try inputting your model output into this function. We can observe that one of the attributes of the object is called <code>coefficients</code>. If we type <code>myfirstmodel$coefficients</code>, we obtain a vector with the value of our two fitted coefficients (<span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>). Using the values from this vector, try plotting the line of best fit on top of the data. Hint: use the <code>geom_abline()</code> function from the <code>ggplot2</code> library.</p>
 </div>
 <div id="interpreting-a-simple-linear-regression" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> Interpreting a simple linear regression</h2>
@@ -482,7 +483,7 @@ We can see that in a model including both the log of body weight and the log of 
 
 **Exercise**: what happens if we use all three variables ($\bf{LifeSpan}$, $\bf{log(BodyWt)}$ and $\bf{log(Gestation)}$) as explanatory variables? Do we get a much better model fit than we using only two? What if we use $\bf{log(Gestation)}$ as the only explanatory variable?
 
-Keep in mind that we generally want a good fit with as simple a model as possible (Occam's Razor). There will always generally be a trade-off between how much variance the model can explain and how complex the model is (how many parameters it has). How can we say whether a slight increase in explained variance justifies the addition of one or more explanatory variables? In later lectures, we'll look at ways of comparing models while accounting for these two competing interests.
+Keep in mind that we generally want a good fit with as simple a model as possible (Occam's Razor). There will always generally be a trade-off between how much variance the model can explain and how complex the model is (how many parameters it has).
 
 
 -->
@@ -582,7 +583,7 @@ lm_fit
 ```
 ## parsnip model object
 ## 
-## Fit time:  2ms 
+## Fit time:  1ms 
 ## 
 ## Call:
 ## stats::lm(formula = TotalSleep ~ log(BodyWt) + LifeSpan, data = data)
