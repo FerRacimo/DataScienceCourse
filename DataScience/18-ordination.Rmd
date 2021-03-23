@@ -10,7 +10,10 @@ Let's begin by installing and loading the necessary libraries:
 if (!require("vegan")) install.packages("vegan")
 if (!require("devtools")) install.packages("devtools")
 if (!require("ggplot2")) install.packages("ggplot2")
-if (!require("ggbiplot")){ library("devtools"); install_github("vqv/ggbiplot") }
+```
+
+```{r, echo=FALSE}
+#if (!require("ggbiplot")){ library("devtools"); install_github("vqv/ggbiplot") }
 ```
 
 We will use a dataset on measurements of particular parts of the iris plant, across individuals from three different species.
@@ -59,24 +62,28 @@ The "Rotation" matrix is included inside the `fit` object we just constructed. Y
 # biplot(fit)
 ```
 
+<!--
+
 We can make prettier plots using ggplot2 and ggbiplot.
 
 We first extract the variances of the principal components and then plot them:
 
 ```{r}
-variances <- data.frame(variances=fit$sdev**2, pcomp=1:length(fit$sdev))
-varPlot <- ggplot(variances, aes(pcomp, variances)) + geom_bar(stat="identity", fill="gray") + geom_line()
-varPlot
+#variances <- data.frame(variances=fit$sdev**2, pcomp=1:length(fit$sdev))
+#varPlot <- ggplot(variances, aes(pcomp, variances)) + geom_bar(stat="identity", fill="gray") + geom_line()
+#varPlot
 ```
 
 We can also plot the first two PCs, like we had done before in base R, but now coloring the samples by their corresponding species. How are the species distributed along PC1?
 
 ```{r}
-Species<-iris$Species
-iris_pca <- ggbiplot(fit,obs.scale = 1, 
-         var.scale=1,groups=Species,ellipse=F,circle=F,varname.size=3)
-iris_pca
+# Species<-iris$Species
+# iris_pca <- ggbiplot(fit,obs.scale = 1, 
+#         var.scale=1,groups=Species,ellipse=F,circle=F,varname.size=3)
+#iris_pca
 ```
+
+-->
 
 ## PCA under the hood
 
@@ -112,7 +119,13 @@ Using the loadings, we can plot our original (standardized) data matrix into the
 
 ```{r}
 scoresLONG <- irisstandard %*% loadingsLONG
-plot(scoresLONG[,1],scoresLONG[,2])
+iristoplot <- data.frame(scoresLONG,iris$Species)
+colnames(iristoplot) <- c("PC1","PC2","PC3","PC4","Species")
+ggplot(iristoplot, aes(PC1, PC2)) +
+  geom_point(aes(color=Species, shape = Species)) +
+  xlab("PC1") +
+  ylab("PC2") +
+  ggtitle("Iris PCA")
 ```
 
 You can compare the results from the first section (using the ready-made function prcomp) and this section (taking a longer road), to check that the results are equivalent. The function `range()` returns a vector containing the minimum and maximum of a given vector. Using this function, we can observe that the minimum and maximum differences in values for the loadings, the scores and the standard deviations of the PCs are all infinitesimally small (effectively zero).
