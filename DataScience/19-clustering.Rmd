@@ -33,13 +33,18 @@ d <- dist(iris[,1:4], method="euclidean")
 d <- as.matrix(d)
 ```
 
-**Exercise**: Under the chosen distance metric, what is the most disparate observation from observation 1? What is the distance between this observation and observation 1? Do they belong to different species?
+**Exercise**: Take a look at the first row of this matrix (`d[1,]`). Under the chosen distance metric, what is the most disparate observation from specimen 1? What is the distance between this specimen and specimen 1? Do these specimens belong to different species? (Hint: the species ID is stored in the origin `iris` data frame)
+
+<!--
 
 **Exercise**: Under the chosen distance metric, what is the pair of observations that are most disparate from each other, among all pairs? What is the distance between them? Do they belong to different species?
+
+-->
 
 ## K-means clustering
 
 Ok, we're almost ready to cluster our data. There are just a few preliminary details to keep in mind. 
+
 The first of these details is that our variables lie on different scales: some span a wider range of variation than others. A common practice in clustering is to scale all variables in our data such that they are mean-centered and have a standard deviation of 1, before performing the clustering. This ensures that all variables have the same "vote" in the clustering. If we don't scale, then variables that have large amounts of variation (large standard deviations) will disproportionately affect the Euclidean distance, and therefore our clustering will be highly influenced by those variables to the detriment of other variables. This is not inherently wrong, but it is important to keep in mind that unscaled data might result in different clusters than scaled data. To scale our data, we use the function `scale()`.
 
 ```{r}

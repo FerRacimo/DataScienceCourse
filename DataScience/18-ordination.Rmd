@@ -149,7 +149,7 @@ We now collate the principal components from the exercise above into a new dataf
 ```{r}
 # The PC scores are stored in the fifth element of fit. Here, we could have also used the object scoresLONG which we obtained by fitting a PCA manually.
 PC.scores <- fit[5] 
-newiris <- data.frame(fit[5],cbind(isvirginica))
+newiris <- data.frame(PC.scores,isvirginica)
 colnames(newiris) <- c("PC1","PC2","PC3","PC4","isvirginica")
 head(newiris)
 ```
@@ -172,23 +172,27 @@ data(dune)
 head(dune)
 ```
 
-Note that this data is non-linear, so our first instinct should not be to perform PCA on it. Because NMDS relies on "distances", we need to specify a distance metric that we'll use. The function for performing NMDS in the package 'vegan' is called metaMDS() and its default distance metric is "bray", which corresponds to the Bray-Curtis dissimilarity: a statistic used to quantify the compositional dissimilarity between two different sites, based on counts at each site
+Note that here linearity is not a good assumption to make for our ordination: a difference between a site containing 0 specimens (absence) and a site containing 1 specimen is conceptually larger than a difference between a site containing 1 specimen and another site containing 2. In other words, the difference between presence and absence is more important than a difference in quantity of specimens. Thus, our first instinct should not be to perform PCA on it. Because NMDS relies on "distances", we need to specify a distance metric that we'll use. The function for performing NMDS in the package 'vegan' is called metaMDS() and its default distance metric is "bray", which corresponds to the Bray-Curtis dissimilarity: a statistic used to quantify the compositional dissimilarity between two different sites, based on counts at each site
 
 Let's perform NMDS ordination using the Bray-Curtis dissimilarity. Remember that, unlike PCA, NMDS requires us to specify the number of dimensions (k) a priori (the default in vegan is 2). It also performs a series of transformations on the data that are appropriate for ecological data (default: autotransform=TRUE). The trymax option ensures that the algorithm is started from different points (in our case, 50) to avoid local minima.
 
 ```{r}
-ord <- metaMDS(dune, k=2, autotransform = TRUE, trymax=50)
+ord <- metaMDS(dune, k=3, autotransform = TRUE, trymax=50, distance="bray")
 ```
 
 As you can see, the function goes through a series of steps until convergence is reached. Let's plot the results:
 
 ```{r}
 par(mfrow=c(1,2))
-plot(ord,display="sites",main="NMDS ordination of sites",type="t")
-plot(ord,display="species",main="NMDS ordination of species",type="t")
+plot(ord,choices=c(1,2),display="sites",main="NMDS ordination of sites",type="t")
+plot(ord,choices=c(1,2),display="species",main="NMDS ordination of species",type="t")
 par(mfrow=c(1,1))
 ```
 
-**Exercise**: What do these plots tell you about the distribution of species across sites? Which species tend to co-occcur with each other? Which sites tend to have similar species compositions?
+Here, the option `choices` determines which NMDS dimensions are being plotted. We only have two dimensions, so there's only two dimensions that we can plot here. In turn, the option `display` allows us to plot an ordination of the sites (assuming species are properties of each site), or of the species (assuming sites are properties of each species).
 
-**Exercise**: Try changing the number of dimensions or the distance metric used. You can take a look at the list of possible distances and their definitions using "?vegdist". Do the results change? Why?
+**Exercise**: Take a look at the plots. Which species tend to co-occcur with each other? Which sites tend to have similar species compositions?
+
+**Exercise**: Change the number of dimensions and re-run the ordination. Note that you'll have to create multiple plots to observe all the dimensions if there are more than 2 of them. How do the results change?
+
+**Exercise**: Change the distance metric used and re-run the ordination with k=2 (e.g. try using the Euclidean distance instead). You can take a look at the list of possible distances and their definitions using `?vegdist`. Do the results change? Why?

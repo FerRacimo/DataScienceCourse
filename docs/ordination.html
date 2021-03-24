@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-03-23" />
+<meta name="date" content="2021-03-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -326,7 +326,7 @@ We can also plot the first two PCs, like we had done before in base R, but now c
 <p>We now collate the principal components from the exercise above into a new dataframe that also includes the response variable we just created.</p>
 <div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="ordination.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The PC scores are stored in the fifth element of fit. Here, we could have also used the object scoresLONG which we obtained by fitting a PCA manually.</span></span>
 <span id="cb125-2"><a href="ordination.html#cb125-2" aria-hidden="true" tabindex="-1"></a>PC.scores <span class="ot">&lt;-</span> fit[<span class="dv">5</span>] </span>
-<span id="cb125-3"><a href="ordination.html#cb125-3" aria-hidden="true" tabindex="-1"></a>newiris <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(fit[<span class="dv">5</span>],<span class="fu">cbind</span>(isvirginica))</span>
+<span id="cb125-3"><a href="ordination.html#cb125-3" aria-hidden="true" tabindex="-1"></a>newiris <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(PC.scores,isvirginica)</span>
 <span id="cb125-4"><a href="ordination.html#cb125-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(newiris) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;PC1&quot;</span>,<span class="st">&quot;PC2&quot;</span>,<span class="st">&quot;PC3&quot;</span>,<span class="st">&quot;PC4&quot;</span>,<span class="st">&quot;isvirginica&quot;</span>)</span>
 <span id="cb125-5"><a href="ordination.html#cb125-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(newiris)</span></code></pre></div>
 <pre><code>##         PC1        PC2         PC3          PC4 isvirginica
@@ -372,54 +372,62 @@ We can also plot the first two PCs, like we had done before in base R, but now c
 ## 4        2        0        1        0        2        0
 ## 5        3        2        2        0        2        0
 ## 6        3        5        5        0        6        0</code></pre>
-<p>Note that this data is non-linear, so our first instinct should not be to perform PCA on it. Because NMDS relies on “distances,” we need to specify a distance metric that we’ll use. The function for performing NMDS in the package ‘vegan’ is called metaMDS() and its default distance metric is “bray,” which corresponds to the Bray-Curtis dissimilarity: a statistic used to quantify the compositional dissimilarity between two different sites, based on counts at each site</p>
+<p>Note that here linearity is not a good assumption to make for our ordination: a difference between a site containing 0 specimens (absence) and a site containing 1 specimen is conceptually larger than a difference between a site containing 1 specimen and another site containing 2. In other words, the difference between presence and absence is more important than a difference in quantity of specimens. Thus, our first instinct should not be to perform PCA on it. Because NMDS relies on “distances,” we need to specify a distance metric that we’ll use. The function for performing NMDS in the package ‘vegan’ is called metaMDS() and its default distance metric is “bray,” which corresponds to the Bray-Curtis dissimilarity: a statistic used to quantify the compositional dissimilarity between two different sites, based on counts at each site</p>
 <p>Let’s perform NMDS ordination using the Bray-Curtis dissimilarity. Remember that, unlike PCA, NMDS requires us to specify the number of dimensions (k) a priori (the default in vegan is 2). It also performs a series of transformations on the data that are appropriate for ecological data (default: autotransform=TRUE). The trymax option ensures that the algorithm is started from different points (in our case, 50) to avoid local minima.</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="ordination.html#cb129-1" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(dune, <span class="at">k=</span><span class="dv">2</span>, <span class="at">autotransform =</span> <span class="cn">TRUE</span>, <span class="at">trymax=</span><span class="dv">50</span>)</span></code></pre></div>
-<pre><code>## Run 0 stress 0.1192678 
-## Run 1 stress 0.1183186 
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="ordination.html#cb129-1" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(dune, <span class="at">k=</span><span class="dv">3</span>, <span class="at">autotransform =</span> <span class="cn">TRUE</span>, <span class="at">trymax=</span><span class="dv">50</span>, <span class="at">distance=</span><span class="st">&quot;bray&quot;</span>)</span></code></pre></div>
+<pre><code>## Run 0 stress 0.0764146 
+## Run 1 stress 0.0764147 
+## ... Procrustes: rmse 0.0001234014  max resid 0.0003588685 
+## ... Similar to previous best
+## Run 2 stress 0.0722698 
 ## ... New best solution
-## ... Procrustes: rmse 0.0202701  max resid 0.0649561 
-## Run 2 stress 0.1183186 
-## ... Procrustes: rmse 2.103623e-05  max resid 6.418e-05 
+## ... Procrustes: rmse 0.0738147  max resid 0.2611184 
+## Run 3 stress 0.07641726 
+## Run 4 stress 0.07641417 
+## Run 5 stress 0.07641547 
+## Run 6 stress 0.0722698 
+## ... Procrustes: rmse 0.0006805085  max resid 0.001728188 
 ## ... Similar to previous best
-## Run 3 stress 0.1183186 
-## ... Procrustes: rmse 6.02139e-05  max resid 0.0001796676 
+## Run 7 stress 0.08674085 
+## Run 8 stress 0.07227004 
+## ... Procrustes: rmse 0.0002995797  max resid 0.0007398965 
 ## ... Similar to previous best
-## Run 4 stress 0.119268 
-## Run 5 stress 0.1183186 
+## Run 9 stress 0.08200617 
+## Run 10 stress 0.07226925 
 ## ... New best solution
-## ... Procrustes: rmse 1.565555e-06  max resid 4.449376e-06 
+## ... Procrustes: rmse 0.0002803448  max resid 0.0007765557 
 ## ... Similar to previous best
-## Run 6 stress 0.1192678 
-## Run 7 stress 0.1809579 
-## Run 8 stress 0.1809584 
-## Run 9 stress 0.1183186 
-## ... Procrustes: rmse 8.92729e-06  max resid 2.743526e-05 
+## Run 11 stress 0.07641656 
+## Run 12 stress 0.07226959 
+## ... Procrustes: rmse 0.0003701525  max resid 0.000841284 
 ## ... Similar to previous best
-## Run 10 stress 0.1192678 
-## Run 11 stress 0.1192679 
-## Run 12 stress 0.1192682 
-## Run 13 stress 0.2035424 
-## Run 14 stress 0.2709284 
-## Run 15 stress 0.1183186 
-## ... Procrustes: rmse 7.676224e-06  max resid 2.259308e-05 
+## Run 13 stress 0.07227042 
+## ... Procrustes: rmse 0.0004701392  max resid 0.001278521 
 ## ... Similar to previous best
-## Run 16 stress 0.1808924 
-## Run 17 stress 0.1192681 
-## Run 18 stress 0.1192678 
-## Run 19 stress 0.1183186 
-## ... Procrustes: rmse 4.846616e-06  max resid 1.003444e-05 
+## Run 14 stress 0.07641567 
+## Run 15 stress 0.0911821 
+## Run 16 stress 0.07641751 
+## Run 17 stress 0.08674224 
+## Run 18 stress 0.07226968 
+## ... Procrustes: rmse 0.0002576417  max resid 0.0007090454 
 ## ... Similar to previous best
-## Run 20 stress 0.1192678 
+## Run 19 stress 0.07226988 
+## ... Procrustes: rmse 0.0004686646  max resid 0.00113996 
+## ... Similar to previous best
+## Run 20 stress 0.07226997 
+## ... Procrustes: rmse 0.0003026157  max resid 0.00063211 
+## ... Similar to previous best
 ## *** Solution reached</code></pre>
 <p>As you can see, the function goes through a series of steps until convergence is reached. Let’s plot the results:</p>
 <div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="ordination.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb131-2"><a href="ordination.html#cb131-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord,<span class="at">display=</span><span class="st">&quot;sites&quot;</span>,<span class="at">main=</span><span class="st">&quot;NMDS ordination of sites&quot;</span>,<span class="at">type=</span><span class="st">&quot;t&quot;</span>)</span>
-<span id="cb131-3"><a href="ordination.html#cb131-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord,<span class="at">display=</span><span class="st">&quot;species&quot;</span>,<span class="at">main=</span><span class="st">&quot;NMDS ordination of species&quot;</span>,<span class="at">type=</span><span class="st">&quot;t&quot;</span>)</span></code></pre></div>
+<span id="cb131-2"><a href="ordination.html#cb131-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord,<span class="at">choices=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="at">display=</span><span class="st">&quot;sites&quot;</span>,<span class="at">main=</span><span class="st">&quot;NMDS ordination of sites&quot;</span>,<span class="at">type=</span><span class="st">&quot;t&quot;</span>)</span>
+<span id="cb131-3"><a href="ordination.html#cb131-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord,<span class="at">choices=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="at">display=</span><span class="st">&quot;species&quot;</span>,<span class="at">main=</span><span class="st">&quot;NMDS ordination of species&quot;</span>,<span class="at">type=</span><span class="st">&quot;t&quot;</span>)</span></code></pre></div>
 <p><img src="DataScience_files/figure-html/unnamed-chunk-73-1.png" width="672" /></p>
 <div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="ordination.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
-<p><strong>Exercise</strong>: What do these plots tell you about the distribution of species across sites? Which species tend to co-occcur with each other? Which sites tend to have similar species compositions?</p>
-<p><strong>Exercise</strong>: Try changing the number of dimensions or the distance metric used. You can take a look at the list of possible distances and their definitions using “?vegdist.” Do the results change? Why?</p>
+<p>Here, the option <code>choices</code> determines which NMDS dimensions are being plotted. We only have two dimensions, so there’s only two dimensions that we can plot here. In turn, the option <code>display</code> allows us to plot an ordination of the sites (assuming species are properties of each site), or of the species (assuming sites are properties of each species).</p>
+<p><strong>Exercise</strong>: Take a look at the plots. Which species tend to co-occcur with each other? Which sites tend to have similar species compositions?</p>
+<p><strong>Exercise</strong>: Change the number of dimensions and re-run the ordination. Note that you’ll have to create multiple plots to observe all the dimensions if there are more than 2 of them. How do the results change?</p>
+<p><strong>Exercise</strong>: Change the distance metric used and re-run the ordination with k=2 (e.g. try using the Euclidean distance instead). You can take a look at the list of possible distances and their definitions using <code>?vegdist</code>. Do the results change? Why?</p>
 
 </div>
 </div>

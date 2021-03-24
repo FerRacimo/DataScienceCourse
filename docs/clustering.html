@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-03-23" />
+<meta name="date" content="2021-03-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -231,13 +231,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The variables we will use to cluster our data are the four flower measurements in the iris dataset. They all represent the measured length of a segment between two points (e.g. sepal length, petal width), the Euclidean distance is an obvious choice of distance for clustering our observation. The clustering method we will apply to our data (and the ordination methods we applied before) implicitly use the function <code>dist()</code> to calculate distances between observations.</p>
 <div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="clustering.html#cb139-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">dist</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">method=</span><span class="st">&quot;euclidean&quot;</span>)</span>
 <span id="cb139-2"><a href="clustering.html#cb139-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(d)</span></code></pre></div>
-<p><strong>Exercise</strong>: Under the chosen distance metric, what is the most disparate observation from observation 1? What is the distance between this observation and observation 1? Do they belong to different species?</p>
-<p><strong>Exercise</strong>: Under the chosen distance metric, what is the pair of observations that are most disparate from each other, among all pairs? What is the distance between them? Do they belong to different species?</p>
+<p><strong>Exercise</strong>: Take a look at the first row of this matrix (<code>d[1,]</code>). Under the chosen distance metric, what is the most disparate observation from specimen 1? What is the distance between this specimen and specimen 1? Do these specimens belong to different species? (Hint: the species ID is stored in the origin <code>iris</code> data frame)</p>
+<!--
+
+**Exercise**: Under the chosen distance metric, what is the pair of observations that are most disparate from each other, among all pairs? What is the distance between them? Do they belong to different species?
+
+-->
 </div>
 <div id="k-means-clustering" class="section level2" number="15.3">
 <h2><span class="header-section-number">15.3</span> K-means clustering</h2>
-<p>Ok, we’re almost ready to cluster our data. There are just a few preliminary details to keep in mind.
-The first of these details is that our variables lie on different scales: some span a wider range of variation than others. A common practice in clustering is to scale all variables in our data such that they are mean-centered and have a standard deviation of 1, before performing the clustering. This ensures that all variables have the same “vote” in the clustering. If we don’t scale, then variables that have large amounts of variation (large standard deviations) will disproportionately affect the Euclidean distance, and therefore our clustering will be highly influenced by those variables to the detriment of other variables. This is not inherently wrong, but it is important to keep in mind that unscaled data might result in different clusters than scaled data. To scale our data, we use the function <code>scale()</code>.</p>
+<p>Ok, we’re almost ready to cluster our data. There are just a few preliminary details to keep in mind.</p>
+<p>The first of these details is that our variables lie on different scales: some span a wider range of variation than others. A common practice in clustering is to scale all variables in our data such that they are mean-centered and have a standard deviation of 1, before performing the clustering. This ensures that all variables have the same “vote” in the clustering. If we don’t scale, then variables that have large amounts of variation (large standard deviations) will disproportionately affect the Euclidean distance, and therefore our clustering will be highly influenced by those variables to the detriment of other variables. This is not inherently wrong, but it is important to keep in mind that unscaled data might result in different clusters than scaled data. To scale our data, we use the function <code>scale()</code>.</p>
 <div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="clustering.html#cb140-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">scale</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span></code></pre></div>
 <p><strong>Exercise</strong>: what’s the mean and standard deviation of each of the four variables in the iris dataset before scaling? what is their mean and standard deviation after scaling?</p>
 <p>Ok, now on to the second preliminary detail. Clustering methods require the specification of the number of clusters that we a priori choose to fit the data to. Deciding on what is the “best” number of clusters depends on a number of criteria (e.g. minimizes the total within-cluster variance, homogenizing per-cluster variance, etc), and there are many methods with different criteria. We’ll use the function <code>NbClust</code> which runs 26 of these different methods on our data for assessing the “best” number of clusters. We’ll then choose to use the number of clusters that is recommended by the largest number of methods.</p>
