@@ -1,7 +1,141 @@
-# Probability Part 3
+# Probability Catch-up
+
+## Discrete distributions
+
+
+Take a look at the help pages for `rpois` (and `dpois` and `ppois`), and for `rgeom` (and `dgeom` and `sample`). There is a whole world of R functions we can use to sample random values from probability distributions or obtain probabilities from them!  The `_pois` family of functions allow us to work with Poisson distributions, while the `_geom` family of functions allow us to work with Geometric distributions.
+
+Be careful with which type of function you use! For example, `rpois` serves to generate random samples from the Poisson distribution. In turn, `dpois` allow us to calculate the Poisson PMF (in other words, $P[X=k]$) for any value of k. Finally, `ppois` allow us to calculate the "distribution function", which is just a fancy way of saying $P[X \leq k]$ for any value of k.
+
+After having navigated these help pages, let's take a stab at answering some discrete probability questions:
+
+**Excercise**: Let's assume the number of meteorites hitting a planet follows a Poisson distribution. If meteorites hit the planet at a rate of 5 per year, what is the probability that 3 or less meteorites will hit on a given year?
+
+<!--
+```{r disc1, exercise = TRUE}
+
+```
+```{r disc1-solution}
+lambda <- 5
+ppois(3, lambda) # ppois gives P[X less than or equal to k]
+```
+-->
+
+**Exercise**: Assuming the same rate as above, what is the probability that more than 10 meteorites hit on a given year?
+
+<!--
+```{r disc2, exercise = TRUE}
+
+```
+```{r disc2-solution}
+lambda <- 5
+1 - ppois(10, lambda)
+```
+-->
+
+**Exercise**: Each hour, 3 buses arrive at a station on average. Simulate a thousand 1-hour instances of this random process, assuming the number of buses per hour follows a Poisson distribution. Compute their sample mean and variance.
+
+<!--
+```{r disc3, exercise = TRUE}
+
+```
+```{r disc3-solution}
+lambda <- 3
+randvec <- rpois(1000,lambda) # We use rpois to generate random Poisson samples
+mean(randvec)
+var(randvec)
+```
+-->
+
+**Exercise**: If I'm tossing a series of unbiased coins, what is the probability I get exactly 5 tails before I get a head?
+
+<!--
+```{r disc4, exercise = TRUE}
+
+```
+```{r disc4-solution}
+prob <- 0.5
+dgeom(5,prob) # P[ exactly 5 tails before a head]
+```
+-->
+
+**Exercise**: If I'm tossing a series of unbiased coins, what is the probability I get at least 5 tails before I get a head?
+
+<!--
+```{r disc5, exercise=TRUE}
+
+```
+```{r disc5-solution}
+prob <- 0.5
+# Probability of at least 5 tails before a head is equal 1 minus the probability of 4 or less tails before a head.
+1 - pgeom(4,prob)
+```
+-->
+
+Finally, we can use the function `sample()` to simulate from a discrete uniform distribution. As input, this requires a vector containing the possible values that we can sample from (for example, the numbers 1, 2, 3, 4, 5 and 6 in a six-sided dice), and the number of trials we want to perform. Make sure to set the option `replace` to `TRUE`, so that we can sample with replacement from the specified vector.
+
+**Exercise**: Using the `sample()` function, throw a fair 16-sided dice a thousand times and compute the sample mean of your results.
+
+<!--
+```{r disc6, exercise=TRUE}
+
+```
+```{r disc6-solution}
+possiblevalues <- seq(1,16)
+ntrials <- 1000
+results <- sample(possiblevalues,ntrials,replace=TRUE)
+mean(results)
+```
+-->
+
+
+## The Normal distribuiton and the Central Limit Theorem
+
+
+The Central Limit Theorem states that if $X_1, X_2, ..., X_m$ are random samples from a distribution (any distribution) with mean $\mu$ and finite variance $\sigma^2$, and the sample mean is $\bar{X}$, then, as m grows large, $\bar{X}$ converges in distribution to a Normal distribution with mean $\mu$ and variance $\sigma^2 /m$.
+
+In other words, for large values of m (large sample sizes), we can treat the average of our sample as being drawn from $N(\mu,\sigma^2/\sqrt{m})$.
+
+How can we verify this to be true? Well, one way to do this is to pretend (simulate) we have many sample sets, each composed of a large number of samples, compute their sample mean, and look at the histogram over all the sample means. If the CLT holds, that histogram should look very similar to a Normal distribution. Let's try that here!
+
+We'll begin with a binomial distribution as our initial "sampling" distribution. We can, for example, draw $m=100$ values from a binomial distribution with parameters $[p=0.7,n=5]$, and then compute their mean:
+
+```{r}
+m <- 100 # sample size
+p <- 0.7 # binomial success parameter
+n <- 5 # binomial size parameter
+samp1 <- rbinom(m,n,p)  # simulation
+mean1 <- mean(samp1) # sample average
+```
+
+The CLT theorem is a statement about multiple means from multiple samples, so let's repeat the above exercise 1,000 times:
+
+```{r}
+allmeans <- sapply(seq(1,1000), function(i){mean(rbinom(m,n,p))})
+hist(allmeans,freq=FALSE)
+```
+
+The CLT states that this distribution should be very close to a Normal distribution with mean $\mu = np = 5*0.7 = 3.5$ and $\sigma^2 = (np(1-p))/m = 5*0.7*0.3/100 = 0.0105$. Let's verify that:
+
+```{r}
+hist(allmeans,freq=FALSE) # Histogram of sample means
+mu <- n*p # mean of Normal distribution under the CLT
+var <- n*p*(1-p)/m # variance of Normal distribution under the CLT
+sd <- sqrt(var) # standard deviation of Normal distribution under the CLT
+curve(dnorm(x,mean=mu,sd=sd),from=-5,to=5,n=5000,add=TRUE,col="red") # Normal distribution
+```
+
+**Exercise**: Repeat the exercise above but instead of a binomial 
+distribution, use a Poisson distribution with parameter $\lambda=5$ (considering what the mean and variance of the corresponding Normal distribution should be).
+
+**Exercise**: Repeat the exercise above but instead of a binomial distribution, use a Geometric distribution with parameter $p=0.8$ (considering what the mean and variance of the corresponding Normal distribution should be).
+
+
+## Other continuous distributions
+
 
 <!-- 
-## The Poisson distribution
+
 
 Limit of binomial
 

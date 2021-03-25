@@ -35,6 +35,10 @@ d <- as.matrix(d)
 
 **Exercise**: Take a look at the first row of this matrix (`d[1,]`). Under the chosen distance metric, what is the most disparate observation from specimen 1? What is the distance between this specimen and specimen 1? Do these specimens belong to different species? (Hint: the species ID is stored in the origin `iris` data frame)
 
+```{r, echo=FALSE}
+#which(d[1,] == max(d[1,]))
+```
+
 <!--
 
 **Exercise**: Under the chosen distance metric, what is the pair of observations that are most disparate from each other, among all pairs? What is the distance between them? Do they belong to different species?
@@ -49,6 +53,13 @@ The first of these details is that our variables lie on different scales: some s
 
 ```{r}
 df <- scale(iris[,1:4])
+```
+
+```{r, echo=FALSE}
+#mean(iris[,1])
+#sd(iris[,1])
+#mean(df[,1])
+#sd(df[,1])
 ```
 
 **Exercise**: what's the mean and standard deviation of each of the four variables in the iris dataset before scaling? what is their mean and standard deviation after scaling?
@@ -91,4 +102,16 @@ ggplot(data=iris) + geom_point(aes(x=Petal.Length,y=Petal.Width,color=clustassig
 
 **Exercise**:  Now try computing a K-means clustering on the data yourself, this time using 3 clusters. Plot the result using a different color for each cluster.
 
+```{r, echo=FALSE}
+fitk3 <- kmeans(df, 3)
+clustk3 <- as.factor(fitk3$cluster)
+irisclust <- data.frame(iris,clustk3) 
+ggplot(data=iris) + geom_point(aes(x=Sepal.Length,y=Sepal.Width,color=clustk3))
+ggplot(data=iris) + geom_point(aes(x=Petal.Length,y=Petal.Width,color=clustk3))
+```
+
 **Exercise**: How well do the clusters from the previous exercise correspond to the 3 iris species? Are they perfectly matched? Why? Why not?
+
+```{r, echo=FALSE}
+compare <- cbind(iris[,5],fitk3$cluster)
+```

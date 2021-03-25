@@ -42,3 +42,12 @@ fitting-a-simple-linear-regression-1
 interpreting-a-simple-linear-regression-1
 simulating-data-from-a-linear-model-1
 hypothesis-testing-and-permutation-testing
+probability-catch-up
+discrete-distributions
+the-normal-distribuiton-and-the-central-limit-theorem
+other-continuous-distributions
+optional-a-multivariate-linear-regression
+hypothesis-testing
+interactions
+anova
+working-with-tidymodels
