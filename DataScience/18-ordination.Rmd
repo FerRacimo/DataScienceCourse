@@ -177,10 +177,10 @@ Note that here linearity is not a good assumption to make for our ordination: a 
 Let's perform NMDS ordination using the Bray-Curtis dissimilarity. Remember that, unlike PCA, NMDS requires us to specify the number of dimensions (k) a priori (the default in vegan is 2). It also performs a series of transformations on the data that are appropriate for ecological data (default: autotransform=TRUE). The trymax option ensures that the algorithm is started from different points (in our case, 50) to avoid local minima.
 
 ```{r}
-ord <- metaMDS(dune, k=3, autotransform = TRUE, trymax=50, distance="bray")
+ord <- metaMDS(dune, k=2, autotransform = TRUE, trymax=50, distance="bray")
 ```
 
-As you can see, the function goes through a series of steps until convergence is reached. Let's plot the results:
+As you can see, the func tion goes through a series of steps until convergence is reached. Let's plot the results:
 
 ```{r}
 par(mfrow=c(1,2))
