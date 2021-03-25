@@ -53,6 +53,69 @@
 
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -93,11 +156,6 @@
 <li class="chapter" data-level="6.1" data-path="linear-models.html"><a href="linear-models.html#fitting-a-simple-linear-regression"><i class="fa fa-check"></i><b>6.1</b> Fitting a simple linear regression</a></li>
 <li class="chapter" data-level="6.2" data-path="linear-models.html"><a href="linear-models.html#interpreting-a-simple-linear-regression"><i class="fa fa-check"></i><b>6.2</b> Interpreting a simple linear regression</a></li>
 <li class="chapter" data-level="6.3" data-path="linear-models.html"><a href="linear-models.html#simulating-data-from-a-linear-model"><i class="fa fa-check"></i><b>6.3</b> Simulating data from a linear model</a></li>
-<li class="chapter" data-level="6.4" data-path="linear-models.html"><a href="linear-models.html#optional-a-multivariate-linear-regression"><i class="fa fa-check"></i><b>6.4</b> Optional: A multivariate linear regression</a></li>
-<li class="chapter" data-level="6.5" data-path="linear-models.html"><a href="linear-models.html#hypothesis-testing"><i class="fa fa-check"></i><b>6.5</b> Hypothesis testing</a></li>
-<li class="chapter" data-level="6.6" data-path="linear-models.html"><a href="linear-models.html#interactions"><i class="fa fa-check"></i><b>6.6</b> Interactions</a></li>
-<li class="chapter" data-level="6.7" data-path="linear-models.html"><a href="linear-models.html#anova"><i class="fa fa-check"></i><b>6.7</b> ANOVA</a></li>
-<li class="chapter" data-level="6.8" data-path="linear-models.html"><a href="linear-models.html#working-with-tidymodels"><i class="fa fa-check"></i><b>6.8</b> Working with tidymodels</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html"><i class="fa fa-check"></i><b>7</b> Properties of Estimators and Inference</a>
 <ul>
@@ -203,7 +261,7 @@ mean(randvec)
 ```
 
 ```
-## [1] 3.088
+## [1] 2.952
 ```
 
 ```r
@@ -211,7 +269,7 @@ var(randvec)
 ```
 
 ```
-## [1] 3.173429
+## [1] 3.148845
 ```
 -->
 <p><strong>Exercise</strong>: If I’m tossing a series of unbiased coins, what is the probability I get exactly 5 tails before I get a head?</p>
@@ -254,15 +312,35 @@ mean(results)
 ```
 
 ```
-## [1] 8.371
+## [1] 8.235
 ```
 -->
 </div>
 <div id="the-normal-distribuiton-and-the-central-limit-theorem" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> The Normal distribuiton and the Central Limit Theorem</h2>
-<p>The Central Limit Theorem states that if <span class="math inline">\(X_1, X_2, ..., X_n\)</span> are random samples from a distribution (any distribution) with mean <span class="math inline">\(\mu\)</span> and finite variance <span class="math inline">\(\sigma^2\)</span>, and the sample mean is <span class="math inline">\(\bar{X}\)</span>, then, as n grows large, <span class="math inline">\(\bar{X}\)</span> converges in distribution to a Normal distribution with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2 / \sqrt{n}\)</span>.</p>
-<p>In other words, for large values of n (large sample sizes), we can treat the average of our sample as being drawn from <span class="math inline">\(N(\mu,\sigma^2/\sqrt{n})\)</span>.</p>
-<p>How can we verify this to be true?</p>
+<p>The Central Limit Theorem states that if <span class="math inline">\(X_1, X_2, ..., X_m\)</span> are random samples from a distribution (any distribution) with mean <span class="math inline">\(\mu\)</span> and finite variance <span class="math inline">\(\sigma^2\)</span>, and the sample mean is <span class="math inline">\(\bar{X}\)</span>, then, as m grows large, <span class="math inline">\(\bar{X}\)</span> converges in distribution to a Normal distribution with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2 /m\)</span>.</p>
+<p>In other words, for large values of m (large sample sizes), we can treat the average of our sample as being drawn from <span class="math inline">\(N(\mu,\sigma^2/\sqrt{m})\)</span>.</p>
+<p>How can we verify this to be true? Well, one way to do this is to pretend (simulate) we have many sample sets, each composed of a large number of samples, compute their sample mean, and look at the histogram over all the sample means. If the CLT holds, that histogram should look very similar to a Normal distribution. Let’s try that here!</p>
+<p>We’ll begin with a binomial distribution as our initial “sampling” distribution. We can, for example, draw <span class="math inline">\(m=100\)</span> values from a binomial distribution with parameters <span class="math inline">\([p=0.7,n=5]\)</span>, and then compute their mean:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="probability-catch-up.html#cb36-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="co"># sample size</span></span>
+<span id="cb36-2"><a href="probability-catch-up.html#cb36-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.7</span> <span class="co"># binomial success parameter</span></span>
+<span id="cb36-3"><a href="probability-catch-up.html#cb36-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># binomial size parameter</span></span>
+<span id="cb36-4"><a href="probability-catch-up.html#cb36-4" aria-hidden="true" tabindex="-1"></a>samp1 <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(m,n,p)  <span class="co"># simulation</span></span>
+<span id="cb36-5"><a href="probability-catch-up.html#cb36-5" aria-hidden="true" tabindex="-1"></a>mean1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp1) <span class="co"># sample average</span></span></code></pre></div>
+<p>The CLT theorem is a statement about multiple means from multiple samples, so let’s repeat the above exercise 1,000 times:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="probability-catch-up.html#cb37-1" aria-hidden="true" tabindex="-1"></a>allmeans <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">1000</span>), <span class="cf">function</span>(i){<span class="fu">mean</span>(<span class="fu">rbinom</span>(m,n,p))})</span>
+<span id="cb37-2"><a href="probability-catch-up.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(allmeans,<span class="at">freq=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>The CLT states that this distribution should be very close to a Normal distribution with mean <span class="math inline">\(\mu = np = 5*0.7 = 3.5\)</span> and <span class="math inline">\(\sigma^2 = (np(1-p))/m = 5*0.7*0.3/100 = 0.0105\)</span>. Let’s verify that:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="probability-catch-up.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(allmeans,<span class="at">freq=</span><span class="cn">FALSE</span>) <span class="co"># Histogram of sample means</span></span>
+<span id="cb38-2"><a href="probability-catch-up.html#cb38-2" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> n<span class="sc">*</span>p <span class="co"># mean of Normal distribution under the CLT</span></span>
+<span id="cb38-3"><a href="probability-catch-up.html#cb38-3" aria-hidden="true" tabindex="-1"></a>var <span class="ot">&lt;-</span> n<span class="sc">*</span>p<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">/</span>m <span class="co"># variance of Normal distribution under the CLT</span></span>
+<span id="cb38-4"><a href="probability-catch-up.html#cb38-4" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(var) <span class="co"># standard deviation of Normal distribution under the CLT</span></span>
+<span id="cb38-5"><a href="probability-catch-up.html#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x,<span class="at">mean=</span>mu,<span class="at">sd=</span>sd),<span class="at">from=</span><span class="sc">-</span><span class="dv">5</span>,<span class="at">to=</span><span class="dv">5</span>,<span class="at">n=</span><span class="dv">5000</span>,<span class="at">add=</span><span class="cn">TRUE</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>) <span class="co"># Normal distribution</span></span></code></pre></div>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><strong>Exercise</strong>: Repeat the exercise above but instead of a binomial
+distribution, use a Poisson distribution with parameter <span class="math inline">\(\lambda=5\)</span> (considering what the mean and variance of the corresponding Normal distribution should be).</p>
+<p><strong>Exercise</strong>: Repeat the exercise above but instead of a binomial distribution, use a Geometric distribution with parameter <span class="math inline">\(p=0.8\)</span> (considering what the mean and variance of the corresponding Normal distribution should be).</p>
 </div>
 <div id="other-continuous-distributions" class="section level2" number="5.3">
 <h2><span class="header-section-number">5.3</span> Other continuous distributions</h2>

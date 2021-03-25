@@ -134,12 +134,9 @@ distribution, use a Poisson distribution with parameter $\lambda=5$ (considering
 ## Other continuous distributions
 
 
+
+
 <!-- 
-
-
-Limit of binomial
-
-## The geometric distribution
 
 
 ## The exponential distribution
