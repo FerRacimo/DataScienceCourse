@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-03-25" />
+<meta name="date" content="2021-03-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -149,7 +149,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="5.1" data-path="probability-catch-up.html"><a href="probability-catch-up.html#discrete-distributions"><i class="fa fa-check"></i><b>5.1</b> Discrete distributions</a></li>
 <li class="chapter" data-level="5.2" data-path="probability-catch-up.html"><a href="probability-catch-up.html#the-normal-distribuiton-and-the-central-limit-theorem"><i class="fa fa-check"></i><b>5.2</b> The Normal distribuiton and the Central Limit Theorem</a></li>
-<li class="chapter" data-level="5.3" data-path="probability-catch-up.html"><a href="probability-catch-up.html#other-continuous-distributions"><i class="fa fa-check"></i><b>5.3</b> Other continuous distributions</a></li>
+<li class="chapter" data-level="5.3" data-path="probability-catch-up.html"><a href="probability-catch-up.html#the-exponential-distribution"><i class="fa fa-check"></i><b>5.3</b> The exponential distribution</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>6</b> Linear Models</a>
 <ul>
@@ -277,11 +277,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We’ll begin by focusing on the relationship between two of the continuous variables: body size (in kg) and total amount of sleep (in hours). Let’s plot these to see what they look like:</p>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="linear-models.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(allisontab) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>BodyWt,<span class="at">y=</span>TotalSleep))</span></code></pre></div>
 <pre><code>## Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 <p>Hmmm this looks weird. We have many measurements of body weight around 0 (small values) and a few very large values of thousands of kilograms. This is not surprising: given that this dataset spans several different species, the measurements spans several orders of magnitude (from elephants to molerats). To account for this, variables involving body measurements (like weight or length) are traditionally converted into a log-scale when fitted into a linear model. Let’s see what happens when we log-scale the body weight variable:</p>
 <div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="linear-models.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(allisontab) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(BodyWt),<span class="at">y=</span>TotalSleep))</span></code></pre></div>
 <pre><code>## Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 <p>A pattern appears to emerge now. There seems to be a negative correlation between the log of body weight and the amount of sleep a species has. Indeed, we can measure this correlation using the <code>cor()</code> function:</p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="linear-models.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">log</span>(allisontab<span class="sc">$</span>BodyWt), allisontab<span class="sc">$</span>TotalSleep, <span class="at">use=</span><span class="st">&quot;complete.obs&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] -0.5328345</code></pre>
@@ -588,7 +588,7 @@ lm_fit
 ```
 ## parsnip model object
 ## 
-## Fit time:  1ms 
+## Fit time:  2ms 
 ## 
 ## Call:
 ## stats::lm(formula = TotalSleep ~ log(BodyWt) + LifeSpan, data = data)

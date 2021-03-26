@@ -2,7 +2,6 @@
 
 ## Discrete distributions
 
-
 Take a look at the help pages for `rpois` (and `dpois` and `ppois`), and for `rgeom` (and `dgeom` and `sample`). There is a whole world of R functions we can use to sample random values from probability distributions or obtain probabilities from them!  The `_pois` family of functions allow us to work with Poisson distributions, while the `_geom` family of functions allow us to work with Geometric distributions.
 
 Be careful with which type of function you use! For example, `rpois` serves to generate random samples from the Poisson distribution. In turn, `dpois` allow us to calculate the Poisson PMF (in other words, $P[X=k]$) for any value of k. Finally, `ppois` allow us to calculate the "distribution function", which is just a fancy way of saying $P[X \leq k]$ for any value of k.
@@ -91,7 +90,6 @@ mean(results)
 
 ## The Normal distribuiton and the Central Limit Theorem
 
-
 The Central Limit Theorem states that if $X_1, X_2, ..., X_m$ are random samples from a distribution (any distribution) with mean $\mu$ and finite variance $\sigma^2$, and the sample mean is $\bar{X}$, then, as m grows large, $\bar{X}$ converges in distribution to a Normal distribution with mean $\mu$ and variance $\sigma^2 /m$.
 
 In other words, for large values of m (large sample sizes), we can treat the average of our sample as being drawn from $N(\mu,\sigma^2/\sqrt{m})$.
@@ -128,29 +126,60 @@ curve(dnorm(x,mean=mu,sd=sd),from=-5,to=5,n=5000,add=TRUE,col="red") # Normal di
 **Exercise**: Repeat the exercise above but instead of a binomial 
 distribution, use a Poisson distribution with parameter $\lambda=5$ (considering what the mean and variance of the corresponding Normal distribution should be).
 
+```{r, eval=FALSE, echo=FALSE}
+lambda <- 5 # lambda parameter
+m <- 100 # sample size
+allmeans <- sapply(seq(1,1000), function(i){mean(rpois(m,lambda))})
+hist(allmeans,freq=FALSE) # Histogram of sample means
+mu <- lambda # mean of Normal distribution under the CLT
+var <- lambda/m # variance of Normal distribution under the CLT
+sd <- sqrt(var) # standard deviation of Normal distribution under the CLT
+curve(dnorm(x,mean=mu,sd=sd),from=-10,to=10,n=5000,add=TRUE,col="red") # Normal distribution
+```
+
 **Exercise**: Repeat the exercise above but instead of a binomial distribution, use a Geometric distribution with parameter $p=0.8$ (considering what the mean and variance of the corresponding Normal distribution should be).
 
-
-## Other continuous distributions
-
-
-
-
-<!-- 
+```{r, eval=FALSE, echo=FALSE}
+p <- 0.8 # p parameter
+m <- 100 # sample size
+allmeans <- sapply(seq(1,1000), function(i){mean(rgeom(m,p))})
+hist(allmeans,freq=FALSE) # Histogram of sample means
+mu <- (1-p)/p # mean of Normal distribution under the CLT
+var <- ((1-p)/(p^2))/m # variance of Normal distribution under the CLT
+sd <- sqrt(var) # standard deviation of Normal distribution under the CLT
+curve(dnorm(x,mean=mu,sd=sd),from=-10,to=10,n=5000,add=TRUE,col="red") # Normal distribution
+```
 
 
 ## The exponential distribution
 
-Limit of geometric
+Previously, we simulated the *quantity* of buses that would randomly arrive at a station over a particular period of time (an hour), given that the *rate* of this process is constant. For this, we used the Poisson distribution with parameter $\lambda$ equal to this rate. Using the same rate assumption, we can also model the *waiting time* until the next bus arrives, using the exponential distribution. Take a look at the help page for `?rexp`.
 
-## Competing exponentials
+**Exercise**: Buses arrive at a station at an average rate of 3 per hour. Using the `rexp` function, simulate 1,000 waiting times (in hours) of this random process, assuming the waiting time follows an exponential distribution. Create a histogram of these waiting times. Then, calculate their sample mean and compare it to the expected value of an exponential distribution with rate 3.
 
-## Time to first event
+```{r, eval=FALSE, echo=FALSE}
+sims <- rexp(1000,3)
+hist(sims)
+mean(sims)
+```
 
-## Convolution
+**Exercise**: I've arrived at a station. Assuming the same rate as above, use the `pexp` function to obtain the probability that I will have to wait less than 15 minutes till the next bus arrives.
 
-## Combining distributions
+```{r, eval=FALSE, echo=FALSE}
+pexp(15/60,3)
+```
 
-Number of events until an outcome
+**Exercise**: Assuming the same rate as above, use the `pexp` function to obtain the probability that I will have to wait more than 30 minutes till the next bus arrives.
 
--->
+```{r, eval=FALSE, echo=FALSE}
+1 - pexp(30/60,3)
+```
+
+**Exercise**: Assuming the same rate as above, use the `pexp` function to obtain the probability that I will have to wait between 33 and 48 minutes for the next bus to arrive.
+
+```{r, eval=FALSE, echo=FALSE}
+pexp(48/60,3) - pexp(33/60,3)
+```
+
+
+

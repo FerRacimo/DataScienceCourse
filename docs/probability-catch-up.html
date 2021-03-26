@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-03-25" />
+<meta name="date" content="2021-03-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -149,7 +149,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="5.1" data-path="probability-catch-up.html"><a href="probability-catch-up.html#discrete-distributions"><i class="fa fa-check"></i><b>5.1</b> Discrete distributions</a></li>
 <li class="chapter" data-level="5.2" data-path="probability-catch-up.html"><a href="probability-catch-up.html#the-normal-distribuiton-and-the-central-limit-theorem"><i class="fa fa-check"></i><b>5.2</b> The Normal distribuiton and the Central Limit Theorem</a></li>
-<li class="chapter" data-level="5.3" data-path="probability-catch-up.html"><a href="probability-catch-up.html#other-continuous-distributions"><i class="fa fa-check"></i><b>5.3</b> Other continuous distributions</a></li>
+<li class="chapter" data-level="5.3" data-path="probability-catch-up.html"><a href="probability-catch-up.html#the-exponential-distribution"><i class="fa fa-check"></i><b>5.3</b> The exponential distribution</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>6</b> Linear Models</a>
 <ul>
@@ -261,7 +261,7 @@ mean(randvec)
 ```
 
 ```
-## [1] 2.952
+## [1] 2.968
 ```
 
 ```r
@@ -269,7 +269,7 @@ var(randvec)
 ```
 
 ```
-## [1] 3.148845
+## [1] 3.132108
 ```
 -->
 <p><strong>Exercise</strong>: If I’m tossing a series of unbiased coins, what is the probability I get exactly 5 tails before I get a head?</p>
@@ -312,7 +312,7 @@ mean(results)
 ```
 
 ```
-## [1] 8.235
+## [1] 8.756
 ```
 -->
 </div>
@@ -342,31 +342,13 @@ mean(results)
 distribution, use a Poisson distribution with parameter <span class="math inline">\(\lambda=5\)</span> (considering what the mean and variance of the corresponding Normal distribution should be).</p>
 <p><strong>Exercise</strong>: Repeat the exercise above but instead of a binomial distribution, use a Geometric distribution with parameter <span class="math inline">\(p=0.8\)</span> (considering what the mean and variance of the corresponding Normal distribution should be).</p>
 </div>
-<div id="other-continuous-distributions" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Other continuous distributions</h2>
-<!-- 
-
-
-Limit of binomial
-
-## The geometric distribution
-
-
-## The exponential distribution
-
-Limit of geometric
-
-## Competing exponentials
-
-## Time to first event
-
-## Convolution
-
-## Combining distributions
-
-Number of events until an outcome
-
--->
+<div id="the-exponential-distribution" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> The exponential distribution</h2>
+<p>Previously, we simulated the <em>quantity</em> of buses that would randomly arrive at a station over a particular period of time (an hour), given that the <em>rate</em> of this process is constant. For this, we used the Poisson distribution with parameter <span class="math inline">\(\lambda\)</span> equal to this rate. Using the same rate assumption, we can also model the <em>waiting time</em> until the next bus arrives, using the exponential distribution. Take a look at the help page for <code>?rexp</code>.</p>
+<p><strong>Exercise</strong>: Buses arrive at a station at an average rate of 3 per hour. Using the <code>rexp</code> function, simulate 1,000 waiting times (in hours) of this random process, assuming the waiting time follows an exponential distribution. Create a histogram of these waiting times. Then, calculate their sample mean and compare it to the expected value of an exponential distribution with rate 3.</p>
+<p><strong>Exercise</strong>: I’ve arrived at a station. Assuming the same rate as above, use the <code>pexp</code> function to obtain the probability that I will have to wait less than 15 minutes till the next bus arrives.</p>
+<p><strong>Exercise</strong>: Assuming the same rate as above, use the <code>pexp</code> function to obtain the probability that I will have to wait more than 30 minutes till the next bus arrives.</p>
+<p><strong>Exercise</strong>: Assuming the same rate as above, use the <code>pexp</code> function to obtain the probability that I will have to wait between 33 and 48 minutes for the next bus to arrive.</p>
 
 </div>
 </div>

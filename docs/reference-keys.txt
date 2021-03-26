@@ -11,7 +11,7 @@ probability-part-2
 probability-catch-up
 discrete-distributions
 the-normal-distribuiton-and-the-central-limit-theorem
-other-continuous-distributions
+the-exponential-distribution
 linear-models
 fitting-a-simple-linear-regression
 interpreting-a-simple-linear-regression
