@@ -18,7 +18,7 @@ interpreting-a-simple-linear-regression
 simulating-data-from-a-linear-model
 properties-of-estimators-and-inference
 properties-of-point-estimators
-builidng-confidence-intervals
+building-confidence-intervals
 roc-curve
 frequentist-inference
 bayesian-inference
@@ -45,9 +45,3 @@ fitting-a-simple-linear-regression-1
 interpreting-a-simple-linear-regression-1
 simulating-data-from-a-linear-model-1
 hypothesis-testing-and-permutation-testing
-optional-a-multivariate-linear-regression
-hypothesis-testing
-interactions
-anova
-working-with-tidymodels
-building-confidence-intervals
