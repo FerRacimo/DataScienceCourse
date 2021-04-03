@@ -2,7 +2,7 @@
 
 ## Properties of point estimators
 
-This exercise is partly based on Exercise 6.1 of the book `Statistical Rethinking` by M.D. Edge. We'll draw many simulated samples from a known distribution with known parameters. We will then pretend this are instances of real datasets and estimate some parameters of the distributions using different estimators. Our goal will be to analyze properties of these parameter estimators, namely their bias and variance. Recall the definitions of these two properties:
+In this exercise, we'll draw many simulated samples from a known distribution with known parameters. We will then consider these as instances of real datasets, and estimate parameters of the original distributions using different estimators applied to the datasets. Our goal will be to analyze properties of the estimators, namely their bias and variance. Recall the definitions of these two properties:
 
 Bias: $$B(\hat\theta_n) =  E[\hat\theta_n(D) - \theta] $$
 
@@ -10,10 +10,9 @@ The bias reflects the average difference between our estimator and the true para
 
 Variance: $$Var(\hat\theta_n) =  E[ (\hat\theta_n(D) - E[\hat\theta_n(D)] )^2] $$
 
-The variance reflects the variation of the estimator around its own mean (regardless of what the true parameter is).
+The variance reflects the variation of the estimator around its own mean (regardless of what the true parameter is). It is also the square of the standard error.
 
 **Note**: in real life, we will generally not know the distribution from which our data comes from, or the value of the parameters of that distribution (otherwise we wouldn't be performing statistical inference). When developing or applying a particular estimator to our data, it is thus important to test the properties of that estimator under a variety of simulations and parameter choices. These simulations should aim to, as much as possible, mimic the possible range of processes and parameters that could be generating our data.
-
 
 We will first create a function that draws a user-specified number (`nsim`) of independent data samples of size `sampsize` from a distribution of choice. By default this distribution is the Normal distribution (`rnorm`), but it can be changed by the user:
 
@@ -45,43 +44,159 @@ testmean <- apply(testmat,1,mean)
 testmedian <- apply(testmat,1,median)
 ```
 
-**Exercise**: Create 20,000 simulated data sets of size 5, each drawn from a Normal distribution with expected value equal to 4 and standard deviation equal to 10. Create a histogram of the sample means from all the data sets. Draw a red line where the expected value of the original source distribution is located. Next, do the same for all the sample medians.
+**Exercise**: Create 20,000 simulated data sets of size 100, each drawn from a Normal distribution with expected value equal to 4 and standard deviation equal to 10. Create a histogram of the sample means from all the data sets. Draw a blue line where the average of all these means is located, and a red line where the **expected value** of the original source distribution is located. Next, do the same for all the sample medians.
 
 Now, try answering these questions: Is the sample mean a biased estimator of the expected value of a normal distribution? Is the sample median a biased estimator of the expected value of a normal distribution? Which estimator has the highest variance? Which estimator would you use if given a dataset like one of the ones we simulated, in order to estimate the expected value of this Normal distribution?
 
 ```{r, eval=FALSE, echo=FALSE}
 EV <- 4
 SD <- 10
-normmat <- simsamps(5,20000,rnorm,mean=EV,sd=SD) 
+n <- 100
+normmat <- simsamps(n,20000,rnorm,mean=EV,sd=SD) 
 normmean <- apply(normmat,1,mean)
 normmedian <- apply(normmat,1,median)
 par(mfrow=c(2,1))
-hist(normmean,xlim=c(-25,25))
-abline(v=mean,col="red")
-hist(normmedian,xlim=c(-25,25))
-abline(v=mean,col="red")
+hist(normmean,xlim=c(-5,10))
+abline(v=EV,col="red")
+abline(v=mean(normmean),col="blue",lty=2)
+hist(normmedian,xlim=c(-5,10))
+abline(v=EV,col="red")
+abline(v=mean(normmedian),col="blue",lty=2)
 par(mfrow=c(1,1))
 ```
 
-**Exercise**: Create 20,000 simulated data sets of size 10, each drawn from an Exponential distribution with rate equal to 2. Create a histogram of the sample means from all the data sets. Draw a red line where the expected value of the original source distribution is located.Recall that the expected value of this distribution is 1/rate = 0.5.
+**Exercise**: Create 20,000 simulated data sets of size 100, each drawn from an Exponential distribution with rate equal to 2. Create a histogram of the sample means from all the data sets. Draw a blue line where the average of all these means is located, and a red line where the **expected value** of the original source distribution is located. Recall that the expected value of this distribution is 1/rate = 0.5.
 
 Now, try answering these questions: Is the sample mean a biased estimator of the expected value of an exponential distribution? Is the sample median a biased estimator of the expected value of an exponential distribution? Which of these two estimators would you use if you were trying to estimate the rate of an exponential process (e.g. the rate at which buses arrive at a station), from a dataset like one of the ones we just simulated?
 
 ```{r,eval=FALSE, echo=FALSE}
 exprate <- 2
-expmat <- simsamps(10,20000,rexp,rate=exprate) 
+expval <- 1/exprate
+n <- 100
+expmat <- simsamps(n,20000,rexp,rate=exprate) 
 expmean <- apply(expmat,1,mean)
 expmedian <- apply(expmat,1,median)
 par(mfrow=c(1,2))
 hist(expmean)
-abline(v=1/2,col="red")
+abline(v=expval,col="red")
+abline(v=mean(expmean),col="blue",lty=2)
 hist(expmedian)
-abline(v=1/2,col="red")
+abline(v=expval,col="red")
+abline(v=mean(expmedian),col="blue",lty=2)
 par(mfrow=c(1,1))
 ```
 
-## Building confidence intervals
+The histograms we've built are examples of **sampling distributions of estimators**. They serve to visualize the spread of an estimator's distribution around its own mean, and allow us to determine whether that estimator's mean is equal to the expected value of our distribution of interest.
 
-This exercise is partly based on Exercise 7.2 of the book `Statistical Rethinking` by M.D. Edge.
+## Obtaining confidence intervals
 
-## ROC curve
+Confidence intervals (CIs) denote how sure we are about the value of a parameter. Importantly, CIs are statements made about an infinite number of data sets, which can be a bit counter-intuitive. For example, let's imagine a parameter of interest called $\theta$, which has a value that we don't know. If we had an infinite number of data sets ($i=1,2,3,...,\infty$), the lower and upper 95% confidence intervals for each dataset $i$ are the two values that should bound (contain) the unknown parameter $\theta$ in 95% of those datasets. Each data set will have its own confidence interval, but we can be sure that that interval will contain the unknown parameter 95% of the time.
+
+Generally, we only have **one set of data points**, so this statement might sound a bit confusing. How can we make statements about infinite data sets, when we only have one set? In practice, the confidence interval is an approximation based on the **spread (variance) of an estimator's ($\hat{\theta}$) sampling distribution around the expected value of the unknown parameter ($\theta$)**. 
+If a given estimator $\hat{\theta}$ of a data set of size n:
+
+1. has a known standard error:
+
+$$\omega = SE(\hat{\theta}_n) = \sqrt{Var(\hat{\theta}_n)}$$
+
+2. is unbiased: 
+
+$$E[\hat{\theta}_n - \theta] = 0$$
+
+and
+
+3. has a normal sampling distribution:
+
+$$\hat{\theta}_n \sim Normal$$
+ 
+then the confidence intervals that will contain the true value of the parameter 95% of the time are:
+
+
+$$(\hat{\theta} + \omega\  q_{2.5\%}, \hat{\theta} + \omega\ q_{97.5\%})$$
+Here, $q_{x\%}$ is the $x\%$ quantile function of a standard Normal(0,1) distribution. This value marks a limit such that $x\%$ of the probability mass of a distribution is to the left (lower than the value), and $1-x\%$ is to the right (higher than the value).
+
+Because the standard normal(0,1) distribution is symmetric and centered around 0, $q_{2.5\%} = -q_{97.5\%}$, so we can also write the CI as:
+
+$$(\hat{\theta} - \omega\  q_{97.5\%}, \hat{\theta} + \omega\ q_{97.5\%})$$
+
+If we compute these boundaries for a particular data set we study, and the estimator we're applying satisfies the 2 conditions above, we can be sure that these boundaries will contain the true parameter $95\%$ of the time (out of an infinite number of possible data sets that we could have obtained, in theory, from the phenomenon of interest).
+
+**Note that the sampling distribution of the mean will tend to be normal and unbiased for large sample sizes, because of the Central Limit Theorem!** However, the sampling distribution of other statistics (like the median) may be neither normal nor unbiased. For example, as we saw in the previous section, the sampling distribution of the median of a data set that is exponentially distributed is biased! Thus, it would be inappropriate to compute the 95% CIs using the equation above in that case. 
+
+Later on in this class, we'll figure out ways to obtain more general CIs that do not depend on the strict assumptions of unbiasedness and normality of the estimator's sampling distribution. 
+
+The mean of a normally distributed dataset is both unbiased and normally distributed, so those assumptions hold in that case. Let's verify that:
+
+**Exercise**: Create 20,000 simulated data sets of size 5, each drawn from a Normal distribution with expected value equal to 4 and standard deviation equal to 10. For each dataset, compute the sample mean. Then, compute the standard error of the mean (standard deviation over all means). Finally, use the standard error to compute the $95\%$ confidence intervals for each data set, using the formula stated above. How often do these confidence intervals contain the expected value? Hint: to obtain the quantiles of a standard Normal(x) distribution, you can use the function `qnorm`. For example, the $35\%$ quantile of a standard Normal(0,1) distribution is equal to `qnorm(0.35,mean=0,sd=1)`.
+
+
+```{r, eval=FALSE, echo=FALSE}
+EV <- 4
+SD <- 10
+n <- 5
+normmat <- simsamps(n,20000,rnorm,mean=EV,sd=SD) 
+normmean <- apply(normmat,1,mean)
+normse <- sd(normmean)
+normlow <- normmean + normse*qnorm(0.025,0,1)
+normhigh <- normmean + normse*qnorm(0.975,0,1)
+bounded <- (EV > normlow & EV < normhigh)
+prop <- sum(bounded)/length(bounded)
+```
+
+
+Because we are using simulations, we can obtain the standard error of the mean by generating many data sets. In practice, when working with a single data set, the standard error $\omega$ is generally unknown. However, it can be approximated using the sample standard deviation $s$ of the dataset we are studying (using the function `sd()`):
+
+$$(\hat{\theta} + \frac{s}{\sqrt{n}}q_{2.5\%}, \hat{\theta} + \frac{s}{\sqrt{n}}q_{97.5\%})$$
+
+**Exercise**: Repeat the exercise above, but instead of using the standard deviation of each data set to approximate the standard error, compute the standard error of the means across all datasete, then plug that standard error into the formula above for obtaining confidence intervals. How often do these confidence intervals contain the expected value? Repeat this exercise multiple times. Is the proportion of bounded means as accurate as in the previous exercise?
+
+
+```{r, eval=FALSE, echo=FALSE}
+EV <- 4
+SD <- 10
+n <- 5
+normmat <- simsamps(n,20000,rnorm,mean=EV,sd=SD) 
+normmean <- apply(normmat,1,mean)
+normsd <- apply(normmat,1,sd)
+normlow <- normmean + normsd*qnorm(0.025,0,1)/sqrt(n)
+normhigh <- normmean + normsd*qnorm(0.975,0,1)/sqrt(n)
+bounded <- (EV > normlow & EV < normhigh)
+prop <- sum(bounded)/length(bounded)
+```
+
+As you've probably noticed, this will lead to overly confident boundaries, because we've replaced the standard error with a rough approximation to it. To correct for this, we must replace the quantiles of the Normal distribution with the quantiles of a distribution with slightly bigger tails: a 'more uncertain' distribution, called the t-distribution. This serves to correct for the extra uncertainty that we are bringing in by using the sample standard deviation $s$:
+
+```{r,eval=TRUE,echo=FALSE}
+curve(dnorm(x,mean=0,sd=1),from=-5,to=5,n=5000,col="red",ylab="dens(x)")
+curve(dt(x,2),from=-5,to=5,n=5000,col="blue",lty=1,add=TRUE)
+curve(dt(x,5),from=-5,to=5,n=5000,col="blue",lty=2,add=TRUE)
+curve(dt(x,19),from=-5,to=5,n=5000,col="blue",lty=3,add=TRUE)
+legend("topright",c("Normal(0,1)","t-dist,n=3","t-dist,n=6","t-dist,n=20"),lty=c(1,1,2,3),col=c("red","blue","blue","blue"))
+```
+
+The t-distribution has a single parameter (called the 'degrees of freedom'), and represents how much information we have about the shape of the sampling distribution. In our case, this parameter should be set to $n-1$ where $n$ is the size of our data set. The larger our dataset, the bigger this parameter, and the closer the t-distribution will become to a Normal distribution.
+
+Thus, to compute the $95\%$ confidence intervals when working with a real data set with a normally distributed estimator, we can use this formula:
+
+$$(\hat{\theta} + \frac{s}{\sqrt{n}}t_{2.5\%}, \hat{\theta} + \frac{s}{\sqrt{n}}t_{97.5\%})$$
+where $t_{x\%}$ is the $x\%$ quantile function of the t-distribution with $n-1$ degrees of freedom. 
+
+This is a useful formula, as the sampling distribution of the sample mean of large data sets (large $n$) will tend to be normal and unbiased due to the Central Limit Theorem. Thus, we can readily use this formula whenever we've obtained a large dataset and have calculated its sample mean and standard deviation!
+
+**Exercise**: Repeat the exercise above, but instead of using the standard normal(0,1) quantiles, use the quantiles from a t-distribution with $n-1$ degrees of freedom, where $n$ is the size of each data set. Hint: You can obtain the quantile of a t-distribution using the function `qt()`. For example, the $30\%$ quantile of a t-distribution with 4 degrees of freedom is equal to `qt(0.3,4)`.
+
+```{r, eval=FALSE, echo=FALSE}
+EV <- 4
+SD <- 10
+n <- 5
+normmat <- simsamps(n,20000,rnorm,mean=EV,sd=SD) 
+normmean <- apply(normmat,1,mean)
+normsd <- apply(normmat,1,sd)
+normlow <- normmean + normsd*qt(0.025,n-1)/sqrt(n)
+normhigh <- normmean + normsd*qt(0.975,n-1)/sqrt(n)
+bounded <- (EV > normlow & EV < normhigh)
+prop <- sum(bounded)/length(bounded)
+```
+
+
+## Hypothesis testing
