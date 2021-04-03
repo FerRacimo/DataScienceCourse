@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-03-26" />
+<meta name="date" content="2021-04-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -160,8 +160,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html"><i class="fa fa-check"></i><b>7</b> Properties of Estimators and Inference</a>
 <ul>
 <li class="chapter" data-level="7.1" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#properties-of-point-estimators"><i class="fa fa-check"></i><b>7.1</b> Properties of point estimators</a></li>
-<li class="chapter" data-level="7.2" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#building-confidence-intervals"><i class="fa fa-check"></i><b>7.2</b> Building confidence intervals</a></li>
-<li class="chapter" data-level="7.3" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#roc-curve"><i class="fa fa-check"></i><b>7.3</b> ROC curve</a></li>
+<li class="chapter" data-level="7.2" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#obtaining-confidence-intervals"><i class="fa fa-check"></i><b>7.2</b> Obtaining confidence intervals</a></li>
+<li class="chapter" data-level="7.3" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#hypothesis-testing"><i class="fa fa-check"></i><b>7.3</b> Hypothesis testing</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="frequentist-inference.html"><a href="frequentist-inference.html"><i class="fa fa-check"></i><b>8</b> Frequentist inference</a></li>
 <li class="chapter" data-level="9" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>9</b> Bayesian Inference</a></li>
@@ -251,13 +251,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>Exercise</strong>: what’s the mean and standard deviation of each of the four variables in the iris dataset before scaling? what is their mean and standard deviation after scaling?</p>
 <p>Ok, now on to the second preliminary detail. Clustering methods require the specification of the number of clusters that we a priori choose to fit the data to. Deciding on what is the “best” number of clusters depends on a number of criteria (e.g. minimizes the total within-cluster variance, homogenizing per-cluster variance, etc), and there are many methods with different criteria. We’ll use the function <code>NbClust</code> which runs 26 of these different methods on our data for assessing the “best” number of clusters. We’ll then choose to use the number of clusters that is recommended by the largest number of methods.</p>
 <div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="clustering.html#cb149-1" aria-hidden="true" tabindex="-1"></a>numclust <span class="ot">&lt;-</span> <span class="fu">NbClust</span>(df, <span class="at">min.nc=</span><span class="dv">2</span>, <span class="at">max.nc=</span><span class="dv">15</span>, <span class="at">distance=</span><span class="st">&quot;euclidean&quot;</span>, <span class="at">method=</span><span class="st">&quot;kmeans&quot;</span>)</span></code></pre></div>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-96-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-100-1.png" width="672" /></p>
 <pre><code>## *** : The Hubert index is a graphical method of determining the number of clusters.
 ##                 In the plot of Hubert index, we seek a significant knee that corresponds to a 
 ##                 significant increase of the value of the measure i.e the significant peak in Hubert
 ##                 index second differences plot. 
 ## </code></pre>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-96-2.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-100-2.png" width="672" /></p>
 <pre><code>## *** : The D index is a graphical method of determining the number of clusters. 
 ##                 In the plot of D index, we seek a significant knee (the significant peak in Dindex
 ##                 second differences plot) that corresponds to a significant increase of the value of
@@ -286,7 +286,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>It seems like ten of the methods suggest that the best number of clusters should be 2. There is also a considerable (but smaller) number of methods (six), that suggest it should be 3.</p>
 <div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="clustering.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(numclust<span class="sc">$</span>Best.n[<span class="dv">1</span>,]),</span>
 <span id="cb154-2"><a href="clustering.html#cb154-2" aria-hidden="true" tabindex="-1"></a><span class="at">xlab=</span><span class="st">&quot;Number of Clusters&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Number of Criteria&quot;</span>, <span class="at">main=</span><span class="st">&quot;Number of Clusters Chosen by 26 Criteria&quot;</span>)</span></code></pre></div>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-97-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-101-1.png" width="672" /></p>
 <p>Let’s go with 2 clusters then. We are now finally ready to perform a K-means clustering. We do so as follows:</p>
 <div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="clustering.html#cb155-1" aria-hidden="true" tabindex="-1"></a>fit.kmeans <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="dv">2</span>)</span></code></pre></div>
 <p>The cluster assignments for all observations are stored in the “cluster” attribute of the resulting object:</p>
@@ -301,11 +301,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="clustering.html#cb158-1" aria-hidden="true" tabindex="-1"></a>clustassig <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(clustassig) <span class="co"># Treat the cluster assignments as discrete factors</span></span>
 <span id="cb158-2"><a href="clustering.html#cb158-2" aria-hidden="true" tabindex="-1"></a>irisclust <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(iris,clustassig) <span class="co"># Combine data with cluster assignments</span></span>
 <span id="cb158-3"><a href="clustering.html#cb158-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Sepal.Length,<span class="at">y=</span>Sepal.Width,<span class="at">color=</span>clustassig)) <span class="co"># Plot sepal variables</span></span></code></pre></div>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-100-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
 <div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="clustering.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width,<span class="at">color=</span>clustassig)) <span class="co"># Plot petal variables</span></span></code></pre></div>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-100-2.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-104-2.png" width="672" /></p>
 <p><strong>Exercise</strong>: Now try computing a K-means clustering on the data yourself, this time using 3 clusters. Plot the result using a different color for each cluster.</p>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-101-1.png" width="672" /><img src="DataScience_files/figure-html/unnamed-chunk-101-2.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-105-1.png" width="672" /><img src="DataScience_files/figure-html/unnamed-chunk-105-2.png" width="672" /></p>
 <p><strong>Exercise</strong>: How well do the clusters from the previous exercise correspond to the 3 iris species? Are they perfectly matched? Why? Why not?</p>
 
 </div>

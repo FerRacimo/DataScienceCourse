@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-03-26" />
+<meta name="date" content="2021-04-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -160,8 +160,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html"><i class="fa fa-check"></i><b>7</b> Properties of Estimators and Inference</a>
 <ul>
 <li class="chapter" data-level="7.1" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#properties-of-point-estimators"><i class="fa fa-check"></i><b>7.1</b> Properties of point estimators</a></li>
-<li class="chapter" data-level="7.2" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#building-confidence-intervals"><i class="fa fa-check"></i><b>7.2</b> Building confidence intervals</a></li>
-<li class="chapter" data-level="7.3" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#roc-curve"><i class="fa fa-check"></i><b>7.3</b> ROC curve</a></li>
+<li class="chapter" data-level="7.2" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#obtaining-confidence-intervals"><i class="fa fa-check"></i><b>7.2</b> Obtaining confidence intervals</a></li>
+<li class="chapter" data-level="7.3" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#hypothesis-testing"><i class="fa fa-check"></i><b>7.3</b> Hypothesis testing</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="frequentist-inference.html"><a href="frequentist-inference.html"><i class="fa fa-check"></i><b>8</b> Frequentist inference</a></li>
 <li class="chapter" data-level="9" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>9</b> Bayesian Inference</a></li>
@@ -261,7 +261,7 @@ mean(randvec)
 ```
 
 ```
-## [1] 3.049
+## [1] 3.015
 ```
 
 ```r
@@ -269,7 +269,7 @@ var(randvec)
 ```
 
 ```
-## [1] 3.105705
+## [1] 3.061837
 ```
 -->
 <p><strong>Exercise</strong>: If I’m tossing a series of unbiased coins, what is the probability I get exactly 5 tails before I get a head?</p>
@@ -312,14 +312,14 @@ mean(results)
 ```
 
 ```
-## [1] 8.761
+## [1] 8.476
 ```
 -->
 </div>
 <div id="the-normal-distribuiton-and-the-central-limit-theorem" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> The Normal distribuiton and the Central Limit Theorem</h2>
-<p>The Central Limit Theorem states that if <span class="math inline">\(X_1, X_2, ..., X_m\)</span> are random samples from a distribution (any distribution) with mean <span class="math inline">\(\mu\)</span> and finite variance <span class="math inline">\(\sigma^2\)</span>, and the sample mean is <span class="math inline">\(\bar{X}\)</span>, then, as m grows large, <span class="math inline">\(\bar{X}\)</span> converges in distribution to a Normal distribution with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2 /m\)</span>.</p>
-<p>In other words, for large values of m (large sample sizes), we can treat the average of our sample as being drawn from <span class="math inline">\(N(\mu,\sigma^2/\sqrt{m})\)</span>.</p>
+<p>The Central Limit Theorem states that if <span class="math inline">\(X_1, X_2, ..., X_m\)</span> are random samples from a distribution (any distribution) with mean <span class="math inline">\(\mu\)</span> and finite variance <span class="math inline">\(\sigma^2\)</span>, and the sample mean is <span class="math inline">\(\bar{X}\)</span>, then, as m grows large, <span class="math inline">\(\bar{X}\)</span> converges in distribution to a Normal distribution with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sqrt{\sigma^2 /m}\)</span>.</p>
+<p>In other words, for large values of m (large sample sizes), we can treat the average of our sample as being drawn from <span class="math inline">\(N(\mu,sqrt{\sigma^2/m})\)</span>.</p>
 <p>How can we verify this to be true? Well, one way to do this is to pretend (simulate) we have many sample sets, each composed of a large number of samples, compute their sample mean, and look at the histogram over all the sample means. If the CLT holds, that histogram should look very similar to a Normal distribution. Let’s try that here!</p>
 <p>We’ll begin with a binomial distribution as our initial “sampling” distribution. We can, for example, draw <span class="math inline">\(m=100\)</span> values from a binomial distribution with parameters <span class="math inline">\([p=0.7,n=5]\)</span>, and then compute their mean:</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="probability-catch-up.html#cb36-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="co"># sample size</span></span>

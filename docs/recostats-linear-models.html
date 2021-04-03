@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-03-26" />
+<meta name="date" content="2021-04-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -160,8 +160,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html"><i class="fa fa-check"></i><b>7</b> Properties of Estimators and Inference</a>
 <ul>
 <li class="chapter" data-level="7.1" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#properties-of-point-estimators"><i class="fa fa-check"></i><b>7.1</b> Properties of point estimators</a></li>
-<li class="chapter" data-level="7.2" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#building-confidence-intervals"><i class="fa fa-check"></i><b>7.2</b> Building confidence intervals</a></li>
-<li class="chapter" data-level="7.3" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#roc-curve"><i class="fa fa-check"></i><b>7.3</b> ROC curve</a></li>
+<li class="chapter" data-level="7.2" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#obtaining-confidence-intervals"><i class="fa fa-check"></i><b>7.2</b> Obtaining confidence intervals</a></li>
+<li class="chapter" data-level="7.3" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#hypothesis-testing"><i class="fa fa-check"></i><b>7.3</b> Hypothesis testing</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="frequentist-inference.html"><a href="frequentist-inference.html"><i class="fa fa-check"></i><b>8</b> Frequentist inference</a></li>
 <li class="chapter" data-level="9" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>9</b> Bayesian Inference</a></li>
@@ -259,11 +259,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We’ll begin by focusing on the relationship between two of the continuous variables: body size (in kg) and total amount of sleep (in hours). Let’s plot these to see what they look like:</p>
 <div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="recostats-linear-models.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(allisontab) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>BodyWt,<span class="at">y=</span>TotalSleep))</span></code></pre></div>
 <pre><code>## Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-106-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
 <p>Hmmm this looks weird. We have many measurements of body weight around 0 (small values) and a few very large values of thousands of kilograms. This is not surprising: given that this dataset spans several different species, the measurements spans several orders of magnitude (from elephants to molerats). To account for this, variables involving body measurements (like weight or length) are traditionally converted into a log-scale when fitted into a linear model. Let’s see what happens when we log-scale the body weight variable:</p>
 <div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="recostats-linear-models.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(allisontab) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(BodyWt),<span class="at">y=</span>TotalSleep))</span></code></pre></div>
 <pre><code>## Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
 <p>A pattern appears to emerge now. There seems to be a negative correlation between the log of body weight and the amount of sleep a species has. Indeed, we can measure this correlation using the <code>cor()</code> function:</p>
 <div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="recostats-linear-models.html#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">log</span>(allisontab<span class="sc">$</span>BodyWt), allisontab<span class="sc">$</span>TotalSleep, <span class="at">use=</span><span class="st">&quot;complete.obs&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] -0.5328345</code></pre>
@@ -433,7 +433,7 @@ Remember that the <span class="math inline">\(\beta_0\)</span> coefficient is im
 <p>Now we can obtain a permuted version of our original data, and compute the slope estimate on this dataset instead:</p>
 <div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="recostats-linear-models.html#cb185-1" aria-hidden="true" tabindex="-1"></a>permuted <span class="ot">&lt;-</span> <span class="fu">permute</span>(allisontab, <span class="st">&quot;TotalSleep&quot;</span>)</span>
 <span id="cb185-2"><a href="recostats-linear-models.html#cb185-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(permuted<span class="sc">$</span>TotalSleep,<span class="fu">log</span>(permuted<span class="sc">$</span>BodyWt))</span></code></pre></div>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-117-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-121-1.png" width="672" /></p>
 <div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="recostats-linear-models.html#cb186-1" aria-hidden="true" tabindex="-1"></a>permest <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="fu">log</span>(BodyWt), <span class="at">data =</span> permuted)<span class="sc">$</span>coeff[<span class="dv">2</span>]</span>
 <span id="cb186-2"><a href="recostats-linear-models.html#cb186-2" aria-hidden="true" tabindex="-1"></a>permest</span></code></pre></div>
 <pre><code>## log(BodyWt) 

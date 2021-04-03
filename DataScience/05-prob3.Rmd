@@ -90,9 +90,9 @@ mean(results)
 
 ## The Normal distribuiton and the Central Limit Theorem
 
-The Central Limit Theorem states that if $X_1, X_2, ..., X_m$ are random samples from a distribution (any distribution) with mean $\mu$ and finite variance $\sigma^2$, and the sample mean is $\bar{X}$, then, as m grows large, $\bar{X}$ converges in distribution to a Normal distribution with mean $\mu$ and variance $\sigma^2 /m$.
+The Central Limit Theorem states that if $X_1, X_2, ..., X_m$ are random samples from a distribution (any distribution) with mean $\mu$ and finite variance $\sigma^2$, and the sample mean is $\bar{X}$, then, as m grows large, $\bar{X}$ converges in distribution to a Normal distribution with mean $\mu$ and standard deviation $\sqrt{\sigma^2 /m}$.
 
-In other words, for large values of m (large sample sizes), we can treat the average of our sample as being drawn from $N(\mu,\sigma^2/\sqrt{m})$.
+In other words, for large values of m (large sample sizes), we can treat the average of our sample as being drawn from $N(\mu,sqrt{\sigma^2/m})$.
 
 How can we verify this to be true? Well, one way to do this is to pretend (simulate) we have many sample sets, each composed of a large number of samples, compute their sample mean, and look at the histogram over all the sample means. If the CLT holds, that histogram should look very similar to a Normal distribution. Let's try that here!
 

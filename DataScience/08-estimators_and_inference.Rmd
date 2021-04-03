@@ -56,10 +56,10 @@ normmat <- simsamps(n,20000,rnorm,mean=EV,sd=SD)
 normmean <- apply(normmat,1,mean)
 normmedian <- apply(normmat,1,median)
 par(mfrow=c(2,1))
-hist(normmean,xlim=c(-5,10))
+hist(normmean,xlim=c(-3,11))
 abline(v=EV,col="red")
 abline(v=mean(normmean),col="blue",lty=2)
-hist(normmedian,xlim=c(-5,10))
+hist(normmedian,xlim=c(-3,11))
 abline(v=EV,col="red")
 abline(v=mean(normmedian),col="blue",lty=2)
 par(mfrow=c(1,1))
@@ -119,7 +119,7 @@ Because the standard normal(0,1) distribution is symmetric and centered around 0
 
 $$(\hat{\theta} - \omega\  q_{97.5\%}, \hat{\theta} + \omega\ q_{97.5\%})$$
 
-If we compute these boundaries for a particular data set we study, and the estimator we're applying satisfies the 2 conditions above, we can be sure that these boundaries will contain the true parameter $95\%$ of the time (out of an infinite number of possible data sets that we could have obtained, in theory, from the phenomenon of interest).
+If we compute these boundaries for a particular data set we study, and the estimator we're applying satisfies the 3 conditions above, we can be sure that these boundaries will contain the true parameter $95\%$ of the time (out of an infinite number of possible data sets that we could have obtained, in theory, from the phenomenon of interest).
 
 **Note that the sampling distribution of the mean will tend to be normal and unbiased for large sample sizes, because of the Central Limit Theorem!** However, the sampling distribution of other statistics (like the median) may be neither normal nor unbiased. For example, as we saw in the previous section, the sampling distribution of the median of a data set that is exponentially distributed is biased! Thus, it would be inappropriate to compute the 95% CIs using the equation above in that case. 
 
@@ -127,7 +127,7 @@ Later on in this class, we'll figure out ways to obtain more general CIs that do
 
 The mean of a normally distributed dataset is both unbiased and normally distributed, so those assumptions hold in that case. Let's verify that:
 
-**Exercise**: Create 20,000 simulated data sets of size 5, each drawn from a Normal distribution with expected value equal to 4 and standard deviation equal to 10. For each dataset, compute the sample mean. Then, compute the standard error of the mean (standard deviation over all means). Finally, use the standard error to compute the $95\%$ confidence intervals for each data set, using the formula stated above. How often do these confidence intervals contain the expected value? Hint: to obtain the quantiles of a standard Normal(x) distribution, you can use the function `qnorm`. For example, the $35\%$ quantile of a standard Normal(0,1) distribution is equal to `qnorm(0.35,mean=0,sd=1)`.
+**Exercise**: Create 20,000 simulated data sets of size 5, each drawn from a Normal distribution with expected value equal to 4 and standard deviation equal to 10. For each dataset, compute the sample mean. Then, compute the standard error of the mean (standard deviation over all means). Finally, use the standard error to compute the $95\%$ confidence intervals for each data set, using the formula stated above. How often do these confidence intervals contain the expected value? Hint: to obtain the quantiles of a Normal distribution, you can use the function `qnorm`. For example, the $35\%$ quantile of a standard Normal(0,1) distribution is equal to `qnorm(0.35,mean=0,sd=1)`.
 
 
 ```{r, eval=FALSE, echo=FALSE}
@@ -143,12 +143,16 @@ bounded <- (EV > normlow & EV < normhigh)
 prop <- sum(bounded)/length(bounded)
 ```
 
+Here, because we are using simulations, we can obtain the standard error of the mean by generating many data sets. In practice, when working with a single data set, the estimator's standard error $\omega$ is generally unknown. However, it can be approximated using the sample standard deviation $s$ of the dataset we are studying:
 
-Because we are using simulations, we can obtain the standard error of the mean by generating many data sets. In practice, when working with a single data set, the standard error $\omega$ is generally unknown. However, it can be approximated using the sample standard deviation $s$ of the dataset we are studying (using the function `sd()`):
+$$\frac{s}{\sqrt{n}} \approx \omega$$
+This approximation will be more precise the larger the data set we have. 
+
+Thus, we can obtain CIs by replacing $\omega$ above with $s/\sqrt{n}$:
 
 $$(\hat{\theta} + \frac{s}{\sqrt{n}}q_{2.5\%}, \hat{\theta} + \frac{s}{\sqrt{n}}q_{97.5\%})$$
 
-**Exercise**: Repeat the exercise above, but instead of using the standard deviation of each data set to approximate the standard error, compute the standard error of the means across all datasete, then plug that standard error into the formula above for obtaining confidence intervals. How often do these confidence intervals contain the expected value? Repeat this exercise multiple times. Is the proportion of bounded means as accurate as in the previous exercise?
+**Exercise**: Repeat the exercise above, but instead of using the standard error, approximate this value by using the standard deviation ($s$) of each data set (via the function `sd()`). Plug that standard deviation into the formula above for obtaining confidence intervals. How often do these confidence intervals contain the expected value? Repeat this exercise multiple times. Is the proportion of bounded means as accurate as in the previous exercise?
 
 
 ```{r, eval=FALSE, echo=FALSE}

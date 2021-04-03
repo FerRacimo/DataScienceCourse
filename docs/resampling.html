@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-03-26" />
+<meta name="date" content="2021-04-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -160,8 +160,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html"><i class="fa fa-check"></i><b>7</b> Properties of Estimators and Inference</a>
 <ul>
 <li class="chapter" data-level="7.1" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#properties-of-point-estimators"><i class="fa fa-check"></i><b>7.1</b> Properties of point estimators</a></li>
-<li class="chapter" data-level="7.2" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#building-confidence-intervals"><i class="fa fa-check"></i><b>7.2</b> Building confidence intervals</a></li>
-<li class="chapter" data-level="7.3" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#roc-curve"><i class="fa fa-check"></i><b>7.3</b> ROC curve</a></li>
+<li class="chapter" data-level="7.2" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#obtaining-confidence-intervals"><i class="fa fa-check"></i><b>7.2</b> Obtaining confidence intervals</a></li>
+<li class="chapter" data-level="7.3" data-path="properties-of-estimators-and-inference.html"><a href="properties-of-estimators-and-inference.html#hypothesis-testing"><i class="fa fa-check"></i><b>7.3</b> Hypothesis testing</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="frequentist-inference.html"><a href="frequentist-inference.html"><i class="fa fa-check"></i><b>8</b> Frequentist inference</a></li>
 <li class="chapter" data-level="9" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>9</b> Bayesian Inference</a></li>
@@ -245,7 +245,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Let’s see what happens when we run this function on our data.</p>
 <div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="resampling.html#cb84-1" aria-hidden="true" tabindex="-1"></a>boots <span class="ot">&lt;-</span> <span class="fu">bootstrap</span>(allisontab)</span>
 <span id="cb84-2"><a href="resampling.html#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boots<span class="sc">$</span>logBrain,boots<span class="sc">$</span>logBody)</span></code></pre></div>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
 <p>Repeat the above command lines multiple times. What happens?</p>
 <p>Let’s estimate a parameter: the slope coefficient in a linear regression of log brain weight on log body weight:</p>
 <div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="resampling.html#cb85-1" aria-hidden="true" tabindex="-1"></a>estimate <span class="ot">&lt;-</span> <span class="fu">lm</span>(logBrain <span class="sc">~</span> logBody, <span class="at">data=</span>allisontab)<span class="sc">$</span>coeff[<span class="dv">2</span>]</span>
@@ -256,7 +256,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Let’s plot the ecdf of all our estimates, using the function ecdf().</p>
 <div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="resampling.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ecdf</span>(bootsvec))</span>
 <span id="cb87-2"><a href="resampling.html#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>estimate,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-59-1.png" width="672" /></p>
 <p>We are now ready to obtain confidence intervals (CIs) of our original parameter estimate, using our bootstrapped distribution. There are multiple ways to obtain CIs from a bootstrapped distribution. Some of these assume that the ECDF has particular properties, while others are more generally applicable:<br />
 a) Standard error approach - assumes ECDF is normal<br />
 b) Percentile approach - assumes ECDF is symmetric and median-unbiased<br />
@@ -298,11 +298,11 @@ These three approaches generally result in very similar CIs, but they differ (sl
 <p>Now we can obtain a permuted version of our original data, and compute the slope estimate on this dataset instead:</p>
 <div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="resampling.html#cb91-1" aria-hidden="true" tabindex="-1"></a>permuted <span class="ot">&lt;-</span> <span class="fu">permute</span>(allisontab, <span class="st">&quot;logBrain&quot;</span>)</span>
 <span id="cb91-2"><a href="resampling.html#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(permuted<span class="sc">$</span>logBody,permuted<span class="sc">$</span>logBrain)</span></code></pre></div>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-58-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
 <div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="resampling.html#cb92-1" aria-hidden="true" tabindex="-1"></a>permest <span class="ot">&lt;-</span> <span class="fu">lm</span>(logBrain <span class="sc">~</span> logBody, <span class="at">data=</span>permuted)<span class="sc">$</span>coeff[<span class="dv">2</span>]</span>
 <span id="cb92-2"><a href="resampling.html#cb92-2" aria-hidden="true" tabindex="-1"></a>permest</span></code></pre></div>
 <pre><code>##     logBody 
-## -0.02068923</code></pre>
+## -0.08092633</code></pre>
 <p><strong>Exercise</strong>: try estimating the same parameter from a series of 100 permuted versions of our original data, and collecting each of the permuted parameters into a vector called “permvec.”</p>
 <p>We now have a distribution of the parameter estimate under the assumption that there is no relationship between these two variables:</p>
 <p><strong>Exercise</strong>: obtain an empirical one-tailed P-value from this distribution by counting how many of the permuted samples are as large as our original estimate, and dividing by the total number of permuted samples we have. Note: you should add a 1 to both the denominator and the numerator of this ratio, in case there are no permuted samples that are as large as the original estimate, so as not to get an infinite number.</p>
