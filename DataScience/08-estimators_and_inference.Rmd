@@ -225,7 +225,7 @@ Recalling that the standard error (SE) is equal to the square root of the varian
 
 $$\frac{\hat{\theta} - \theta_0}{SE(\hat{\theta})} \sim Normal(0, 1)$$
 
-For example, in the plot below, we show a $Normal(0,1)$ distribution, and an observed value of $\hat{\theta}$. If this value is far enough from zero, then we can reject the hypothesis that $\hat{\theta} = \theta_0$. We need to define an arbitrary cutoff for what "far enough" means. This cutoff is traditionally set such that values as extreme or more extreme than the one observed have a probability less than $5\%$ (in other words, P-value < 0.05), but this cutoff is just a tradition.
+For example, in the plot below, we show a $Normal(0,1)$ distribution, and an observed value of the difference $\hat{\theta}-\theta_0$. If the magnitude of this difference is far enough from zero, then we can reject the hypothesis that $\hat{\theta} = \theta_0$. We need to define an arbitrary cutoff for what "far enough" means. This cutoff is traditionally set such that values as extreme or more extreme than the one observed have a probability less than $5\%$ (in other words, P-value < 0.05), but this cutoff is just a tradition.
 
 ```{r,eval=TRUE,echo=FALSE}
 curve(dnorm(x,mean=0,sd=1),from=-5,to=5,n=5000,col="blue",ylab="dens(x)")

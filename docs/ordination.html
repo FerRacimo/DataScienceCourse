@@ -381,49 +381,41 @@ We can also plot the first two PCs, like we had done before in base R, but now c
 <p>Let’s perform NMDS ordination using the Bray-Curtis dissimilarity. Remember that, unlike PCA, NMDS requires us to specify the number of dimensions (k) a priori (the default in vegan is 2). It also performs a series of transformations on the data that are appropriate for ecological data (default: autotransform=TRUE). The trymax option ensures that the algorithm is started from different points (in our case, 50) to avoid local minima.</p>
 <div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="ordination.html#cb137-1" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(dune, <span class="at">k=</span><span class="dv">2</span>, <span class="at">autotransform =</span> <span class="cn">TRUE</span>, <span class="at">trymax=</span><span class="dv">50</span>, <span class="at">distance=</span><span class="st">&quot;bray&quot;</span>)</span></code></pre></div>
 <pre><code>## Run 0 stress 0.1192678 
-## Run 1 stress 0.1192679 
-## ... Procrustes: rmse 9.550198e-05  max resid 0.000302326 
+## Run 1 stress 0.119268 
+## ... Procrustes: rmse 0.0001904589  max resid 0.0005805451 
 ## ... Similar to previous best
-## Run 2 stress 0.1192682 
-## ... Procrustes: rmse 0.0002851213  max resid 0.0008648899 
+## Run 2 stress 0.1939212 
+## Run 3 stress 0.119268 
+## ... Procrustes: rmse 0.0001593693  max resid 0.0005112441 
 ## ... Similar to previous best
-## Run 3 stress 0.1183186 
+## Run 4 stress 0.1183186 
 ## ... New best solution
-## ... Procrustes: rmse 0.02027305  max resid 0.06497035 
-## Run 4 stress 0.2192919 
+## ... Procrustes: rmse 0.02026984  max resid 0.0649542 
 ## Run 5 stress 0.1183186 
-## ... Procrustes: rmse 6.258365e-05  max resid 0.0002032971 
+## ... Procrustes: rmse 8.628118e-06  max resid 2.525397e-05 
 ## ... Similar to previous best
-## Run 6 stress 0.1192683 
-## Run 7 stress 0.1192679 
-## Run 8 stress 0.1812933 
-## Run 9 stress 0.1192678 
-## Run 10 stress 0.1192678 
-## Run 11 stress 0.1192678 
-## Run 12 stress 0.1183186 
-## ... New best solution
-## ... Procrustes: rmse 6.214693e-05  max resid 0.0002046955 
+## Run 6 stress 0.1192679 
+## Run 7 stress 0.119268 
+## Run 8 stress 0.1192681 
+## Run 9 stress 0.1183186 
+## ... Procrustes: rmse 2.81317e-05  max resid 9.057826e-05 
 ## ... Similar to previous best
-## Run 13 stress 0.1183186 
-## ... New best solution
-## ... Procrustes: rmse 3.260001e-05  max resid 0.000109935 
+## Run 10 stress 0.1939202 
+## Run 11 stress 0.1183186 
+## ... Procrustes: rmse 1.195687e-05  max resid 3.726011e-05 
 ## ... Similar to previous best
-## Run 14 stress 0.1192679 
+## Run 12 stress 0.1192679 
+## Run 13 stress 0.1192679 
+## Run 14 stress 0.1812941 
 ## Run 15 stress 0.1183186 
-## ... Procrustes: rmse 5.043714e-06  max resid 1.445422e-05 
+## ... Procrustes: rmse 2.322542e-05  max resid 7.232363e-05 
 ## ... Similar to previous best
-## Run 16 stress 0.1183186 
-## ... Procrustes: rmse 0.0001104243  max resid 0.0003059458 
-## ... Similar to previous best
-## Run 17 stress 0.1183186 
-## ... Procrustes: rmse 1.542647e-05  max resid 5.006905e-05 
-## ... Similar to previous best
-## Run 18 stress 0.1192679 
-## Run 19 stress 0.1183186 
-## ... Procrustes: rmse 6.592829e-05  max resid 0.0001725368 
-## ... Similar to previous best
+## Run 16 stress 0.1192692 
+## Run 17 stress 0.119268 
+## Run 18 stress 0.1809579 
+## Run 19 stress 0.2035424 
 ## Run 20 stress 0.1183186 
-## ... Procrustes: rmse 3.778765e-05  max resid 0.000121676 
+## ... Procrustes: rmse 3.717538e-05  max resid 0.0001192024 
 ## ... Similar to previous best
 ## *** Solution reached</code></pre>
 <p>As you can see, the func tion goes through a series of steps until convergence is reached. Let’s plot the results:</p>
