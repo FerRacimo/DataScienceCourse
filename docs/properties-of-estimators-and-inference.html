@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-04-03" />
+<meta name="date" content="2021-04-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -284,15 +284,48 @@ This approximation will be more precise the larger the data set we have.</p>
 <p><strong>Exercise</strong>: Repeat the exercise above, but instead of using the standard error, approximate this value by using the standard deviation (<span class="math inline">\(s\)</span>) of each data set (via the function <code>sd()</code>). Plug that standard deviation into the formula above for obtaining confidence intervals. How often do these confidence intervals contain the expected value? Repeat this exercise multiple times. Is the proportion of bounded means as accurate as in the previous exercise?</p>
 <p>As you’ve probably noticed, this will lead to overly confident boundaries, because we’ve replaced the standard error with a rough approximation to it. To correct for this, we must replace the quantiles of the Normal distribution with the quantiles of a distribution with slightly bigger tails: a ‘more uncertain’ distribution, called the t-distribution. This serves to correct for the extra uncertainty that we are bringing in by using the sample standard deviation <span class="math inline">\(s\)</span>:</p>
 <p><img src="DataScience_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
-<p>The t-distribution has a single parameter (called the ‘degrees of freedom’), and represents how much information we have about the shape of the sampling distribution. In our case, this parameter should be set to <span class="math inline">\(n-1\)</span> where <span class="math inline">\(n\)</span> is the size of our data set. The larger our dataset, the bigger this parameter, and the closer the t-distribution will become to a Normal distribution.</p>
+<p>The t-distribution arises has a single parameter (called the ‘degrees of freedom’), and represents how much information we have about the shape of the sampling distribution. In our case, this parameter should be set to <span class="math inline">\(n-1\)</span> where <span class="math inline">\(n\)</span> is the size of our data set. The larger our dataset, the bigger this parameter, and the closer the t-distribution will become to a Normal distribution.</p>
 <p>Thus, to compute the <span class="math inline">\(95\%\)</span> confidence intervals when working with a real data set with a normally distributed estimator, we can use this formula:</p>
 <p><span class="math display">\[(\hat{\theta} + \frac{s}{\sqrt{n}}t_{2.5\%}, \hat{\theta} + \frac{s}{\sqrt{n}}t_{97.5\%})\]</span>
 where <span class="math inline">\(t_{x\%}\)</span> is the <span class="math inline">\(x\%\)</span> quantile function of the t-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom.</p>
-<p>This is a useful formula, as the sampling distribution of the sample mean of large data sets (large <span class="math inline">\(n\)</span>) will tend to be normal and unbiased due to the Central Limit Theorem. Thus, we can readily use this formula whenever we’ve obtained a large dataset and have calculated its sample mean and standard deviation!</p>
 <p><strong>Exercise</strong>: Repeat the exercise above, but instead of using the standard normal(0,1) quantiles, use the quantiles from a t-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom, where <span class="math inline">\(n\)</span> is the size of each data set. Hint: You can obtain the quantile of a t-distribution using the function <code>qt()</code>. For example, the <span class="math inline">\(30\%\)</span> quantile of a t-distribution with 4 degrees of freedom is equal to <code>qt(0.3,4)</code>.</p>
+<p>This is a useful formula, as the sampling distribution of the sample mean of large data sets (large <span class="math inline">\(n\)</span>) will tend to be normal and unbiased due to the Central Limit Theorem. Thus, we can readily use this formula whenever we’ve obtained a large dataset and have calculated its sample mean and standard deviation!</p>
+<p>A good rule of thumb is to use the above formula to compute CIs using the sample mean <span class="math inline">\(\bar{X}\)</span> as the estimator <span class="math inline">\(\hat{\theta}\)</span> if:</p>
+<ol style="list-style-type: decimal">
+<li><p>The data points <span class="math inline">\(X_1, X_2, ..., X_n\)</span> of your data set are known to come from a Normal distribution, so <span class="math inline">\(\bar{X}\)</span> is guaranteed to be Normally distributed, OR…</p></li>
+<li><p>The data points <span class="math inline">\(X_1, X_2, ..., X_n\)</span> of your data set might not come from a Normal distribution, but <span class="math inline">\(n\)</span> is large enough that the Central Limit Theorem kicks in, and so <span class="math inline">\(\bar{X}\)</span> is approximately Normal (generally around 30 data points).</p></li>
+</ol>
+<p>If these assumptions don’t hold, you might need to use other methods, like permutation and resampling, which we’ll cover in later lectures.</p>
 </div>
 <div id="hypothesis-testing" class="section level2" number="7.3">
 <h2><span class="header-section-number">7.3</span> Hypothesis testing</h2>
+<p>We often need to use the sampling distribution of an estimator <span class="math inline">\(\hat{\theta}\)</span> to determine whether the value of the estimator is “far enough” from a given value <span class="math inline">\(\theta_0\)</span> to reject the hypothesis that the true expected value is equal to <span class="math inline">\(\theta_0\)</span>. How “far enough” the estimator needs to be from <span class="math inline">\(\theta_0\)</span> - the null hypothesis - will depend on how wide the sampling distribution is.</p>
+<p>If we’re dealing with unbiased, normally distributed estimators - like the sample mean - then, under the hypothesis that the true expected value <span class="math inline">\(\theta = \theta_0\)</span>:</p>
+<p><span class="math display">\[\hat{\theta} - \theta_0 \sim Normal(0, Var(\hat{\theta}))\]</span>
+Another way to say this is:</p>
+<p><span class="math display">\[\frac{\hat{\theta} - \theta_0}{\sqrt{Var(\hat{\theta})}} \sim Normal(0, 1)\]</span>
+Recalling that the standard error (SE) is equal to the square root of the variance of the estimator, we can also re-write the above formula as:</p>
+<p><span class="math display">\[\frac{\hat{\theta} - \theta_0}{SE(\hat{\theta})} \sim Normal(0, 1)\]</span></p>
+<p>For example, in the plot below, we show a <span class="math inline">\(Normal(0,1)\)</span> distribution, and an observed value of <span class="math inline">\(\hat{\theta}\)</span>. If this value is far enough from zero, then we can reject the hypothesis that <span class="math inline">\(\hat{\theta} = \theta_0\)</span>. We need to define an arbitrary cutoff for what “far enough” means. This cutoff is traditionally set such that values as extreme or more extreme than the one observed have a probability less than <span class="math inline">\(5\%\)</span> (in other words, P-value &lt; 0.05), but this cutoff is just a tradition.</p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<p>We also need to be aware that we often don’t know whether the true expected value of our distribution is <em>a priori</em> lower or higher than the value stated by our null hypothesis. In that case, we need to look at the two tails of the sampling distribution, e.g. the probability mass to the left of the green line and to the right of the red line in the plot below:</p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
+<p>Annoyingly, to determine the “width” of the sampling distribution of the estimator, we need its standard error. This is generally unavailable, and is often replaced by the standard deviation <strong>of the data set</strong>, saled by the square root of the sample size: <span class="math inline">\(SE(\hat{\theta}) \approx s/\sqrt{n}\)</span>. When this happens, we can no longer use the Normal distribution: the use of the standard deviation as a “stand-in” for the standard error causes the sampling distribution to become wider, morphing into a t-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom:</p>
+<p><span class="math display">\[\frac{\hat{\theta} - \theta}{s/\sqrt{n}} \sim t_{n-1}\]</span></p>
+<p>The above is called a <strong>t-statistic</strong>, and it follows a t-distribution. The t-distribution is a handy distribution when performing hypothesis testing, particularly because it arises whenever we use the standard deviation of the data as a replacement for the standard error.</p>
+<p>As before, a good rule of thumb is to use the above formula for performing hypothesis testing using the sample mean <span class="math inline">\(\bar{X}\)</span> as the estimator <span class="math inline">\(\hat{\theta}\)</span> if:</p>
+<ol style="list-style-type: decimal">
+<li><p>The data points <span class="math inline">\(X_1, X_2, ..., X_n\)</span> of your data set are known to come from a Normal distribution, so <span class="math inline">\(\bar{X}\)</span> is guaranteed to be Normally distributed, OR…</p></li>
+<li><p>The data points <span class="math inline">\(X_1, X_2, ..., X_n\)</span> of your data set might not come from a Normal distribution, but <span class="math inline">\(n\)</span> is large enough that the Central Limit Theorem kicks in, and so <span class="math inline">\(\bar{X}\)</span> is approximately Normal (generally around 30 data points).</p></li>
+</ol>
+<p><strong>Exercise</strong>: Create a single simulated data set of size 50, where each data point is drawn from a Normal distribution with expected value equal to 4 and standard deviation equal to 10. Let’s pretend like you don’t know the expected value from which you’re simuating. Using a P-value cutoff of <span class="math inline">\(5\%\)</span>, can you reject the null hypothesis that the expected value is equal to 5? The test will need to be <code>two.sided</code> as we don’t know whether we expect the true expected value to be larger than or smaller than 5 <em>a priori</em>.
+Hint: you can do this in two ways, which should yield exactly the same P-values:</p>
+<ol style="list-style-type: decimal">
+<li><p>computing a t-statistic and then using twice the CDF of a t-distribution with ‘n-1’ degrees of freedom, to obtain the symmetric 2-tailed P-values: ’2*pt()’, or…</p></li>
+<li><p>using the handy function <code>t.test()</code>. You’ll need to set the option <code>x</code> to be equal to your vector of data points, and the option <code>mu</code> to the particular hypothesis value you might want to test.</p></li>
+</ol>
+<p><strong>Exercise</strong>: Repeat the above exercise, but this time simulate a data set of size 500 instead. Using a P-value cutoff of <span class="math inline">\(5\%\)</span>, can you now reject the null hypothesis that the expected value is equal to 5?</p>
+<p>This exercise illustrates that the ability to reject a null hypothesis does not only depend on the difference between a statistic and its null expectation, but also in the amount of data we have, i.e. the power we have to reject the hypothesis.</p>
 
 </div>
 </div>

@@ -92,7 +92,7 @@ mean(results)
 
 The Central Limit Theorem states that if $X_1, X_2, ..., X_m$ are random samples from a distribution (any distribution) with mean $\mu$ and finite variance $\sigma^2$, and the sample mean is $\bar{X}$, then, as m grows large, $\bar{X}$ converges in distribution to a Normal distribution with mean $\mu$ and standard deviation $\sqrt{\sigma^2 /m}$.
 
-In other words, for large values of m (large sample sizes), we can treat the average of our sample as being drawn from $N(\mu,sqrt{\sigma^2/m})$.
+In other words, for large values of m (large sample sizes), we can treat the average of our sample as being drawn from $N(\mu,\sigma^2/m)$.
 
 How can we verify this to be true? Well, one way to do this is to pretend (simulate) we have many sample sets, each composed of a large number of samples, compute their sample mean, and look at the histogram over all the sample means. If the CLT holds, that histogram should look very similar to a Normal distribution. Let's try that here!
 
@@ -150,6 +150,7 @@ sd <- sqrt(var) # standard deviation of Normal distribution under the CLT
 curve(dnorm(x,mean=mu,sd=sd),from=-10,to=10,n=5000,add=TRUE,col="red") # Normal distribution
 ```
 
+**Note**: if you know *a priori* that $X_1, X_2, ..., X_m$ are independent draws from a $Normal(\mu,\sigma^2)$ distribution, then you don't need to invoke the CLT: $\bar{X}$ will be normally distributed with mean $\mu$ and standard deviation $\sqrt{\sigma^2 /m}$, even for low values of $m$!
 
 ## The exponential distribution
 

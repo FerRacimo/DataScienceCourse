@@ -121,7 +121,7 @@ $$(\hat{\theta} - \omega\  q_{97.5\%}, \hat{\theta} + \omega\ q_{97.5\%})$$
 
 If we compute these boundaries for a particular data set we study, and the estimator we're applying satisfies the 3 conditions above, we can be sure that these boundaries will contain the true parameter $95\%$ of the time (out of an infinite number of possible data sets that we could have obtained, in theory, from the phenomenon of interest).
 
-**Note that the sampling distribution of the mean will tend to be normal and unbiased for large sample sizes, because of the Central Limit Theorem!** However, the sampling distribution of other statistics (like the median) may be neither normal nor unbiased. For example, as we saw in the previous section, the sampling distribution of the median of a data set that is exponentially distributed is biased! Thus, it would be inappropriate to compute the 95% CIs using the equation above in that case. 
+**Note that the sampling distribution of the mean will tend to be normal and unbiased for large sample sizes, because of the Central Limit Theorem!** However, the sampling distribution of other statistics (like the median) may be neither normal nor unbiased. For example, as we saw in the previous section, the sampling distribution of the median of a data set that is exponentially distributed is biased! Thus, it would be inappropriate to compute the 95% CIs using the equation above in that case.
 
 Later on in this class, we'll figure out ways to obtain more general CIs that do not depend on the strict assumptions of unbiasedness and normality of the estimator's sampling distribution. 
 
@@ -178,14 +178,13 @@ curve(dt(x,19),from=-5,to=5,n=5000,col="blue",lty=3,add=TRUE)
 legend("topright",c("Normal(0,1)","t-dist,n=3","t-dist,n=6","t-dist,n=20"),lty=c(1,1,2,3),col=c("red","blue","blue","blue"))
 ```
 
-The t-distribution has a single parameter (called the 'degrees of freedom'), and represents how much information we have about the shape of the sampling distribution. In our case, this parameter should be set to $n-1$ where $n$ is the size of our data set. The larger our dataset, the bigger this parameter, and the closer the t-distribution will become to a Normal distribution.
+The t-distribution arises has a single parameter (called the 'degrees of freedom'), and represents how much information we have about the shape of the sampling distribution. In our case, this parameter should be set to $n-1$ where $n$ is the size of our data set. The larger our dataset, the bigger this parameter, and the closer the t-distribution will become to a Normal distribution.
 
 Thus, to compute the $95\%$ confidence intervals when working with a real data set with a normally distributed estimator, we can use this formula:
 
 $$(\hat{\theta} + \frac{s}{\sqrt{n}}t_{2.5\%}, \hat{\theta} + \frac{s}{\sqrt{n}}t_{97.5\%})$$
 where $t_{x\%}$ is the $x\%$ quantile function of the t-distribution with $n-1$ degrees of freedom. 
 
-This is a useful formula, as the sampling distribution of the sample mean of large data sets (large $n$) will tend to be normal and unbiased due to the Central Limit Theorem. Thus, we can readily use this formula whenever we've obtained a large dataset and have calculated its sample mean and standard deviation!
 
 **Exercise**: Repeat the exercise above, but instead of using the standard normal(0,1) quantiles, use the quantiles from a t-distribution with $n-1$ degrees of freedom, where $n$ is the size of each data set. Hint: You can obtain the quantile of a t-distribution using the function `qt()`. For example, the $30\%$ quantile of a t-distribution with 4 degrees of freedom is equal to `qt(0.3,4)`.
 
@@ -202,5 +201,84 @@ bounded <- (EV > normlow & EV < normhigh)
 prop <- sum(bounded)/length(bounded)
 ```
 
+This is a useful formula, as the sampling distribution of the sample mean of large data sets (large $n$) will tend to be normal and unbiased due to the Central Limit Theorem. Thus, we can readily use this formula whenever we've obtained a large dataset and have calculated its sample mean and standard deviation!
+
+A good rule of thumb is to use the above formula to compute CIs using the sample mean $\bar{X}$ as the estimator $\hat{\theta}$ if:
+
+1. The data points $X_1, X_2, ..., X_n$ of your data set are known to come from a Normal distribution, so $\bar{X}$ is guaranteed to be Normally distributed, OR...
+
+2. The data points $X_1, X_2, ..., X_n$ of your data set might not come from a Normal distribution, but $n$ is large enough that the Central Limit Theorem kicks in, and so $\bar{X}$ is approximately Normal (generally around 30 data points).
+
+If these assumptions don't hold, you might need to use other methods, like permutation and resampling, which we'll cover in later lectures.
 
 ## Hypothesis testing
+
+We often need to use the sampling distribution of an estimator $\hat{\theta}$ to determine whether the value of the estimator is "far enough" from a given value $\theta_0$ to reject the hypothesis that the true expected value is equal to $\theta_0$. How "far enough" the estimator needs to be from $\theta_0$ - the null hypothesis - will depend on how wide the sampling distribution is.
+
+If we're dealing with unbiased, normally distributed estimators - like the sample mean - then, under the hypothesis that the true expected value $\theta = \theta_0$:
+
+$$\hat{\theta} - \theta_0 \sim Normal(0, Var(\hat{\theta}))$$
+Another way to say this is:
+
+$$\frac{\hat{\theta} - \theta_0}{\sqrt{Var(\hat{\theta})}} \sim Normal(0, 1)$$
+Recalling that the standard error (SE) is equal to the square root of the variance of the estimator, we can also re-write the above formula as:
+
+$$\frac{\hat{\theta} - \theta_0}{SE(\hat{\theta})} \sim Normal(0, 1)$$
+
+For example, in the plot below, we show a $Normal(0,1)$ distribution, and an observed value of $\hat{\theta}$. If this value is far enough from zero, then we can reject the hypothesis that $\hat{\theta} = \theta_0$. We need to define an arbitrary cutoff for what "far enough" means. This cutoff is traditionally set such that values as extreme or more extreme than the one observed have a probability less than $5\%$ (in other words, P-value < 0.05), but this cutoff is just a tradition.
+
+```{r,eval=TRUE,echo=FALSE}
+curve(dnorm(x,mean=0,sd=1),from=-5,to=5,n=5000,col="blue",ylab="dens(x)")
+abline(v=3,col="red")
+```
+
+We also need to be aware that we often don't know whether the true expected value of our distribution is *a priori* lower or higher than the value stated by our null hypothesis. In that case, we need to look at the two tails of the sampling distribution, e.g. the probability mass to the left of the green line and to the right of the red line in the plot below:
+
+```{r,eval=TRUE,echo=FALSE}
+curve(dnorm(x,mean=0,sd=1),from=-5,to=5,n=5000,col="blue",ylab="dens(x)")
+abline(v=3,col="red")
+abline(v=-3,col="dark green")
+```
+
+Annoyingly, to determine the "width" of the sampling distribution of the estimator, we need its standard error. This is generally unavailable, and is often replaced by the standard deviation **of the data set**, saled by the square root of the sample size: $SE(\hat{\theta}) \approx s/\sqrt{n}$. When this happens, we can no longer use the Normal distribution: the use of the standard deviation as a "stand-in" for the standard error causes the sampling distribution to become wider, morphing into a t-distribution with $n-1$ degrees of freedom:
+
+$$\frac{\hat{\theta} - \theta}{s/\sqrt{n}} \sim t_{n-1}$$
+
+The above is called a **t-statistic**, and it follows a t-distribution. The t-distribution is a handy distribution when performing hypothesis testing, particularly because it arises whenever we use the standard deviation of the data as a replacement for the standard error.
+
+As before, a good rule of thumb is to use the above formula for performing hypothesis testing using the sample mean $\bar{X}$ as the estimator $\hat{\theta}$ if:
+
+1. The data points $X_1, X_2, ..., X_n$ of your data set are known to come from a Normal distribution, so $\bar{X}$ is guaranteed to be Normally distributed, OR...
+
+2. The data points $X_1, X_2, ..., X_n$ of your data set might not come from a Normal distribution, but $n$ is large enough that the Central Limit Theorem kicks in, and so $\bar{X}$ is approximately Normal (generally around 30 data points).
+
+**Exercise**: Create a single simulated data set of size 50, where each data point is drawn from a Normal distribution with expected value equal to 4 and standard deviation equal to 10. Let's pretend like you don't know the expected value from which you're simuating. Using a P-value cutoff of $5\%$, can you reject the null hypothesis that the expected value is equal to 5? The test will need to be `two.sided` as we don't know whether we expect the true expected value to be larger than or smaller than 5 *a priori*.
+Hint: you can do this in two ways, which should yield exactly the same P-values:
+
+1. computing a t-statistic and then using twice the CDF of a t-distribution with 'n-1' degrees of freedom, to obtain the symmetric 2-tailed P-values: '2*pt()', or...
+
+2. using the handy function `t.test()`. You'll need to set the option `x` to be equal to your vector of data points, and the option `mu` to the particular hypothesis value you might want to test. 
+
+```{r, eval=FALSE, echo=FALSE}
+EV <- 4
+SD <- 10
+n <- 50
+normmat <- simsamps(n,1,rnorm,mean=EV,sd=SD) 
+tstat <- (mean(normmat) - 5)/(sd(normmat)/sqrt(n))
+t.test(normmat,mu=5,alternative="two.sided") # easy way of obtaining P-values
+2 * pt(tstat, df=n-1) # alternative way using the CDF of a t-distribution
+```
+
+
+**Exercise**: Repeat the above exercise, but this time simulate a data set of size 500 instead. Using a P-value cutoff of $5\%$, can you now reject the null hypothesis that the expected value is equal to 5?
+
+```{r, eval=FALSE, echo=FALSE}
+EV <- 4
+SD <- 10
+n <- 500
+normmat <- simsamps(n,1,rnorm,mean=EV,sd=SD) 
+t.test(normmat,mu=5,alternative="two.sided")
+```
+
+
+This exercise illustrates that the ability to reject a null hypothesis does not only depend on the difference between a statistic and its null expectation, but also in the amount of data we have, i.e. the power we have to reject the hypothesis.
