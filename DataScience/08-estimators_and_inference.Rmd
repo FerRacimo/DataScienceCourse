@@ -1,11 +1,8 @@
-# Properties of Estimators and Inference
+# Properties of Estimators and Hypothesis Testing
 
 ## Properties of point estimators
 
 In this exercise, we'll draw many simulated samples from a known distribution with known parameters. We will then consider these as instances of real datasets, and estimate parameters of the original distributions using different estimators applied to the datasets. Our goal will be to analyze properties of the estimators, namely their sampling distribution, bias and variance. 
-
-
-> The 'sampling distribution' is the distribution of a particular test statistic, like the sample mean or the sample median. This is different from the distribution of the data itself. For example, a data set may come from a particular distribution, say Poisson, Normal or Binomial. The sample mean of such a dataset is a single number. If we had different data sets of equal size, we would be able to obtain different sample means. The distribution of those means (in the limit of infinite datasets) is the sampling distribution, which is often Normal due to the Central Limit Theorem. We generally don't know the sampling distribution of a statistic, because we only have a single dataset,  but we can attempt to approximate this distribution, as we'll see below.
 
 Recall the definitions of two important properties of point estimators:
 
@@ -13,11 +10,11 @@ Bias: $$B(\hat\theta_n) =  E[\hat\theta_n(D) - \theta] $$
 
 The bias reflects the average difference between our estimator and the true parameter.
 
-Variance: $$Var(\hat\theta_n) =  E[ (\hat\theta_n(D) - E[\hat\theta_n(D)] )^2] $$
+Variance: $$Var(\hat\theta_n) =  E[ (\hat\theta_n(D) - E[\hat\theta_n(D)] )^2] = SE(\hat\theta_n)^2$$
 
 The variance reflects the variation of the estimator's sampling distribution around its own mean (regardless of what the true parameter is). It is also the square of the standard error.
 
-> In real life, we will generally not know the distribution from which our data comes from, or the sampling distribution of our test statistic, but we can attempt to approximate these. As we'll see below, simulations can be of great help here.
+> In real life, we will generally not know the sampling distribution of our test statistic, but we can attempt to approximate it. As we'll see below, simulations can be of great help here.
 
 We will first create a function that draws a user-specified number (`nsim`) of independent data samples of size `sampsize` from a distribution of choice. By default this distribution is the Normal distribution (`rnorm`), but it can be changed by the user:
 
@@ -91,13 +88,16 @@ abline(v=mean(expmedian),col="blue",lty=2)
 par(mfrow=c(1,1))
 ```
 
-The histograms we've built are examples of **sampling distributions of estimators**. They serve to visualize the spread of an estimator's distribution around its own mean, and allow us to determine whether that estimator's mean is equal to the expected value of our distribution of interest.
+The histograms we've built reflect the **sampling distributions of estimators**. They serve to visualize the spread of an estimator's distribution around its own mean, and allow us to determine whether that estimator's mean is equal to the expected value of our distribution of interest.
+
+> The 'sampling distribution' is the distribution of a particular test statistic, like the sample mean or the sample median. This is different from the distribution of the data itself. For example, a data set may come from a particular distribution, say Poisson, Normal or Exponential. The sample mean of such a dataset is a single number. If we had different data sets of equal size, we would be able to obtain different sample means. The distribution of those means (in the limit of infinite datasets) is the sampling distribution, which will often be Normal, if the conditions of the Central Limit Theorem apply. For other statistics, for example, the sample median, the Central Limit Theorem might not apply.
 
 ## Obtaining confidence intervals
 
-Confidence intervals (CIs) denote how sure we are about the value of a parameter. Importantly, CIs are statements made about an infinite number of data sets, which can be a bit counter-intuitive. For example, let's imagine a parameter of interest called $\theta$, which has a value that we don't know. If we had an infinite number of data sets ($i=1,2,3,...,\infty$), the lower and upper 95% confidence intervals for each dataset $i$ are the two values that should bound (contain) the unknown parameter $\theta$ in 95% of those datasets. Each data set will have its own confidence interval, but we can be sure that that interval will contain the unknown parameter 95% of the time.
+Confidence intervals (CIs) denote how sure we are about the value of a parameter. Importantly, CIs are statements made about an infinite number of datasets. For example, let's imagine a parameter of interest called $\theta$, which has a value that we don't know. If we had an infinite number of data sets ($i=1,2,3,...,\infty$), the lower and upper 95% confidence intervals for each dataset $i$ are the two values that would bound (contain) the unknown parameter $\theta$ in 95% of those datasets.
 
 Generally, we only have **one set of data points**, so this statement might sound a bit confusing. How can we make statements about infinite data sets, when we only have one set? In practice, the confidence interval is an approximation based on the **spread (variance) of an estimator's ($\hat{\theta}$) sampling distribution around the expected value of the unknown parameter ($\theta$)**. 
+
 If a given estimator $\hat{\theta}$ of a data set of size n:
 
 1. has a known standard error:
@@ -127,11 +127,9 @@ $$(\hat{\theta} - SE(\hat{\theta}_n)  q_{97.5\%}, \
 
 If we compute these boundaries for a particular data set we study, and the estimator we're applying satisfies the 3 conditions above, we can be sure that these boundaries will contain the true parameter $95\%$ of the time (out of an infinite number of possible data sets that we could have obtained, in theory, from the phenomenon of interest).
 
-**Note that the sampling distribution of the mean will tend to be normal and unbiased for large sample sizes, because of the Central Limit Theorem!** However, the sampling distribution of other statistics (like the median) may be neither normal nor unbiased. For example, as we saw in the previous section, the sampling distribution of the median of a data set that is exponentially distributed is biased! Thus, it would be inappropriate to compute the 95% CIs using the equation above in that case.
+> Note that the sampling distribution of the mean will tend to be normal and unbiased for large sample sizes, because of the Central Limit Theorem! However, the sampling distribution of other statistics (like the median) may be neither normal nor unbiased. For example, as we saw in the previous section, the sampling distribution of the median of a data set that is exponentially distributed is biased! Thus, it would be inappropriate to compute the 95% CIs using the equation above in that case. Later on in this class, we'll figure out ways to obtain more general CIs that do not depend on the strict assumptions of unbiasedness and normality of the estimator's sampling distribution. 
 
-Later on in this class, we'll figure out ways to obtain more general CIs that do not depend on the strict assumptions of unbiasedness and normality of the estimator's sampling distribution. 
-
-The mean of a normally distributed dataset is both unbiased and normally distributed, so those assumptions hold in that case. Let's verify that:
+The mean of a normally distributed dataset is both unbiased and normally distributed, so the stated assumptions hold in that case. Let's verify that:
 
 **Exercise**: Create 20,000 simulated data sets of size 5, each drawn from a Normal distribution with expected value equal to 4 and standard deviation equal to 10. For each dataset, compute the sample mean. Then, compute the standard error of the mean (standard deviation over all means). Finally, use the standard error to compute the $95\%$ confidence intervals for each data set, using the formula stated above. How often do these confidence intervals contain the expected value? Hint: to obtain the quantiles of a Normal distribution, you can use the function `qnorm`. For example, the $35\%$ quantile of a standard Normal(0,1) distribution is equal to `qnorm(0.35,mean=0,sd=1)`.
 
@@ -149,9 +147,13 @@ bounded <- (EV > normlow & EV < normhigh)
 prop <- sum(bounded)/length(bounded)
 ```
 
-Here, because we are using simulations, we can obtain the standard error of the mean by generating many data sets. In practice, when working with a single data set, the estimator's standard error $SE(\hat{\theta}_n)$ is generally unknown. However, it can be approximated using the sample standard deviation $s$ of the dataset we are studying:
+Here, because we are using simulations, we can obtain the standard error of the mean by generating many data sets. Recall from the Central Limit Theorem that the standard error of the mean is equal to a scaled version of the standard deviation, when n is large:
 
-$$\frac{s}{\sqrt{n}} \approx SE(\hat{\theta}_n)$$
+$$SE(\hat{\theta}_n) = \frac{\sqrt{\sigma^2}}{\sqrt{n}}$$
+
+In practice, when working with a single data set, the estimator's standard error $SE(\hat{\theta}_n)$ is generally unknown. However, it can be approximated using the sample standard deviation $s$ of the dataset we are studying:
+
+$$SE(\hat{\theta}_n) \approx \frac{s}{\sqrt{n}}$$
 Thus, we can obtain CIs by replacing $SE(\hat{\theta}_n)$ above with $s/\sqrt{n}$:
 
 $$(\hat{\theta} + \frac{s}{\sqrt{n}}q_{2.5\%}, \hat{\theta} + \frac{s}{\sqrt{n}}q_{97.5\%})$$
@@ -219,10 +221,13 @@ If these assumptions don't hold, you might need to use other methods, like permu
 
 We often need to use the sampling distribution of an estimator $\hat{\theta}$ to determine whether the value of the estimator is "far enough" from a given value $\theta_0$ to reject the hypothesis that the true expected value is equal to $\theta_0$. How "far enough" the estimator needs to be from $\theta_0$ - the null hypothesis - will depend on how wide the sampling distribution is.
 
-If we're dealing with unbiased, normally distributed estimators - like the sample mean - then, under the hypothesis that the true expected value $\theta = \theta_0$:
+If we're dealing with unbiased, normally distributed estimators - like the sample mean when $n$ is large - then under the hypothesis that the true expected value $\theta = \theta_0$:
+
+$$\hat{\theta} \sim Normal(\theta_0, Var(\hat{\theta}))$$
+In other words,
 
 $$\hat{\theta} - \theta_0 \sim Normal(0, Var(\hat{\theta}))$$
-Another way to say this is:
+If we move the variance to the other side, we obtain:
 
 $$\frac{\hat{\theta} - \theta_0}{\sqrt{Var(\hat{\theta})}} \sim Normal(0, 1)$$
 Recalling that the standard error (SE) is equal to the square root of the variance of the estimator, we can also re-write the above formula as:
@@ -244,13 +249,24 @@ abline(v=3,col="red")
 abline(v=-3,col="dark green")
 ```
 
-Annoyingly, to determine the "width" of the sampling distribution of the estimator, we need its standard error. This is generally unavailable, and is often replaced by the standard deviation **of the data set**, saled by the square root of the sample size: $SE(\hat{\theta}) \approx s/\sqrt{n}$. When this happens, we can no longer use the Normal distribution: the use of the standard deviation as a "stand-in" for the standard error causes the sampling distribution to become wider, morphing into a t-distribution with $n-1$ degrees of freedom:
+Annoyingly, to determine the "width" of the sampling distribution of the estimator, we need its standard error. If our test statistic is the sample mean and we have a large dataset (generally $n>30$), then can again re-use the Central Limit Theorem, which states the standard error of the sample mean is equal to the standard deviation scaled by the square root of the sample size:
+
+$$SE(\hat{\theta}) = \sqrt{\sigma^2}/\sqrt{n}$$
+Thus:
+
+$$\frac{\hat{\theta} - \theta_0}{\sqrt{\sigma^2/n}} \sim Normal(0, 1)$$
+
+However, the standard deviation $\sqrt{\sigma^2}$ is generally unavailable because we would only be able to know this if we knew the parameters of the distribution from which our data comes from. Instead, just as we did when computing confidence intervals, $\sqrt{\sigma^2}$ can be replaced by the standard deviation **of the data set at hand** (s), scaled by the square root of the sample size:
+
+$$SE(\hat{\theta}) \approx s/\sqrt{n}$$
+
+When this happens, we can no longer say that our test statistic follows a Normal distribution: the use of the sample standard deviation as a "stand-in" for the true standard deviation causes the sampling distribution of our test statistic to become wider. Our new test-statistic - called a **t-statistic** - now follows a new distribution called the **t-distribution** with $n-1$ degrees of freedom:
 
 $$\frac{\hat{\theta} - \theta_0}{s/\sqrt{n}} \sim t_{n-1}$$
 
-The above is called a **t-statistic**, and it follows a t-distribution. The t-distribution is a handy distribution when performing hypothesis testing, particularly because it arises whenever we use the standard deviation of the data as a replacement for the standard error.
+The t-distribution is a handy distribution when performing hypothesis testing, particularly because it arises whenever we use the standard deviation of the data as a replacement for the standard error.
 
-> The t-statistic is an example of a 'pivot statistic': like other statistics, it can be a function of observations, but its key feature is that its probability distribution does not depend on the unknown parameters. You can be sure that the distribution of a t-statistic will always be the t-distribution with n-1 degrees of freedom, even if we don't know the true expectation or the true variance of the sampling distribution of $\hat{\theta}$.
+> The t-statistic is an example of a 'pivot statistic': like other statistics, it can be a function of observations, but its key feature is that its probability distribution does not depend on unknown parameters. You can be sure that the distribution of a t-statistic will always be the t-distribution with n-1 degrees of freedom, even if we don't know the true standard deviation of the sampling distribution of $\hat{\theta}$.
 
 As before, a good rule of thumb is to use the above formula for performing hypothesis testing using the sample mean $\bar{X}$ as the estimator $\hat{\theta}$ if:
 
@@ -288,3 +304,5 @@ t.test(normmat,mu=5,alternative="two.sided")
 
 
 This exercise illustrates that the ability to reject a null hypothesis does not only depend on the difference between a statistic and its null expectation, but also in the amount of data we have, i.e. the power we have to reject the hypothesis.
+
+> You might notice lots of similarities between the computation of confidence intervals and the testing of a hypothesis: same assumptions, same approximations, same use of the Normal distribution. Under the "frequentist" school of statistical thought, hypothesis testing and confidence interval estimation are indeed intimately related: they are two sides of the same coin!

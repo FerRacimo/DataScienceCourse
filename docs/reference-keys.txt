@@ -16,7 +16,7 @@ linear-models
 fitting-a-simple-linear-regression
 interpreting-a-simple-linear-regression
 simulating-data-from-a-linear-model
-properties-of-estimators-and-inference
+properties-of-estimators-and-hypothesis-testing
 properties-of-point-estimators
 obtaining-confidence-intervals
 hypothesis-testing
