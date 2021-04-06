@@ -2,7 +2,12 @@
 
 ## Properties of point estimators
 
-In this exercise, we'll draw many simulated samples from a known distribution with known parameters. We will then consider these as instances of real datasets, and estimate parameters of the original distributions using different estimators applied to the datasets. Our goal will be to analyze properties of the estimators, namely their bias and variance. Recall the definitions of these two properties:
+In this exercise, we'll draw many simulated samples from a known distribution with known parameters. We will then consider these as instances of real datasets, and estimate parameters of the original distributions using different estimators applied to the datasets. Our goal will be to analyze properties of the estimators, namely their sampling distribution, bias and variance. 
+
+
+> The 'sampling distribution' is the distribution of a particular test statistic, like the sample mean or the sample median. This is different from the distribution of the data itself. For example, a data set may come from a particular distribution, say Poisson, Normal or Binomial. The sample mean of such a dataset is a single number. If we had different data sets of equal size, we would be able to obtain different sample means. The distribution of those means (in the limit of infinite datasets) is the sampling distribution, which is often Normal due to the Central Limit Theorem. We generally don't know the sampling distribution of a statistic, because we only have a single dataset,  but we can attempt to approximate this distribution, as we'll see below.
+
+Recall the definitions of two important properties of point estimators:
 
 Bias: $$B(\hat\theta_n) =  E[\hat\theta_n(D) - \theta] $$
 
@@ -10,9 +15,9 @@ The bias reflects the average difference between our estimator and the true para
 
 Variance: $$Var(\hat\theta_n) =  E[ (\hat\theta_n(D) - E[\hat\theta_n(D)] )^2] $$
 
-The variance reflects the variation of the estimator around its own mean (regardless of what the true parameter is). It is also the square of the standard error.
+The variance reflects the variation of the estimator's sampling distribution around its own mean (regardless of what the true parameter is). It is also the square of the standard error.
 
-**Note**: in real life, we will generally not know the distribution from which our data comes from, or the value of the parameters of that distribution (otherwise we wouldn't be performing statistical inference). When developing or applying a particular estimator to our data, it is thus important to test the properties of that estimator under a variety of simulations and parameter choices. These simulations should aim to, as much as possible, mimic the possible range of processes and parameters that could be generating our data.
+> In real life, we will generally not know the distribution from which our data comes from, or the sampling distribution of our test statistic, but we can attempt to approximate these. As we'll see below, simulations can be of great help here.
 
 We will first create a function that draws a user-specified number (`nsim`) of independent data samples of size `sampsize` from a distribution of choice. By default this distribution is the Normal distribution (`rnorm`), but it can be changed by the user:
 
@@ -97,7 +102,7 @@ If a given estimator $\hat{\theta}$ of a data set of size n:
 
 1. has a known standard error:
 
-$$\omega = SE(\hat{\theta}_n) = \sqrt{Var(\hat{\theta}_n)}$$
+$$SE(\hat{\theta}_n) = \sqrt{Var(\hat{\theta}_n)}$$
 
 2. is unbiased: 
 
@@ -112,12 +117,13 @@ $$\hat{\theta}_n \sim Normal$$
 then the confidence intervals that will contain the true value of the parameter 95% of the time are:
 
 
-$$(\hat{\theta} + \omega\  q_{2.5\%}, \hat{\theta} + \omega\ q_{97.5\%})$$
+$$(\hat{\theta} + SE(\hat{\theta}_n) q_{2.5\%}, \ \hat{\theta} + SE(\hat{\theta}_n) q_{97.5\%})$$
 Here, $q_{x\%}$ is the $x\%$ quantile function of a standard Normal(0,1) distribution. This value marks a limit such that $x\%$ of the probability mass of a distribution is to the left (lower than the value), and $1-x\%$ is to the right (higher than the value).
 
 Because the standard normal(0,1) distribution is symmetric and centered around 0, $q_{2.5\%} = -q_{97.5\%}$, so we can also write the CI as:
 
-$$(\hat{\theta} - \omega\  q_{97.5\%}, \hat{\theta} + \omega\ q_{97.5\%})$$
+$$(\hat{\theta} - SE(\hat{\theta}_n)  q_{97.5\%}, \
+ \hat{\theta} + SE(\hat{\theta}_n) q_{97.5\%})$$
 
 If we compute these boundaries for a particular data set we study, and the estimator we're applying satisfies the 3 conditions above, we can be sure that these boundaries will contain the true parameter $95\%$ of the time (out of an infinite number of possible data sets that we could have obtained, in theory, from the phenomenon of interest).
 
@@ -143,12 +149,10 @@ bounded <- (EV > normlow & EV < normhigh)
 prop <- sum(bounded)/length(bounded)
 ```
 
-Here, because we are using simulations, we can obtain the standard error of the mean by generating many data sets. In practice, when working with a single data set, the estimator's standard error $\omega$ is generally unknown. However, it can be approximated using the sample standard deviation $s$ of the dataset we are studying:
+Here, because we are using simulations, we can obtain the standard error of the mean by generating many data sets. In practice, when working with a single data set, the estimator's standard error $SE(\hat{\theta}_n)$ is generally unknown. However, it can be approximated using the sample standard deviation $s$ of the dataset we are studying:
 
-$$\frac{s}{\sqrt{n}} \approx \omega$$
-This approximation will be more precise the larger the data set we have. 
-
-Thus, we can obtain CIs by replacing $\omega$ above with $s/\sqrt{n}$:
+$$\frac{s}{\sqrt{n}} \approx SE(\hat{\theta}_n)$$
+Thus, we can obtain CIs by replacing $SE(\hat{\theta}_n)$ above with $s/\sqrt{n}$:
 
 $$(\hat{\theta} + \frac{s}{\sqrt{n}}q_{2.5\%}, \hat{\theta} + \frac{s}{\sqrt{n}}q_{97.5\%})$$
 
@@ -168,7 +172,7 @@ bounded <- (EV > normlow & EV < normhigh)
 prop <- sum(bounded)/length(bounded)
 ```
 
-As you've probably noticed, this will lead to overly confident boundaries, because we've replaced the standard error with a rough approximation to it. To correct for this, we must replace the quantiles of the Normal distribution with the quantiles of a distribution with slightly bigger tails: a 'more uncertain' distribution, called the t-distribution. This serves to correct for the extra uncertainty that we are bringing in by using the sample standard deviation $s$:
+As you've probably noticed, this will lead to overly confident boundaries, because we've replaced the standard error with a rough approximation to it. To correct for this, we must replace the quantiles of the Normal distribution with the quantiles of a distribution with slightly bigger tails: a 'more uncertain' distribution, called the t-distribution. This serves to correct for the extra uncertainty that we are bringing in by using our sample's standard deviation $s$ instead of the true $SE(\hat{\theta}_n)$ of the sampling distribution:
 
 ```{r,eval=TRUE,echo=FALSE}
 curve(dnorm(x,mean=0,sd=1),from=-5,to=5,n=5000,col="red",ylab="dens(x)")
@@ -242,9 +246,11 @@ abline(v=-3,col="dark green")
 
 Annoyingly, to determine the "width" of the sampling distribution of the estimator, we need its standard error. This is generally unavailable, and is often replaced by the standard deviation **of the data set**, saled by the square root of the sample size: $SE(\hat{\theta}) \approx s/\sqrt{n}$. When this happens, we can no longer use the Normal distribution: the use of the standard deviation as a "stand-in" for the standard error causes the sampling distribution to become wider, morphing into a t-distribution with $n-1$ degrees of freedom:
 
-$$\frac{\hat{\theta} - \theta}{s/\sqrt{n}} \sim t_{n-1}$$
+$$\frac{\hat{\theta} - \theta_0}{s/\sqrt{n}} \sim t_{n-1}$$
 
 The above is called a **t-statistic**, and it follows a t-distribution. The t-distribution is a handy distribution when performing hypothesis testing, particularly because it arises whenever we use the standard deviation of the data as a replacement for the standard error.
+
+> The t-statistic is an example of a 'pivot statistic': like other statistics, it can be a function of observations, but its key feature is that its probability distribution does not depend on the unknown parameters. You can be sure that the distribution of a t-statistic will always be the t-distribution with n-1 degrees of freedom, even if we don't know the true expectation or the true variance of the sampling distribution of $\hat{\theta}$.
 
 As before, a good rule of thumb is to use the above formula for performing hypothesis testing using the sample mean $\bar{X}$ as the estimator $\hat{\theta}$ if:
 
@@ -255,7 +261,7 @@ As before, a good rule of thumb is to use the above formula for performing hypot
 **Exercise**: Create a single simulated data set of size 50, where each data point is drawn from a Normal distribution with expected value equal to 4 and standard deviation equal to 10. Let's pretend like you don't know the expected value from which you're simuating. Using a P-value cutoff of $5\%$, can you reject the null hypothesis that the expected value is equal to 5? The test will need to be `two.sided` as we don't know whether we expect the true expected value to be larger than or smaller than 5 *a priori*.
 Hint: you can do this in two ways, which should yield exactly the same P-values:
 
-1. computing a t-statistic and then using twice the CDF of a t-distribution with 'n-1' degrees of freedom, to obtain the symmetric 2-tailed P-values: '2*pt()', or...
+1. computing a t-statistic and then using twice the CDF of a t-distribution with 'n-1' degrees of freedom, to obtain the symmetric 2-tailed P-values: `2*pt()`, or...
 
 2. using the handy function `t.test()`. You'll need to set the option `x` to be equal to your vector of data points, and the option `mu` to the particular hypothesis value you might want to test. 
 

@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-04-04" />
+<meta name="date" content="2021-04-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -221,12 +221,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 7</span> Properties of Estimators and Inference</h1>
 <div id="properties-of-point-estimators" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Properties of point estimators</h2>
-<p>In this exercise, we’ll draw many simulated samples from a known distribution with known parameters. We will then consider these as instances of real datasets, and estimate parameters of the original distributions using different estimators applied to the datasets. Our goal will be to analyze properties of the estimators, namely their bias and variance. Recall the definitions of these two properties:</p>
+<p>In this exercise, we’ll draw many simulated samples from a known distribution with known parameters. We will then consider these as instances of real datasets, and estimate parameters of the original distributions using different estimators applied to the datasets. Our goal will be to analyze properties of the estimators, namely their sampling distribution, bias and variance.</p>
+<blockquote>
+<p>The ‘sampling distribution’ is the distribution of a particular test statistic, like the sample mean or the sample median. This is different from the distribution of the data itself. For example, a data set may come from a particular distribution, say Poisson, Normal or Binomial. The sample mean of such a dataset is a single number. If we had different data sets of equal size, we would be able to obtain different sample means. The distribution of those means (in the limit of infinite datasets) is the sampling distribution, which is often Normal due to the Central Limit Theorem. We generally don’t know the sampling distribution of a statistic, because we only have a single dataset, but we can attempt to approximate this distribution, as we’ll see below.</p>
+</blockquote>
+<p>Recall the definitions of two important properties of point estimators:</p>
 <p>Bias: <span class="math display">\[B(\hat\theta_n) =  E[\hat\theta_n(D) - \theta] \]</span></p>
 <p>The bias reflects the average difference between our estimator and the true parameter.</p>
 <p>Variance: <span class="math display">\[Var(\hat\theta_n) =  E[ (\hat\theta_n(D) - E[\hat\theta_n(D)] )^2] \]</span></p>
-<p>The variance reflects the variation of the estimator around its own mean (regardless of what the true parameter is). It is also the square of the standard error.</p>
-<p><strong>Note</strong>: in real life, we will generally not know the distribution from which our data comes from, or the value of the parameters of that distribution (otherwise we wouldn’t be performing statistical inference). When developing or applying a particular estimator to our data, it is thus important to test the properties of that estimator under a variety of simulations and parameter choices. These simulations should aim to, as much as possible, mimic the possible range of processes and parameters that could be generating our data.</p>
+<p>The variance reflects the variation of the estimator’s sampling distribution around its own mean (regardless of what the true parameter is). It is also the square of the standard error.</p>
+<blockquote>
+<p>In real life, we will generally not know the distribution from which our data comes from, or the sampling distribution of our test statistic, but we can attempt to approximate these. As we’ll see below, simulations can be of great help here.</p>
+</blockquote>
 <p>We will first create a function that draws a user-specified number (<code>nsim</code>) of independent data samples of size <code>sampsize</code> from a distribution of choice. By default this distribution is the Normal distribution (<code>rnorm</code>), but it can be changed by the user:</p>
 <div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="properties-of-estimators-and-inference.html#cb76-1" aria-hidden="true" tabindex="-1"></a>simsamps <span class="ot">&lt;-</span> <span class="cf">function</span>(sampsize, <span class="at">nsim =</span> <span class="dv">10000</span>, <span class="at">rsim =</span> rnorm, ...){</span>
 <span id="cb76-2"><a href="properties-of-estimators-and-inference.html#cb76-2" aria-hidden="true" tabindex="-1"></a>  sims <span class="ot">&lt;-</span> <span class="fu">rsim</span>(sampsize<span class="sc">*</span>nsim,...) <span class="co"># generate draws from a specified distribution</span></span>
@@ -256,7 +262,7 @@ If a given estimator <span class="math inline">\(\hat{\theta}\)</span> of a data
 <ol style="list-style-type: decimal">
 <li>has a known standard error:</li>
 </ol>
-<p><span class="math display">\[\omega = SE(\hat{\theta}_n) = \sqrt{Var(\hat{\theta}_n)}\]</span></p>
+<p><span class="math display">\[SE(\hat{\theta}_n) = \sqrt{Var(\hat{\theta}_n)}\]</span></p>
 <ol start="2" style="list-style-type: decimal">
 <li>is unbiased:</li>
 </ol>
@@ -267,22 +273,22 @@ If a given estimator <span class="math inline">\(\hat{\theta}\)</span> of a data
 </ol>
 <p><span class="math display">\[\hat{\theta}_n \sim Normal\]</span></p>
 <p>then the confidence intervals that will contain the true value of the parameter 95% of the time are:</p>
-<p><span class="math display">\[(\hat{\theta} + \omega\  q_{2.5\%}, \hat{\theta} + \omega\ q_{97.5\%})\]</span>
+<p><span class="math display">\[(\hat{\theta} + SE(\hat{\theta}_n) q_{2.5\%}, \ \hat{\theta} + SE(\hat{\theta}_n) q_{97.5\%})\]</span>
 Here, <span class="math inline">\(q_{x\%}\)</span> is the <span class="math inline">\(x\%\)</span> quantile function of a standard Normal(0,1) distribution. This value marks a limit such that <span class="math inline">\(x\%\)</span> of the probability mass of a distribution is to the left (lower than the value), and <span class="math inline">\(1-x\%\)</span> is to the right (higher than the value).</p>
 <p>Because the standard normal(0,1) distribution is symmetric and centered around 0, <span class="math inline">\(q_{2.5\%} = -q_{97.5\%}\)</span>, so we can also write the CI as:</p>
-<p><span class="math display">\[(\hat{\theta} - \omega\  q_{97.5\%}, \hat{\theta} + \omega\ q_{97.5\%})\]</span></p>
+<p><span class="math display">\[(\hat{\theta} - SE(\hat{\theta}_n)  q_{97.5\%}, \
+ \hat{\theta} + SE(\hat{\theta}_n) q_{97.5\%})\]</span></p>
 <p>If we compute these boundaries for a particular data set we study, and the estimator we’re applying satisfies the 3 conditions above, we can be sure that these boundaries will contain the true parameter <span class="math inline">\(95\%\)</span> of the time (out of an infinite number of possible data sets that we could have obtained, in theory, from the phenomenon of interest).</p>
 <p><strong>Note that the sampling distribution of the mean will tend to be normal and unbiased for large sample sizes, because of the Central Limit Theorem!</strong> However, the sampling distribution of other statistics (like the median) may be neither normal nor unbiased. For example, as we saw in the previous section, the sampling distribution of the median of a data set that is exponentially distributed is biased! Thus, it would be inappropriate to compute the 95% CIs using the equation above in that case.</p>
 <p>Later on in this class, we’ll figure out ways to obtain more general CIs that do not depend on the strict assumptions of unbiasedness and normality of the estimator’s sampling distribution.</p>
 <p>The mean of a normally distributed dataset is both unbiased and normally distributed, so those assumptions hold in that case. Let’s verify that:</p>
 <p><strong>Exercise</strong>: Create 20,000 simulated data sets of size 5, each drawn from a Normal distribution with expected value equal to 4 and standard deviation equal to 10. For each dataset, compute the sample mean. Then, compute the standard error of the mean (standard deviation over all means). Finally, use the standard error to compute the <span class="math inline">\(95\%\)</span> confidence intervals for each data set, using the formula stated above. How often do these confidence intervals contain the expected value? Hint: to obtain the quantiles of a Normal distribution, you can use the function <code>qnorm</code>. For example, the <span class="math inline">\(35\%\)</span> quantile of a standard Normal(0,1) distribution is equal to <code>qnorm(0.35,mean=0,sd=1)</code>.</p>
-<p>Here, because we are using simulations, we can obtain the standard error of the mean by generating many data sets. In practice, when working with a single data set, the estimator’s standard error <span class="math inline">\(\omega\)</span> is generally unknown. However, it can be approximated using the sample standard deviation <span class="math inline">\(s\)</span> of the dataset we are studying:</p>
-<p><span class="math display">\[\frac{s}{\sqrt{n}} \approx \omega\]</span>
-This approximation will be more precise the larger the data set we have.</p>
-<p>Thus, we can obtain CIs by replacing <span class="math inline">\(\omega\)</span> above with <span class="math inline">\(s/\sqrt{n}\)</span>:</p>
+<p>Here, because we are using simulations, we can obtain the standard error of the mean by generating many data sets. In practice, when working with a single data set, the estimator’s standard error <span class="math inline">\(SE(\hat{\theta}_n)\)</span> is generally unknown. However, it can be approximated using the sample standard deviation <span class="math inline">\(s\)</span> of the dataset we are studying:</p>
+<p><span class="math display">\[\frac{s}{\sqrt{n}} \approx SE(\hat{\theta}_n)\]</span>
+Thus, we can obtain CIs by replacing <span class="math inline">\(SE(\hat{\theta}_n)\)</span> above with <span class="math inline">\(s/\sqrt{n}\)</span>:</p>
 <p><span class="math display">\[(\hat{\theta} + \frac{s}{\sqrt{n}}q_{2.5\%}, \hat{\theta} + \frac{s}{\sqrt{n}}q_{97.5\%})\]</span></p>
 <p><strong>Exercise</strong>: Repeat the exercise above, but instead of using the standard error, approximate this value by using the standard deviation (<span class="math inline">\(s\)</span>) of each data set (via the function <code>sd()</code>). Plug that standard deviation into the formula above for obtaining confidence intervals. How often do these confidence intervals contain the expected value? Repeat this exercise multiple times. Is the proportion of bounded means as accurate as in the previous exercise?</p>
-<p>As you’ve probably noticed, this will lead to overly confident boundaries, because we’ve replaced the standard error with a rough approximation to it. To correct for this, we must replace the quantiles of the Normal distribution with the quantiles of a distribution with slightly bigger tails: a ‘more uncertain’ distribution, called the t-distribution. This serves to correct for the extra uncertainty that we are bringing in by using the sample standard deviation <span class="math inline">\(s\)</span>:</p>
+<p>As you’ve probably noticed, this will lead to overly confident boundaries, because we’ve replaced the standard error with a rough approximation to it. To correct for this, we must replace the quantiles of the Normal distribution with the quantiles of a distribution with slightly bigger tails: a ‘more uncertain’ distribution, called the t-distribution. This serves to correct for the extra uncertainty that we are bringing in by using our sample’s standard deviation <span class="math inline">\(s\)</span> instead of the true <span class="math inline">\(SE(\hat{\theta}_n)\)</span> of the sampling distribution:</p>
 <p><img src="DataScience_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
 <p>The t-distribution arises has a single parameter (called the ‘degrees of freedom’), and represents how much information we have about the shape of the sampling distribution. In our case, this parameter should be set to <span class="math inline">\(n-1\)</span> where <span class="math inline">\(n\)</span> is the size of our data set. The larger our dataset, the bigger this parameter, and the closer the t-distribution will become to a Normal distribution.</p>
 <p>Thus, to compute the <span class="math inline">\(95\%\)</span> confidence intervals when working with a real data set with a normally distributed estimator, we can use this formula:</p>
@@ -311,8 +317,11 @@ Recalling that the standard error (SE) is equal to the square root of the varian
 <p>We also need to be aware that we often don’t know whether the true expected value of our distribution is <em>a priori</em> lower or higher than the value stated by our null hypothesis. In that case, we need to look at the two tails of the sampling distribution, e.g. the probability mass to the left of the green line and to the right of the red line in the plot below:</p>
 <p><img src="DataScience_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
 <p>Annoyingly, to determine the “width” of the sampling distribution of the estimator, we need its standard error. This is generally unavailable, and is often replaced by the standard deviation <strong>of the data set</strong>, saled by the square root of the sample size: <span class="math inline">\(SE(\hat{\theta}) \approx s/\sqrt{n}\)</span>. When this happens, we can no longer use the Normal distribution: the use of the standard deviation as a “stand-in” for the standard error causes the sampling distribution to become wider, morphing into a t-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom:</p>
-<p><span class="math display">\[\frac{\hat{\theta} - \theta}{s/\sqrt{n}} \sim t_{n-1}\]</span></p>
+<p><span class="math display">\[\frac{\hat{\theta} - \theta_0}{s/\sqrt{n}} \sim t_{n-1}\]</span></p>
 <p>The above is called a <strong>t-statistic</strong>, and it follows a t-distribution. The t-distribution is a handy distribution when performing hypothesis testing, particularly because it arises whenever we use the standard deviation of the data as a replacement for the standard error.</p>
+<blockquote>
+<p>The t-statistic is an example of a ‘pivot statistic’: like other statistics, it can be a function of observations, but its key feature is that its probability distribution does not depend on the unknown parameters. You can be sure that the distribution of a t-statistic will always be the t-distribution with n-1 degrees of freedom, even if we don’t know the true expectation or the true variance of the sampling distribution of <span class="math inline">\(\hat{\theta}\)</span>.</p>
+</blockquote>
 <p>As before, a good rule of thumb is to use the above formula for performing hypothesis testing using the sample mean <span class="math inline">\(\bar{X}\)</span> as the estimator <span class="math inline">\(\hat{\theta}\)</span> if:</p>
 <ol style="list-style-type: decimal">
 <li><p>The data points <span class="math inline">\(X_1, X_2, ..., X_n\)</span> of your data set are known to come from a Normal distribution, so <span class="math inline">\(\bar{X}\)</span> is guaranteed to be Normally distributed, OR…</p></li>
@@ -321,7 +330,7 @@ Recalling that the standard error (SE) is equal to the square root of the varian
 <p><strong>Exercise</strong>: Create a single simulated data set of size 50, where each data point is drawn from a Normal distribution with expected value equal to 4 and standard deviation equal to 10. Let’s pretend like you don’t know the expected value from which you’re simuating. Using a P-value cutoff of <span class="math inline">\(5\%\)</span>, can you reject the null hypothesis that the expected value is equal to 5? The test will need to be <code>two.sided</code> as we don’t know whether we expect the true expected value to be larger than or smaller than 5 <em>a priori</em>.
 Hint: you can do this in two ways, which should yield exactly the same P-values:</p>
 <ol style="list-style-type: decimal">
-<li><p>computing a t-statistic and then using twice the CDF of a t-distribution with ‘n-1’ degrees of freedom, to obtain the symmetric 2-tailed P-values: ’2*pt()’, or…</p></li>
+<li><p>computing a t-statistic and then using twice the CDF of a t-distribution with ‘n-1’ degrees of freedom, to obtain the symmetric 2-tailed P-values: <code>2*pt()</code>, or…</p></li>
 <li><p>using the handy function <code>t.test()</code>. You’ll need to set the option <code>x</code> to be equal to your vector of data points, and the option <code>mu</code> to the particular hypothesis value you might want to test.</p></li>
 </ol>
 <p><strong>Exercise</strong>: Repeat the above exercise, but this time simulate a data set of size 500 instead. Using a P-value cutoff of <span class="math inline">\(5\%\)</span>, can you now reject the null hypothesis that the expected value is equal to 5?</p>
