@@ -6,7 +6,7 @@ Today, we'll perform a clustering of the iris dataset, using the K-means cluster
 
 We'll use the following libraries for clustering:
 
-```{r}
+```{r, message=FALSE}
 if (!require("cluster")) install.packages("cluster")
 if (!require("NbClust")) install.packages("NbClust")
 if (!require("tidyverse")) install.packages("tidyverse")

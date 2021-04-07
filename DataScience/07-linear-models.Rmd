@@ -3,7 +3,7 @@
 We describe linear models in this chapter. First we need to load some libraries (and install them if necessary).
 
 
-```{r}
+```{r, message=FALSE}
 if (!require("tidyverse")) install.packages("tidyverse") # Library for data analysis
 if (!require("stargazer")) install.packages("stargazer") # Library for producing pretty tables of estimates from linear models
 if (!require("devtools")) install.packages("devtools")

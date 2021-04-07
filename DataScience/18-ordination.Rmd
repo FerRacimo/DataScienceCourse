@@ -6,7 +6,7 @@ Today, we will work with the package vegan (useful for ordination techniques) an
 
 Let's begin by installing and loading the necessary libraries:
 
-```{r}
+```{r, message=FALSE}
 if (!require("vegan")) install.packages("vegan")
 if (!require("devtools")) install.packages("devtools")
 if (!require("ggplot2")) install.packages("ggplot2")
