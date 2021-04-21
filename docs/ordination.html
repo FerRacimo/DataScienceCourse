@@ -358,41 +358,50 @@ We can also plot the first two PCs, like we had done before in base R, but now c
 <p>Let’s perform NMDS ordination using the Bray-Curtis dissimilarity. Remember that, unlike PCA, NMDS requires us to specify the number of dimensions (k) a priori (the default in vegan is 2). It also performs a series of transformations on the data that are appropriate for ecological data (default: autotransform=TRUE). The trymax option ensures that the algorithm is started from different points (in our case, 50) to avoid local minima.</p>
 <div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="ordination.html#cb113-1" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(dune, <span class="at">k=</span><span class="dv">2</span>, <span class="at">autotransform =</span> <span class="cn">TRUE</span>, <span class="at">trymax=</span><span class="dv">50</span>, <span class="at">distance=</span><span class="st">&quot;bray&quot;</span>)</span></code></pre></div>
 <pre><code>## Run 0 stress 0.1192678 
-## Run 1 stress 0.119268 
-## ... Procrustes: rmse 0.000153419  max resid 0.0004751177 
+## Run 1 stress 0.1192679 
+## ... Procrustes: rmse 0.0001059286  max resid 0.0003187994 
 ## ... Similar to previous best
-## Run 2 stress 0.1183186 
+## Run 2 stress 0.1192683 
+## ... Procrustes: rmse 0.0003890342  max resid 0.001185795 
+## ... Similar to previous best
+## Run 3 stress 0.1192678 
 ## ... New best solution
-## ... Procrustes: rmse 0.02026929  max resid 0.06495216 
-## Run 3 stress 0.1183186 
-## ... Procrustes: rmse 4.021324e-05  max resid 0.0001234062 
+## ... Procrustes: rmse 3.236284e-05  max resid 9.385529e-05 
 ## ... Similar to previous best
-## Run 4 stress 0.119268 
-## Run 5 stress 0.1812945 
+## Run 4 stress 0.188966 
+## Run 5 stress 0.119268 
+## ... Procrustes: rmse 0.0001904652  max resid 0.0005754477 
+## ... Similar to previous best
 ## Run 6 stress 0.1183186 
 ## ... New best solution
-## ... Procrustes: rmse 2.581529e-06  max resid 8.10773e-06 
+## ... Procrustes: rmse 0.02028192  max resid 0.06504401 
+## Run 7 stress 0.1183186 
+## ... Procrustes: rmse 5.165354e-05  max resid 0.0001541586 
 ## ... Similar to previous best
-## Run 7 stress 0.1192678 
-## Run 8 stress 0.1183186 
-## ... Procrustes: rmse 2.981645e-05  max resid 9.51808e-05 
-## ... Similar to previous best
-## Run 9 stress 0.1183186 
-## ... Procrustes: rmse 1.458991e-05  max resid 4.688629e-05 
-## ... Similar to previous best
+## Run 8 stress 0.1192679 
+## Run 9 stress 0.1192678 
 ## Run 10 stress 0.1183186 
-## ... Procrustes: rmse 6.165772e-05  max resid 0.0001650884 
+## ... New best solution
+## ... Procrustes: rmse 8.445599e-06  max resid 2.154331e-05 
 ## ... Similar to previous best
-## Run 11 stress 0.1192679 
-## Run 12 stress 0.1809582 
-## Run 13 stress 0.119268 
-## Run 14 stress 0.2407564 
-## Run 15 stress 0.1192679 
-## Run 16 stress 0.1192678 
+## Run 11 stress 0.1183186 
+## ... Procrustes: rmse 1.035278e-05  max resid 2.827923e-05 
+## ... Similar to previous best
+## Run 12 stress 0.1183186 
+## ... Procrustes: rmse 1.115493e-05  max resid 3.592272e-05 
+## ... Similar to previous best
+## Run 13 stress 0.1183186 
+## ... Procrustes: rmse 8.209039e-06  max resid 1.66106e-05 
+## ... Similar to previous best
+## Run 14 stress 0.1192685 
+## Run 15 stress 0.1183186 
+## ... Procrustes: rmse 8.483861e-06  max resid 2.708275e-05 
+## ... Similar to previous best
+## Run 16 stress 0.1192679 
 ## Run 17 stress 0.1192679 
-## Run 18 stress 0.1192682 
-## Run 19 stress 0.1192678 
-## Run 20 stress 0.1192679 
+## Run 18 stress 0.1192684 
+## Run 19 stress 0.1889647 
+## Run 20 stress 0.1192682 
 ## *** Solution reached</code></pre>
 <p>As you can see, the func tion goes through a series of steps until convergence is reached. Let’s plot the results:</p>
 <div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="ordination.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
