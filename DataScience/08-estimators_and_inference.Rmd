@@ -256,7 +256,7 @@ Thus:
 
 $$\frac{\hat{\theta} - \theta_0}{\sqrt{\sigma^2/n}} \sim Normal(0, 1)$$
 
-However, the standard deviation $\sqrt{\sigma^2}$ is generally unavailable because we would only be able to know this if we knew the parameters of the distribution from which our data comes from. Instead, just as we did when computing confidence intervals, $\sqrt{\sigma^2}$ can be replaced by the standard deviation **of the data set at hand** (s), scaled by the square root of the sample size:
+This standardized version of the sample mean is called a **z-score** and follows a standard normal distribution. However, the standard deviation in the denominator ($\sqrt{\sigma^2}$) is generally unavailable because we would only be able to know this with certainty if we knew the parameters of the distribution from which our data comes from. Instead, just as we did when computing confidence intervals, $\sqrt{\sigma^2}$ can be replaced by the standard deviation **of the data set at hand** (s), scaled by the square root of the sample size:
 
 $$SE(\hat{\theta}) \approx s/\sqrt{n}$$
 

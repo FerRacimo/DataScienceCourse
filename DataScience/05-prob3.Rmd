@@ -2,13 +2,55 @@
 
 ## Discrete distributions
 
-Take a look at the help pages for `rpois` (and `dpois` and `ppois`), and for `rgeom` (and `dgeom` and `sample`). There is a whole world of R functions we can use to sample random values from probability distributions or obtain probabilities from them!  The `_pois` family of functions allow us to work with Poisson distributions, while the `_geom` family of functions allow us to work with Geometric distributions.
+We'll start by reviewing a few commonly used discrete probability distributions.
 
-Be careful with which type of function you use! For example, `rpois` serves to generate random samples from the Poisson distribution. In turn, `dpois` allow us to calculate the Poisson PMF (in other words, $P[X=k]$) for any value of k. Finally, `ppois` allow us to calculate the "distribution function", which is just a fancy way of saying $P[X \leq k]$ for any value of k.
+There is a whole world of R functions we can use to sample random values from probability distributions or obtain probabilities from them. Generally, each of these functions is referenced with an abbreviation (`pois` for Poisson, `geom` for Geometric, `binom` for the Binomial, etc.) preceded by the type of function we want, referenced by a letter:
 
-After having navigated these help pages, let's take a stab at answering some discrete probability questions:
+- `r`... for simulating from a distribution of interest
+- `d`... for obtaining the probability mass function $P[X=x]$ (or probability density function for continuous random variables)
+- `p`... for obtaining the cumulative distribution function, which is just a fancy way of saying $P[X \leq q]$ for any value of $q$.
+- `q`... for the quantile function of a distribution of interest
 
-**Excercise**: Let's assume the number of meteorites hitting a planet follows a Poisson distribution. If meteorites hit the planet at a rate of 5 per year, what is the probability that 3 or less meteorites will hit on a given year?
+For example, in the case of the Poisson distribution:
+
+- `rpois(n, lambda)` generates $n$ random samples from the Poisson distribution with rate `lambda`
+- `dpois(x, lambda)` allow us to calculate the Poisson probability mass function (PMF) $P[X=x] = \lambda^x e^{-\lambda}/x!$ for a given value of $x$ (an integer) and `lambda` ($\lambda$) - the rate of the Poisson process.
+- `ppois(q,lambda)` allow us to calculate the Poisson cumulative distribution function $P[X \leq q]$ for any value of $q$ (an integer) and rate `lambda` ($\lambda$).
+- `qpois(p, lambda)` provides the $p$th quantile of the Poisson PMF with rate `lambda`.
+
+The internet and the R help functions (e.g. `?rpois`) are your friends here. Use them whenever you're interested in understanding how to use these functions, and what types of inputs they require.
+
+
+### Poisson distribution
+
+Let's take a stab at answering some discrete probability questions using the Poisson distribution and the above mentioned functions.
+
+Recall that the Poisson distribution is used to model the number of events (or objects) that occur over a given period of time (or space), if these occur with a constant mean rate and independently of each other. It is generally applied to systems with a large number of possible events, each of which is rare.
+
+Some (simplified) examples include:
+
+- Number of rain droplets falling on a house roof
+
+- Number of meteorites hitting a planet over a given period of time
+
+- Number of buses arriving at a station over a given period of time
+
+- Number of trees in a given area of land
+
+- Number of fish in a given volume of water
+
+Here are plots of Poisson PMFs with different mean rates $\lambda$:
+
+```{r,eval=TRUE,echo=FALSE}
+par(mfrow=c(2,2))
+barplot(dpois(seq(0,20),0.1),names.arg=seq(0,20),ylab="probability",xlab="k",main="Rate = 0.1")
+barplot(dpois(seq(0,20),0.5),names.arg=seq(0,20),ylab="probability",xlab="k",main="Rate = 0.5")
+barplot(dpois(seq(0,20),1),names.arg=seq(0,20),ylab="probability",xlab="k",main="Rate = 1")
+barplot(dpois(seq(0,20),5),names.arg=seq(0,20),ylab="probability",xlab="k",main="Rate = 5")
+par(mfrow=c(1,1))
+```
+
+**Exercise**: Let's assume the number of trees on any squared kilometer of land follows a Poisson distribution. If trees occur at a mean rate of 5 per squared kilometer, what is the probability that **3 or less trees** will occur on a given squared kilometer?
 
 <!--
 ```{r disc1, exercise = TRUE}
@@ -20,7 +62,14 @@ ppois(3, lambda) # ppois gives P[X less than or equal to k]
 ```
 -->
 
-**Exercise**: Assuming the same rate as above, what is the probability that more than 10 meteorites hit on a given year?
+A nice property of the Poisson distribution is that if its rate $\lambda$ is given over a particular unit of time (or space), but our period or area of study is larger or smaller than that unit, we can simply multiply that rate by the extent of the corresponding period or area to get the rate of the Poisson distribution for that period or area:
+
+$$P[ x\ events\ in\ interval\ of\ length\ 1] =  \lambda^x e^{-\lambda}/x!$$
+
+$$P[ x\ events\ in\ interval\ of\ length\ t] =  (\lambda t)^x e^{-\lambda t}/x!$$
+
+
+**Exercise**: Given the same per-unit rate as the previous exercise, what is the probability that **more than 10 trees** will occur on area that is **3 squared kilometers** large?
 
 <!--
 ```{r disc2, exercise = TRUE}
@@ -28,67 +77,95 @@ ppois(3, lambda) # ppois gives P[X less than or equal to k]
 ```
 ```{r disc2-solution}
 lambda <- 5
-1 - ppois(10, lambda)
+interval <- 3
+1 - ppois(10, lambda*interval)
 ```
 -->
 
-**Exercise**: Each hour, 3 buses arrive at a station on average. Simulate a thousand 1-hour instances of this random process, assuming the number of buses per hour follows a Poisson distribution. Compute their sample mean and variance.
 
-<!--
-```{r disc3, exercise = TRUE}
+### Geometric distribution
 
+Another interesting distribution is the Geometric distribution. Recall that this distribution serves to model a sequence of trials, in which we are interested in computing the probability of a given number of failures, before we are succesful. The probability mass function depends on a single parameter, the per-trial probability of success, `p`. The probability I fail `k` times before I succeed is:
+
+$$P[X = k] = (1-p)^k p $$
+
+Here are plots of Geometric PMFs with different probabilities of success:
+
+```{r,eval=TRUE,echo=FALSE}
+par(mfrow=c(2,2))
+barplot(dgeom(seq(0,20),0.5),names.arg=seq(0,20),ylab="probability",xlab="# failures before a success",main="P[success]=0.5",ylim=c(0,1))
+barplot(dgeom(seq(0,20),0.7),names.arg=seq(0,20),ylab="probability",xlab="# failures before a success",main="P[success]=0.7",ylim=c(0,1))
+barplot(dgeom(seq(0,20),0.9),names.arg=seq(0,20),ylab="probability",xlab="# failures before a success",main="P[success]=0.9",ylim=c(0,1))
+barplot(dgeom(seq(0,20),0.1),names.arg=seq(0,20),ylab="probability",xlab="# failures before a success",main="P[success]=0.1",ylim=c(0,1))
+par(mfrow=c(1,1))
 ```
-```{r disc3-solution}
-lambda <- 3
-randvec <- rpois(1000,lambda) # We use rpois to generate random Poisson samples
-mean(randvec)
-var(randvec)
-```
--->
 
-**Exercise**: If I'm tossing a series of unbiased coins, what is the probability I get exactly 5 tails before I get a head?
+While the probability mass function always decreases for increasing number of failures, the rate of this decrease strongly depends on the probability of success in eahc trial. For example, if I have a loaded coin that has 90% of probability of giving heads, then I won't have to wait for long until I get heads (success). Looking at the bottom left panel in the figures above, I can see that it's actually most likely I will get heads on the first try.
+
+**Exercise**: I have a loaded coin that I use to trick people. Unlike normal coins, this coin results in heads 3 out of 4 times, on average.  I start tossing the coin, and wonder: what is the probability I get at least 2 tails before I get a head? And what is the probability I get exactly 2 tails before I get a head? Use the geometric cumulative distribution function `pgeom` and the probability mass function `dgeom`, respectively, to answer these questions.
 
 <!--
 ```{r disc4, exercise = TRUE}
 
 ```
 ```{r disc4-solution}
-prob <- 0.5
-dgeom(5,prob) # P[ exactly 5 tails before a head]
-```
--->
-
-**Exercise**: If I'm tossing a series of unbiased coins, what is the probability I get at least 5 tails before I get a head?
-
-<!--
-```{r disc5, exercise=TRUE}
-
-```
-```{r disc5-solution}
-prob <- 0.5
-# Probability of at least 5 tails before a head is equal 1 minus the probability of 4 or less tails before a head.
-1 - pgeom(4,prob)
-```
--->
-
-Finally, we can use the function `sample()` to simulate from a discrete uniform distribution. As input, this requires a vector containing the possible values that we can sample from (for example, the numbers 1, 2, 3, 4, 5 and 6 in a six-sided dice), and the number of trials we want to perform. Make sure to set the option `replace` to `TRUE`, so that we can sample with replacement from the specified vector.
-
-**Exercise**: Using the `sample()` function, throw a fair 16-sided dice a thousand times and compute the sample mean of your results.
-
-<!--
-```{r disc6, exercise=TRUE}
-
-```
-```{r disc6-solution}
-possiblevalues <- seq(1,16)
-ntrials <- 1000
-results <- sample(possiblevalues,ntrials,replace=TRUE)
-mean(results)
+prob <- 3/4
+1 - pgeom(1,prob) # P[ at least 2 tails before a head]
+dgeom(2,prob) # P[ exactly 2 tails before a head]
 ```
 -->
 
 
-## The Normal distribuiton and the Central Limit Theorem
+### Sampling from arbitrary distributions
+
+What if we want to create our own probability distribution? In R, we can, using the funciton `sample()`. Here's an example of a probability distribution I just decided to create, which serves to model a six-sided dice roll, where each side has equal probability (1/6) of being obtained:
+
+```{r}
+sides=c(1,2,3,4,5,6) # vector of elements
+probabilities=c(1/6,1/6,1/6,1/6,1/6,1/6) # vector of probabilities for each element
+sample(sides,10,prob=probabilities,replace=TRUE) # roll a dice 10 times
+```
+
+The option `replace=TRUE` ensures we can sample **with replacement** from the `sides` vector. Because each element has equal probability of occurring, the above is also calle a **discrete uniform distribution**. This is not necessary, however. Here's an example in which we roll a loaded dice where the side `6` is biased to appear more frequently than the others:
+
+```{r}
+sides=c(1,2,3,4,5,6) # vector of elements
+weights=c(1,1,1,1,1,4) # vector of unnormalized weights for each element, with the element '6' being more favored than the others
+probabilities = weights / sum(weights) # to create a probability vector, we ensure all the weights sum up to 1
+sample(sides,10,prob=probabilities,replace=TRUE) # roll a loaded dice 10 times
+```
+
+Let's put this function into practice.
+
+**Exercise**: You're a dog breeder who's been given the following table of litter size frequencies, obtained from 10,000 previously recorded litter sizes:
+
+```{r,results='asis'}
+library(knitr)
+dogprobs <- round(c(dpois(seq(1,9),4)),2)
+dogprobs <- c(dogprobs, 1-sum(dogprobs))
+littertab <- cbind(c(1,2,3,4,5,6,7,8,9,10),dogprobs)
+colnames(littertab) <- c("litter_size","frequency")
+kable(littertab,caption="Dog litter size frequencies")
+```
+
+In this exercise, we'll assume that a litter size of 11 or higher is effectively zero. Simulate 100 new litter sizes using the above table as an approximation to the true distribution of litter sizes, by using the recorded frequencies as probabilities.
+
+a) Compute the sample mean, sample variance and create a histogram (with the function `hist()`) of the simulated litter sizes.
+
+b) Estimate the probability mass function of your simulated samples from part (a), using the help of the function `table()`. This should be very similar to the original probabilities that you simulated from.
+
+```{r, eval=FALSE, echo=FALSE}
+litters <- seq(1,10)
+probabilities <- c(0.07,0.15,0.2,0.2,0.16,0.1,0.06,0.03,0.01,0.02)
+sims <- sample(litters,100,prob=probabilities,replace=TRUE)
+hist(sims)
+mean(sims)
+var(sims)
+table(sims)/sum(sims)
+```
+
+
+## The Normal distribution and the Central Limit Theorem
 
 The Central Limit Theorem states that if $X_1, X_2, ..., X_m$ are random samples from a distribution (any distribution) with mean $\mu$ and finite variance $\sigma^2$, and the sample mean is $\bar{X}$, then, as m grows large, $\bar{X}$ converges in distribution to a Normal distribution with mean $\mu$ and standard deviation $\sqrt{\sigma^2 /m}$.
 
@@ -110,13 +187,13 @@ The CLT theorem is a statement about multiple means from multiple samples, so le
 
 ```{r}
 allmeans <- sapply(seq(1,1000), function(i){mean(rbinom(m,n,p))})
-hist(allmeans,freq=FALSE)
+hist(allmeans,freq=FALSE,main="Histogram of sample means")
 ```
 
 The CLT states that this distribution should be very close to a Normal distribution with mean $\mu = np = 5*0.7 = 3.5$ and $\sigma^2 = (np(1-p))/m = 5*0.7*0.3/100 = 0.0105$. Let's verify that:
 
 ```{r}
-hist(allmeans,freq=FALSE) # Histogram of sample means
+hist(allmeans,freq=FALSE,main="Histogram of sample means") # Histogram of sample means
 mu <- n*p # mean of Normal distribution under the CLT
 var <- n*p*(1-p)/m # variance of Normal distribution under the CLT
 sd <- sqrt(var) # standard deviation of Normal distribution under the CLT

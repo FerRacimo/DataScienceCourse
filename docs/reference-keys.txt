@@ -1,3 +1,4 @@
+tab:unnamed-chunk-21
 introduction
 intro
 prob1
@@ -10,7 +11,10 @@ the-variance
 probability-part-2
 probability-catch-up
 discrete-distributions
-the-normal-distribuiton-and-the-central-limit-theorem
+poisson-distribution
+geometric-distribution
+sampling-from-arbitrary-distributions
+the-normal-distribution-and-the-central-limit-theorem
 the-exponential-distribution
 linear-models
 fitting-a-simple-linear-regression
