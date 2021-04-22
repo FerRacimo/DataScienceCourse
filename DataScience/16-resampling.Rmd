@@ -50,11 +50,11 @@ estimate <- lm(logBrain ~ logBody, data=allisontab)$coeff[2]
 estimate
 ```
 
-**Exercise**: try estimating the same parameter from a series of 100 bootstrapped samples of our original data, and collecting each of the bootstrapped parameters into a vector called "bootsvec". Hint: you might want to use a for loop or a vectorized sapply() function.
+**Exercise**: try estimating the same parameter from a series of 1000 bootstrapped samples of our original data, and collecting each of the bootstrapped parameters into a vector called "bootsvec". Hint: you might want to use a for loop or a vectorized sapply() function.
 
 ```{r, echo=FALSE}
 bootsvec <- c()
-for(i in seq(1,100)){
+for(i in seq(1,1000)){
   boots <- bootstrap(allisontab)
   bootsest <- lm(logBrain ~ logBody, data=boots)$coeff[2]
   bootsvec <- c(bootsvec,bootsest)
@@ -74,8 +74,32 @@ We are now ready to obtain confidence intervals (CIs) of our original parameter 
 a) Standard error approach - assumes ECDF is normal \
 b) Percentile approach - assumes ECDF is symmetric and median-unbiased \
 c) Pivotal approach - most general, makes very few assumptions. \
-These three approaches generally result in very similar CIs, but they differ (slightly) in methodology. The most widely used method is the pivotal approach, though the motivation for its construction is a bit long-winded. In the interest of time, we'll demonstrate how to run the first two approaches in R. We'll leave the third approach as an exercise you can do at home (read Box 8-1 in the Edge book for an explanation of it, and a code example).
+These three approaches generally result in very similar CIs, but they differ (slightly) in methodology. In the interest of time, we'll demonstrate how to run the first two approaches in R. We'll leave the third approach as an exercise you can do at home (read Box 8-1 in the Edge book for an explanation of it, and a code example).
 
+The standard approach assumes that the bootstrap distribution is a Normal distribution. Recall from the lecture on properties of estimators that we can obtain CIs from a Normally-distributed summary statistic $\theta$ by using the standard error of the statistic: $SE(\hat{\theta}_n)$:
+
+$$(\hat{\theta} - SE(\hat{\theta}_n)q_{97.5\%}, \hat{\theta} + SE(\hat{\theta}_n)q_{97.5\%})$$
+Where $q_{97.5\%}$ is a quantile from a standard N(0,1) Normal distribution, and $SE(\hat{\theta}_n)$ is the standard error (the standard deviation of our estimator). The standard error approach to obtain boostrap confidence intervals proceeds by replacing the standard error $SE(\hat{\theta}_n)$ with the standard deviation of the bootstrap distribution as a stand-in for it. Let's call this last value $SE_b(\hat{\theta}_n)$. Then:
+
+$$(\hat{\theta} - SE_b(\hat{\theta}_n)q_{97.5\%}, \hat{\theta} + SE_b(\hat{\theta}_n)q_{97.5\%})$$
+In R, we can thus obtain the CI around the mean as follows:
+
+```{r}
+# Let bootsvec be our vector of boostrapped parameters from the previous exercise
+bootsmean <- mean(bootsvec)
+SEb <- sd(bootsvec)
+NormalQ <- qnorm(0.975,mean=0, sd=1)
+CIs <- c( bootsmean - SEb*NormalQ, bootsmean + SEb*NormalQ )
+CIs
+```
+
+The percentile approach involves obtaining percentiles of the bootstrap distributions. If we are interested in a 95% CI, for example, we just look for the values of the distribution that correspond to the 2.5% percentile and the 97.5% percentile, so that the central boostrap distribution mass between them adds up to 95%.
+
+```{r}
+# Let bootsvec be our vector of boostrapped parameters from the previous exercise
+CIs <- quantile(bootsvec, c(0.025,0.975))
+CIs
+```
 
 ## Permutation test
 
