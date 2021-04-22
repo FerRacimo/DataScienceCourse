@@ -154,7 +154,7 @@ colnames(newiris) <- c("PC1","PC2","PC3","PC4","isvirginica")
 head(newiris)
 ```
 
-**Exercise**: use the `glm()` function on the newly created `newiris` data-frame, to perform a logistic regression for the probability that an individual belongs to the species virginica, using the first principal component (PC1 and PC2) as explanatory variables. Do both components have fitted effects that are significantly different from 0?  Do these results make sense in light of the PCA biplots created in the sections above? 
+**Exercise**: use the `glm()` function on the newly created `newiris` data-frame, to perform a logistic regression for the probability that an individual belongs to the species virginica, using the first two principal components (PC1 and PC2) as explanatory variables. Do both components have fitted effects that are significantly different from 0?  Do these results make sense in light of the PCA biplots created in the sections above? 
 
 **Exercise**: Compare the logistic model to another logistic model, this time using only PC1 as the explanatory variable. Which model has the highest AIC score?
 
@@ -168,6 +168,7 @@ head(newiris)
 We'll now perform non-metric multidimensional scaling. Let's first take a look at the raw data we will use. This is a data matrix containing information about dune meadow vegetation. There are 30 species and 20 sites. Each cell corresponds to the number of specimens of a particular species that has been observed at a particular site (Jongman et al. 1987). As one can see, there are many sites where some species are completely absent (the cell value equals 0):
 
 ```{r}
+require(vegan)
 data(dune)
 head(dune)
 ```
@@ -180,7 +181,7 @@ Let's perform NMDS ordination using the Bray-Curtis dissimilarity. Remember that
 ord <- metaMDS(dune, k=2, autotransform = TRUE, trymax=50, distance="bray")
 ```
 
-As you can see, the func tion goes through a series of steps until convergence is reached. Let's plot the results:
+As you can see, the function goes through a series of steps until convergence is reached. Let's plot the results:
 
 ```{r}
 par(mfrow=c(1,2))
