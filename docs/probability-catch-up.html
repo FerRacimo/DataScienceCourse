@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-04-22" />
+<meta name="date" content="2021-04-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -169,7 +169,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3" data-path="properties-of-estimators-and-hypothesis-testing.html"><a href="properties-of-estimators-and-hypothesis-testing.html#hypothesis-testing"><i class="fa fa-check"></i><b>7.3</b> Hypothesis testing</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="frequentist-inference.html"><a href="frequentist-inference.html"><i class="fa fa-check"></i><b>8</b> Frequentist inference</a></li>
-<li class="chapter" data-level="9" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>9</b> Bayesian Inference</a></li>
+<li class="chapter" data-level="9" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>9</b> Bayesian Inference</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#using-bayes-rule-covid-19"><i class="fa fa-check"></i><b>9.1</b> Using Bayes’ rule: Covid-19</a></li>
+<li class="chapter" data-level="9.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#first-foray-into-bayesian-inference"><i class="fa fa-check"></i><b>9.2</b> First foray into Bayesian inference</a></li>
+<li class="chapter" data-level="9.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#conjugate-prior-rejection-sampling-and-mcmc"><i class="fa fa-check"></i><b>9.3</b> Conjugate prior, Rejection sampling and MCMC*</a></li>
+<li class="chapter" data-level="9.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#bayesian-point-estimates-and-credible-intervals"><i class="fa fa-check"></i><b>9.4</b> Bayesian point estimates and credible intervals</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#point-estimates"><i class="fa fa-check"></i><b>9.4.1</b> Point estimates</a></li>
+<li class="chapter" data-level="9.4.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#credible-intervals"><i class="fa fa-check"></i><b>9.4.2</b> Credible intervals</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="10" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>10</b> Classification</a></li>
 <li class="chapter" data-level="11" data-path="model-assessment.html"><a href="model-assessment.html"><i class="fa fa-check"></i><b>11</b> Model Assessment</a></li>
 <li class="chapter" data-level="12" data-path="resampling.html"><a href="resampling.html"><i class="fa fa-check"></i><b>12</b> Resampling</a>
@@ -257,64 +267,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Here are plots of Poisson PMFs with different mean rates <span class="math inline">\(\lambda\)</span>:</p>
 <p><img src="DataScience_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p><strong>Exercise</strong>: Let’s assume the number of trees on any squared kilometer of land follows a Poisson distribution. If trees occur at a mean rate of 5 per squared kilometer, what is the probability that <strong>3 or less trees</strong> will occur on a given squared kilometer?</p>
-<!--
-
-
-```r
-lambda <- 5
-ppois(3, lambda) # ppois gives P[X less than or equal to k]
-```
-
-```
-## [1] 0.2650259
-```
--->
 <p>A nice property of the Poisson distribution is that if its rate <span class="math inline">\(\lambda\)</span> is given over a particular unit of time (or space), but our period or area of study is larger or smaller than that unit, we can simply multiply that rate by the extent of the corresponding period or area to get the rate of the Poisson distribution for that period or area:</p>
 <p><span class="math display">\[P[ x\ events\ in\ interval\ of\ length\ 1] =  \lambda^x e^{-\lambda}/x!\]</span></p>
 <p><span class="math display">\[P[ x\ events\ in\ interval\ of\ length\ t] =  (\lambda t)^x e^{-\lambda t}/x!\]</span></p>
 <p><strong>Exercise</strong>: Given the same per-unit rate as the previous exercise, what is the probability that <strong>more than 10 trees</strong> will occur on area that is <strong>3 squared kilometers</strong> large?</p>
-<!--
-
-
-```r
-lambda <- 5
-interval <- 3
-1 - ppois(10, lambda*interval)
-```
-
-```
-## [1] 0.8815356
-```
--->
 </div>
 <div id="geometric-distribution" class="section level3" number="5.1.2">
 <h3><span class="header-section-number">5.1.2</span> Geometric distribution</h3>
 <p>Another interesting distribution is the Geometric distribution. Recall that this distribution serves to model a sequence of trials, in which we are interested in computing the probability of a given number of failures, before we are succesful. The probability mass function depends on a single parameter, the per-trial probability of success, <code>p</code>. The probability I fail <code>k</code> times before I succeed is:</p>
 <p><span class="math display">\[P[X = k] = (1-p)^k p \]</span></p>
 <p>Here are plots of Geometric PMFs with different probabilities of success:</p>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <p>While the probability mass function always decreases for increasing number of failures, the rate of this decrease strongly depends on the probability of success in eahc trial. For example, if I have a loaded coin that has 90% of probability of giving heads, then I won’t have to wait for long until I get heads (success). Looking at the bottom left panel in the figures above, I can see that it’s actually most likely I will get heads on the first try.</p>
 <p><strong>Exercise</strong>: I have a loaded coin that I use to trick people. Unlike normal coins, this coin results in heads 3 out of 4 times, on average. I start tossing the coin, and wonder: what is the probability I get at least 2 tails before I get a head? And what is the probability I get exactly 2 tails before I get a head? Use the geometric cumulative distribution function <code>pgeom</code> and the probability mass function <code>dgeom</code>, respectively, to answer these questions.</p>
-<!--
-
-
-```r
-prob <- 3/4
-1 - pgeom(1,prob) # P[ at least 2 tails before a head]
-```
-
-```
-## [1] 0.0625
-```
-
-```r
-dgeom(2,prob) # P[ exactly 2 tails before a head]
-```
-
-```
-## [1] 0.046875
-```
--->
 </div>
 <div id="sampling-from-arbitrary-distributions" class="section level3" number="5.1.3">
 <h3><span class="header-section-number">5.1.3</span> Sampling from arbitrary distributions</h3>
@@ -322,13 +287,13 @@ dgeom(2,prob) # P[ exactly 2 tails before a head]
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="probability-catch-up.html#cb36-1" aria-hidden="true" tabindex="-1"></a>sides<span class="ot">=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>) <span class="co"># vector of elements</span></span>
 <span id="cb36-2"><a href="probability-catch-up.html#cb36-2" aria-hidden="true" tabindex="-1"></a>probabilities<span class="ot">=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">6</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">6</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">6</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">6</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">6</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">6</span>) <span class="co"># vector of probabilities for each element</span></span>
 <span id="cb36-3"><a href="probability-catch-up.html#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(sides,<span class="dv">10</span>,<span class="at">prob=</span>probabilities,<span class="at">replace=</span><span class="cn">TRUE</span>) <span class="co"># roll a dice 10 times</span></span></code></pre></div>
-<pre><code>##  [1] 5 6 5 6 2 4 6 6 2 6</code></pre>
+<pre><code>##  [1] 6 3 1 6 3 2 4 4 6 1</code></pre>
 <p>The option <code>replace=TRUE</code> ensures we can sample <strong>with replacement</strong> from the <code>sides</code> vector. Because each element has equal probability of occurring, the above is also calle a <strong>discrete uniform distribution</strong>. This is not necessary, however. Here’s an example in which we roll a loaded dice where the side <code>6</code> is biased to appear more frequently than the others:</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="probability-catch-up.html#cb38-1" aria-hidden="true" tabindex="-1"></a>sides<span class="ot">=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>) <span class="co"># vector of elements</span></span>
 <span id="cb38-2"><a href="probability-catch-up.html#cb38-2" aria-hidden="true" tabindex="-1"></a>weights<span class="ot">=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">4</span>) <span class="co"># vector of unnormalized weights for each element, with the element &#39;6&#39; being more favored than the others</span></span>
 <span id="cb38-3"><a href="probability-catch-up.html#cb38-3" aria-hidden="true" tabindex="-1"></a>probabilities <span class="ot">=</span> weights <span class="sc">/</span> <span class="fu">sum</span>(weights) <span class="co"># to create a probability vector, we ensure all the weights sum up to 1</span></span>
 <span id="cb38-4"><a href="probability-catch-up.html#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(sides,<span class="dv">10</span>,<span class="at">prob=</span>probabilities,<span class="at">replace=</span><span class="cn">TRUE</span>) <span class="co"># roll a loaded dice 10 times</span></span></code></pre></div>
-<pre><code>##  [1] 3 2 5 3 3 6 6 1 6 6</code></pre>
+<pre><code>##  [1] 3 6 6 6 6 6 5 2 1 5</code></pre>
 <p>Let’s put this function into practice.</p>
 <p><strong>Exercise</strong>: You’re a dog breeder who’s been given the following table of litter size frequencies, obtained from 10,000 previously recorded litter sizes:</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="probability-catch-up.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
@@ -338,7 +303,7 @@ dgeom(2,prob) # P[ exactly 2 tails before a head]
 <span id="cb40-5"><a href="probability-catch-up.html#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(littertab) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;litter_size&quot;</span>,<span class="st">&quot;frequency&quot;</span>)</span>
 <span id="cb40-6"><a href="probability-catch-up.html#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(littertab,<span class="at">caption=</span><span class="st">&quot;Dog litter size frequencies&quot;</span>)</span></code></pre></div>
 <table>
-<caption><span id="tab:unnamed-chunk-21">Table 5.1: </span>Dog litter size frequencies</caption>
+<caption><span id="tab:unnamed-chunk-24">Table 5.1: </span>Dog litter size frequencies</caption>
 <thead>
 <tr class="header">
 <th align="right">litter_size</th>
@@ -388,7 +353,7 @@ dgeom(2,prob) # P[ exactly 2 tails before a head]
 </tr>
 </tbody>
 </table>
-<p>In this exercise, we’ll assume that a litter size of 11 or higher is effectively zero. Simulate 100 new litter sizes using the above table as an approximation to the true distribution of litter sizes, by using the recorded frequencies as probabilities.</p>
+<p>In this exercise, we’ll assume that the probability of a litter size of 11 or higher is effectively zero. Simulate 100 new litter sizes using the above table as an approximation to the true distribution of litter sizes, by using the recorded frequencies as probabilities.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Compute the sample mean, sample variance and create a histogram (with the function <code>hist()</code>) of the simulated litter sizes.</p></li>
 <li><p>Estimate the probability mass function of your simulated samples from part (a), using the help of the function <code>table()</code>. This should be very similar to the original probabilities that you simulated from.</p></li>
@@ -409,14 +374,14 @@ dgeom(2,prob) # P[ exactly 2 tails before a head]
 <p>The CLT theorem is a statement about multiple means from multiple samples, so let’s repeat the above exercise 1,000 times:</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="probability-catch-up.html#cb42-1" aria-hidden="true" tabindex="-1"></a>allmeans <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">1000</span>), <span class="cf">function</span>(i){<span class="fu">mean</span>(<span class="fu">rbinom</span>(m,n,p))})</span>
 <span id="cb42-2"><a href="probability-catch-up.html#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(allmeans,<span class="at">freq=</span><span class="cn">FALSE</span>,<span class="at">main=</span><span class="st">&quot;Histogram of sample means&quot;</span>)</span></code></pre></div>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 <p>The CLT states that this distribution should be very close to a Normal distribution with mean <span class="math inline">\(\mu = np = 5*0.7 = 3.5\)</span> and <span class="math inline">\(\sigma^2 = (np(1-p))/m = 5*0.7*0.3/100 = 0.0105\)</span>. Let’s verify that:</p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="probability-catch-up.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(allmeans,<span class="at">freq=</span><span class="cn">FALSE</span>,<span class="at">main=</span><span class="st">&quot;Histogram of sample means&quot;</span>) <span class="co"># Histogram of sample means</span></span>
 <span id="cb43-2"><a href="probability-catch-up.html#cb43-2" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> n<span class="sc">*</span>p <span class="co"># mean of Normal distribution under the CLT</span></span>
 <span id="cb43-3"><a href="probability-catch-up.html#cb43-3" aria-hidden="true" tabindex="-1"></a>var <span class="ot">&lt;-</span> n<span class="sc">*</span>p<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">/</span>m <span class="co"># variance of Normal distribution under the CLT</span></span>
 <span id="cb43-4"><a href="probability-catch-up.html#cb43-4" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(var) <span class="co"># standard deviation of Normal distribution under the CLT</span></span>
 <span id="cb43-5"><a href="probability-catch-up.html#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x,<span class="at">mean=</span>mu,<span class="at">sd=</span>sd),<span class="at">from=</span><span class="sc">-</span><span class="dv">5</span>,<span class="at">to=</span><span class="dv">5</span>,<span class="at">n=</span><span class="dv">5000</span>,<span class="at">add=</span><span class="cn">TRUE</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>) <span class="co"># Normal distribution</span></span></code></pre></div>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 <p><strong>Exercise</strong>: Repeat the exercise above but instead of a binomial
 distribution, use a Poisson distribution with parameter <span class="math inline">\(\lambda=5\)</span> (considering what the mean and variance of the corresponding Normal distribution should be).</p>
 <p><strong>Exercise</strong>: Repeat the exercise above but instead of a binomial distribution, use a Geometric distribution with parameter <span class="math inline">\(p=0.8\)</span> (considering what the mean and variance of the corresponding Normal distribution should be).</p>

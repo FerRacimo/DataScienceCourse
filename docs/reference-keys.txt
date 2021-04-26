@@ -1,4 +1,4 @@
-tab:unnamed-chunk-21
+tab:unnamed-chunk-24
 introduction
 intro
 prob1
@@ -26,6 +26,12 @@ obtaining-confidence-intervals
 hypothesis-testing
 frequentist-inference
 bayesian-inference
+using-bayes-rule-covid-19
+first-foray-into-bayesian-inference
+conjugate-prior-rejection-sampling-and-mcmc
+bayesian-point-estimates-and-credible-intervals
+point-estimates
+credible-intervals
 classification
 model-assessment
 resampling
@@ -49,20 +55,3 @@ fitting-a-simple-linear-regression-1
 interpreting-a-simple-linear-regression-1
 simulating-data-from-a-linear-model-1
 hypothesis-testing-and-permutation-testing
-<<<<<<< HEAD
-=======
-optional-a-multivariate-linear-regression
-interactions
-anova
-working-with-tidymodels
-hypothesis-testing-1
-using-bayes-rule-covid-19
-obtaining-confidence-intervals-1
-hypothesis-testing-2
-first-foray-into-bayesian-inference
-putting-it-all-together
-conjugate-prior-rejection-sampling-and-mcmc
-bayesian-point-estimates-and-credible-intervals
-point-estimates
-credible-intervals
->>>>>>> cc57488052695f99fe12db79d39cb489ec5d79be

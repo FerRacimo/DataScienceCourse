@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-04-22" />
+<meta name="date" content="2021-04-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -169,7 +169,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3" data-path="properties-of-estimators-and-hypothesis-testing.html"><a href="properties-of-estimators-and-hypothesis-testing.html#hypothesis-testing"><i class="fa fa-check"></i><b>7.3</b> Hypothesis testing</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="frequentist-inference.html"><a href="frequentist-inference.html"><i class="fa fa-check"></i><b>8</b> Frequentist inference</a></li>
-<li class="chapter" data-level="9" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>9</b> Bayesian Inference</a></li>
+<li class="chapter" data-level="9" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>9</b> Bayesian Inference</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#using-bayes-rule-covid-19"><i class="fa fa-check"></i><b>9.1</b> Using Bayes’ rule: Covid-19</a></li>
+<li class="chapter" data-level="9.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#first-foray-into-bayesian-inference"><i class="fa fa-check"></i><b>9.2</b> First foray into Bayesian inference</a></li>
+<li class="chapter" data-level="9.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#conjugate-prior-rejection-sampling-and-mcmc"><i class="fa fa-check"></i><b>9.3</b> Conjugate prior, Rejection sampling and MCMC*</a></li>
+<li class="chapter" data-level="9.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#bayesian-point-estimates-and-credible-intervals"><i class="fa fa-check"></i><b>9.4</b> Bayesian point estimates and credible intervals</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#point-estimates"><i class="fa fa-check"></i><b>9.4.1</b> Point estimates</a></li>
+<li class="chapter" data-level="9.4.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#credible-intervals"><i class="fa fa-check"></i><b>9.4.2</b> Credible intervals</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="10" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>10</b> Classification</a></li>
 <li class="chapter" data-level="11" data-path="model-assessment.html"><a href="model-assessment.html"><i class="fa fa-check"></i><b>11</b> Model Assessment</a></li>
 <li class="chapter" data-level="12" data-path="resampling.html"><a href="resampling.html"><i class="fa fa-check"></i><b>12</b> Resampling</a>
@@ -250,7 +260,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Let’s see what happens when we run this function on our data.</p>
 <div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="resampling.html#cb74-1" aria-hidden="true" tabindex="-1"></a>boots <span class="ot">&lt;-</span> <span class="fu">bootstrap</span>(allisontab)</span>
 <span id="cb74-2"><a href="resampling.html#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boots<span class="sc">$</span>logBrain,boots<span class="sc">$</span>logBody)</span></code></pre></div>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
 <p>Repeat the above command lines multiple times. What happens?</p>
 <p>Let’s estimate a parameter: the slope coefficient in a linear regression of log brain weight on log body weight:</p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="resampling.html#cb75-1" aria-hidden="true" tabindex="-1"></a>estimate <span class="ot">&lt;-</span> <span class="fu">lm</span>(logBrain <span class="sc">~</span> logBody, <span class="at">data=</span>allisontab)<span class="sc">$</span>coeff[<span class="dv">2</span>]</span>
@@ -261,7 +271,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Let’s plot the ecdf of all our estimates, using the function ecdf().</p>
 <div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="resampling.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ecdf</span>(bootsvec))</span>
 <span id="cb77-2"><a href="resampling.html#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>estimate,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-72-1.png" width="672" /></p>
 <p>We are now ready to obtain confidence intervals (CIs) of our original parameter estimate, using our bootstrapped distribution. There are multiple ways to obtain CIs from a bootstrapped distribution. Some of these assume that the ECDF has particular properties, while others are more generally applicable:<br />
 a) Standard error approach - assumes ECDF is normal<br />
 b) Percentile approach - assumes ECDF is symmetric and median-unbiased<br />
@@ -278,13 +288,13 @@ In R, we can thus obtain the CI around the mean as follows:</p>
 <span id="cb78-4"><a href="resampling.html#cb78-4" aria-hidden="true" tabindex="-1"></a>NormalQ <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>,<span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
 <span id="cb78-5"><a href="resampling.html#cb78-5" aria-hidden="true" tabindex="-1"></a>CIs <span class="ot">&lt;-</span> <span class="fu">c</span>( bootsmean <span class="sc">-</span> SEb<span class="sc">*</span>NormalQ, bootsmean <span class="sc">+</span> SEb<span class="sc">*</span>NormalQ )</span>
 <span id="cb78-6"><a href="resampling.html#cb78-6" aria-hidden="true" tabindex="-1"></a>CIs</span></code></pre></div>
-<pre><code>## [1] 0.7087542 0.8085173</code></pre>
+<pre><code>## [1] 0.7115926 0.8072513</code></pre>
 <p>The percentile approach involves obtaining percentiles of the bootstrap distributions. If we are interested in a 95% CI, for example, we just look for the values of the distribution that correspond to the 2.5% percentile and the 97.5% percentile, so that the central boostrap distribution mass between them adds up to 95%.</p>
 <div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="resampling.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let bootsvec be our vector of boostrapped parameters from the previous exercise</span></span>
 <span id="cb80-2"><a href="resampling.html#cb80-2" aria-hidden="true" tabindex="-1"></a>CIs <span class="ot">&lt;-</span> <span class="fu">quantile</span>(bootsvec, <span class="fu">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>))</span>
 <span id="cb80-3"><a href="resampling.html#cb80-3" aria-hidden="true" tabindex="-1"></a>CIs</span></code></pre></div>
 <pre><code>##      2.5%     97.5% 
-## 0.7107537 0.8130854</code></pre>
+## 0.7152611 0.8095215</code></pre>
 </div>
 <div id="permutation-test" class="section level2" number="12.2">
 <h2><span class="header-section-number">12.2</span> Permutation test</h2>
@@ -321,11 +331,11 @@ In R, we can thus obtain the CI around the mean as follows:</p>
 <p>Now we can obtain a permuted version of our original data, and compute the slope estimate on this dataset instead:</p>
 <div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="resampling.html#cb85-1" aria-hidden="true" tabindex="-1"></a>permuted <span class="ot">&lt;-</span> <span class="fu">permute</span>(allisontab, <span class="st">&quot;logBrain&quot;</span>)</span>
 <span id="cb85-2"><a href="resampling.html#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(permuted<span class="sc">$</span>logBody,permuted<span class="sc">$</span>logBrain)</span></code></pre></div>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-74-1.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-77-1.png" width="672" /></p>
 <div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="resampling.html#cb86-1" aria-hidden="true" tabindex="-1"></a>permest <span class="ot">&lt;-</span> <span class="fu">lm</span>(logBrain <span class="sc">~</span> logBody, <span class="at">data=</span>permuted)<span class="sc">$</span>coeff[<span class="dv">2</span>]</span>
 <span id="cb86-2"><a href="resampling.html#cb86-2" aria-hidden="true" tabindex="-1"></a>permest</span></code></pre></div>
-<pre><code>##    logBody 
-## 0.05854274</code></pre>
+<pre><code>## logBody 
+## 0.28064</code></pre>
 <p><strong>Exercise</strong>: try estimating the same parameter from a series of 100 permuted versions of our original data, and collecting each of the permuted parameters into a vector called “permvec.”</p>
 <p>We now have a distribution of the parameter estimate under the assumption that there is no relationship between these two variables:</p>
 <p><strong>Exercise</strong>: obtain an empirical one-tailed P-value from this distribution by counting how many of the permuted samples are as large as our original estimate, and dividing by the total number of permuted samples we have.</p>
