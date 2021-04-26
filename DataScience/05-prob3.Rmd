@@ -52,15 +52,10 @@ par(mfrow=c(1,1))
 
 **Exercise**: Let's assume the number of trees on any squared kilometer of land follows a Poisson distribution. If trees occur at a mean rate of 5 per squared kilometer, what is the probability that **3 or less trees** will occur on a given squared kilometer?
 
-<!--
-```{r disc1, exercise = TRUE}
-
-```
-```{r disc1-solution}
+```{r, eval=FALSE, echo=FALSE}
 lambda <- 5
 ppois(3, lambda) # ppois gives P[X less than or equal to k]
 ```
--->
 
 A nice property of the Poisson distribution is that if its rate $\lambda$ is given over a particular unit of time (or space), but our period or area of study is larger or smaller than that unit, we can simply multiply that rate by the extent of the corresponding period or area to get the rate of the Poisson distribution for that period or area:
 
@@ -68,19 +63,14 @@ $$P[ x\ events\ in\ interval\ of\ length\ 1] =  \lambda^x e^{-\lambda}/x!$$
 
 $$P[ x\ events\ in\ interval\ of\ length\ t] =  (\lambda t)^x e^{-\lambda t}/x!$$
 
-
 **Exercise**: Given the same per-unit rate as the previous exercise, what is the probability that **more than 10 trees** will occur on area that is **3 squared kilometers** large?
 
-<!--
-```{r disc2, exercise = TRUE}
-
-```
-```{r disc2-solution}
+```{r, eval=FALSE, echo=FALSE}
 lambda <- 5
 interval <- 3
 1 - ppois(10, lambda*interval)
 ```
--->
+
 
 
 ### Geometric distribution
@@ -104,16 +94,11 @@ While the probability mass function always decreases for increasing number of fa
 
 **Exercise**: I have a loaded coin that I use to trick people. Unlike normal coins, this coin results in heads 3 out of 4 times, on average.  I start tossing the coin, and wonder: what is the probability I get at least 2 tails before I get a head? And what is the probability I get exactly 2 tails before I get a head? Use the geometric cumulative distribution function `pgeom` and the probability mass function `dgeom`, respectively, to answer these questions.
 
-<!--
-```{r disc4, exercise = TRUE}
-
-```
-```{r disc4-solution}
+```{r, eval=FALSE, echo=FALSE}
 prob <- 3/4
 1 - pgeom(1,prob) # P[ at least 2 tails before a head]
 dgeom(2,prob) # P[ exactly 2 tails before a head]
 ```
--->
 
 
 ### Sampling from arbitrary distributions
@@ -148,7 +133,7 @@ colnames(littertab) <- c("litter_size","frequency")
 kable(littertab,caption="Dog litter size frequencies")
 ```
 
-In this exercise, we'll assume that a litter size of 11 or higher is effectively zero. Simulate 100 new litter sizes using the above table as an approximation to the true distribution of litter sizes, by using the recorded frequencies as probabilities.
+In this exercise, we'll assume that the probability of a litter size of 11 or higher is effectively zero. Simulate 100 new litter sizes using the above table as an approximation to the true distribution of litter sizes, by using the recorded frequencies as probabilities.
 
 a) Compute the sample mean, sample variance and create a histogram (with the function `hist()`) of the simulated litter sizes.
 
@@ -161,7 +146,7 @@ sims <- sample(litters,100,prob=probabilities,replace=TRUE)
 hist(sims)
 mean(sims)
 var(sims)
-table(sims)/sum(sims)
+table(sims)/100
 ```
 
 
@@ -218,7 +203,7 @@ curve(dnorm(x,mean=mu,sd=sd),from=-10,to=10,n=5000,add=TRUE,col="red") # Normal 
 
 ```{r, eval=FALSE, echo=FALSE}
 p <- 0.8 # p parameter
-m <- 100 # sample size
+m <- 10000 # sample size
 allmeans <- sapply(seq(1,1000), function(i){mean(rgeom(m,p))})
 hist(allmeans,freq=FALSE) # Histogram of sample means
 mu <- (1-p)/p # mean of Normal distribution under the CLT

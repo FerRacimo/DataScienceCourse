@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-04-21" />
+<meta name="date" content="2021-04-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -228,18 +228,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">14.1</span> Libraries and Data</h2>
 <p>Today, we will work with the package vegan (useful for ordination techniques) and the packages ggplot2 and ggbiplot (useful for fancy plotting). Make sure all these libraries are installed before you begin.</p>
 <p>Let’s begin by installing and loading the necessary libraries:</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="ordination.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;vegan&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;vegan&quot;</span>)</span>
-<span id="cb94-2"><a href="ordination.html#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;devtools&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
-<span id="cb94-3"><a href="ordination.html#cb94-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;ggplot2&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="ordination.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;vegan&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;vegan&quot;</span>)</span>
+<span id="cb98-2"><a href="ordination.html#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;devtools&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
+<span id="cb98-3"><a href="ordination.html#cb98-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;ggplot2&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</span></code></pre></div>
 <p>We will use a dataset on measurements of particular parts of the iris plant, across individuals from three different species.</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="ordination.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="ordination.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span></code></pre></div>
 <p><strong>Exercise</strong>: Take a look at the iris data matrix. How many samples does it have? How many variables? What happens when you run the function <code>plot()</code> on this matrix? Which variables seem to be strongly correlated? (you can use the function cor() to compute the strength of correlations). Speculate as to why some of these variables could be strongly correlated.</p>
 </div>
 <div id="principal-component-analysis-pca" class="section level2" number="14.2">
 <h2><span class="header-section-number">14.2</span> Principal component analysis (PCA)</h2>
 <p>We’ll perform a PCA of the data. The function prcomp() performs the PCA, and we can assign the result of this function to a new variable (let’s call it “fit”). We must first remove the last column to whatever we give as input to prcomp, as the species names are a non-linear (categorical) variable and we don’t have (for now) any natural measures of distance for species. The option scale=T standardizes the variables to the same relative scale, so that some variables do not become dominant just because of their large measurement unit. We use</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="ordination.html#cb96-1" aria-hidden="true" tabindex="-1"></a>irisnumvar <span class="ot">&lt;-</span> iris[<span class="sc">-</span><span class="dv">5</span>] <span class="co"># Remove the categorical variable</span></span>
-<span id="cb96-2"><a href="ordination.html#cb96-2" aria-hidden="true" tabindex="-1"></a>fit<span class="ot">&lt;-</span><span class="fu">prcomp</span>(irisnumvar, <span class="at">scale=</span><span class="cn">TRUE</span>) <span class="co"># Perform PCA</span></span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="ordination.html#cb100-1" aria-hidden="true" tabindex="-1"></a>irisnumvar <span class="ot">&lt;-</span> iris[<span class="sc">-</span><span class="dv">5</span>] <span class="co"># Remove the categorical variable</span></span>
+<span id="cb100-2"><a href="ordination.html#cb100-2" aria-hidden="true" tabindex="-1"></a>fit<span class="ot">&lt;-</span><span class="fu">prcomp</span>(irisnumvar, <span class="at">scale=</span><span class="cn">TRUE</span>) <span class="co"># Perform PCA</span></span></code></pre></div>
 <p><strong>Exercise</strong>: Try using the <code>summary()</code> and <code>plot()</code> functions to obtain a summary of the resulting PCA object How many principal components were created? (note that the number of PCs always equals the number of original variables). How much variance does the first principal component serve to explain in our data? How much variance does the second component explain? How many PCs would we need to be able to explain at least 95% of the variation in our data?</p>
 <p>The “Rotation” matrix is included inside the <code>fit</code> object we just constructed. You can retrieve it by typing <code>fit[2]$rotation</code>. This matrix contains the “loadings” of each of the original variables on the newly created PCs.</p>
 <p><strong>Exercise</strong>: Take a look at the rotation matrix. The larger the absolute value of a variable in each PC, the more that variable contributes to that PC. For each component, use the function <code>barplot()</code> to plot the loadings (contributions) of each variable into that component. Which variables contribute most to each component?</p>
@@ -273,44 +273,44 @@ We can also plot the first two PCs, like we had done before in base R, but now c
 <h2><span class="header-section-number">14.3</span> PCA under the hood</h2>
 <p>Rather than just using a ready-made function to compute a PCA, let’s take a longer route to understand exactly what’s happening under the hood of the prcomp() function.</p>
 <p>First, let’s standardize each column of our data so that each column has mean 0 and variance 1</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="ordination.html#cb97-1" aria-hidden="true" tabindex="-1"></a>irisdat <span class="ot">&lt;-</span> iris[<span class="sc">-</span><span class="dv">5</span>]</span>
-<span id="cb97-2"><a href="ordination.html#cb97-2" aria-hidden="true" tabindex="-1"></a>irisstandard <span class="ot">&lt;-</span> <span class="fu">apply</span>(irisdat,<span class="dv">2</span>,<span class="cf">function</span>(x){(x<span class="sc">-</span><span class="fu">mean</span>(x))<span class="sc">/</span><span class="fu">sd</span>(x)})</span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="ordination.html#cb101-1" aria-hidden="true" tabindex="-1"></a>irisdat <span class="ot">&lt;-</span> iris[<span class="sc">-</span><span class="dv">5</span>]</span>
+<span id="cb101-2"><a href="ordination.html#cb101-2" aria-hidden="true" tabindex="-1"></a>irisstandard <span class="ot">&lt;-</span> <span class="fu">apply</span>(irisdat,<span class="dv">2</span>,<span class="cf">function</span>(x){(x<span class="sc">-</span><span class="fu">mean</span>(x))<span class="sc">/</span><span class="fu">sd</span>(x)})</span></code></pre></div>
 <p>Now, calculate the covariance matrix. Because the data has been standardized, this is equivalent to calculating the correlation matrix of the pre-standardized data.</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="ordination.html#cb98-1" aria-hidden="true" tabindex="-1"></a>cormat <span class="ot">&lt;-</span> <span class="fu">cov</span>(irisstandard)</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="ordination.html#cb102-1" aria-hidden="true" tabindex="-1"></a>cormat <span class="ot">&lt;-</span> <span class="fu">cov</span>(irisstandard)</span></code></pre></div>
 <p>Then, extract the eigenvalues and eigenvectors of correlation matrix:</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="ordination.html#cb99-1" aria-hidden="true" tabindex="-1"></a>myEig <span class="ot">&lt;-</span> <span class="fu">eigen</span>(cormat)</span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="ordination.html#cb103-1" aria-hidden="true" tabindex="-1"></a>myEig <span class="ot">&lt;-</span> <span class="fu">eigen</span>(cormat)</span></code></pre></div>
 <p>Now, we’ll manually obtain certain values that were automatically computed by the prcomp function when we ran it earlier. We’ll calculate the singular values (square root of eigenvalues) and also obtain the eigenvectors, also called loadings.</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="ordination.html#cb100-1" aria-hidden="true" tabindex="-1"></a>sdLONG <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(myEig<span class="sc">$</span>values)</span>
-<span id="cb100-2"><a href="ordination.html#cb100-2" aria-hidden="true" tabindex="-1"></a>loadingsLONG <span class="ot">&lt;-</span> myEig<span class="sc">$</span>vectors</span>
-<span id="cb100-3"><a href="ordination.html#cb100-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(loadingsLONG) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(irisstandard)</span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="ordination.html#cb104-1" aria-hidden="true" tabindex="-1"></a>sdLONG <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(myEig<span class="sc">$</span>values)</span>
+<span id="cb104-2"><a href="ordination.html#cb104-2" aria-hidden="true" tabindex="-1"></a>loadingsLONG <span class="ot">&lt;-</span> myEig<span class="sc">$</span>vectors</span>
+<span id="cb104-3"><a href="ordination.html#cb104-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(loadingsLONG) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(irisstandard)</span></code></pre></div>
 <p>Using the loadings, we can plot our original (standardized) data matrix into the new PC-space, by multiplying the data matrix by the matrix of loadings. Plotting the first two rows of the resulting product should reveal the location of our data points in the first two principal components (like we had before):</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="ordination.html#cb101-1" aria-hidden="true" tabindex="-1"></a>scoresLONG <span class="ot">&lt;-</span> irisstandard <span class="sc">%*%</span> loadingsLONG</span>
-<span id="cb101-2"><a href="ordination.html#cb101-2" aria-hidden="true" tabindex="-1"></a>iristoplot <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(scoresLONG,iris<span class="sc">$</span>Species)</span>
-<span id="cb101-3"><a href="ordination.html#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(iristoplot) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;PC1&quot;</span>,<span class="st">&quot;PC2&quot;</span>,<span class="st">&quot;PC3&quot;</span>,<span class="st">&quot;PC4&quot;</span>,<span class="st">&quot;Species&quot;</span>)</span>
-<span id="cb101-4"><a href="ordination.html#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iristoplot, <span class="fu">aes</span>(PC1, PC2)) <span class="sc">+</span></span>
-<span id="cb101-5"><a href="ordination.html#cb101-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species, <span class="at">shape =</span> Species)) <span class="sc">+</span></span>
-<span id="cb101-6"><a href="ordination.html#cb101-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;PC1&quot;</span>) <span class="sc">+</span></span>
-<span id="cb101-7"><a href="ordination.html#cb101-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;PC2&quot;</span>) <span class="sc">+</span></span>
-<span id="cb101-8"><a href="ordination.html#cb101-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Iris PCA&quot;</span>)</span></code></pre></div>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-95-1.png" width="672" /></p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="ordination.html#cb105-1" aria-hidden="true" tabindex="-1"></a>scoresLONG <span class="ot">&lt;-</span> irisstandard <span class="sc">%*%</span> loadingsLONG</span>
+<span id="cb105-2"><a href="ordination.html#cb105-2" aria-hidden="true" tabindex="-1"></a>iristoplot <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(scoresLONG,iris<span class="sc">$</span>Species)</span>
+<span id="cb105-3"><a href="ordination.html#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(iristoplot) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;PC1&quot;</span>,<span class="st">&quot;PC2&quot;</span>,<span class="st">&quot;PC3&quot;</span>,<span class="st">&quot;PC4&quot;</span>,<span class="st">&quot;Species&quot;</span>)</span>
+<span id="cb105-4"><a href="ordination.html#cb105-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iristoplot, <span class="fu">aes</span>(PC1, PC2)) <span class="sc">+</span></span>
+<span id="cb105-5"><a href="ordination.html#cb105-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species, <span class="at">shape =</span> Species)) <span class="sc">+</span></span>
+<span id="cb105-6"><a href="ordination.html#cb105-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;PC1&quot;</span>) <span class="sc">+</span></span>
+<span id="cb105-7"><a href="ordination.html#cb105-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;PC2&quot;</span>) <span class="sc">+</span></span>
+<span id="cb105-8"><a href="ordination.html#cb105-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Iris PCA&quot;</span>)</span></code></pre></div>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-97-1.png" width="672" /></p>
 <p>You can compare the results from the first section (using the ready-made function prcomp) and this section (taking a longer road), to check that the results are equivalent. The function <code>range()</code> returns a vector containing the minimum and maximum of a given vector. Using this function, we can observe that the minimum and maximum differences in values for the loadings, the scores and the standard deviations of the PCs are all infinitesimally small (effectively zero).</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="ordination.html#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(fit<span class="sc">$</span>sdev <span class="sc">-</span> sdLONG)</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="ordination.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(fit<span class="sc">$</span>sdev <span class="sc">-</span> sdLONG)</span></code></pre></div>
 <pre><code>## [1] -6.661338e-16  2.220446e-16</code></pre>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="ordination.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(fit<span class="sc">$</span>rotation <span class="sc">-</span> loadingsLONG)</span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="ordination.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(fit<span class="sc">$</span>rotation <span class="sc">-</span> loadingsLONG)</span></code></pre></div>
 <pre><code>## [1] -6.661338e-16  7.771561e-16</code></pre>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="ordination.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(fit<span class="sc">$</span>x <span class="sc">-</span> scoresLONG) </span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="ordination.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(fit<span class="sc">$</span>x <span class="sc">-</span> scoresLONG) </span></code></pre></div>
 <pre><code>## [1] -2.359224e-15  3.108624e-15</code></pre>
 </div>
 <div id="principal-components-as-explanatory-variables" class="section level2" number="14.4">
 <h2><span class="header-section-number">14.4</span> Principal components as explanatory variables</h2>
 <p>We can use principal components as explanatory variables to any linear model. In this case, we’ll use the first two principal components of the PCA we performed above, to perform a logistic regression on the probability that an individual belongs to the species ‘virginica.’ First, let’s create a new variable that is equal to 1 if an individual belongs to this species, and is 0 otherwise. We’ll use this variable as the response variable</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="ordination.html#cb108-1" aria-hidden="true" tabindex="-1"></a>isvirginica <span class="ot">&lt;-</span>  <span class="fu">as.numeric</span>(iris[,<span class="dv">5</span>] <span class="sc">==</span> <span class="st">&quot;virginica&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="ordination.html#cb112-1" aria-hidden="true" tabindex="-1"></a>isvirginica <span class="ot">&lt;-</span>  <span class="fu">as.numeric</span>(iris[,<span class="dv">5</span>] <span class="sc">==</span> <span class="st">&quot;virginica&quot;</span>)</span></code></pre></div>
 <p>We now collate the principal components from the exercise above into a new dataframe that also includes the response variable we just created.</p>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="ordination.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The PC scores are stored in the fifth element of fit. Here, we could have also used the object scoresLONG which we obtained by fitting a PCA manually.</span></span>
-<span id="cb109-2"><a href="ordination.html#cb109-2" aria-hidden="true" tabindex="-1"></a>PC.scores <span class="ot">&lt;-</span> fit[<span class="dv">5</span>] </span>
-<span id="cb109-3"><a href="ordination.html#cb109-3" aria-hidden="true" tabindex="-1"></a>newiris <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(PC.scores,isvirginica)</span>
-<span id="cb109-4"><a href="ordination.html#cb109-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(newiris) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;PC1&quot;</span>,<span class="st">&quot;PC2&quot;</span>,<span class="st">&quot;PC3&quot;</span>,<span class="st">&quot;PC4&quot;</span>,<span class="st">&quot;isvirginica&quot;</span>)</span>
-<span id="cb109-5"><a href="ordination.html#cb109-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(newiris)</span></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="ordination.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The PC scores are stored in the fifth element of fit. Here, we could have also used the object scoresLONG which we obtained by fitting a PCA manually.</span></span>
+<span id="cb113-2"><a href="ordination.html#cb113-2" aria-hidden="true" tabindex="-1"></a>PC.scores <span class="ot">&lt;-</span> fit[<span class="dv">5</span>] </span>
+<span id="cb113-3"><a href="ordination.html#cb113-3" aria-hidden="true" tabindex="-1"></a>newiris <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(PC.scores,isvirginica)</span>
+<span id="cb113-4"><a href="ordination.html#cb113-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(newiris) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;PC1&quot;</span>,<span class="st">&quot;PC2&quot;</span>,<span class="st">&quot;PC3&quot;</span>,<span class="st">&quot;PC4&quot;</span>,<span class="st">&quot;isvirginica&quot;</span>)</span>
+<span id="cb113-5"><a href="ordination.html#cb113-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(newiris)</span></code></pre></div>
 <pre><code>##         PC1        PC2         PC3          PC4 isvirginica
 ## 1 -2.257141 -0.4784238  0.12727962  0.024087508           0
 ## 2 -2.074013  0.6718827  0.23382552  0.102662845           0
@@ -318,14 +318,15 @@ We can also plot the first two PCs, like we had done before in base R, but now c
 ## 4 -2.291707  0.5953999 -0.09098530 -0.065735340           0
 ## 5 -2.381863 -0.6446757 -0.01568565 -0.035802870           0
 ## 6 -2.068701 -1.4842053 -0.02687825  0.006586116           0</code></pre>
-<p><strong>Exercise</strong>: use the <code>glm()</code> function on the newly created <code>newiris</code> data-frame, to perform a logistic regression for the probability that an individual belongs to the species virginica, using the first principal component (PC1 and PC2) as explanatory variables. Do both components have fitted effects that are significantly different from 0? Do these results make sense in light of the PCA biplots created in the sections above?</p>
+<p><strong>Exercise</strong>: use the <code>glm()</code> function on the newly created <code>newiris</code> data-frame, to perform a logistic regression for the probability that an individual belongs to the species virginica, using the first two principal components (PC1 and PC2) as explanatory variables. Do both components have fitted effects that are significantly different from 0? Do these results make sense in light of the PCA biplots created in the sections above?</p>
 <p><strong>Exercise</strong>: Compare the logistic model to another logistic model, this time using only PC1 as the explanatory variable. Which model has the highest AIC score?</p>
 </div>
 <div id="nmds" class="section level2" number="14.5">
 <h2><span class="header-section-number">14.5</span> NMDS</h2>
 <p>We’ll now perform non-metric multidimensional scaling. Let’s first take a look at the raw data we will use. This is a data matrix containing information about dune meadow vegetation. There are 30 species and 20 sites. Each cell corresponds to the number of specimens of a particular species that has been observed at a particular site (Jongman et al. 1987). As one can see, there are many sites where some species are completely absent (the cell value equals 0):</p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="ordination.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(dune)</span>
-<span id="cb111-2"><a href="ordination.html#cb111-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dune)</span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="ordination.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(vegan)</span>
+<span id="cb115-2"><a href="ordination.html#cb115-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(dune)</span>
+<span id="cb115-3"><a href="ordination.html#cb115-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dune)</span></code></pre></div>
 <pre><code>##   Achimill Agrostol Airaprae Alopgeni Anthodor Bellpere Bromhord Chenalbu
 ## 1        1        0        0        0        0        0        0        0
 ## 2        3        0        0        2        0        3        4        0
@@ -356,59 +357,54 @@ We can also plot the first two PCs, like we had done before in base R, but now c
 ## 6        3        5        5        0        6        0</code></pre>
 <p>Note that here linearity is not a good assumption to make for our ordination: a difference between a site containing 0 specimens (absence) and a site containing 1 specimen is conceptually larger than a difference between a site containing 1 specimen and another site containing 2. In other words, the difference between presence and absence is more important than a difference in quantity of specimens. Thus, our first instinct should not be to perform PCA on it. Because NMDS relies on “distances,” we need to specify a distance metric that we’ll use. The function for performing NMDS in the package ‘vegan’ is called metaMDS() and its default distance metric is “bray,” which corresponds to the Bray-Curtis dissimilarity: a statistic used to quantify the compositional dissimilarity between two different sites, based on counts at each site</p>
 <p>Let’s perform NMDS ordination using the Bray-Curtis dissimilarity. Remember that, unlike PCA, NMDS requires us to specify the number of dimensions (k) a priori (the default in vegan is 2). It also performs a series of transformations on the data that are appropriate for ecological data (default: autotransform=TRUE). The trymax option ensures that the algorithm is started from different points (in our case, 50) to avoid local minima.</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="ordination.html#cb113-1" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(dune, <span class="at">k=</span><span class="dv">2</span>, <span class="at">autotransform =</span> <span class="cn">TRUE</span>, <span class="at">trymax=</span><span class="dv">50</span>, <span class="at">distance=</span><span class="st">&quot;bray&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="ordination.html#cb117-1" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(dune, <span class="at">k=</span><span class="dv">2</span>, <span class="at">autotransform =</span> <span class="cn">TRUE</span>, <span class="at">trymax=</span><span class="dv">50</span>, <span class="at">distance=</span><span class="st">&quot;bray&quot;</span>)</span></code></pre></div>
 <pre><code>## Run 0 stress 0.1192678 
-## Run 1 stress 0.1192679 
-## ... Procrustes: rmse 0.0001059286  max resid 0.0003187994 
+## Run 1 stress 0.119268 
+## ... Procrustes: rmse 0.0002188857  max resid 0.000665587 
 ## ... Similar to previous best
-## Run 2 stress 0.1192683 
-## ... Procrustes: rmse 0.0003890342  max resid 0.001185795 
-## ... Similar to previous best
-## Run 3 stress 0.1192678 
+## Run 2 stress 0.1183186 
 ## ... New best solution
-## ... Procrustes: rmse 3.236284e-05  max resid 9.385529e-05 
-## ... Similar to previous best
-## Run 4 stress 0.188966 
-## Run 5 stress 0.119268 
-## ... Procrustes: rmse 0.0001904652  max resid 0.0005754477 
-## ... Similar to previous best
-## Run 6 stress 0.1183186 
+## ... Procrustes: rmse 0.02026361  max resid 0.06492933 
+## Run 3 stress 0.1183186 
 ## ... New best solution
-## ... Procrustes: rmse 0.02028192  max resid 0.06504401 
-## Run 7 stress 0.1183186 
-## ... Procrustes: rmse 5.165354e-05  max resid 0.0001541586 
+## ... Procrustes: rmse 6.931338e-05  max resid 0.0001828082 
 ## ... Similar to previous best
-## Run 8 stress 0.1192679 
-## Run 9 stress 0.1192678 
-## Run 10 stress 0.1183186 
+## Run 4 stress 0.1183186 
+## ... Procrustes: rmse 4.916906e-05  max resid 0.0001460977 
+## ... Similar to previous best
+## Run 5 stress 0.1808914 
+## Run 6 stress 0.2377447 
+## Run 7 stress 0.1192679 
+## Run 8 stress 0.1886532 
+## Run 9 stress 0.1886532 
+## Run 10 stress 0.119268 
+## Run 11 stress 0.1192681 
+## Run 12 stress 0.1192678 
+## Run 13 stress 0.1192678 
+## Run 14 stress 0.1183186 
+## ... Procrustes: rmse 2.033297e-05  max resid 6.517488e-05 
+## ... Similar to previous best
+## Run 15 stress 0.1192678 
+## Run 16 stress 0.1183186 
 ## ... New best solution
-## ... Procrustes: rmse 8.445599e-06  max resid 2.154331e-05 
+## ... Procrustes: rmse 2.105767e-05  max resid 4.771437e-05 
 ## ... Similar to previous best
-## Run 11 stress 0.1183186 
-## ... Procrustes: rmse 1.035278e-05  max resid 2.827923e-05 
+## Run 17 stress 0.1192678 
+## Run 18 stress 0.1183186 
+## ... New best solution
+## ... Procrustes: rmse 1.42824e-05  max resid 4.837988e-05 
 ## ... Similar to previous best
-## Run 12 stress 0.1183186 
-## ... Procrustes: rmse 1.115493e-05  max resid 3.592272e-05 
+## Run 19 stress 0.219285 
+## Run 20 stress 0.1183187 
+## ... Procrustes: rmse 9.342759e-05  max resid 0.000283791 
 ## ... Similar to previous best
-## Run 13 stress 0.1183186 
-## ... Procrustes: rmse 8.209039e-06  max resid 1.66106e-05 
-## ... Similar to previous best
-## Run 14 stress 0.1192685 
-## Run 15 stress 0.1183186 
-## ... Procrustes: rmse 8.483861e-06  max resid 2.708275e-05 
-## ... Similar to previous best
-## Run 16 stress 0.1192679 
-## Run 17 stress 0.1192679 
-## Run 18 stress 0.1192684 
-## Run 19 stress 0.1889647 
-## Run 20 stress 0.1192682 
 ## *** Solution reached</code></pre>
-<p>As you can see, the func tion goes through a series of steps until convergence is reached. Let’s plot the results:</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="ordination.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb115-2"><a href="ordination.html#cb115-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord,<span class="at">choices=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="at">display=</span><span class="st">&quot;sites&quot;</span>,<span class="at">main=</span><span class="st">&quot;NMDS ordination of sites&quot;</span>,<span class="at">type=</span><span class="st">&quot;t&quot;</span>)</span>
-<span id="cb115-3"><a href="ordination.html#cb115-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord,<span class="at">choices=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="at">display=</span><span class="st">&quot;species&quot;</span>,<span class="at">main=</span><span class="st">&quot;NMDS ordination of species&quot;</span>,<span class="at">type=</span><span class="st">&quot;t&quot;</span>)</span></code></pre></div>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-102-1.png" width="672" /></p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="ordination.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
+<p>As you can see, the function goes through a series of steps until convergence is reached. Let’s plot the results:</p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="ordination.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb119-2"><a href="ordination.html#cb119-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord,<span class="at">choices=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="at">display=</span><span class="st">&quot;sites&quot;</span>,<span class="at">main=</span><span class="st">&quot;NMDS ordination of sites&quot;</span>,<span class="at">type=</span><span class="st">&quot;t&quot;</span>)</span>
+<span id="cb119-3"><a href="ordination.html#cb119-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord,<span class="at">choices=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="at">display=</span><span class="st">&quot;species&quot;</span>,<span class="at">main=</span><span class="st">&quot;NMDS ordination of species&quot;</span>,<span class="at">type=</span><span class="st">&quot;t&quot;</span>)</span></code></pre></div>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="ordination.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
 <p>Here, the option <code>choices</code> determines which NMDS dimensions are being plotted. We only have two dimensions, so there’s only two dimensions that we can plot here. In turn, the option <code>display</code> allows us to plot an ordination of the sites (assuming species are properties of each site), or of the species (assuming sites are properties of each species).</p>
 <p><strong>Exercise</strong>: Take a look at the plots. Which species tend to co-occcur with each other? Which sites tend to have similar species compositions?</p>
 <p><strong>Exercise</strong>: Change the number of dimensions and re-run the ordination. Note that you’ll have to create multiple plots to observe all the dimensions if there are more than 2 of them. How do the results change?</p>
