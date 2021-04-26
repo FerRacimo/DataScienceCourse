@@ -54,3 +54,12 @@ interactions
 anova
 working-with-tidymodels
 hypothesis-testing-1
+using-bayes-rule-covid-19
+obtaining-confidence-intervals-1
+hypothesis-testing-2
+first-foray-into-bayesian-inference
+putting-it-all-together
+conjugate-prior-rejection-sampling-and-mcmc
+bayesian-point-estimates-and-credible-intervals
+point-estimates
+credible-intervals

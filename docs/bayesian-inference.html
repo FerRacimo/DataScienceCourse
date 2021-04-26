@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 Bayesian Inference | Data Analysis and Statistical Thinking: An R Workbook</title>
   <meta name="description" content="This is a guide for the Globe Data Science Course." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 Bayesian Inference | Data Analysis and Statistical Thinking: An R Workbook" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-04-21" />
+<meta name="date" content="2021-04-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,6 @@
   
 <link rel="prev" href="frequentist-inference.html"/>
 <link rel="next" href="classification.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,71 +50,12 @@
 
 
 
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
-<style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -135,8 +75,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Getting Started with Data Analysis</a></li>
-<li class="chapter" data-level="3" data-path="prob1.html"><a href="prob1.html"><i class="fa fa-check"></i><b>3</b> Probability Part 1</a>
-<ul>
+<li class="chapter" data-level="3" data-path="prob1.html"><a href="prob1.html"><i class="fa fa-check"></i><b>3</b> Probability Part 1</a><ul>
 <li class="chapter" data-level="3.1" data-path="prob1.html"><a href="prob1.html#todays-programme"><i class="fa fa-check"></i><b>3.1</b> Today’s programme</a></li>
 <li class="chapter" data-level="3.2" data-path="prob1.html"><a href="prob1.html#the-bernoulli-distribution-tossing-a-coin"><i class="fa fa-check"></i><b>3.2</b> The Bernoulli distribution: tossing a coin</a></li>
 <li class="chapter" data-level="3.3" data-path="prob1.html"><a href="prob1.html#adding-up-coin-tosses"><i class="fa fa-check"></i><b>3.3</b> Adding up coin tosses</a></li>
@@ -145,10 +84,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.6" data-path="prob1.html"><a href="prob1.html#the-variance"><i class="fa fa-check"></i><b>3.6</b> The variance</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="probability-part-2.html"><a href="probability-part-2.html"><i class="fa fa-check"></i><b>4</b> Probability Part 2</a></li>
-<li class="chapter" data-level="5" data-path="probability-catch-up.html"><a href="probability-catch-up.html"><i class="fa fa-check"></i><b>5</b> Probability Catch-up</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="probability-catch-up.html"><a href="probability-catch-up.html#discrete-distributions"><i class="fa fa-check"></i><b>5.1</b> Discrete distributions</a>
-<ul>
+<li class="chapter" data-level="5" data-path="probability-catch-up.html"><a href="probability-catch-up.html"><i class="fa fa-check"></i><b>5</b> Probability Catch-up</a><ul>
+<li class="chapter" data-level="5.1" data-path="probability-catch-up.html"><a href="probability-catch-up.html#discrete-distributions"><i class="fa fa-check"></i><b>5.1</b> Discrete distributions</a><ul>
 <li class="chapter" data-level="5.1.1" data-path="probability-catch-up.html"><a href="probability-catch-up.html#poisson-distribution"><i class="fa fa-check"></i><b>5.1.1</b> Poisson distribution</a></li>
 <li class="chapter" data-level="5.1.2" data-path="probability-catch-up.html"><a href="probability-catch-up.html#geometric-distribution"><i class="fa fa-check"></i><b>5.1.2</b> Geometric distribution</a></li>
 <li class="chapter" data-level="5.1.3" data-path="probability-catch-up.html"><a href="probability-catch-up.html#sampling-from-arbitrary-distributions"><i class="fa fa-check"></i><b>5.1.3</b> Sampling from arbitrary distributions</a></li>
@@ -156,46 +93,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2" data-path="probability-catch-up.html"><a href="probability-catch-up.html#the-normal-distribution-and-the-central-limit-theorem"><i class="fa fa-check"></i><b>5.2</b> The Normal distribution and the Central Limit Theorem</a></li>
 <li class="chapter" data-level="5.3" data-path="probability-catch-up.html"><a href="probability-catch-up.html#the-exponential-distribution"><i class="fa fa-check"></i><b>5.3</b> The exponential distribution</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>6</b> Linear Models</a>
-<ul>
+<li class="chapter" data-level="6" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>6</b> Linear Models</a><ul>
 <li class="chapter" data-level="6.1" data-path="linear-models.html"><a href="linear-models.html#fitting-a-simple-linear-regression"><i class="fa fa-check"></i><b>6.1</b> Fitting a simple linear regression</a></li>
 <li class="chapter" data-level="6.2" data-path="linear-models.html"><a href="linear-models.html#interpreting-a-simple-linear-regression"><i class="fa fa-check"></i><b>6.2</b> Interpreting a simple linear regression</a></li>
 <li class="chapter" data-level="6.3" data-path="linear-models.html"><a href="linear-models.html#simulating-data-from-a-linear-model"><i class="fa fa-check"></i><b>6.3</b> Simulating data from a linear model</a></li>
+<li class="chapter" data-level="6.4" data-path="linear-models.html"><a href="linear-models.html#optional-a-multivariate-linear-regression"><i class="fa fa-check"></i><b>6.4</b> Optional: A multivariate linear regression</a></li>
+<li class="chapter" data-level="6.5" data-path="linear-models.html"><a href="linear-models.html#hypothesis-testing"><i class="fa fa-check"></i><b>6.5</b> Hypothesis testing</a></li>
+<li class="chapter" data-level="6.6" data-path="linear-models.html"><a href="linear-models.html#interactions"><i class="fa fa-check"></i><b>6.6</b> Interactions</a></li>
+<li class="chapter" data-level="6.7" data-path="linear-models.html"><a href="linear-models.html#anova"><i class="fa fa-check"></i><b>6.7</b> ANOVA</a></li>
+<li class="chapter" data-level="6.8" data-path="linear-models.html"><a href="linear-models.html#working-with-tidymodels"><i class="fa fa-check"></i><b>6.8</b> Working with tidymodels</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="properties-of-estimators-and-hypothesis-testing.html"><a href="properties-of-estimators-and-hypothesis-testing.html"><i class="fa fa-check"></i><b>7</b> Properties of Estimators and Hypothesis Testing</a>
-<ul>
+<li class="chapter" data-level="7" data-path="properties-of-estimators-and-hypothesis-testing.html"><a href="properties-of-estimators-and-hypothesis-testing.html"><i class="fa fa-check"></i><b>7</b> Properties of Estimators and Hypothesis Testing</a><ul>
 <li class="chapter" data-level="7.1" data-path="properties-of-estimators-and-hypothesis-testing.html"><a href="properties-of-estimators-and-hypothesis-testing.html#properties-of-point-estimators"><i class="fa fa-check"></i><b>7.1</b> Properties of point estimators</a></li>
 <li class="chapter" data-level="7.2" data-path="properties-of-estimators-and-hypothesis-testing.html"><a href="properties-of-estimators-and-hypothesis-testing.html#obtaining-confidence-intervals"><i class="fa fa-check"></i><b>7.2</b> Obtaining confidence intervals</a></li>
-<li class="chapter" data-level="7.3" data-path="properties-of-estimators-and-hypothesis-testing.html"><a href="properties-of-estimators-and-hypothesis-testing.html#hypothesis-testing"><i class="fa fa-check"></i><b>7.3</b> Hypothesis testing</a></li>
+<li class="chapter" data-level="7.3" data-path="properties-of-estimators-and-hypothesis-testing.html"><a href="properties-of-estimators-and-hypothesis-testing.html#hypothesis-testing-1"><i class="fa fa-check"></i><b>7.3</b> Hypothesis testing</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="frequentist-inference.html"><a href="frequentist-inference.html"><i class="fa fa-check"></i><b>8</b> Frequentist inference</a></li>
-<li class="chapter" data-level="9" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>9</b> Bayesian Inference</a></li>
+<li class="chapter" data-level="9" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>9</b> Bayesian Inference</a><ul>
+<li class="chapter" data-level="9.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#using-bayes-rule-covid-19"><i class="fa fa-check"></i><b>9.1</b> Using Bayes’ rule: Covid-19</a></li>
+<li class="chapter" data-level="9.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#first-foray-into-bayesian-inference"><i class="fa fa-check"></i><b>9.2</b> First foray into Bayesian inference</a></li>
+<li class="chapter" data-level="9.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#conjugate-prior-rejection-sampling-and-mcmc"><i class="fa fa-check"></i><b>9.3</b> Conjugate prior, Rejection sampling and MCMC*</a></li>
+<li class="chapter" data-level="9.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#bayesian-point-estimates-and-credible-intervals"><i class="fa fa-check"></i><b>9.4</b> Bayesian point estimates and credible intervals</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#point-estimates"><i class="fa fa-check"></i><b>9.4.1</b> Point estimates</a></li>
+<li class="chapter" data-level="9.4.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#credible-intervals"><i class="fa fa-check"></i><b>9.4.2</b> Credible intervals</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="10" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>10</b> Classification</a></li>
 <li class="chapter" data-level="11" data-path="model-assessment.html"><a href="model-assessment.html"><i class="fa fa-check"></i><b>11</b> Model Assessment</a></li>
-<li class="chapter" data-level="12" data-path="resampling.html"><a href="resampling.html"><i class="fa fa-check"></i><b>12</b> Resampling</a>
-<ul>
+<li class="chapter" data-level="12" data-path="resampling.html"><a href="resampling.html"><i class="fa fa-check"></i><b>12</b> Resampling</a><ul>
 <li class="chapter" data-level="12.1" data-path="resampling.html"><a href="resampling.html#the-bootstrap"><i class="fa fa-check"></i><b>12.1</b> The bootstrap</a></li>
 <li class="chapter" data-level="12.2" data-path="resampling.html"><a href="resampling.html#permutation-test"><i class="fa fa-check"></i><b>12.2</b> Permutation test</a></li>
 <li class="chapter" data-level="12.3" data-path="resampling.html"><a href="resampling.html#validation"><i class="fa fa-check"></i><b>12.3</b> Validation</a></li>
 <li class="chapter" data-level="12.4" data-path="resampling.html"><a href="resampling.html#cross-validation"><i class="fa fa-check"></i><b>12.4</b> Cross-validation</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="mixed-models.html"><a href="mixed-models.html"><i class="fa fa-check"></i><b>13</b> Mixed Models</a></li>
-<li class="chapter" data-level="14" data-path="ordination.html"><a href="ordination.html"><i class="fa fa-check"></i><b>14</b> Ordination</a>
-<ul>
+<li class="chapter" data-level="14" data-path="ordination.html"><a href="ordination.html"><i class="fa fa-check"></i><b>14</b> Ordination</a><ul>
 <li class="chapter" data-level="14.1" data-path="ordination.html"><a href="ordination.html#libraries-and-data"><i class="fa fa-check"></i><b>14.1</b> Libraries and Data</a></li>
 <li class="chapter" data-level="14.2" data-path="ordination.html"><a href="ordination.html#principal-component-analysis-pca"><i class="fa fa-check"></i><b>14.2</b> Principal component analysis (PCA)</a></li>
 <li class="chapter" data-level="14.3" data-path="ordination.html"><a href="ordination.html#pca-under-the-hood"><i class="fa fa-check"></i><b>14.3</b> PCA under the hood</a></li>
 <li class="chapter" data-level="14.4" data-path="ordination.html"><a href="ordination.html#principal-components-as-explanatory-variables"><i class="fa fa-check"></i><b>14.4</b> Principal components as explanatory variables</a></li>
 <li class="chapter" data-level="14.5" data-path="ordination.html"><a href="ordination.html#nmds"><i class="fa fa-check"></i><b>14.5</b> NMDS</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>15</b> Clustering</a>
-<ul>
+<li class="chapter" data-level="15" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>15</b> Clustering</a><ul>
 <li class="chapter" data-level="15.1" data-path="clustering.html"><a href="clustering.html#libraries-and-data-1"><i class="fa fa-check"></i><b>15.1</b> Libraries and Data</a></li>
 <li class="chapter" data-level="15.2" data-path="clustering.html"><a href="clustering.html#distances"><i class="fa fa-check"></i><b>15.2</b> Distances</a></li>
 <li class="chapter" data-level="15.3" data-path="clustering.html"><a href="clustering.html#k-means-clustering"><i class="fa fa-check"></i><b>15.3</b> K-means clustering</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html"><i class="fa fa-check"></i><b>16</b> REcoStats: Linear Models</a>
-<ul>
+<li class="chapter" data-level="16" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html"><i class="fa fa-check"></i><b>16</b> REcoStats: Linear Models</a><ul>
 <li class="chapter" data-level="16.1" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html#fitting-a-simple-linear-regression-1"><i class="fa fa-check"></i><b>16.1</b> Fitting a simple linear regression</a></li>
 <li class="chapter" data-level="16.2" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html#interpreting-a-simple-linear-regression-1"><i class="fa fa-check"></i><b>16.2</b> Interpreting a simple linear regression</a></li>
 <li class="chapter" data-level="16.3" data-path="recostats-linear-models.html"><a href="recostats-linear-models.html#simulating-data-from-a-linear-model-1"><i class="fa fa-check"></i><b>16.3</b> Simulating data from a linear model</a></li>
@@ -222,9 +166,59 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="bayesian-inference" class="section level1" number="9">
+<div id="bayesian-inference" class="section level1">
 <h1><span class="header-section-number">Chapter 9</span> Bayesian Inference</h1>
+<div id="using-bayes-rule-covid-19" class="section level2">
+<h2><span class="header-section-number">9.1</span> Using Bayes’ rule: Covid-19</h2>
+<p>For our first taste of Bayesian inference, we are going to use covid-19 quicktest data to use and understand Bayes’ rule and how to use it. As you might know, there is a lot of debate in the media about the efficacy of the antigen based test (quicktest) in identifying and preventing the spread of the virus. First let us gather all the information we have on the quicktest - we will use this paper as the source of the information (<a href="https://www.medrxiv.org/content/10.1101/2021.01.22.21250042v1" class="uri">https://www.medrxiv.org/content/10.1101/2021.01.22.21250042v1</a>) - note that we do not have the whole data.</p>
+<p>First consider that <span class="math inline">\(C\)</span> is the event that a patient has covid-19 (C=1) or not (C=0), and <span class="math inline">\(T\)</span> is the event that the test is positive (T=1) or negative (T=0).
+From the paper, we know that the sensitivity of the test, <span class="math inline">\(P(T=1 | C=1) = 0.697\)</span>, while the specificity of the test, <span class="math inline">\(P(T=0 | C=0) = 0.995\)</span>, and finally the prevalence of covid-19, <span class="math inline">\(P(C=1) = 0.046\)</span>. Using this information, we can compute the positive and negative predictive values of the test, which is <span class="math inline">\(P(C=1 | T=1)\)</span> and <span class="math inline">\(P(C=0 | T=0)\)</span>.</p>
+<p>Remember Bayes’ rule <span class="math display">\[P(A|B) = \frac{P(B|A)P(A)}{P(B)}\]</span></p>
+<p>Use this to compute the two values asked for above. How does the test perform? Do you think it is useful as a standalone tracker of covid in the population?</p>
+</div>
+<div id="first-foray-into-bayesian-inference" class="section level2">
+<h2><span class="header-section-number">9.2</span> First foray into Bayesian inference</h2>
+<p>We are going to delve into Bayesian inference by using a simple dice problem. We have three identical coins, but they are not identical in terms of their probability of tossing a head. So let us call these three coins A, B and C, and their heads probabilities are <span class="math display">\[A: P(A~gives~heads) = 0.5 \\B: P(B~gives~heads) =  0.6 \\ C: P(C~gives~heads) = 0.9\]</span>.</p>
+<p>We are going to design a Bayesian inference method to help us identify which coin we have using the results of a coin toss experiment. You pick a coin blindfolded, and then you toss the coins a number of times, and record how many heads and tails you have. We will use this as input data for our model.</p>
+<p>So A is a fair coin, while B and C are biased. And <em>a priori</em> there is no way for us to know which coin you have for your toss experiments.</p>
+<p>Now let us start by specifying the parts of our Bayesian inference framework. Again, recall the Bayesian framework - we want to compute the posterior probabilities; in this case, that would be the probability that the coin we chose is A, B or C <strong>given</strong> the number of heads and tails observed. Let us denote the number of heads as <span class="math inline">\(H\)</span> and number of tails as <span class="math inline">\(T\)</span>. So our data <span class="math inline">\(D\)</span> consists of just the number of heads and the total number of tosses <span class="math inline">\(N = H+T\)</span>. What kind of model would you choose for this data? How would you write the likelihood of this data given the probability of heads, <span class="math inline">\(p\)</span> (Remeber the Binomial distribution).</p>
+<p>The second step: time for us to choose a prior - What prior would you choose? You have no information for the three coins - so a uniform prior on all three coins sounds like a good idea! What would a uniform prior look like?</p>
+<p><strong>Putting it all together</strong>
+We are ready to apply Bayesian inference to identify which coin we have. Let us start by simulating some data. Choose a coin of your liking - I am choosing the one with the heads probability of 0.9.</p>
+<p><strong>Exercise 1.</strong> With the coin with 0.9 probability of heads, simulate <span class="math inline">\(N=10\)</span> coin tosses. Note the number of heads as <span class="math inline">\(H\)</span>. Use this as input data. Now use Bayes’ rule together with the Uniform prior on the 3 coins to get the posterior on which coin was chosen? What does the posterior probability look like? Are you convinced about which coin was chosen?</p>
+<p><strong>Exercise 2.</strong> Same as exercise 1, but with <span class="math inline">\(N=100\)</span> and <span class="math inline">\(N=1000\)</span> coin tosses. How does the posterior change? Did your “confidence” in which coin you chose increase, and how much?</p>
+<p><strong>Exercise 3.</strong> Now repeat for <span class="math inline">\(N=10, 100, 1000\)</span> coin tosses, but use the coin with heads probability of 0.6. How did your results change? Was it easier or more difficult to separate the three coin cases?</p>
+</div>
+<div id="conjugate-prior-rejection-sampling-and-mcmc" class="section level2">
+<h2><span class="header-section-number">9.3</span> Conjugate prior, Rejection sampling and MCMC*</h2>
+<p>In this exercise, we will try and solve problem 10.1 from the Edge book. But we will not use the rejection sampler that comes with the book, we will write our own. First, let us set up the problem. We have <span class="math inline">\(n\)</span> independent observations <span class="math inline">\(x_1, x_2, \dots, x_n\)</span> drawn from a Normal(<span class="math inline">\(\theta, \sigma^2\)</span>), and we assume that the variance <span class="math inline">\(\sigma^2\)</span> is known. We will also assume the conjugate prior for the mean <span class="math inline">\(\theta\)</span>. So the prior for <span class="math inline">\(\theta\)</span> is Normal(<span class="math inline">\(\gamma\)</span>, <span class="math inline">\(\tau^2\)</span>). Choose whatever values of <span class="math inline">\(\theta\)</span>, <span class="math inline">\(\sigma^2\)</span> <span class="math inline">\(\gamma\)</span>, <span class="math inline">\(\tau^2\)</span> and <span class="math inline">\(n\)</span> you want. Just note that if the prior is very far from the data (i.e. <span class="math inline">\(\theta\)</span> is very different than <span class="math inline">\(\gamma\)</span>), your rejection sampler will be very inefficient and slow. In our example, as in the book, we will use <span class="math inline">\(\theta = 2\)</span>, <span class="math inline">\(\gamma=0\)</span>, <span class="math inline">\(\sigma^2 = \tau^2 = 1\)</span>, and <span class="math inline">\(n=20\)</span>.</p>
+<p><strong>Exercise 4.</strong> First generate your data using <code>rnorm</code> using the <span class="math inline">\(\theta\)</span> and the <span class="math inline">\(\sigma^2\)</span> given.
+<strong>Exercise 5.</strong> We know that the setup we have will lead to a posterior that has the same form as the prior (Normal). And in class and in the book, we know what the expectation and variance of this posterior is. Compute these values and use them to sample 10000 points from the posterior using <code>rnorm</code>. Plot the histogram of these points.
+<strong>Exercise 6.</strong> In R, first install and load the library <code>MCMCpack</code>. Then using the function <code>MCnormalnormal()</code>, draw 10000 samples from the posterior distribution. Compute the mean and variance of this sample set, and plot the distribution using a histogram.
+<strong>Exercise 7.</strong> Rejection sampling. We know our prior: Normal(<span class="math inline">\(\gamma\)</span>, <span class="math inline">\(\tau^2\)</span>), and our model (likelihood): Normal(<span class="math inline">\(\theta\)</span>, <span class="math inline">\(\sigma^2\)</span>). So we can use the recipe for a rejection sampler to write a function for rejection samplling to sample from the posterior. Keep track of your accpetance rate (what proportion of your samples were not rejected). Use your own function to draw 10000 samples from the posterior. Use these samples to compute the mean and variance, and plot their density using a histogram.
+<strong>Exercise 8.</strong> Change your <span class="math inline">\(\gamma\)</span> to 4 and run your rejection sampler again. What happened to the acceptance rate? How much slower did your sampler get? Is there any way to make this faster?
+<strong>Exercise X. (BONUS)</strong> Can you write a rejection sampler for a coin toss experiment. Assume that the probability of heads of a coin is <span class="math inline">\(p\)</span>. Assume a <span class="math inline">\(Beta(\alpha=5, \beta=5)\)</span> prior on this probability. For generating your data, use <code>rbinom</code> with a success probability of 0.7, and draw 1000 samples. Use both the conjugate prior and rejection sampling method to estimate the parameters of the Beta distribution that will be the posterior in this case.</p>
+</div>
+<div id="bayesian-point-estimates-and-credible-intervals" class="section level2">
+<h2><span class="header-section-number">9.4</span> Bayesian point estimates and credible intervals</h2>
+<p>In the last section, we used sampling from the posterior to understand the distribution and compute statistics such as the mean and variance of the posterior distribution. We will use the results from Exercise 5-7, to compute the point estimates and the credible interval.</p>
+<div id="point-estimates" class="section level3">
+<h3><span class="header-section-number">9.4.1</span> Point estimates</h3>
+<p>Remember that there are three point estimates in a Bayesian inference.
+Posterior mean: <span class="math inline">\(\theta_{mean} = E[\theta|D]\)</span>
+Posterior median: <span class="math inline">\(\theta_{med}; P(\theta &lt; \theta_{med} | D) = 0.5\)</span>
+Posterior mode: <span class="math inline">\(\theta_{mode} = argmax~f(\theta | D)\)</span></p>
+<p><strong>Exercise 9.</strong> Using the samples from exercises 5-7, compute the three point estimates for your problem? How well did these three perform? Why are they all the same in our case? (Note: You can compute these for problem 5, above using that you would expect them to be for a Normal distribution given the parameters of the posterior Normal distribution.) What happened to the point estimates when you used a prior of exercise 8.
+<strong>Exercise X. (BONUS)</strong> If you did the last bonus exercise, then compute the point estimates for the coin toss problem.</p>
+</div>
+<div id="credible-intervals" class="section level3">
+<h3><span class="header-section-number">9.4.2</span> Credible intervals</h3>
+<p>Recall that the <span class="math inline">\((1-\alpha)\)</span> credible interval for a parameter is any interval <span class="math inline">\((a, b)\)</span> such that <span class="math inline">\(P(a &lt; \theta &lt; b | D) = 1-\alpha\)</span>.</p>
+<p><strong>Exercise 10.</strong> Using the samples from exercise 7 and 8, compute the 95% credible interval for our posterior. How many such intervals exist? Can you give a couple of examples of 95% credible intervals? How would you choose one?
+<strong>Exercise X. (BONUS)</strong> If you did this for the beta and binomial setup in the BONUS problems, then compute the 95% credible interval for <span class="math inline">\(p\)</span>. Is the quantile based credible interval the highest posterior density interval?</p>
 
+</div>
+</div>
 </div>
             </section>
 
@@ -255,6 +249,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
