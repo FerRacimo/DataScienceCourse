@@ -274,7 +274,7 @@ As before, a good rule of thumb is to use the above formula for performing hypot
 
 2. The data points $X_1, X_2, ..., X_n$ of your data set might not come from a Normal distribution, but $n$ is large enough that the Central Limit Theorem kicks in, and so $\bar{X}$ is approximately Normal (generally around 30 data points).
 
-**Exercise**: Create a single simulated data set of size 50, where each data point is drawn from a Normal distribution with expected value equal to 4 and standard deviation equal to 10. Let's pretend like you don't know the expected value from which you're simuating. Using a P-value cutoff of $5\%$, can you reject the null hypothesis that the expected value is equal to 5? The test will need to be `two.sided` as we don't know whether we expect the true expected value to be larger than or smaller than 5 *a priori*.
+**Exercise**: Create a single simulated data set of size 50, where each data point is drawn from a Normal distribution with expected value equal to 4 and standard deviation equal to 10. Let's pretend like you don't know the expected value from which you're simulating. Using a P-value cutoff of $5\%$, can you reject the null hypothesis that the expected value is equal to 5? The test will need to be `two.sided` as we don't know whether we expect the true expected value to be larger than or smaller than 5 *a priori*.
 Hint: you can do this in two ways, which should yield exactly the same P-values:
 
 1. computing a t-statistic and then using twice the CDF of a t-distribution with 'n-1' degrees of freedom, to obtain the symmetric 2-tailed P-values: `2*pt()`, or...
@@ -287,8 +287,8 @@ SD <- 10
 n <- 50
 normmat <- simsamps(n,1,rnorm,mean=EV,sd=SD) 
 tstat <- (mean(normmat) - 5)/(sd(normmat)/sqrt(n))
-t.test(normmat,mu=5,alternative="two.sided") # easy way of obtaining P-values
-2 * pt(tstat, df=n-1) # alternative way using the CDF of a t-distribution
+2 * pt(tstat, df=n-1) # option A: one way using the CDF of a t-distribution
+t.test(normmat,mu=5,alternative="two.sided") # option B: easy way of obtaining P-values
 ```
 
 
