@@ -23,6 +23,7 @@ Now let us start by specifying the parts of our Bayesian inference framework. Ag
 The second step: time for us to choose a prior - What prior would you choose? You have no information for the three coins - so a uniform prior on all three coins sounds like a good idea! What would a uniform prior look like?
 
 **Putting it all together**
+
 We are ready to apply Bayesian inference to identify which coin we have. Let us start by simulating some data. Choose a coin of your liking - I am choosing the one with the heads probability of 0.9. 
 
 __Exercise 1.__ With the coin with 0.9 probability of heads, simulate $N=10$ coin tosses. Note the number of heads as $H$. Use this as input data. Now use Bayes' rule together with the Uniform prior on the 3 coins to get the posterior on which coin was chosen? What does the posterior probability look like? Are you convinced about which coin was chosen?
@@ -54,8 +55,11 @@ In the last section, we used sampling from the posterior to understand the distr
 
 ### Point estimates 
 Remember that there are three point estimates in a Bayesian inference. 
+
 Posterior mean: $\theta_{mean} = E[\theta|D]$
+
 Posterior median: $\theta_{med}; P(\theta < \theta_{med} | D) = 0.5$
+
 Posterior mode: $\theta_{mode} = argmax~f(\theta | D)$
 
 __Exercise 9.__ Using the samples from exercises 5-7, compute the three point estimates for your problem? How well did these three perform? Why are they all the same in our case? (Note: You can compute these for problem 5, above using that you would expect them to be for a Normal distribution given the parameters of the posterior Normal distribution.) What happened to the point estimates when you used a prior of exercise 8.

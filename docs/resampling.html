@@ -168,7 +168,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="properties-of-estimators-and-hypothesis-testing.html"><a href="properties-of-estimators-and-hypothesis-testing.html#obtaining-confidence-intervals"><i class="fa fa-check"></i><b>7.2</b> Obtaining confidence intervals</a></li>
 <li class="chapter" data-level="7.3" data-path="properties-of-estimators-and-hypothesis-testing.html"><a href="properties-of-estimators-and-hypothesis-testing.html#hypothesis-testing"><i class="fa fa-check"></i><b>7.3</b> Hypothesis testing</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="likelihood-based-inference.html"><a href="likelihood-based-inference.html"><i class="fa fa-check"></i><b>8</b> Likelihood-based inference</a></li>
+<li class="chapter" data-level="8" data-path="likelihood-based-inference.html"><a href="likelihood-based-inference.html"><i class="fa fa-check"></i><b>8</b> Likelihood-based inference</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="likelihood-based-inference.html"><a href="likelihood-based-inference.html#meteorite-data"><i class="fa fa-check"></i><b>8.1</b> Meteorite data</a></li>
+<li class="chapter" data-level="8.2" data-path="likelihood-based-inference.html"><a href="likelihood-based-inference.html#simple-linear-regression"><i class="fa fa-check"></i><b>8.2</b> Simple linear regression</a></li>
+</ul></li>
 <li class="chapter" data-level="9" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>9</b> Bayesian Inference</a>
 <ul>
 <li class="chapter" data-level="9.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#using-bayes-rule-covid-19"><i class="fa fa-check"></i><b>9.1</b> Using Bayes’ rule: Covid-19</a></li>
@@ -288,13 +292,13 @@ In R, we can thus obtain the CI around the mean as follows:</p>
 <span id="cb78-4"><a href="resampling.html#cb78-4" aria-hidden="true" tabindex="-1"></a>NormalQ <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>,<span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
 <span id="cb78-5"><a href="resampling.html#cb78-5" aria-hidden="true" tabindex="-1"></a>CIs <span class="ot">&lt;-</span> <span class="fu">c</span>( bootsmean <span class="sc">-</span> SEb<span class="sc">*</span>NormalQ, bootsmean <span class="sc">+</span> SEb<span class="sc">*</span>NormalQ )</span>
 <span id="cb78-6"><a href="resampling.html#cb78-6" aria-hidden="true" tabindex="-1"></a>CIs</span></code></pre></div>
-<pre><code>## [1] 0.7115640 0.8082069</code></pre>
+<pre><code>## [1] 0.7107399 0.8094050</code></pre>
 <p>The percentile approach involves obtaining percentiles of the bootstrap distributions. If we are interested in a 95% CI, for example, we just look for the values of the distribution that correspond to the 2.5% percentile and the 97.5% percentile, so that the central boostrap distribution mass between them adds up to 95%.</p>
 <div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="resampling.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let bootsvec be our vector of boostrapped parameters from the previous exercise</span></span>
 <span id="cb80-2"><a href="resampling.html#cb80-2" aria-hidden="true" tabindex="-1"></a>CIs <span class="ot">&lt;-</span> <span class="fu">quantile</span>(bootsvec, <span class="fu">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>))</span>
 <span id="cb80-3"><a href="resampling.html#cb80-3" aria-hidden="true" tabindex="-1"></a>CIs</span></code></pre></div>
 <pre><code>##      2.5%     97.5% 
-## 0.7117170 0.8099989</code></pre>
+## 0.7130202 0.8133766</code></pre>
 </div>
 <div id="permutation-test" class="section level2" number="12.2">
 <h2><span class="header-section-number">12.2</span> Permutation test</h2>
@@ -335,7 +339,7 @@ In R, we can thus obtain the CI around the mean as follows:</p>
 <div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="resampling.html#cb86-1" aria-hidden="true" tabindex="-1"></a>permest <span class="ot">&lt;-</span> <span class="fu">lm</span>(logBrain <span class="sc">~</span> logBody, <span class="at">data=</span>permuted)<span class="sc">$</span>coeff[<span class="dv">2</span>]</span>
 <span id="cb86-2"><a href="resampling.html#cb86-2" aria-hidden="true" tabindex="-1"></a>permest</span></code></pre></div>
 <pre><code>##   logBody 
-## 0.1124023</code></pre>
+## -0.072061</code></pre>
 <p><strong>Exercise</strong>: try estimating the same parameter from a series of 100 permuted versions of our original data, and collecting each of the permuted parameters into a vector called “permvec.”</p>
 <p>We now have a distribution of the parameter estimate under the assumption that there is no relationship between these two variables:</p>
 <p><strong>Exercise</strong>: obtain an empirical one-tailed P-value from this distribution by counting how many of the permuted samples are as large as our original estimate, and dividing by the total number of permuted samples we have.</p>

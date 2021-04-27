@@ -25,6 +25,8 @@ properties-of-point-estimators
 obtaining-confidence-intervals
 hypothesis-testing
 likelihood-based-inference
+meteorite-data
+simple-linear-regression
 bayesian-inference
 using-bayes-rule-covid-19
 first-foray-into-bayesian-inference

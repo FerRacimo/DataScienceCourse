@@ -168,7 +168,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="properties-of-estimators-and-hypothesis-testing.html"><a href="properties-of-estimators-and-hypothesis-testing.html#obtaining-confidence-intervals"><i class="fa fa-check"></i><b>7.2</b> Obtaining confidence intervals</a></li>
 <li class="chapter" data-level="7.3" data-path="properties-of-estimators-and-hypothesis-testing.html"><a href="properties-of-estimators-and-hypothesis-testing.html#hypothesis-testing"><i class="fa fa-check"></i><b>7.3</b> Hypothesis testing</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="likelihood-based-inference.html"><a href="likelihood-based-inference.html"><i class="fa fa-check"></i><b>8</b> Likelihood-based inference</a></li>
+<li class="chapter" data-level="8" data-path="likelihood-based-inference.html"><a href="likelihood-based-inference.html"><i class="fa fa-check"></i><b>8</b> Likelihood-based inference</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="likelihood-based-inference.html"><a href="likelihood-based-inference.html#meteorite-data"><i class="fa fa-check"></i><b>8.1</b> Meteorite data</a></li>
+<li class="chapter" data-level="8.2" data-path="likelihood-based-inference.html"><a href="likelihood-based-inference.html#simple-linear-regression"><i class="fa fa-check"></i><b>8.2</b> Simple linear regression</a></li>
+</ul></li>
 <li class="chapter" data-level="9" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>9</b> Bayesian Inference</a>
 <ul>
 <li class="chapter" data-level="9.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#using-bayes-rule-covid-19"><i class="fa fa-check"></i><b>9.1</b> Using Bayes’ rule: Covid-19</a></li>
@@ -249,8 +253,8 @@ From the paper, we know that the sensitivity of the test, <span class="math inli
 <p>So A is a fair coin, while B and C are biased. And <em>a priori</em> there is no way for us to know which coin you have for your toss experiments.</p>
 <p>Now let us start by specifying the parts of our Bayesian inference framework. Again, recall the Bayesian framework - we want to compute the posterior probabilities; in this case, that would be the probability that the coin we chose is A, B or C <strong>given</strong> the number of heads and tails observed. Let us denote the number of heads as <span class="math inline">\(H\)</span> and number of tails as <span class="math inline">\(T\)</span>. So our data <span class="math inline">\(D\)</span> consists of just the number of heads and the total number of tosses <span class="math inline">\(N = H+T\)</span>. What kind of model would you choose for this data? How would you write the likelihood of this data given the probability of heads, <span class="math inline">\(p\)</span> (Remeber the Binomial distribution).</p>
 <p>The second step: time for us to choose a prior - What prior would you choose? You have no information for the three coins - so a uniform prior on all three coins sounds like a good idea! What would a uniform prior look like?</p>
-<p><strong>Putting it all together</strong>
-We are ready to apply Bayesian inference to identify which coin we have. Let us start by simulating some data. Choose a coin of your liking - I am choosing the one with the heads probability of 0.9.</p>
+<p><strong>Putting it all together</strong></p>
+<p>We are ready to apply Bayesian inference to identify which coin we have. Let us start by simulating some data. Choose a coin of your liking - I am choosing the one with the heads probability of 0.9.</p>
 <p><strong>Exercise 1.</strong> With the coin with 0.9 probability of heads, simulate <span class="math inline">\(N=10\)</span> coin tosses. Note the number of heads as <span class="math inline">\(H\)</span>. Use this as input data. Now use Bayes’ rule together with the Uniform prior on the 3 coins to get the posterior on which coin was chosen? What does the posterior probability look like? Are you convinced about which coin was chosen?</p>
 <p><strong>Exercise 2.</strong> Same as exercise 1, but with <span class="math inline">\(N=100\)</span> and <span class="math inline">\(N=1000\)</span> coin tosses. How does the posterior change? Did your “confidence” in which coin you chose increase, and how much?</p>
 <p><strong>Exercise 3.</strong> Now repeat for <span class="math inline">\(N=10, 100, 1000\)</span> coin tosses, but use the coin with heads probability of 0.6. How did your results change? Was it easier or more difficult to separate the three coin cases?</p>
@@ -270,10 +274,10 @@ We are ready to apply Bayesian inference to identify which coin we have. Let us 
 <p>In the last section, we used sampling from the posterior to understand the distribution and compute statistics such as the mean and variance of the posterior distribution. We will use the results from Exercise 5-7, to compute the point estimates and the credible interval.</p>
 <div id="point-estimates" class="section level3" number="9.4.1">
 <h3><span class="header-section-number">9.4.1</span> Point estimates</h3>
-<p>Remember that there are three point estimates in a Bayesian inference.
-Posterior mean: <span class="math inline">\(\theta_{mean} = E[\theta|D]\)</span>
-Posterior median: <span class="math inline">\(\theta_{med}; P(\theta &lt; \theta_{med} | D) = 0.5\)</span>
-Posterior mode: <span class="math inline">\(\theta_{mode} = argmax~f(\theta | D)\)</span></p>
+<p>Remember that there are three point estimates in a Bayesian inference.</p>
+<p>Posterior mean: <span class="math inline">\(\theta_{mean} = E[\theta|D]\)</span></p>
+<p>Posterior median: <span class="math inline">\(\theta_{med}; P(\theta &lt; \theta_{med} | D) = 0.5\)</span></p>
+<p>Posterior mode: <span class="math inline">\(\theta_{mode} = argmax~f(\theta | D)\)</span></p>
 <p><strong>Exercise 9.</strong> Using the samples from exercises 5-7, compute the three point estimates for your problem? How well did these three perform? Why are they all the same in our case? (Note: You can compute these for problem 5, above using that you would expect them to be for a Normal distribution given the parameters of the posterior Normal distribution.) What happened to the point estimates when you used a prior of exercise 8.</p>
 <p><strong>Exercise X. (BONUS)</strong> If you did the last bonus exercise, then compute the point estimates for the coin toss problem.</p>
 </div>
