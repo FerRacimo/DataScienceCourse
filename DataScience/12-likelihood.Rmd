@@ -1,4 +1,4 @@
-# Frequentist Inference
+# Likelihood-based inference
 
 To understand and experiment with frequentist inference, we will focus our efforts on the Maximum Likelihood Estimates (MLE). To accomplish this, we will use two different approaches. First, we will use calculus to calculate the MLE of parameters of the exponential distribution using some meteorite landing data from NASA. We will also use grid search to narrow down the parameter estimate. Second, we will use a linear regression model to use both calculus and numerical methods to get the MLE of the parameters of a simple linear regression. Let's get started. 
 

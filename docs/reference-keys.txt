@@ -1,4 +1,4 @@
-tab:unnamed-chunk-21
+tab:unnamed-chunk-24
 introduction
 intro
 prob1
@@ -24,8 +24,14 @@ properties-of-estimators-and-hypothesis-testing
 properties-of-point-estimators
 obtaining-confidence-intervals
 hypothesis-testing
-frequentist-inference
+likelihood-based-inference
 bayesian-inference
+using-bayes-rule-covid-19
+first-foray-into-bayesian-inference
+conjugate-prior-rejection-sampling-and-mcmc
+bayesian-point-estimates-and-credible-intervals
+point-estimates
+credible-intervals
 classification
 model-assessment
 resampling

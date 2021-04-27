@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-04-21" />
+<meta name="date" content="2021-04-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -168,8 +168,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="properties-of-estimators-and-hypothesis-testing.html"><a href="properties-of-estimators-and-hypothesis-testing.html#obtaining-confidence-intervals"><i class="fa fa-check"></i><b>7.2</b> Obtaining confidence intervals</a></li>
 <li class="chapter" data-level="7.3" data-path="properties-of-estimators-and-hypothesis-testing.html"><a href="properties-of-estimators-and-hypothesis-testing.html#hypothesis-testing"><i class="fa fa-check"></i><b>7.3</b> Hypothesis testing</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="frequentist-inference.html"><a href="frequentist-inference.html"><i class="fa fa-check"></i><b>8</b> Frequentist inference</a></li>
-<li class="chapter" data-level="9" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>9</b> Bayesian Inference</a></li>
+<li class="chapter" data-level="8" data-path="likelihood-based-inference.html"><a href="likelihood-based-inference.html"><i class="fa fa-check"></i><b>8</b> Likelihood-based inference</a></li>
+<li class="chapter" data-level="9" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>9</b> Bayesian Inference</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#using-bayes-rule-covid-19"><i class="fa fa-check"></i><b>9.1</b> Using Bayes’ rule: Covid-19</a></li>
+<li class="chapter" data-level="9.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#first-foray-into-bayesian-inference"><i class="fa fa-check"></i><b>9.2</b> First foray into Bayesian inference</a></li>
+<li class="chapter" data-level="9.3" data-path="bayesian-inference.html"><a href="bayesian-inference.html#conjugate-prior-rejection-sampling-and-mcmc"><i class="fa fa-check"></i><b>9.3</b> Conjugate prior, Rejection sampling and MCMC*</a></li>
+<li class="chapter" data-level="9.4" data-path="bayesian-inference.html"><a href="bayesian-inference.html#bayesian-point-estimates-and-credible-intervals"><i class="fa fa-check"></i><b>9.4</b> Bayesian point estimates and credible intervals</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#point-estimates"><i class="fa fa-check"></i><b>9.4.1</b> Point estimates</a></li>
+<li class="chapter" data-level="9.4.2" data-path="bayesian-inference.html"><a href="bayesian-inference.html#credible-intervals"><i class="fa fa-check"></i><b>9.4.2</b> Credible intervals</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="10" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>10</b> Classification</a></li>
 <li class="chapter" data-level="11" data-path="model-assessment.html"><a href="model-assessment.html"><i class="fa fa-check"></i><b>11</b> Model Assessment</a></li>
 <li class="chapter" data-level="12" data-path="resampling.html"><a href="resampling.html"><i class="fa fa-check"></i><b>12</b> Resampling</a>
@@ -228,17 +238,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="libraries-and-data-1" class="section level2" number="15.1">
 <h2><span class="header-section-number">15.1</span> Libraries and Data</h2>
 <p>We’ll use the following libraries for clustering:</p>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="clustering.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;cluster&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;cluster&quot;</span>)</span>
-<span id="cb117-2"><a href="clustering.html#cb117-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;NbClust&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;NbClust&quot;</span>)</span>
-<span id="cb117-3"><a href="clustering.html#cb117-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;tidyverse&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="clustering.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;cluster&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;cluster&quot;</span>)</span>
+<span id="cb121-2"><a href="clustering.html#cb121-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;NbClust&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;NbClust&quot;</span>)</span>
+<span id="cb121-3"><a href="clustering.html#cb121-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">&quot;tidyverse&quot;</span>)) <span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
 <p>Now, load the iris dataset using the <code>data()</code> function.</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="clustering.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="clustering.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span></code></pre></div>
 </div>
 <div id="distances" class="section level2" number="15.2">
 <h2><span class="header-section-number">15.2</span> Distances</h2>
 <p>The variables we will use to cluster our data are the four flower measurements in the iris dataset. They all represent the measured length of a segment between two points (e.g. sepal length, petal width), the Euclidean distance is an obvious choice of distance for clustering our observation. The clustering method we will apply to our data (and the ordination methods we applied before) implicitly use the function <code>dist()</code> to calculate distances between observations.</p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="clustering.html#cb119-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">dist</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">method=</span><span class="st">&quot;euclidean&quot;</span>)</span>
-<span id="cb119-2"><a href="clustering.html#cb119-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(d)</span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="clustering.html#cb123-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">dist</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">method=</span><span class="st">&quot;euclidean&quot;</span>)</span>
+<span id="cb123-2"><a href="clustering.html#cb123-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(d)</span></code></pre></div>
 <p><strong>Exercise</strong>: Take a look at the first row of this matrix (<code>d[1,]</code>). Under the chosen distance metric, what is the most disparate observation from specimen 1? What is the distance between this specimen and specimen 1? Do these specimens belong to different species? (Hint: the species ID is stored in the origin <code>iris</code> data frame)</p>
 <!--
 
@@ -250,17 +260,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">15.3</span> K-means clustering</h2>
 <p>Ok, we’re almost ready to cluster our data. There are just a few preliminary details to keep in mind.</p>
 <p>The first of these details is that our variables lie on different scales: some span a wider range of variation than others. A common practice in clustering is to scale all variables in our data such that they are mean-centered and have a standard deviation of 1, before performing the clustering. This ensures that all variables have the same “vote” in the clustering. If we don’t scale, then variables that have large amounts of variation (large standard deviations) will disproportionately affect the Euclidean distance, and therefore our clustering will be highly influenced by those variables to the detriment of other variables. This is not inherently wrong, but it is important to keep in mind that unscaled data might result in different clusters than scaled data. To scale our data, we use the function <code>scale()</code>.</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="clustering.html#cb120-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">scale</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="clustering.html#cb124-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">scale</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span></code></pre></div>
 <p><strong>Exercise</strong>: what’s the mean and standard deviation of each of the four variables in the iris dataset before scaling? what is their mean and standard deviation after scaling?</p>
 <p>Ok, now on to the second preliminary detail. Clustering methods require the specification of the number of clusters that we a priori choose to fit the data to. Deciding on what is the “best” number of clusters depends on a number of criteria (e.g. minimizes the total within-cluster variance, homogenizing per-cluster variance, etc), and there are many methods with different criteria. We’ll use the function <code>NbClust</code> which runs 26 of these different methods on our data for assessing the “best” number of clusters. We’ll then choose to use the number of clusters that is recommended by the largest number of methods.</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="clustering.html#cb121-1" aria-hidden="true" tabindex="-1"></a>numclust <span class="ot">&lt;-</span> <span class="fu">NbClust</span>(df, <span class="at">min.nc=</span><span class="dv">2</span>, <span class="at">max.nc=</span><span class="dv">15</span>, <span class="at">distance=</span><span class="st">&quot;euclidean&quot;</span>, <span class="at">method=</span><span class="st">&quot;kmeans&quot;</span>)</span></code></pre></div>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="clustering.html#cb125-1" aria-hidden="true" tabindex="-1"></a>numclust <span class="ot">&lt;-</span> <span class="fu">NbClust</span>(df, <span class="at">min.nc=</span><span class="dv">2</span>, <span class="at">max.nc=</span><span class="dv">15</span>, <span class="at">distance=</span><span class="st">&quot;euclidean&quot;</span>, <span class="at">method=</span><span class="st">&quot;kmeans&quot;</span>)</span></code></pre></div>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-115-1.png" width="672" /></p>
 <pre><code>## *** : The Hubert index is a graphical method of determining the number of clusters.
 ##                 In the plot of Hubert index, we seek a significant knee that corresponds to a 
 ##                 significant increase of the value of the measure i.e the significant peak in Hubert
 ##                 index second differences plot. 
 ## </code></pre>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-110-2.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-115-2.png" width="672" /></p>
 <pre><code>## *** : The D index is a graphical method of determining the number of clusters. 
 ##                 In the plot of D index, we seek a significant knee (the significant peak in Dindex
 ##                 second differences plot) that corresponds to a significant increase of the value of
@@ -282,33 +292,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  
 ##  
 ## *******************************************************************</code></pre>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="clustering.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(numclust<span class="sc">$</span>Best.n[<span class="dv">1</span>,])</span></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="clustering.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(numclust<span class="sc">$</span>Best.n[<span class="dv">1</span>,])</span></code></pre></div>
 <pre><code>## 
 ##  0  2  3  4  5 12 14 15 
 ##  2 10  6  1  1  3  1  2</code></pre>
 <p>It seems like ten of the methods suggest that the best number of clusters should be 2. There is also a considerable (but smaller) number of methods (six), that suggest it should be 3.</p>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="clustering.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(numclust<span class="sc">$</span>Best.n[<span class="dv">1</span>,]),</span>
-<span id="cb126-2"><a href="clustering.html#cb126-2" aria-hidden="true" tabindex="-1"></a><span class="at">xlab=</span><span class="st">&quot;Number of Clusters&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Number of Criteria&quot;</span>, <span class="at">main=</span><span class="st">&quot;Number of Clusters Chosen by 26 Criteria&quot;</span>)</span></code></pre></div>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="clustering.html#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(numclust<span class="sc">$</span>Best.n[<span class="dv">1</span>,]),</span>
+<span id="cb130-2"><a href="clustering.html#cb130-2" aria-hidden="true" tabindex="-1"></a><span class="at">xlab=</span><span class="st">&quot;Number of Clusters&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Number of Criteria&quot;</span>, <span class="at">main=</span><span class="st">&quot;Number of Clusters Chosen by 26 Criteria&quot;</span>)</span></code></pre></div>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-116-1.png" width="672" /></p>
 <p>Let’s go with 2 clusters then. We are now finally ready to perform a K-means clustering. We do so as follows:</p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="clustering.html#cb127-1" aria-hidden="true" tabindex="-1"></a>fit.kmeans <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="clustering.html#cb131-1" aria-hidden="true" tabindex="-1"></a>fit.kmeans <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="dv">2</span>)</span></code></pre></div>
 <p>The cluster assignments for all observations are stored in the “cluster” attribute of the resulting object:</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="clustering.html#cb128-1" aria-hidden="true" tabindex="-1"></a>clustassig <span class="ot">&lt;-</span> fit.kmeans<span class="sc">$</span>cluster</span>
-<span id="cb128-2"><a href="clustering.html#cb128-2" aria-hidden="true" tabindex="-1"></a>clustassig</span></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="clustering.html#cb132-1" aria-hidden="true" tabindex="-1"></a>clustassig <span class="ot">&lt;-</span> fit.kmeans<span class="sc">$</span>cluster</span>
+<span id="cb132-2"><a href="clustering.html#cb132-2" aria-hidden="true" tabindex="-1"></a>clustassig</span></code></pre></div>
 <pre><code>##   [1] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
 ##  [38] 2 2 2 2 2 2 2 2 2 2 2 2 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 ##  [75] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 ## [112] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 ## [149] 1 1</code></pre>
 <p>We can use this vector to plot our data, colored by the resulting clusters.</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="clustering.html#cb130-1" aria-hidden="true" tabindex="-1"></a>clustassig <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(clustassig) <span class="co"># Treat the cluster assignments as discrete factors</span></span>
-<span id="cb130-2"><a href="clustering.html#cb130-2" aria-hidden="true" tabindex="-1"></a>irisclust <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(iris,clustassig) <span class="co"># Combine data with cluster assignments</span></span>
-<span id="cb130-3"><a href="clustering.html#cb130-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Sepal.Length,<span class="at">y=</span>Sepal.Width,<span class="at">color=</span>clustassig)) <span class="co"># Plot sepal variables</span></span></code></pre></div>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-114-1.png" width="672" /></p>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="clustering.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width,<span class="at">color=</span>clustassig)) <span class="co"># Plot petal variables</span></span></code></pre></div>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-114-2.png" width="672" /></p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="clustering.html#cb134-1" aria-hidden="true" tabindex="-1"></a>clustassig <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(clustassig) <span class="co"># Treat the cluster assignments as discrete factors</span></span>
+<span id="cb134-2"><a href="clustering.html#cb134-2" aria-hidden="true" tabindex="-1"></a>irisclust <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(iris,clustassig) <span class="co"># Combine data with cluster assignments</span></span>
+<span id="cb134-3"><a href="clustering.html#cb134-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Sepal.Length,<span class="at">y=</span>Sepal.Width,<span class="at">color=</span>clustassig)) <span class="co"># Plot sepal variables</span></span></code></pre></div>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-119-1.png" width="672" /></p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="clustering.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>Petal.Length,<span class="at">y=</span>Petal.Width,<span class="at">color=</span>clustassig)) <span class="co"># Plot petal variables</span></span></code></pre></div>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-119-2.png" width="672" /></p>
 <p><strong>Exercise</strong>: Now try computing a K-means clustering on the data yourself, this time using 3 clusters. Plot the result using a different color for each cluster.</p>
-<p><img src="DataScience_files/figure-html/unnamed-chunk-115-1.png" width="672" /><img src="DataScience_files/figure-html/unnamed-chunk-115-2.png" width="672" /></p>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-120-1.png" width="672" /><img src="DataScience_files/figure-html/unnamed-chunk-120-2.png" width="672" /></p>
 <p><strong>Exercise</strong>: How well do the clusters from the previous exercise correspond to the 3 iris species? Are they perfectly matched? Why? Why not?</p>
 
 </div>
