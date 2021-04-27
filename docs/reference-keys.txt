@@ -63,3 +63,5 @@ conjugate-prior-rejection-sampling-and-mcmc
 bayesian-point-estimates-and-credible-intervals
 point-estimates
 credible-intervals
+meteorite-data
+simple-linear-regression

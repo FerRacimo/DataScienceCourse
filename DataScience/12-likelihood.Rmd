@@ -1,1 +1,42 @@
-# Frequentist inference
+# Frequentist Inference
+
+To understand and experiment with frequentist inference, we will focus our efforts on the Maximum Likelihood Estimates (MLE). To accomplish this, we will use two different approaches. First, we will use calculus to calculate the MLE of parameters of the exponential distribution using some meteorite landing data from NASA. We will also use grid search to narrow down the parameter estimate. Second, we will use a linear regression model to use both calculus and numerical methods to get the MLE of the parameters of a simple linear regression. Let's get started. 
+
+## Meteorite data
+First of all, download the meteorite data from the absalon home page under files for today's lecture. Note that you have a choice of 2 data sets, one is a pre-processed data set with only the location and year, and the second one is the full data set which you can use to play a bit more with, if you are so inclined. 
+
+__Exercise 1.__ Let us first process the data, and plot it to visualize how many meteorites fell per year in the period 1890-1970. Also plot a histogram of this number (meteorites/year). What does it look like? Given what you know about the data, what distribution would you say works best for this type of data? 
+
+__Exercise 2.__ Write the log-likelihood of the Poisson distribution? Using this log-likelihood, use calculus to figure out what the MLE of the rate parameter would be? Use this to get an estimate of the rate parameter for the number of meteorites that fall on the earth every year.
+
+__Exercise 3.__ Using the log-likelihood equation from above, plot the log-likelihood for our data over a grid of values from 0 to 25, with a spacing of 0.1. Looking at the log-likelihood values over this range, what would your estimate of the rate parameter be (Hint: Where does the log-likelihood hit its maximum?)
+
+__Exercise 4.__ Use the rate parameter you obtained from exercise 2 to plot the density of the Poisson distribution. Compare this to the density from the data. Is it a good fit?
+
+__Exercise X. (BONUS)__ Instead of using the range 1890-1970, use the range 1890-2000. What do your exploratory plots show? Find the MLE estimate for this data, and repeat the part from exercise 4. Is this a good fit now?
+
+## Simple linear regression
+In this example, we will first simulate data from a linear model, then we will use inbuilt functions to estimate the parameters for our linear model, and finally we will use a numerical solver to figure out what estimates we get from maximizing the log-likelihood function for our data. 
+
+Recall that the simple linear regression model is represented by $$Y_i = \alpha + \beta x_i + \epsilon_i$$
+Also, recall that $\epsilon_i \sim N(0, \sigma^2)$, and that the observations are i.i.d. (independent and identically distributed), which just means that for all $i$, the $\epsilon_i$ has the same distribution and that these "error terms" are not correlated between the different $i$.
+
+Since we assume that $\alpha$, $\beta$ and $x_i$ are fixed quantities (and not random variables), we can compute the distribution of $Y_i$. We can compute the expectation of $Y_i$ as $$E[Y_i] = E[\alpha+\beta x_i + \epsilon_i] \\ E[Y_i] = \alpha + \beta x_i + E[\epsilon_i]\\E[Y_i] = \alpha + \beta x_i$$
+
+Similarly the variance of $Y_i$ can be computed as $$Var(Y_i) = Var(\alpha+\beta x_i + \epsilon_i)\\Var(Y_i) = Var(\epsilon_i) = \sigma^2$$
+
+So we can conclude that $Y_i \sim N(\alpha+\beta x_i, \sigma^2)$. 
+
+Now that we know the distribution of $Y_i$, we can write the likelihood of the parameters ($\alpha$ and $\beta$) for a single observation as $$L(\alpha, \beta) = f(Y_i | \alpha, \beta) = \frac{1}{\sigma \sqrt{2\pi}}e^{((Y_i - \alpha - \beta x_i)^2)/2\sigma^2}$$
+
+We are ready to start the exercises now. 
+
+__Exercise 5.__ Assume that you have $n$ observations of $Y_i$ and their corresponding $x_i$ values. Use the equation above to write the joint log likelihood of $n$ observations. (Hint: Remember that we assumed that the $\epsilon_i$ are i.i.d.) [__BONUS__: Use calculus to get MLEs of $\alpha$ and $\beta$.]
+
+__Exercise 6.__ Let us simulate some data. We will use $n=100$, $\alpha=1.5$, $\beta=3$ and $\sigma^2=0.81$. Start with simulating 100 values for $x$: $x_1,\dots,x_{100}$ by using a standard uniform in the range (0,20) using the `runif` function, then simulation $\epsilon_1, \dots,\epsilon_{100}$ from $N(0, 0.81)$. Now calculate $Y_i$s using the first equation of this section. Plot the distribution of $Y_i$. What does it look like?
+
+__Exercise 7.__ Now we can fit our simple linear regression using the inbuilt R function `lm`. After you fit the model, use the summary function to get details on the model. What do your parameters look like? Are they close enough estimates of our choice of 1.5 and 3? Can you compute the 95% confidence interval of these estimates from the output of the summary of the model?
+
+__Exercise 8. (semi-difficult)__ Using the log-likelihood equation you calculated in step 5, and using the inbuilt function `optim`, find the $\alpha$ and $\beta$ parameters that maximize the log-likelihood. Do these estimates agree with the values from `lm`? (Hint: Write a R function that takes in the values of $\alpha$ and $\beta$ - as a single vector - and returns the log-likelihood. Use this function in `optim`.)
+
+__Exercise X. (BONUS)__ Repeat exercise 6 and 7 with $n=1000$. How does this affect the outcome? What happened to our estimates of the parameters - in terms of precision and accuracy?
