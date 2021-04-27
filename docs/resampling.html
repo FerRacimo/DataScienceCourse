@@ -21,7 +21,7 @@
   <meta name="twitter:description" content="This is a guide for the Globe Data Science Course." />
   
 
-<meta name="author" content="Fernando Racimo, …" />
+<meta name="author" content="Fernando Racimo, Shyam Gopalakrishnan" />
 
 
 <meta name="date" content="2021-04-27" />
@@ -292,13 +292,13 @@ In R, we can thus obtain the CI around the mean as follows:</p>
 <span id="cb78-4"><a href="resampling.html#cb78-4" aria-hidden="true" tabindex="-1"></a>NormalQ <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>,<span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
 <span id="cb78-5"><a href="resampling.html#cb78-5" aria-hidden="true" tabindex="-1"></a>CIs <span class="ot">&lt;-</span> <span class="fu">c</span>( bootsmean <span class="sc">-</span> SEb<span class="sc">*</span>NormalQ, bootsmean <span class="sc">+</span> SEb<span class="sc">*</span>NormalQ )</span>
 <span id="cb78-6"><a href="resampling.html#cb78-6" aria-hidden="true" tabindex="-1"></a>CIs</span></code></pre></div>
-<pre><code>## [1] 0.7107399 0.8094050</code></pre>
+<pre><code>## [1] 0.7119667 0.8095870</code></pre>
 <p>The percentile approach involves obtaining percentiles of the bootstrap distributions. If we are interested in a 95% CI, for example, we just look for the values of the distribution that correspond to the 2.5% percentile and the 97.5% percentile, so that the central boostrap distribution mass between them adds up to 95%.</p>
 <div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="resampling.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let bootsvec be our vector of boostrapped parameters from the previous exercise</span></span>
 <span id="cb80-2"><a href="resampling.html#cb80-2" aria-hidden="true" tabindex="-1"></a>CIs <span class="ot">&lt;-</span> <span class="fu">quantile</span>(bootsvec, <span class="fu">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>))</span>
 <span id="cb80-3"><a href="resampling.html#cb80-3" aria-hidden="true" tabindex="-1"></a>CIs</span></code></pre></div>
 <pre><code>##      2.5%     97.5% 
-## 0.7130202 0.8133766</code></pre>
+## 0.7146090 0.8121696</code></pre>
 </div>
 <div id="permutation-test" class="section level2" number="12.2">
 <h2><span class="header-section-number">12.2</span> Permutation test</h2>
@@ -338,8 +338,8 @@ In R, we can thus obtain the CI around the mean as follows:</p>
 <p><img src="DataScience_files/figure-html/unnamed-chunk-77-1.png" width="672" /></p>
 <div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="resampling.html#cb86-1" aria-hidden="true" tabindex="-1"></a>permest <span class="ot">&lt;-</span> <span class="fu">lm</span>(logBrain <span class="sc">~</span> logBody, <span class="at">data=</span>permuted)<span class="sc">$</span>coeff[<span class="dv">2</span>]</span>
 <span id="cb86-2"><a href="resampling.html#cb86-2" aria-hidden="true" tabindex="-1"></a>permest</span></code></pre></div>
-<pre><code>##   logBody 
-## -0.072061</code></pre>
+<pre><code>##     logBody 
+## -0.03927568</code></pre>
 <p><strong>Exercise</strong>: try estimating the same parameter from a series of 100 permuted versions of our original data, and collecting each of the permuted parameters into a vector called “permvec.”</p>
 <p>We now have a distribution of the parameter estimate under the assumption that there is no relationship between these two variables:</p>
 <p><strong>Exercise</strong>: obtain an empirical one-tailed P-value from this distribution by counting how many of the permuted samples are as large as our original estimate, and dividing by the total number of permuted samples we have.</p>

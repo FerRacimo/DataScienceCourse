@@ -178,7 +178,7 @@ We can determine which of these trials was equal to 10 using the "==" symbol:
 ```{r}
 k <- 10
 verify <- (binomvec == k)
-verify
+head(verify)
 ```
 
 This returns a new vector in which each element is equal to TRUE if the corresponding element in "binomvec" is equal to 10, and FALSE otherwise. The nice thing is that R considers the value of TRUE to also be equal to 1, and the value of FALSE to also be equal to 0, so we can actually apply the function sum() to this vector!
@@ -232,7 +232,7 @@ nsims <- 100000
 size <- 10
 prob <- 0.5
 X <- rbinom(nsims, size, prob)
-X
+head(X)
 mean(X)
 var(X)
 ```
