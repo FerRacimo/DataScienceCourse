@@ -147,7 +147,7 @@ bounded <- (EV > normlow & EV < normhigh)
 prop <- sum(bounded)/length(bounded)
 ```
 
-Here, because we are using simulations, we can obtain the standard error of the mean by generating many data sets. Recall from the Central Limit Theorem that the standard error of the mean is equal to a scaled version of the standard deviation, when n is large:
+Here, because we are using simulations, we can obtain the standard error of the mean by generating many data sets. Recall that the standard error of the mean is equal to a scaled version of the standard deviation:
 
 $$SE(\hat{\theta}_n) = \frac{\sqrt{\sigma^2}}{\sqrt{n}}$$
 
@@ -184,7 +184,7 @@ curve(dt(x,19),from=-5,to=5,n=5000,col="blue",lty=3,add=TRUE)
 legend("topright",c("Normal(0,1)","t-dist,n=3","t-dist,n=6","t-dist,n=20"),lty=c(1,1,2,3),col=c("red","blue","blue","blue"))
 ```
 
-The t-distribution arises has a single parameter (called the 'degrees of freedom'), and represents how much information we have about the shape of the sampling distribution. In our case, this parameter should be set to $n-1$ where $n$ is the size of our data set. The larger our dataset, the bigger this parameter, and the closer the t-distribution will become to a Normal distribution.
+The t-distribution has a single parameter (called the 'degrees of freedom'), and represents how much information we have about the shape of the sampling distribution. In our case, this parameter should be set to $n-1$ where $n$ is the size of our data set. The larger our dataset, the bigger this parameter, and the closer the t-distribution will become to a Normal distribution.
 
 Thus, to compute the $95\%$ confidence intervals when working with a real data set with a normally distributed estimator, we can use this formula:
 

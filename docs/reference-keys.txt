@@ -24,7 +24,7 @@ properties-of-estimators-and-hypothesis-testing
 properties-of-point-estimators
 obtaining-confidence-intervals
 hypothesis-testing
-frequentist-inference
+likelihood-based-inference
 bayesian-inference
 using-bayes-rule-covid-19
 first-foray-into-bayesian-inference

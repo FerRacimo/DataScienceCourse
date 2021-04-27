@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, …" />
 
 
-<meta name="date" content="2021-04-26" />
+<meta name="date" content="2021-04-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="linear-models.html"/>
-<link rel="next" href="frequentist-inference.html"/>
+<link rel="next" href="likelihood-based-inference.html"/>
 <script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -168,7 +168,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.2" data-path="properties-of-estimators-and-hypothesis-testing.html"><a href="properties-of-estimators-and-hypothesis-testing.html#obtaining-confidence-intervals"><i class="fa fa-check"></i><b>7.2</b> Obtaining confidence intervals</a></li>
 <li class="chapter" data-level="7.3" data-path="properties-of-estimators-and-hypothesis-testing.html"><a href="properties-of-estimators-and-hypothesis-testing.html#hypothesis-testing"><i class="fa fa-check"></i><b>7.3</b> Hypothesis testing</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="frequentist-inference.html"><a href="frequentist-inference.html"><i class="fa fa-check"></i><b>8</b> Frequentist inference</a></li>
+<li class="chapter" data-level="8" data-path="likelihood-based-inference.html"><a href="likelihood-based-inference.html"><i class="fa fa-check"></i><b>8</b> Likelihood-based inference</a></li>
 <li class="chapter" data-level="9" data-path="bayesian-inference.html"><a href="bayesian-inference.html"><i class="fa fa-check"></i><b>9</b> Bayesian Inference</a>
 <ul>
 <li class="chapter" data-level="9.1" data-path="bayesian-inference.html"><a href="bayesian-inference.html#using-bayes-rule-covid-19"><i class="fa fa-check"></i><b>9.1</b> Using Bayes’ rule: Covid-19</a></li>
@@ -299,7 +299,7 @@ Here, <span class="math inline">\(q_{x\%}\)</span> is the <span class="math inli
 </blockquote>
 <p>The mean of a normally distributed dataset is both unbiased and normally distributed, so the stated assumptions hold in that case. Let’s verify that:</p>
 <p><strong>Exercise</strong>: Create 20,000 simulated data sets of size 5, each drawn from a Normal distribution with expected value equal to 4 and standard deviation equal to 10. For each dataset, compute the sample mean. Then, compute the standard error of the mean (standard deviation over all means). Finally, use the standard error to compute the <span class="math inline">\(95\%\)</span> confidence intervals for each data set, using the formula stated above. How often do these confidence intervals contain the expected value? Hint: to obtain the quantiles of a Normal distribution, you can use the function <code>qnorm</code>. For example, the <span class="math inline">\(35\%\)</span> quantile of a standard Normal(0,1) distribution is equal to <code>qnorm(0.35,mean=0,sd=1)</code>.</p>
-<p>Here, because we are using simulations, we can obtain the standard error of the mean by generating many data sets. Recall from the Central Limit Theorem that the standard error of the mean is equal to a scaled version of the standard deviation, when n is large:</p>
+<p>Here, because we are using simulations, we can obtain the standard error of the mean by generating many data sets. Recall that the standard error of the mean is equal to a scaled version of the standard deviation:</p>
 <p><span class="math display">\[SE(\hat{\theta}_n) = \frac{\sqrt{\sigma^2}}{\sqrt{n}}\]</span></p>
 <p>In practice, when working with a single data set, the estimator’s standard error <span class="math inline">\(SE(\hat{\theta}_n)\)</span> is generally unknown. However, it can be approximated using the sample standard deviation <span class="math inline">\(s\)</span> of the dataset we are studying:</p>
 <p><span class="math display">\[SE(\hat{\theta}_n) \approx \frac{s}{\sqrt{n}}\]</span>
@@ -308,7 +308,7 @@ Thus, we can obtain CIs by replacing <span class="math inline">\(SE(\hat{\theta}
 <p><strong>Exercise</strong>: Repeat the exercise above, but instead of using the standard error, approximate this value by using the standard deviation (<span class="math inline">\(s\)</span>) of each data set (via the function <code>sd()</code>). Plug that standard deviation into the formula above for obtaining confidence intervals. How often do these confidence intervals contain the expected value? Repeat this exercise multiple times. Is the proportion of bounded means as accurate as in the previous exercise?</p>
 <p>As you’ve probably noticed, this will lead to overly confident boundaries, because we’ve replaced the standard error with a rough approximation to it. To correct for this, we must replace the quantiles of the Normal distribution with the quantiles of a distribution with slightly bigger tails: a ‘more uncertain’ distribution, called the t-distribution. This serves to correct for the extra uncertainty that we are bringing in by using our sample’s standard deviation <span class="math inline">\(s\)</span> instead of the true <span class="math inline">\(SE(\hat{\theta}_n)\)</span> of the sampling distribution:</p>
 <p><img src="DataScience_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
-<p>The t-distribution arises has a single parameter (called the ‘degrees of freedom’), and represents how much information we have about the shape of the sampling distribution. In our case, this parameter should be set to <span class="math inline">\(n-1\)</span> where <span class="math inline">\(n\)</span> is the size of our data set. The larger our dataset, the bigger this parameter, and the closer the t-distribution will become to a Normal distribution.</p>
+<p>The t-distribution has a single parameter (called the ‘degrees of freedom’), and represents how much information we have about the shape of the sampling distribution. In our case, this parameter should be set to <span class="math inline">\(n-1\)</span> where <span class="math inline">\(n\)</span> is the size of our data set. The larger our dataset, the bigger this parameter, and the closer the t-distribution will become to a Normal distribution.</p>
 <p>Thus, to compute the <span class="math inline">\(95\%\)</span> confidence intervals when working with a real data set with a normally distributed estimator, we can use this formula:</p>
 <p><span class="math display">\[(\hat{\theta} + \frac{s}{\sqrt{n}}t_{2.5\%}, \hat{\theta} + \frac{s}{\sqrt{n}}t_{97.5\%})\]</span>
 where <span class="math inline">\(t_{x\%}\)</span> is the <span class="math inline">\(x\%\)</span> quantile function of the t-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom.</p>
@@ -373,7 +373,7 @@ Hint: you can do this in two ways, which should yield exactly the same P-values:
         </div>
       </div>
 <a href="linear-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="frequentist-inference.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="likelihood-based-inference.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
