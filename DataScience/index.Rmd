@@ -1,6 +1,6 @@
 --- 
 title: "Data Analysis and Statistical Thinking: An R Workbook"
-author: "Fernando Racimo, ..."
+author: "Fernando Racimo, Shyam Gopalakrishnan"
 date: "`r Sys.Date()`"
 bibliography:
 - book.bib
