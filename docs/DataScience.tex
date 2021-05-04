@@ -118,7 +118,7 @@
 
 \title{Data Analysis and Statistical Thinking: An R Workbook}
 \author{Fernando Racimo, Shyam Gopalakrishnan}
-\date{2021-04-27}
+\date{2021-05-04}
 
 \begin{document}
 \maketitle
@@ -171,7 +171,7 @@ We can ``virtually'' toss a coin in our R console, using the rbinom() function:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0
+## [1] 1
 \end{verbatim}
 
 Try copying the above chunk to your R console and running it multiple times. Do you always get the same result?
@@ -185,7 +185,7 @@ This function has 3 required input parameters: n, size and prob. The first param
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0 0 0 0 1 0 1 0 1 1 1 1 0 0 0 1 0 0 0 0
+##  [1] 0 0 0 1 1 0 1 1 1 0 1 1 1 1 1 1 0 1 1 0
 \end{verbatim}
 
 Here, we generate 20 toin cosses, and the zeroes and ones represent whether we got a heads or a tails in each trial. For now, we will ignore the second parameter (size) and fix it at 1, but we'll revisit it in a moment. The third parameter (prob) dictates how biased the coin is. If we set it to 0.9, we'll get the outcomes of a biased coin toss, in particular biased towards heads:
@@ -197,7 +197,7 @@ Here, we generate 20 toin cosses, and the zeroes and ones represent whether we g
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 1 1 1 1 0 1 1 1 1 1 1 0 1 1 1 1 1 0 1 1
+##  [1] 0 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1
 \end{verbatim}
 
 \textbf{Exercise}: What happens when you set prob to 0.1? Or 0.999? Why?
@@ -224,7 +224,7 @@ Let's create a new variable (n) that will determine how many trials we attempt, 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.7
+## [1] 0.65
 \end{verbatim}
 
 \textbf{Exercise}: Run the chunk of code above, in your own console. Do you get the same number as I do? Do you get exactly 0.5? If not, why not? Try the same exercise but with 100 trials, 1000 trials and 100000 trials. What happens as we increase the number of trials? This should illustrate how powerful R can be. We just threw 100 thousand coins into the air without even lifting our fingers! Try to repeat the exercise, but this time, set the Bernoulli prob parameter to be equal to a number of your choice (between 0 and 1). What is the average of all your coin tosses?
@@ -255,7 +255,7 @@ Turns out there's a short-hand way of performing the same experiment, i.e.~tossi
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 9
+## [1] 8
 \end{verbatim}
 
 The above code is equivalent to taking 20 Bernoulli trials, and then adding their outcomes up. The ``experiment'' we are running is now not a single coin toss, but 20 coin tosses together, so the first parameter is now 1 (note: if we had set it to 20, we would have performed 20 20-toss experiments). The outcome of this experiment is neither heads nor tails, but the sum of all the heads in all those coin tosses.
@@ -280,7 +280,7 @@ We can compute the average of multiple Binomial trials. Let's try adding the res
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  7 11 12 12 13
+## [1]  9  7 10 10 11
 \end{verbatim}
 
 \begin{Shaded}
@@ -291,7 +291,7 @@ We can compute the average of multiple Binomial trials. Let's try adding the res
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 55
+## [1] 47
 \end{verbatim}
 
 To get the average, we divide by the total number of trials. Remember here that the number of Binomial trials is 5:
@@ -304,7 +304,7 @@ To get the average, we divide by the total number of trials. Remember here that 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 11
+## [1] 9.4
 \end{verbatim}
 
 A shorthand for obtaining the mean is the function mean(). This should give you the same result:
@@ -317,7 +317,7 @@ A shorthand for obtaining the mean is the function mean(). This should give you 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 11
+## [1] 9.4
 \end{verbatim}
 
 Note that the mean need not be an integer, even though the outcome of each Binomial trial \emph{must} be an integer.
@@ -387,26 +387,26 @@ Ok, this is very neat, but how can we check this equation is correct? Well, we c
 \end{Shaded}
 
 \begin{verbatim}
-##   [1] 12 12 13  8  6 10 10 13 10  9 11 11 10  9 11 10  6  8  8  9 10 11  8 14 13
-##  [26] 10  6 10 10 12  7 10  9  7  8 15  9  8 10  9 13 10  9 11  8  6 10  8 14  6
-##  [51]  9 12 12  9 11  8 10  7  9 10 15  9  9  7 10  5 10  9  9  8  8 14 10  6 12
-##  [76] 10  9  9 15 10 12 11  8 10 10 10  7 10  9  9 13  8 15 10 11 17 12  8 13 10
-## [101]  7  7  7 12 11 12 10  9  8 13 13 12 13 13  8 13 10  8  8 11  7 15  9 12 11
-## [126] 12 12  7 10 10 12 10 11  7 12 12 13  9  8  9  6 13 12  7 12 13 10 13  9  9
-## [151] 13  6  8 13 11  7 10 15  8 15  5 14  8 12 10 12 11 13 12  9 10 10 10 10  8
-## [176] 12 10 13 14 11  8 10  8 13 13  9 12 11 14  9  6 11 11  9  9 16 11  9 11 12
-## [201] 12  7 11  8  8 15  9  7  9  8  7  8 12 10 10  8  8 14  5 13 15 13 11 14 10
-## [226] 13 10 11  6 11 10 10 10 12  9 13 11 14 10 10  6 10 14 12 12  9 12  9 14 13
-## [251] 11 12 11  8  9  9  5 13 11  7  9 10  8 11 11 10 14  9  8  5 10 11 13  9  9
-## [276] 10 11 11  9 11 12  7 12 15  9  9  7 13 11 11 13 11  8  8  9  9 12  6  8  8
-## [301]  8 11  9  8  9 12  9 11  7  9  9 12 11  7 10 10 12  6 11 10  7 12 13  8  9
-## [326]  7  8 12 11  8 15 16  9  8 10  8 10 12  6  4  9 11  7 12 13 14 11  7  8 12
-## [351]  9 13  8 10 12 13  8 12 10  8 10 12  5  9  9  7  9 10 11  9 11  6 14 13 11
-## [376] 12 13 10  9 11  9 12 14 10 11  8  8 11  8  8 12  8 11 11  8  8 10  9 10  7
-## [401] 14  7 10  8 10  8 12 10  9  9 10  8  9 10 10 11 14  7 10 10 12 10  6  9  8
-## [426] 11 11 11 11 15 12 12  9  7 11  9 14 10  9 11 15 13  9  6 12  8  8  9 14 12
-## [451] 14 14 13 13  8  9 11 12 10 11 13 10 12 10 11 12  6  9  6 12 10 15  9  7 10
-## [476] 14  8  5 10 11 10  9 12  8  8  8 10 11  9 12 11  9  9 10  7  8  9 12 13 10
+##   [1]  7  6 11  9 12 12 11 11  9  9 10 12 10 10 11 10  9 10  5 10  8  8  9 12  9
+##  [26]  6 10  8  9  7 14 13  9 10  6  7  9  7 11 14 11 14  5  9 11 11 12 10 13  7
+##  [51] 11  7  9 12  9 10 10 12 10  6 11 10 10 12 13  7 10 11 13 12 12  8 10  8  9
+##  [76] 11 10 12  7  9  8 10  9  6 12 11 10  9 12  6 14 13 13 10 12  6  8 14 12 12
+## [101]  7 10  8  8 11 13 16 11  9  7 10 13  6  7 14 12 11 11  8 10  9  9 10  9 10
+## [126] 10  8 10 10  9  8  7 15 12 11  9  9 12 12 10  9 10 10 12 12  8 10 15  8 13
+## [151] 12 15  8 13 12 11  7  7  9 10  7 11  8 12  9 10  6  9 10  8 12 11  9 11 11
+## [176]  8 12 11  8 11 12 10  8  8 11 11 11 13  9  6  8 10  9  8  8  6  7 13 12  7
+## [201]  6 12  6  7  9 13  9 11  8 12 11  7  6 11 11 11 14 12  9 16 11 10 12 10 12
+## [226]  6 12 16  6 12 12 10  7 10  9  8  8 10 14  9 13 10 14  8 13  9 11 12 12 13
+## [251]  9  7  5  8 11 13  9 12 10  9 11 10 13 10  9 11 13 11 10 12 11  9  9 12  8
+## [276]  9 11 13  8 12  8  9  6  5 11  9  5  6 13  8  7 10 11  5  8 10 11 10 13 14
+## [301] 10 11 14 13 13 10 11  6  7 10  9  8 11 12 10 11  9 14 10 11  9  9  8  9 11
+## [326]  9 11 11 10  7  9 10 10  8 10  8 12  8 10 10  7  9  9  9 11 11 12  8  6 10
+## [351] 11  7 12 10  7 11  9 14 10  9 11  9 14  9  8 14  9  7  9  9 11 12 10 14  9
+## [376] 11  6  8 11  9 14  8 11 11  7  9 13 11 13 12 10  8  8  8 12  9 12 13 10 13
+## [401] 10  9 11  8 12 10  9  9  9  4  6 13 10 11 13  8 12 12 11 11 11 10  7 10  6
+## [426] 13 13  9  9  8 10 10  7 11 11  7 13 10  7 10  6  7 12 11  8  6 11 13 10  7
+## [451]  9 10 12  9 12 10  8 12  6 10 10  8 10 10 12  7  9  9 11 15  8  5  6 13 10
+## [476] 11 11  7 10 10 12 10  8 10 11  8  7  5 10  7 12 12 13  9  8 11  7  6 12 10
 \end{verbatim}
 
 We can determine which of these trials was equal to 10 using the ``=='' symbol:
@@ -420,7 +420,7 @@ We can determine which of these trials was equal to 10 using the ``=='' symbol:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] FALSE FALSE FALSE FALSE FALSE  TRUE
+## [1] FALSE FALSE FALSE FALSE FALSE FALSE
 \end{verbatim}
 
 This returns a new vector in which each element is equal to TRUE if the corresponding element in ``binomvec'' is equal to 10, and FALSE otherwise. The nice thing is that R considers the value of TRUE to also be equal to 1, and the value of FALSE to also be equal to 0, so we can actually apply the function sum() to this vector!
@@ -433,7 +433,7 @@ This returns a new vector in which each element is equal to TRUE if the correspo
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 87
+## [1] 90
 \end{verbatim}
 
 Finally, to get at the fraction of all trials that were equal to 10, we simply divide by the number of trials:
@@ -446,7 +446,7 @@ Finally, to get at the fraction of all trials that were equal to 10, we simply d
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.174
+## [1] 0.18
 \end{verbatim}
 
 You should have gotten a number pretty close to 17.62\%. You can imagine that the more trials we perform, the more accurate this number will approximate the exact probability given by the PMF.
@@ -493,7 +493,7 @@ Just as we can compute the sample mean of a set of trials using the function mea
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 5 5 2 4 2 3
+## [1] 5 5 3 3 5 4
 \end{verbatim}
 
 \begin{Shaded}
@@ -503,7 +503,7 @@ Just as we can compute the sample mean of a set of trials using the function mea
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 4.99437
+## [1] 5.00097
 \end{verbatim}
 
 \begin{Shaded}
@@ -513,7 +513,7 @@ Just as we can compute the sample mean of a set of trials using the function mea
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 2.492583
+## [1] 2.480934
 \end{verbatim}
 
 \textbf{Exercise}: Compute the variance of a set of 100,000 Binomial trials, each of size 10, for different values of the probability of heads, ranging from 0 to 1 (in steps of 0.1). This is equivalent to performing one hundred thousand 5-toss experiments, with different types of biased coins in each experiment. For what value of the binomial probability is the variance maximized? Afterwards, try overlaying the theoretical variance of the binomial distribuiton (\texttt{size*p*(1-p)}) on top of your plot.
@@ -624,7 +624,7 @@ What if we want to create our own probability distribution? In R, we can, using 
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 5 5 4 2 5 2 5 6 2 1
+##  [1] 2 6 4 5 1 2 6 6 6 5
 \end{verbatim}
 
 The option \texttt{replace=TRUE} ensures we can sample \textbf{with replacement} from the \texttt{sides} vector. Because each element has equal probability of occurring, the above is also calle a \textbf{discrete uniform distribution}. This is not necessary, however. Here's an example in which we roll a loaded dice where the side \texttt{6} is biased to appear more frequently than the others:
@@ -639,7 +639,7 @@ The option \texttt{replace=TRUE} ensures we can sample \textbf{with replacement}
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 6 2 6 6 6 6 6 6 2 6
+##  [1] 6 6 2 5 3 6 2 6 6 3
 \end{verbatim}
 
 Let's put this function into practice.
@@ -1470,6 +1470,20 @@ Recall that the \((1-\alpha)\) credible interval for a parameter is any interval
 \hypertarget{resampling}{%
 \chapter{Resampling}\label{resampling}}
 
+Resampling consists in \textbf{re-using} our data several times in smart ways, particularly when one doesn't want to make too many assumptions about the underlying distribution that is generating our data. There are many reasons for which one would want to re-use one's data, and today we'll look at three different cases in which resampling can help us:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Estimating confidence intervals (using bootstrapping)
+\item
+  Testing a model (using permutation)
+\item
+  Evaluating model fit (using cross-validation)
+\end{enumerate}
+
+For these exercises, we'll use the \texttt{tidyverse} library, so let's load it first.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(}\StringTok{"tidyverse"}\NormalTok{)}
@@ -1479,12 +1493,55 @@ Recall that the \((1-\alpha)\) credible interval for a parameter is any interval
 \hypertarget{the-bootstrap}{%
 \section{The bootstrap}\label{the-bootstrap}}
 
-We'll work with a subset of the Allison et al.~data. We'll start by using the body and brain weight measurements from all the species, after log-scaling them. Later on, we'll also use the TotalSleep variable as well, so let's remove any rows that have missing data for any of these 3 variables.
+We'll use a dataset published by Allison and Cicchetti (1976). In this study, the authors studied the relationship between sleep and various ecological and morphological variables across a set of mammalian species: \url{https://science.sciencemag.org/content/194/4266/732}
+
+Let's start by loading the data into a table:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Load table}
 \NormalTok{allisontab }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\FunctionTok{read.csv}\NormalTok{(}\StringTok{"Data\_allison.csv"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+This dataset contains several variables related to various body measurements and measures of sleep in different species. Note that some of these are continuous, while others are discrete and ordinal.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(allisontab)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Species              BodyWt            BrainWt         NonDreaming    
+##  Length:62          Min.   :   0.005   Min.   :   0.14   Min.   : 2.100  
+##  Class :character   1st Qu.:   0.600   1st Qu.:   4.25   1st Qu.: 6.250  
+##  Mode  :character   Median :   3.342   Median :  17.25   Median : 8.350  
+##                     Mean   : 198.790   Mean   : 283.13   Mean   : 8.673  
+##                     3rd Qu.:  48.202   3rd Qu.: 166.00   3rd Qu.:11.000  
+##                     Max.   :6654.000   Max.   :5712.00   Max.   :17.900  
+##                                                          NA's   :14      
+##     Dreaming       TotalSleep       LifeSpan         Gestation     
+##  Min.   :0.000   Min.   : 2.60   Min.   :  2.000   Min.   : 12.00  
+##  1st Qu.:0.900   1st Qu.: 8.05   1st Qu.:  6.625   1st Qu.: 35.75  
+##  Median :1.800   Median :10.45   Median : 15.100   Median : 79.00  
+##  Mean   :1.972   Mean   :10.53   Mean   : 19.878   Mean   :142.35  
+##  3rd Qu.:2.550   3rd Qu.:13.20   3rd Qu.: 27.750   3rd Qu.:207.50  
+##  Max.   :6.600   Max.   :19.90   Max.   :100.000   Max.   :645.00  
+##  NA's   :12      NA's   :4       NA's   :4         NA's   :4       
+##    Predation        Exposure         Danger     
+##  Min.   :1.000   Min.   :1.000   Min.   :1.000  
+##  1st Qu.:2.000   1st Qu.:1.000   1st Qu.:1.000  
+##  Median :3.000   Median :2.000   Median :2.000  
+##  Mean   :2.871   Mean   :2.419   Mean   :2.613  
+##  3rd Qu.:4.000   3rd Qu.:4.000   3rd Qu.:4.000  
+##  Max.   :5.000   Max.   :5.000   Max.   :5.000  
+## 
+\end{verbatim}
+
+We'll start by comparing the body weight (\texttt{BodyWt}) and brain weight (\texttt{BrainWt}) measurements from all the species. As these are measurements that span multiple orders of magnitude, we'lll log-scale them before analyzing them. Later on, we'll also use the amount of time a species sleeps (\texttt{TotalSleep}) as well, so let's remove any rows that have missing data for any of these 3 variables.
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{\# Remove rows with missing data in columns of interest }
 \NormalTok{allisontab }\OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(allisontab,}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(BrainWt) }\SpecialCharTok{\&} \SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(BodyWt) }\SpecialCharTok{\&} \SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(TotalSleep))}
 \CommentTok{\# Log{-}scale body and brain weight}
@@ -1492,7 +1549,19 @@ We'll work with a subset of the Allison et al.~data. We'll start by using the bo
 \end{Highlighting}
 \end{Shaded}
 
-Below is a function to obtain a single bootstrapped sample from an input data. Take a close look at each step.
+Let's first look at the relationship between body weight and brain weight (now both in log-scale):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(allisontab}\SpecialCharTok{$}\NormalTok{logBrain,allisontab}\SpecialCharTok{$}\NormalTok{logBody)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-70-1.pdf}
+
+There seems to be a linear relationship here. But how confident are we in this?
+
+We'll use bootstrapping to assess the strength of this relationship: we'll build confidence intervals on the slope parameter of a linear regression of \texttt{logBrain} as a function of \texttt{logBody} using as few parametric assumptions as possible. The bootstrap comes to the rescue whenever we don't want to assume too much about the sampling distribution of our parameter. Below is a function to obtain a single bootstrapped sample from an input dataset. Take a close look at each step.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1520,7 +1589,7 @@ Let's see what happens when we run this function on our data.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-69-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-72-1.pdf}
 
 Repeat the above command lines multiple times. What happens?
 
@@ -1528,7 +1597,8 @@ Let's estimate a parameter: the slope coefficient in a linear regression of log 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{estimate }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(logBrain }\SpecialCharTok{\textasciitilde{}}\NormalTok{ logBody, }\AttributeTok{data=}\NormalTok{allisontab)}\SpecialCharTok{$}\NormalTok{coeff[}\DecValTok{2}\NormalTok{]}
+\NormalTok{lmmodel }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(logBrain }\SpecialCharTok{\textasciitilde{}}\NormalTok{ logBody, }\AttributeTok{data=}\NormalTok{allisontab)}
+\NormalTok{estimate }\OtherTok{\textless{}{-}}\NormalTok{ lmmodel}\SpecialCharTok{$}\NormalTok{coeff[}\DecValTok{2}\NormalTok{]}
 \NormalTok{estimate}
 \end{Highlighting}
 \end{Shaded}
@@ -1549,18 +1619,18 @@ Let's plot the ecdf of all our estimates, using the function ecdf().
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-72-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-75-1.pdf}
 
 We are now ready to obtain confidence intervals (CIs) of our original parameter estimate, using our bootstrapped distribution. There are multiple ways to obtain CIs from a bootstrapped distribution. Some of these assume that the ECDF has particular properties, while others are more generally applicable:\\
-a) Standard error approach - assumes ECDF is normal\\
+a) Standard error approach - assumes ECDF is approximately normal\\
 b) Percentile approach - assumes ECDF is symmetric and median-unbiased\\
-c) Pivotal approach - most general, makes very few assumptions.\\
+c) Pivotal approach - most general, makes almost no assumptions.\\
 These three approaches generally result in very similar CIs, but they differ (slightly) in methodology. In the interest of time, we'll demonstrate how to run the first two approaches in R. We'll leave the third approach as an exercise you can do at home (read Box 8-1 in the Edge book for an explanation of it, and a code example).
 
-The standard approach assumes that the bootstrap distribution is a Normal distribution. Recall from the lecture on properties of estimators that we can obtain CIs from a Normally-distributed summary statistic \(\theta\) by using the standard error of the statistic: \(SE(\hat{\theta}_n)\):
+The standard approach is the most `parametric' of the 3 approaches, and assumes that the ECDF is approximately a Normal distribution. Recall from the lecture on properties of estimators that we can obtain CIs from a Normally-distributed summary statistic \(\theta\) by using the standard error of the statistic: \(SE(\hat{\theta}_n)\):
 
 \[(\hat{\theta} - SE(\hat{\theta}_n)q_{97.5\%}, \hat{\theta} + SE(\hat{\theta}_n)q_{97.5\%})\]
-Where \(q_{97.5\%}\) is a quantile from a standard N(0,1) Normal distribution, and \(SE(\hat{\theta}_n)\) is the standard error (the standard deviation of our estimator). The standard error approach to obtain boostrap confidence intervals proceeds by replacing the standard error \(SE(\hat{\theta}_n)\) with the standard deviation of the bootstrap distribution as a stand-in for it. Let's call this last value \(SE_b(\hat{\theta}_n)\). Then:
+Where \(q_{97.5\%}\) is a quantile from a standard N(0,1) Normal distribution, and \(SE(\hat{\theta}_n)\) is the standard error (the standard deviation of our estimator). \textbf{The standard error approach to obtain boostrap confidence intervals proceeds by replacing the standard error \(SE(\hat{\theta}_n)\) with the standard deviation of the bootstrap distribution as a stand-in for it.} Let's call this last value \(SE_b(\hat{\theta}_n)\). Then:
 
 \[(\hat{\theta} - SE_b(\hat{\theta}_n)q_{97.5\%}, \hat{\theta} + SE_b(\hat{\theta}_n)q_{97.5\%})\]
 In R, we can thus obtain the CI around the mean as follows:
@@ -1571,29 +1641,51 @@ In R, we can thus obtain the CI around the mean as follows:
 \NormalTok{bootsmean }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(bootsvec)}
 \NormalTok{SEb }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(bootsvec)}
 \NormalTok{NormalQ }\OtherTok{\textless{}{-}} \FunctionTok{qnorm}\NormalTok{(}\FloatTok{0.975}\NormalTok{,}\AttributeTok{mean=}\DecValTok{0}\NormalTok{, }\AttributeTok{sd=}\DecValTok{1}\NormalTok{)}
-\NormalTok{CIs }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{( bootsmean }\SpecialCharTok{{-}}\NormalTok{ SEb}\SpecialCharTok{*}\NormalTok{NormalQ, bootsmean }\SpecialCharTok{+}\NormalTok{ SEb}\SpecialCharTok{*}\NormalTok{NormalQ )}
-\NormalTok{CIs}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.7079987 0.8092793
-\end{verbatim}
-
-The percentile approach involves obtaining percentiles of the bootstrap distributions. If we are interested in a 95\% CI, for example, we just look for the values of the distribution that correspond to the 2.5\% percentile and the 97.5\% percentile, so that the central boostrap distribution mass between them adds up to 95\%.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Let bootsvec be our vector of boostrapped parameters from the previous exercise}
-\NormalTok{CIs }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(bootsvec, }\FunctionTok{c}\NormalTok{(}\FloatTok{0.025}\NormalTok{,}\FloatTok{0.975}\NormalTok{))}
-\NormalTok{CIs}
+\NormalTok{CIs.bootsSE }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{( bootsmean }\SpecialCharTok{{-}}\NormalTok{ SEb}\SpecialCharTok{*}\NormalTok{NormalQ, bootsmean }\SpecialCharTok{+}\NormalTok{ SEb}\SpecialCharTok{*}\NormalTok{NormalQ )}
+\FunctionTok{names}\NormalTok{(CIs.bootsSE) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"2.5\%"}\NormalTok{,}\StringTok{"97.5\%"}\NormalTok{)}
+\NormalTok{CIs.bootsSE}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ##      2.5%     97.5% 
-## 0.7082542 0.8125138
+## 0.7112475 0.8090555
 \end{verbatim}
+
+Note that here, we are still using Normal quantiles, which is why this method has a bit of a parametric flavor.
+
+The percentile approach is less `parametric' and simply involves obtaining percentiles of the bootstrap distribution. If we are interested in a 95\% CI, for example, we just look for the values of the bootstrap distribution that correspond to the 2.5\% percentile and the 97.5\% percentile, so that the central bootstrap distribution mass between them adds up to 95\%.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Let bootsvec be our vector of boostrapped parameters from the previous exercise}
+\NormalTok{CIs.bootsQ }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(bootsvec, }\FunctionTok{c}\NormalTok{(}\FloatTok{0.025}\NormalTok{,}\FloatTok{0.975}\NormalTok{))}
+\NormalTok{CIs.bootsQ}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      2.5%     97.5% 
+## 0.7149903 0.8128316
+\end{verbatim}
+
+Compare these confidence intervals to the (highly parametric) CIs that are obtained directly from the linear model, using the function \texttt{confint}, which assumes that the fitted parameter is normally distributed, and does not use any information about bootstraps at all (just the standard error of the fitted model).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CIs.param }\OtherTok{\textless{}{-}} \FunctionTok{confint}\NormalTok{(lmmodel)[}\DecValTok{2}\NormalTok{,]}
+\NormalTok{CIs.param}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     2.5 %    97.5 % 
+## 0.6984844 0.8197284
+\end{verbatim}
+
+\begin{quote}
+While it is easy to obtain parametric CIs in this case (as this is a simple linear model), it will be much harder to obtain parametric CIs for more complex models where normality assumptions are harder to justify. Bootstrap-based CIs, in contrast, are obtainable regardless of how complex your model is: you just need to bootstrap your data many times and fit you your model on each bootstraped sample!
+\end{quote}
 
 \hypertarget{permutation-test}{%
 \section{Permutation test}\label{permutation-test}}
@@ -1652,7 +1744,7 @@ Now we can obtain a permuted version of our original data, and compute the slope
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-77-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-81-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1662,8 +1754,8 @@ Now we can obtain a permuted version of our original data, and compute the slope
 \end{Shaded}
 
 \begin{verbatim}
-##    logBody 
-## 0.02403355
+##     logBody 
+## -0.09338198
 \end{verbatim}
 
 \textbf{Exercise}: try estimating the same parameter from a series of 100 permuted versions of our original data, and collecting each of the permuted parameters into a vector called ``permvec''.
@@ -1886,7 +1978,7 @@ Using the loadings, we can plot our original (standardized) data matrix into the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-100-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-104-1.pdf}
 
 You can compare the results from the first section (using the ready-made function prcomp) and this section (taking a longer road), to check that the results are equivalent. The function \texttt{range()} returns a vector containing the minimum and maximum of a given vector. Using this function, we can observe that the minimum and maximum differences in values for the loadings, the scores and the standard deviations of the PCs are all infinitesimally small (effectively zero).
 
@@ -2013,53 +2105,48 @@ Let's perform NMDS ordination using the Bray-Curtis dissimilarity. Remember that
 
 \begin{verbatim}
 ## Run 0 stress 0.1192678 
-## Run 1 stress 0.1183186 
-## ... New best solution
-## ... Procrustes: rmse 0.02026759  max resid 0.06494227 
-## Run 2 stress 0.1183186 
-## ... New best solution
-## ... Procrustes: rmse 3.285599e-05  max resid 0.000108675 
+## Run 1 stress 0.1192679 
+## ... Procrustes: rmse 8.187661e-05  max resid 0.000254235 
+## ... Similar to previous best
+## Run 2 stress 0.119268 
+## ... Procrustes: rmse 6.51795e-05  max resid 0.00011331 
 ## ... Similar to previous best
 ## Run 3 stress 0.1183186 
-## ... Procrustes: rmse 2.054674e-05  max resid 6.534918e-05 
-## ... Similar to previous best
-## Run 4 stress 0.1183186 
-## ... Procrustes: rmse 7.252381e-05  max resid 0.0002360155 
-## ... Similar to previous best
-## Run 5 stress 0.1192679 
-## Run 6 stress 0.1183186 
-## ... Procrustes: rmse 3.356249e-05  max resid 7.659093e-05 
-## ... Similar to previous best
-## Run 7 stress 0.1192678 
-## Run 8 stress 0.1183186 
-## ... Procrustes: rmse 4.807861e-06  max resid 1.495597e-05 
-## ... Similar to previous best
-## Run 9 stress 0.1183186 
 ## ... New best solution
-## ... Procrustes: rmse 1.292393e-05  max resid 3.601861e-05 
+## ... Procrustes: rmse 0.02027039  max resid 0.06495626 
+## Run 4 stress 0.3032401 
+## Run 5 stress 0.1192678 
+## Run 6 stress 0.1809579 
+## Run 7 stress 0.2341213 
+## Run 8 stress 0.1192683 
+## Run 9 stress 0.1192683 
+## Run 10 stress 0.1183186 
+## ... Procrustes: rmse 7.134716e-05  max resid 0.0002290379 
 ## ... Similar to previous best
-## Run 10 stress 0.2035424 
-## Run 11 stress 0.1192679 
-## Run 12 stress 0.1183186 
-## ... Procrustes: rmse 1.99821e-05  max resid 5.482749e-05 
+## Run 11 stress 0.1183186 
+## ... Procrustes: rmse 6.039469e-06  max resid 2.094076e-05 
 ## ... Similar to previous best
+## Run 12 stress 0.1192684 
 ## Run 13 stress 0.1183186 
-## ... Procrustes: rmse 3.48063e-05  max resid 0.0001079752 
+## ... Procrustes: rmse 1.957562e-05  max resid 5.966438e-05 
 ## ... Similar to previous best
-## Run 14 stress 0.1183186 
-## ... New best solution
-## ... Procrustes: rmse 3.47904e-06  max resid 8.511745e-06 
+## Run 14 stress 0.1192683 
+## Run 15 stress 0.1183186 
+## ... Procrustes: rmse 9.359684e-05  max resid 0.0002615581 
 ## ... Similar to previous best
-## Run 15 stress 0.1183187 
-## ... Procrustes: rmse 5.767978e-05  max resid 0.0001773045 
+## Run 16 stress 0.1192679 
+## Run 17 stress 0.1183186 
+## ... Procrustes: rmse 9.24119e-05  max resid 0.0002530793 
 ## ... Similar to previous best
-## Run 16 stress 0.1183186 
-## ... Procrustes: rmse 3.648247e-05  max resid 0.0001157266 
+## Run 18 stress 0.1183186 
+## ... Procrustes: rmse 2.164739e-05  max resid 6.484153e-05 
 ## ... Similar to previous best
-## Run 17 stress 0.1192682 
-## Run 18 stress 0.1192678 
-## Run 19 stress 0.1192682 
-## Run 20 stress 0.1192681 
+## Run 19 stress 0.1183186 
+## ... Procrustes: rmse 8.083001e-05  max resid 0.0002082536 
+## ... Similar to previous best
+## Run 20 stress 0.1183186 
+## ... Procrustes: rmse 5.668036e-05  max resid 0.0001876308 
+## ... Similar to previous best
 ## *** Solution reached
 \end{verbatim}
 
@@ -2073,7 +2160,7 @@ As you can see, the function goes through a series of steps until convergence is
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-107-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-111-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2152,7 +2239,7 @@ Ok, now on to the second preliminary detail. Clustering methods require the spec
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-115-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-119-1.pdf}
 
 \begin{verbatim}
 ## *** : The Hubert index is a graphical method of determining the number of clusters.
@@ -2162,7 +2249,7 @@ Ok, now on to the second preliminary detail. Clustering methods require the spec
 ## 
 \end{verbatim}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-115-2.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-119-2.pdf}
 
 \begin{verbatim}
 ## *** : The D index is a graphical method of determining the number of clusters. 
@@ -2209,7 +2296,7 @@ It seems like ten of the methods suggest that the best number of clusters should
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-116-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-120-1.pdf}
 
 Let's go with 2 clusters then. We are now finally ready to perform a K-means clustering. We do so as follows:
 
@@ -2246,7 +2333,7 @@ We can use this vector to plot our data, colored by the resulting clusters.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-119-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-123-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2254,11 +2341,11 @@ We can use this vector to plot our data, colored by the resulting clusters.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-119-2.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-123-2.pdf}
 
 \textbf{Exercise}: Now try computing a K-means clustering on the data yourself, this time using 3 clusters. Plot the result using a different color for each cluster.
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-120-1.pdf} \includegraphics{DataScience_files/figure-latex/unnamed-chunk-120-2.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-124-1.pdf} \includegraphics{DataScience_files/figure-latex/unnamed-chunk-124-2.pdf}
 
 \textbf{Exercise}: How well do the clusters from the previous exercise correspond to the 3 iris species? Are they perfectly matched? Why? Why not?
 
@@ -2337,7 +2424,7 @@ We'll begin by focusing on the relationship between two of the continuous variab
 ## Warning: Removed 4 rows containing missing values (geom_point).
 \end{verbatim}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-125-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-129-1.pdf}
 
 Hmmm this looks weird. We have many measurements of body weight around 0 (small values) and a few very large values of thousands of kilograms. This is not surprising: given that this dataset spans several different species, the measurements spans several orders of magnitude (from elephants to molerats). To account for this, variables involving body measurements (like weight or length) are traditionally converted into a log-scale when fitted into a linear model. Let's see what happens when we log-scale the body weight variable:
 
@@ -2351,7 +2438,7 @@ Hmmm this looks weird. We have many measurements of body weight around 0 (small 
 ## Warning: Removed 4 rows containing missing values (geom_point).
 \end{verbatim}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-126-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-130-1.pdf}
 
 A pattern appears to emerge now. There seems to be a negative correlation between the log of body weight and the amount of sleep a species has. Indeed, we can measure this correlation using the \texttt{cor()} function:
 
@@ -2629,7 +2716,7 @@ Now we can obtain a permuted version of our original data, and compute the slope
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-136-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-140-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]

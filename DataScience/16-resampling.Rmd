@@ -1,23 +1,54 @@
 # Resampling
 
-```{r}
+Resampling consists in **re-using** our data several times in smart ways, particularly when one doesn't want to make too many assumptions about the underlying distribution that is generating our data. There are many reasons for which one would want to re-use one's data, and today we'll look at three different cases in which resampling can help us:
+
+1. Estimating confidence intervals (using bootstrapping)
+
+2. Testing a model (using permutation)
+
+3. Evaluating model fit (using cross-validation)
+
+For these exercises, we'll use the `tidyverse` library, so let's load it first.
+
+```{r, message=FALSE}
 library("tidyverse")
 ```
 
 ## The bootstrap
 
-We'll work with a subset of the Allison et al. data. We'll start by using the body and brain weight measurements from all the species, after log-scaling them. Later on, we'll also use the TotalSleep variable as well, so let's remove any rows that have missing data for any of these 3 variables.
+
+We’ll use a dataset published by Allison and Cicchetti (1976). In this study, the authors studied the relationship between sleep and various ecological and morphological variables across a set of mammalian species: https://science.sciencemag.org/content/194/4266/732
+
+Let’s start by loading the data into a table:
 
 ```{r}
-# Load table
 allisontab <- tibble(read.csv("Data_allison.csv"))
+```
+
+This dataset contains several variables related to various body measurements and measures of sleep in different species. Note that some of these are continuous, while others are discrete and ordinal.
+
+```{r}
+summary(allisontab)
+```
+
+We'll start by comparing the body weight (`BodyWt`) and brain weight (`BrainWt`) measurements from all the species. As these are measurements that span multiple orders of magnitude, we'lll log-scale them before analyzing them. Later on, we'll also use the amount of time a species sleeps (`TotalSleep`) as well, so let's remove any rows that have missing data for any of these 3 variables.
+
+```{r}
 # Remove rows with missing data in columns of interest 
 allisontab <- filter(allisontab,!is.na(BrainWt) & !is.na(BodyWt) & !is.na(TotalSleep))
 # Log-scale body and brain weight
 allisontab <- mutate(allisontab,logBody=log10(BodyWt), logBrain=log10(BrainWt))
 ```
 
-Below is a function to obtain a single bootstrapped sample from an input data. Take a close look at each step.
+Let's first look at the relationship between body weight and brain weight (now both in log-scale):
+
+```{r}
+plot(allisontab$logBrain,allisontab$logBody)
+```
+
+There seems to be a linear relationship here. But how confident are we in this? 
+
+We'll use bootstrapping to assess the strength of this relationship: we'll build confidence intervals on the slope parameter of a linear regression of `logBrain` as a function of `logBody` using as few parametric assumptions as possible. The bootstrap comes to the rescue whenever we don't want to assume too much about the sampling distribution of our parameter. Below is a function to obtain a single bootstrapped sample from an input dataset. Take a close look at each step.
 
 ```{r}
 bootstrap <- function(tab){
@@ -46,7 +77,8 @@ Repeat the above command lines multiple times. What happens?
 Let's estimate a parameter: the slope coefficient in a linear regression of log brain weight on log body weight:
 
 ```{r}
-estimate <- lm(logBrain ~ logBody, data=allisontab)$coeff[2]
+lmmodel <- lm(logBrain ~ logBody, data=allisontab)
+estimate <- lmmodel$coeff[2]
 estimate
 ```
 
@@ -71,15 +103,15 @@ abline(v=estimate,col="red")
 ```
 
 We are now ready to obtain confidence intervals (CIs) of our original parameter estimate, using our bootstrapped distribution. There are multiple ways to obtain CIs from a bootstrapped distribution. Some of these assume that the ECDF has particular properties, while others are more generally applicable: \
-a) Standard error approach - assumes ECDF is normal \
+a) Standard error approach - assumes ECDF is approximately normal \
 b) Percentile approach - assumes ECDF is symmetric and median-unbiased \
-c) Pivotal approach - most general, makes very few assumptions. \
+c) Pivotal approach - most general, makes almost no assumptions. \
 These three approaches generally result in very similar CIs, but they differ (slightly) in methodology. In the interest of time, we'll demonstrate how to run the first two approaches in R. We'll leave the third approach as an exercise you can do at home (read Box 8-1 in the Edge book for an explanation of it, and a code example).
 
-The standard approach assumes that the bootstrap distribution is a Normal distribution. Recall from the lecture on properties of estimators that we can obtain CIs from a Normally-distributed summary statistic $\theta$ by using the standard error of the statistic: $SE(\hat{\theta}_n)$:
+The standard approach is the most 'parametric' of the 3 approaches, and assumes that the ECDF is approximately a Normal distribution. Recall from the lecture on properties of estimators that we can obtain CIs from a Normally-distributed summary statistic $\theta$ by using the standard error of the statistic: $SE(\hat{\theta}_n)$:
 
 $$(\hat{\theta} - SE(\hat{\theta}_n)q_{97.5\%}, \hat{\theta} + SE(\hat{\theta}_n)q_{97.5\%})$$
-Where $q_{97.5\%}$ is a quantile from a standard N(0,1) Normal distribution, and $SE(\hat{\theta}_n)$ is the standard error (the standard deviation of our estimator). The standard error approach to obtain boostrap confidence intervals proceeds by replacing the standard error $SE(\hat{\theta}_n)$ with the standard deviation of the bootstrap distribution as a stand-in for it. Let's call this last value $SE_b(\hat{\theta}_n)$. Then:
+Where $q_{97.5\%}$ is a quantile from a standard N(0,1) Normal distribution, and $SE(\hat{\theta}_n)$ is the standard error (the standard deviation of our estimator). **The standard error approach to obtain boostrap confidence intervals proceeds by replacing the standard error $SE(\hat{\theta}_n)$ with the standard deviation of the bootstrap distribution as a stand-in for it.** Let's call this last value $SE_b(\hat{\theta}_n)$. Then:
 
 $$(\hat{\theta} - SE_b(\hat{\theta}_n)q_{97.5\%}, \hat{\theta} + SE_b(\hat{\theta}_n)q_{97.5\%})$$
 In R, we can thus obtain the CI around the mean as follows:
@@ -89,17 +121,29 @@ In R, we can thus obtain the CI around the mean as follows:
 bootsmean <- mean(bootsvec)
 SEb <- sd(bootsvec)
 NormalQ <- qnorm(0.975,mean=0, sd=1)
-CIs <- c( bootsmean - SEb*NormalQ, bootsmean + SEb*NormalQ )
-CIs
+CIs.bootsSE <- c( bootsmean - SEb*NormalQ, bootsmean + SEb*NormalQ )
+names(CIs.bootsSE) <- c("2.5%","97.5%")
+CIs.bootsSE
 ```
 
-The percentile approach involves obtaining percentiles of the bootstrap distributions. If we are interested in a 95% CI, for example, we just look for the values of the distribution that correspond to the 2.5% percentile and the 97.5% percentile, so that the central boostrap distribution mass between them adds up to 95%.
+Note that here, we are still using Normal quantiles, which is why this method has a bit of a parametric flavor. 
+
+The percentile approach is less 'parametric' and simply involves obtaining percentiles of the bootstrap distribution. If we are interested in a 95% CI, for example, we just look for the values of the bootstrap distribution that correspond to the 2.5% percentile and the 97.5% percentile, so that the central bootstrap distribution mass between them adds up to 95%.
 
 ```{r}
 # Let bootsvec be our vector of boostrapped parameters from the previous exercise
-CIs <- quantile(bootsvec, c(0.025,0.975))
-CIs
+CIs.bootsQ <- quantile(bootsvec, c(0.025,0.975))
+CIs.bootsQ
 ```
+
+Compare these confidence intervals to the (highly parametric) CIs that are obtained directly from the linear model, using the function `confint`, which assumes that the fitted parameter is normally distributed, and does not use any information about bootstraps at all (just the standard error of the fitted model).
+
+```{r}
+CIs.param <- confint(lmmodel)[2,]
+CIs.param
+```
+
+> While it is easy to obtain parametric CIs in this case (as this is a simple linear model), it will be much harder to obtain parametric CIs for more complex models where normality assumptions are harder to justify. Bootstrap-based CIs, in contrast, are obtainable regardless of how complex your model is: you just need to bootstrap your data many times and fit you your model on each bootstraped sample!
 
 ## Permutation test
 
