@@ -333,7 +333,7 @@ In R, we can thus obtain the CI around the mean as follows:</p>
 <span id="cb82-6"><a href="resampling.html#cb82-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(CIs.bootsSE) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;2.5%&quot;</span>,<span class="st">&quot;97.5%&quot;</span>)</span>
 <span id="cb82-7"><a href="resampling.html#cb82-7" aria-hidden="true" tabindex="-1"></a>CIs.bootsSE</span></code></pre></div>
 <pre><code>##      2.5%     97.5% 
-## 0.7104684 0.8089267</code></pre>
+## 0.7011659 0.8180416</code></pre>
 <p>Note that here, we are still using Normal quantiles, which is why this method has a bit of a parametric flavor.</p>
 <p>The percentile approach is less ‘parametric’ and simply involves obtaining percentiles of the bootstrap distribution. If we are interested in a 95% CI, for example, we just look for the values of the bootstrap distribution that correspond to the 2.5% percentile and the 97.5% percentile, so that the central bootstrap distribution mass between them adds up to 95%.</p>
 <p><strong>Exercise</strong>: To obtain the bootstrap-based quantile confidence intervals, compute the 95% quantiles (lower 2.5% and upper 97.5%) of the bootstrap distribution we’ve obtained before.</p>
@@ -385,7 +385,7 @@ In R, we can thus obtain the CI around the mean as follows:</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="resampling.html#cb90-1" aria-hidden="true" tabindex="-1"></a>permest <span class="ot">&lt;-</span> <span class="fu">lm</span>(logBrain <span class="sc">~</span> logBody, <span class="at">data=</span>permuted)<span class="sc">$</span>coeff[<span class="dv">2</span>]</span>
 <span id="cb90-2"><a href="resampling.html#cb90-2" aria-hidden="true" tabindex="-1"></a>permest</span></code></pre></div>
 <pre><code>##    logBody 
-## 0.05448147</code></pre>
+## 0.06862868</code></pre>
 <p><strong>Exercise</strong>: try estimating the same parameter from a series of 100 permuted versions of our original data, and collecting each of the permuted parameters into a vector called “permvec.”</p>
 <p>We now have a distribution of the parameter estimate under the assumption that there is no relationship between these two variables:</p>
 <p><strong>Exercise</strong>: obtain an empirical one-tailed P-value from this distribution by counting how many of the permuted samples are as large as our original estimate, and dividing by the total number of permuted samples we have.</p>
@@ -405,17 +405,20 @@ In R, we can thus obtain the CI around the mean as follows:</p>
 <span id="cb93-3"><a href="resampling.html#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict all observations using the fitted linear model</span></span>
 <span id="cb93-4"><a href="resampling.html#cb93-4" aria-hidden="true" tabindex="-1"></a>predall <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit1,allisontab)</span>
 <span id="cb93-5"><a href="resampling.html#cb93-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute mean squared differences between observations and predictions</span></span>
-<span id="cb93-6"><a href="resampling.html#cb93-6" aria-hidden="true" tabindex="-1"></a>sqdiff <span class="ot">&lt;-</span> (allisontab<span class="sc">$</span>logBrain <span class="sc">-</span> predall)<span class="sc">^</span><span class="dv">2</span> </span>
+<span id="cb93-6"><a href="resampling.html#cb93-6" aria-hidden="true" tabindex="-1"></a>sqdiff <span class="ot">&lt;-</span> (allisontab<span class="sc">$</span>TotalSleep <span class="sc">-</span> predall)<span class="sc">^</span><span class="dv">2</span> </span>
 <span id="cb93-7"><a href="resampling.html#cb93-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the differences for the test partition</span></span>
 <span id="cb93-8"><a href="resampling.html#cb93-8" aria-hidden="true" tabindex="-1"></a>sqdiff.test <span class="ot">&lt;-</span> sqdiff[testset]</span>
 <span id="cb93-9"><a href="resampling.html#cb93-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the mean squared error</span></span>
 <span id="cb93-10"><a href="resampling.html#cb93-10" aria-hidden="true" tabindex="-1"></a>mse1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(sqdiff.test)</span></code></pre></div>
-<p>Now, we’ll try to fit our data to two more complex models: a quadratic model and a cubic model, using the function <code>poly</code>:</p>
+<p>Now, we’ll try to fit our data to 3 more complex models: a quadratic model, a cubic model and a 4-th degree polynomial model, using the function <code>poly</code>:</p>
 <div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="resampling.html#cb94-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="fu">poly</span>(logBody,<span class="dv">2</span>), <span class="at">data=</span>allisontab,<span class="at">subset=</span>trainset)</span>
-<span id="cb94-2"><a href="resampling.html#cb94-2" aria-hidden="true" tabindex="-1"></a>mse2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(((allisontab<span class="sc">$</span>logBrain <span class="sc">-</span> <span class="fu">predict</span>(fit2,allisontab))<span class="sc">^</span><span class="dv">2</span>)[testset])</span>
+<span id="cb94-2"><a href="resampling.html#cb94-2" aria-hidden="true" tabindex="-1"></a>mse2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(((allisontab<span class="sc">$</span>TotalSleep <span class="sc">-</span> <span class="fu">predict</span>(fit2,allisontab))<span class="sc">^</span><span class="dv">2</span>)[testset])</span>
 <span id="cb94-3"><a href="resampling.html#cb94-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb94-4"><a href="resampling.html#cb94-4" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="fu">poly</span>(logBody,<span class="dv">3</span>), <span class="at">data=</span>allisontab,<span class="at">subset=</span>trainset)</span>
-<span id="cb94-5"><a href="resampling.html#cb94-5" aria-hidden="true" tabindex="-1"></a>mse3 <span class="ot">&lt;-</span> <span class="fu">mean</span>(((allisontab<span class="sc">$</span>logBrain <span class="sc">-</span> <span class="fu">predict</span>(fit3,allisontab))<span class="sc">^</span><span class="dv">2</span>)[testset])</span></code></pre></div>
+<span id="cb94-5"><a href="resampling.html#cb94-5" aria-hidden="true" tabindex="-1"></a>mse3 <span class="ot">&lt;-</span> <span class="fu">mean</span>(((allisontab<span class="sc">$</span>TotalSleep <span class="sc">-</span> <span class="fu">predict</span>(fit3,allisontab))<span class="sc">^</span><span class="dv">2</span>)[testset])</span>
+<span id="cb94-6"><a href="resampling.html#cb94-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-7"><a href="resampling.html#cb94-7" aria-hidden="true" tabindex="-1"></a>fit4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(TotalSleep <span class="sc">~</span> <span class="fu">poly</span>(logBody,<span class="dv">4</span>), <span class="at">data=</span>allisontab,<span class="at">subset=</span>trainset)</span>
+<span id="cb94-8"><a href="resampling.html#cb94-8" aria-hidden="true" tabindex="-1"></a>mse4 <span class="ot">&lt;-</span> <span class="fu">mean</span>(((allisontab<span class="sc">$</span>TotalSleep <span class="sc">-</span> <span class="fu">predict</span>(fit4,allisontab))<span class="sc">^</span><span class="dv">2</span>)[testset])</span></code></pre></div>
 <p>We can see that the MSE appears to increase for the more complex models. This suggests a simple linear fit performs better at predicting values that were not included in the training set.</p>
 <p><strong>Exercise</strong>: compute the MSE on the training partition. Compare the resulting values to the MSE on the test partition. What do you observe? Is the difference in errors between the three models as large as when computing the MSE on the test partition? Why do you think this is?</p>
 </div>

@@ -185,7 +185,7 @@ This function has 3 required input parameters: n, size and prob. The first param
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0 0 0 0 1 0 1 0 0 0 0 1 1 0 0 0 1 1 1 1
+##  [1] 0 1 0 0 1 1 0 1 0 1 1 0 1 1 1 0 1 1 1 1
 \end{verbatim}
 
 Here, we generate 20 toin cosses, and the zeroes and ones represent whether we got a heads or a tails in each trial. For now, we will ignore the second parameter (size) and fix it at 1, but we'll revisit it in a moment. The third parameter (prob) dictates how biased the coin is. If we set it to 0.9, we'll get the outcomes of a biased coin toss, in particular biased towards heads:
@@ -197,7 +197,7 @@ Here, we generate 20 toin cosses, and the zeroes and ones represent whether we g
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [1] 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 1 1 1 0
 \end{verbatim}
 
 \textbf{Exercise}: What happens when you set prob to 0.1? Or 0.999? Why?
@@ -224,7 +224,7 @@ Let's create a new variable (n) that will determine how many trials we attempt, 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.45
+## [1] 0.35
 \end{verbatim}
 
 \textbf{Exercise}: Run the chunk of code above, in your own console. Do you get the same number as I do? Do you get exactly 0.5? If not, why not? Try the same exercise but with 100 trials, 1000 trials and 100000 trials. What happens as we increase the number of trials? This should illustrate how powerful R can be. We just threw 100 thousand coins into the air without even lifting our fingers! Try to repeat the exercise, but this time, set the Bernoulli prob parameter to be equal to a number of your choice (between 0 and 1). What is the average of all your coin tosses?
@@ -243,7 +243,7 @@ One way of doing this is by running 20 Bernoulli trials, and then adding them up
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 12
+## [1] 7
 \end{verbatim}
 
 Turns out there's a short-hand way of performing the same experiment, i.e.~tossing a bunch of coins - each a Bernoulli random variable - observing their outcomes and adding them up, without using the sum() function at all. Here's where the second input parameter - size - of the rbinom() function comes into play. So far, we've always left it equal to 1 in all our command lines above, but we can set it to any positive integer:
@@ -255,7 +255,7 @@ Turns out there's a short-hand way of performing the same experiment, i.e.~tossi
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 9
+## [1] 8
 \end{verbatim}
 
 The above code is equivalent to taking 20 Bernoulli trials, and then adding their outcomes up. The ``experiment'' we are running is now not a single coin toss, but 20 coin tosses together, so the first parameter is now 1 (note: if we had set it to 20, we would have performed 20 20-toss experiments). The outcome of this experiment is neither heads nor tails, but the sum of all the heads in all those coin tosses.
@@ -280,7 +280,7 @@ We can compute the average of multiple Binomial trials. Let's try adding the res
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  9  8 11  8 11
+## [1] 14 10 10  9 10
 \end{verbatim}
 
 \begin{Shaded}
@@ -291,7 +291,7 @@ We can compute the average of multiple Binomial trials. Let's try adding the res
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 47
+## [1] 53
 \end{verbatim}
 
 To get the average, we divide by the total number of trials. Remember here that the number of Binomial trials is 5:
@@ -304,7 +304,7 @@ To get the average, we divide by the total number of trials. Remember here that 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 9.4
+## [1] 10.6
 \end{verbatim}
 
 A shorthand for obtaining the mean is the function mean(). This should give you the same result:
@@ -317,7 +317,7 @@ A shorthand for obtaining the mean is the function mean(). This should give you 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 9.4
+## [1] 10.6
 \end{verbatim}
 
 Note that the mean need not be an integer, even though the outcome of each Binomial trial \emph{must} be an integer.
@@ -387,26 +387,26 @@ Ok, this is very neat, but how can we check this equation is correct? Well, we c
 \end{Shaded}
 
 \begin{verbatim}
-##   [1] 13 10 14 11 10 11  8 11 12 11 11  8 11 10 10  9 11 10  9 13  8 11 13 10 13
-##  [26] 10 11 14  9 10 13  8  9  8 11  8  7 10  9  8  9  9 10 11  9 13 11 10 12 10
-##  [51] 10  9  8 14  8  8 10  9 12 13  8 11 13  8  8  6  7 12  9  9 10  9  9 12  9
-##  [76] 10 12 12 14  8 10  7  5 11  9  9  8  9  7  8 10 12 10 10 11  9 14 11 12 12
-## [101]  9 14 11  9  9 13 12 12 11 13  6 11 11 13 14 12  9  9  6  6 10 10  7 11 14
-## [126]  7 12 13  9 10 12  9 10  8 14 12  9  7  8  9 12 11 13 10 11  9 10 10 12  9
-## [151] 13  7 10 10  9 11  6  8 11 10  8  7 11 11 10 10 12  8  7  9  9 10 10 16  8
-## [176]  8 11 12  9  8 10 10 12 13 11  9  9 12 13  6  8 12 13 12  9  9 10 10 11 11
-## [201] 11 15 11  8 11 12 11 11 13 14  4  7  9  9  9  7  6  5 13  9 10  8 10  9 10
-## [226]  8 12 10  7  8  8  9 12 11 11  9  7  9  6  9 10 10  9 14 13 15  7 11  8  9
-## [251]  8  9 13 10 11 12  9 11 11  9 10 10 10 11 13 10 11 11 10  8 12 12  9  7 10
-## [276] 13 15 13 11  5  6  8 10  8 11  9 10 14  9  9 10 12 12 10 10  9 14  6 10 11
-## [301] 12  9 13 16  6 14  8  4 10 10  9 10  9  9 10 11 10 12 11  9 10 13  7  7 11
-## [326] 11 13 11  7  5  8 12 10  8 10 14 10 14 13  8 11 12  8 10  9 10  6  9 11 15
-## [351]  6  9  8 12 11  9  7 11  8 10 11 12  9 12 10  6 11  9  7  9  7 12 11 13 11
-## [376]  7 11 15  9  9 10 10 11 10 10  9  7 13 11 10  9  9 11 10  5 13  6  5 10 10
-## [401] 12 12  9  9  5  6  9 13 13 10  7 14 13 12 13 10  7  9 13  9  8 11 10  9 15
-## [426] 10 11 10  9  7  9  7  7 10 10 11 12  9 10 12 10  7  7 10 12 12  9 10 13 10
-## [451] 12 11 11 14  6 12 15 11 11 10 14  8 12 12  8 14  9  8  9  7 14 14 13  9 15
-## [476] 11 11 11 11 13  9  9  9 10  9  8 10  9 11 11 13 13 11 10 10 10  9 10 11  9
+##   [1] 10  8  9  7 11 12 12 10 15  9  8 12 11 11 10  8 10 10  7 15 12  9 13 11  6
+##  [26] 12 10  9  6  9  7  8 11  8 10  8 14 12 10 11 10  9 10 10 13 10  9 11 10 12
+##  [51]  8 11 11  8 14  8  7  9  9 11  8 12 12  7 10  9 10 10  7 10  7  7 11 14  9
+##  [76] 14  9  8  9 13 10  9 10  9  7  9  6 11  8 11 10  9  7  9 12  9  9  8 10  7
+## [101] 14 10  9 10 11 11  9 11 11 10 10  5  9 10  9 11  9 10  8 10 11 11 11 13 12
+## [126]  9 12 10 10 11 11 10 11 11 11  8  5 11 15  9  8 11 10  8  7  9  4  9 13  7
+## [151] 13 12  9  7 15 11 13 11  6 11 10  8 10  8 11  9 13 11 10 11  6  6  9  8 14
+## [176] 13 10 10  9  8  8  9  9 10  8 10 11 12  9 14  9 10 10 12 11 12  6 12 12 12
+## [201] 12 10  5  4 13  6 10 11 10  9 10 11  9 12 11 12 10 10 10  8 10 11  9 12  9
+## [226]  9 10 13  9 13 11 10  9 11 12 11 14 10 13  7 12 14  9 14  6 10  6 11 11  9
+## [251] 10 11 12 13 10 13 12  8  8  9  8 11 10 11 13 11 10  8 14 13 13 13 10  8  9
+## [276]  7  6 10 13 11 10  7 12  7 12 11 11  6  7 11 10 12  7 14  7  6  7 10 13 10
+## [301] 15  8 10  9 11  5 10 10 12 11 10 11 10 14  9  8 11  8 12 11  9  7 14  8 11
+## [326] 10  9 11  8 11 12 12 12 11 17  9  7  6 10  9  7 11 11 11  9  6 10 10 15  9
+## [351] 11  8  7 14 15 11 10 10 10  5 11 11  7  9 10 12 13 10  9 10 14 13 10 11 11
+## [376] 12 11 11  9 14 10 10  7 12  9 10  8  8 10  6 11 10  9 11 10 12  8 13  9  8
+## [401]  8  9  9 12  9 13  9  7  7  9 14 12  5 12 10 10 14 10 11 11 10 10  7  7 12
+## [426] 10  9 10 11 12 12 12  5  8  9 12  7 14  9  9 11  5  8  8  7  9  8 14  8  8
+## [451]  8  9 11 11  7 14  9 12 10  9 13 12  9 10 13 10  8  9 11  9 14 13  9  7  8
+## [476] 12  8 14 13 11  8 10 12 14 11  9 10  9  6 11  9  7  9  7 14 11  8  8 13 10
 \end{verbatim}
 
 We can determine which of these trials was equal to 10 using the ``=='' symbol:
@@ -420,7 +420,7 @@ We can determine which of these trials was equal to 10 using the ``=='' symbol:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] FALSE  TRUE FALSE FALSE  TRUE FALSE
+## [1]  TRUE FALSE FALSE FALSE FALSE FALSE
 \end{verbatim}
 
 This returns a new vector in which each element is equal to TRUE if the corresponding element in ``binomvec'' is equal to 10, and FALSE otherwise. The nice thing is that R considers the value of TRUE to also be equal to 1, and the value of FALSE to also be equal to 0, so we can actually apply the function sum() to this vector!
@@ -433,7 +433,7 @@ This returns a new vector in which each element is equal to TRUE if the correspo
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 97
+## [1] 98
 \end{verbatim}
 
 Finally, to get at the fraction of all trials that were equal to 10, we simply divide by the number of trials:
@@ -446,7 +446,7 @@ Finally, to get at the fraction of all trials that were equal to 10, we simply d
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.194
+## [1] 0.196
 \end{verbatim}
 
 You should have gotten a number pretty close to 17.62\%. You can imagine that the more trials we perform, the more accurate this number will approximate the exact probability given by the PMF.
@@ -493,7 +493,7 @@ Just as we can compute the sample mean of a set of trials using the function mea
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 5 5 6 5 5 4
+## [1] 5 4 3 5 4 8
 \end{verbatim}
 
 \begin{Shaded}
@@ -503,7 +503,7 @@ Just as we can compute the sample mean of a set of trials using the function mea
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 5.00467
+## [1] 5.00908
 \end{verbatim}
 
 \begin{Shaded}
@@ -513,7 +513,7 @@ Just as we can compute the sample mean of a set of trials using the function mea
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 2.482993
+## [1] 2.514163
 \end{verbatim}
 
 \textbf{Exercise}: Compute the variance of a set of 100,000 Binomial trials, each of size 10, for different values of the probability of heads, ranging from 0 to 1 (in steps of 0.1). This is equivalent to performing one hundred thousand 5-toss experiments, with different types of biased coins in each experiment. For what value of the binomial probability is the variance maximized? Afterwards, try overlaying the theoretical variance of the binomial distribuiton (\texttt{size*p*(1-p)}) on top of your plot.
@@ -624,7 +624,7 @@ What if we want to create our own probability distribution? In R, we can, using 
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 6 2 6 4 4 6 2 3 4 3
+##  [1] 4 3 2 3 4 1 1 2 5 3
 \end{verbatim}
 
 The option \texttt{replace=TRUE} ensures we can sample \textbf{with replacement} from the \texttt{sides} vector. Because each element has equal probability of occurring, the above is also calle a \textbf{discrete uniform distribution}. This is not necessary, however. Here's an example in which we roll a loaded dice where the side \texttt{6} is biased to appear more frequently than the others:
@@ -639,7 +639,7 @@ The option \texttt{replace=TRUE} ensures we can sample \textbf{with replacement}
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 6 1 4 3 1 5 6 3 3 5
+##  [1] 3 3 6 6 5 3 1 1 5 6
 \end{verbatim}
 
 Let's put this function into practice.
@@ -1649,7 +1649,7 @@ In R, we can thus obtain the CI around the mean as follows:
 
 \begin{verbatim}
 ##      2.5%     97.5% 
-## 0.7108991 0.8082572
+## 0.7158626 0.8028230
 \end{verbatim}
 
 Note that here, we are still using Normal quantiles, which is why this method has a bit of a parametric flavor.
@@ -1743,8 +1743,8 @@ Now we can obtain a permuted version of our original data, and compute the slope
 \end{Shaded}
 
 \begin{verbatim}
-##  logBody 
-## 0.195154
+##     logBody 
+## -0.07234491
 \end{verbatim}
 
 \textbf{Exercise}: try estimating the same parameter from a series of 100 permuted versions of our original data, and collecting each of the permuted parameters into a vector called ``permvec''.
@@ -1778,7 +1778,7 @@ Let's begin by calculating the mean squared error (MSE) between our observatiosn
 \CommentTok{\# Predict all observations using the fitted linear model}
 \NormalTok{predall }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(fit1,allisontab)}
 \CommentTok{\# Compute mean squared differences between observations and predictions}
-\NormalTok{sqdiff }\OtherTok{\textless{}{-}}\NormalTok{ (allisontab}\SpecialCharTok{$}\NormalTok{logBrain }\SpecialCharTok{{-}}\NormalTok{ predall)}\SpecialCharTok{\^{}}\DecValTok{2} 
+\NormalTok{sqdiff }\OtherTok{\textless{}{-}}\NormalTok{ (allisontab}\SpecialCharTok{$}\NormalTok{TotalSleep }\SpecialCharTok{{-}}\NormalTok{ predall)}\SpecialCharTok{\^{}}\DecValTok{2} 
 \CommentTok{\# Extract the differences for the test partition}
 \NormalTok{sqdiff.test }\OtherTok{\textless{}{-}}\NormalTok{ sqdiff[testset]}
 \CommentTok{\# Compute the mean squared error}
@@ -1786,15 +1786,18 @@ Let's begin by calculating the mean squared error (MSE) between our observatiosn
 \end{Highlighting}
 \end{Shaded}
 
-Now, we'll try to fit our data to two more complex models: a quadratic model and a cubic model, using the function \texttt{poly}:
+Now, we'll try to fit our data to 3 more complex models: a quadratic model, a cubic model and a 4-th degree polynomial model, using the function \texttt{poly}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{fit2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(TotalSleep }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(logBody,}\DecValTok{2}\NormalTok{), }\AttributeTok{data=}\NormalTok{allisontab,}\AttributeTok{subset=}\NormalTok{trainset)}
-\NormalTok{mse2 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(((allisontab}\SpecialCharTok{$}\NormalTok{logBrain }\SpecialCharTok{{-}} \FunctionTok{predict}\NormalTok{(fit2,allisontab))}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)[testset])}
+\NormalTok{mse2 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(((allisontab}\SpecialCharTok{$}\NormalTok{TotalSleep }\SpecialCharTok{{-}} \FunctionTok{predict}\NormalTok{(fit2,allisontab))}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)[testset])}
 
 \NormalTok{fit3 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(TotalSleep }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(logBody,}\DecValTok{3}\NormalTok{), }\AttributeTok{data=}\NormalTok{allisontab,}\AttributeTok{subset=}\NormalTok{trainset)}
-\NormalTok{mse3 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(((allisontab}\SpecialCharTok{$}\NormalTok{logBrain }\SpecialCharTok{{-}} \FunctionTok{predict}\NormalTok{(fit3,allisontab))}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)[testset])}
+\NormalTok{mse3 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(((allisontab}\SpecialCharTok{$}\NormalTok{TotalSleep }\SpecialCharTok{{-}} \FunctionTok{predict}\NormalTok{(fit3,allisontab))}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)[testset])}
+
+\NormalTok{fit4 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(TotalSleep }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(logBody,}\DecValTok{4}\NormalTok{), }\AttributeTok{data=}\NormalTok{allisontab,}\AttributeTok{subset=}\NormalTok{trainset)}
+\NormalTok{mse4 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(((allisontab}\SpecialCharTok{$}\NormalTok{TotalSleep }\SpecialCharTok{{-}} \FunctionTok{predict}\NormalTok{(fit4,allisontab))}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)[testset])}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2096,46 +2099,38 @@ Let's perform NMDS ordination using the Bray-Curtis dissimilarity. Remember that
 
 \begin{verbatim}
 ## Run 0 stress 0.1192678 
-## Run 1 stress 0.1192683 
-## ... Procrustes: rmse 0.0004107342  max resid 0.001262418 
+## Run 1 stress 0.1808911 
+## Run 2 stress 0.1192679 
+## ... Procrustes: rmse 7.794663e-05  max resid 0.0002368762 
 ## ... Similar to previous best
-## Run 2 stress 0.119268 
-## ... Procrustes: rmse 0.0001876683  max resid 0.0005724544 
-## ... Similar to previous best
-## Run 3 stress 0.1183187 
-## ... New best solution
-## ... Procrustes: rmse 0.02025256  max resid 0.06488289 
+## Run 3 stress 0.1808911 
 ## Run 4 stress 0.1183186 
 ## ... New best solution
-## ... Procrustes: rmse 9.451813e-05  max resid 0.0002431628 
+## ... Procrustes: rmse 0.0202695  max resid 0.06495276 
+## Run 5 stress 0.1886532 
+## Run 6 stress 0.1192678 
+## Run 7 stress 0.1192681 
+## Run 8 stress 0.2075713 
+## Run 9 stress 0.1809578 
+## Run 10 stress 0.1183186 
+## ... Procrustes: rmse 6.355678e-05  max resid 0.0001866434 
 ## ... Similar to previous best
-## Run 5 stress 0.1192678 
-## Run 6 stress 0.1886532 
-## Run 7 stress 0.1192678 
-## Run 8 stress 0.1183186 
-## ... New best solution
-## ... Procrustes: rmse 3.458021e-05  max resid 9.712127e-05 
+## Run 11 stress 0.1183186 
+## ... Procrustes: rmse 0.0001132017  max resid 0.0003093434 
 ## ... Similar to previous best
-## Run 9 stress 0.1183186 
-## ... Procrustes: rmse 8.030154e-05  max resid 0.0002770769 
-## ... Similar to previous best
-## Run 10 stress 0.1808911 
-## Run 11 stress 0.1192681 
-## Run 12 stress 0.2736963 
-## Run 13 stress 0.1900944 
-## Run 14 stress 0.1192682 
-## Run 15 stress 0.1886532 
-## Run 16 stress 0.1183186 
-## ... Procrustes: rmse 2.978114e-05  max resid 7.195254e-05 
-## ... Similar to previous best
+## Run 12 stress 0.1192682 
+## Run 13 stress 0.1192678 
+## Run 14 stress 0.1192681 
+## Run 15 stress 0.1192678 
+## Run 16 stress 0.1808916 
 ## Run 17 stress 0.1183186 
-## ... Procrustes: rmse 3.09709e-05  max resid 8.833399e-05 
+## ... Procrustes: rmse 6.805762e-05  max resid 0.000219497 
 ## ... Similar to previous best
-## Run 18 stress 0.1183186 
-## ... Procrustes: rmse 7.997416e-05  max resid 0.0002098148 
+## Run 18 stress 0.1192678 
+## Run 19 stress 0.1183186 
+## ... Procrustes: rmse 2.389172e-05  max resid 7.64447e-05 
 ## ... Similar to previous best
-## Run 19 stress 0.1812947 
-## Run 20 stress 0.119268 
+## Run 20 stress 0.1192678 
 ## *** Solution reached
 \end{verbatim}
 

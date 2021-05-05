@@ -86,7 +86,7 @@ estimate
 
 ```{r, echo=FALSE}
 bootsvec <- c()
-for(i in seq(1,1000)){
+for(i in seq(1,100)){
   boots <- bootstrap(allisontab)
   bootsest <- lm(logBrain ~ logBody, data=boots)$coeff[2]
   bootsvec <- c(bootsvec,bootsest)
@@ -186,7 +186,6 @@ permest
 permvec <- c()
 for(i in seq(1,100)){
   permdat <- permute(allisontab,"logBrain")
-  colnames(permdat) <- c("Species","logBody","logBrain")
   permest <- lm(logBrain ~ logBody, data=permdat)$coeff[2]
   permvec <- c(permvec,permest)
 }
@@ -200,8 +199,9 @@ We now have a distribution of the parameter estimate under the assumption that t
 
 
 ```{r, echo=FALSE}
-data_est <- lm(TotalSleep ~ log(BodyWt), data=allisontab)$coeff[2]
-approx_pval <- (sum(permvec < data_est) + 1)/(length(permvec) + 1)
+data_est <- lm(logBrain ~ log(BodyWt), data=allisontab)$coeff[2]
+max_pval <- sum(permvec > data_est) / length(permvec) # P must be less than this number
+approx_pval <- (sum(permvec > data_est) + 1)/(length(permvec) + 1) # P is approximately this number
 ```
 
 
@@ -226,21 +226,24 @@ fit1 <- lm(TotalSleep ~ logBody, data=allisontab,subset=trainset)
 # Predict all observations using the fitted linear model
 predall <- predict(fit1,allisontab)
 # Compute mean squared differences between observations and predictions
-sqdiff <- (allisontab$logBrain - predall)^2 
+sqdiff <- (allisontab$TotalSleep - predall)^2 
 # Extract the differences for the test partition
 sqdiff.test <- sqdiff[testset]
 # Compute the mean squared error
 mse1 <- mean(sqdiff.test)
 ```
 
-Now, we'll try to fit our data to two more complex models: a quadratic model and a cubic model, using the function `poly`:
+Now, we'll try to fit our data to 3 more complex models: a quadratic model, a cubic model and a 4-th degree polynomial model, using the function `poly`:
 
 ```{r}
 fit2 <- lm(TotalSleep ~ poly(logBody,2), data=allisontab,subset=trainset)
-mse2 <- mean(((allisontab$logBrain - predict(fit2,allisontab))^2)[testset])
+mse2 <- mean(((allisontab$TotalSleep - predict(fit2,allisontab))^2)[testset])
 
 fit3 <- lm(TotalSleep ~ poly(logBody,3), data=allisontab,subset=trainset)
-mse3 <- mean(((allisontab$logBrain - predict(fit3,allisontab))^2)[testset])
+mse3 <- mean(((allisontab$TotalSleep - predict(fit3,allisontab))^2)[testset])
+
+fit4 <- lm(TotalSleep ~ poly(logBody,4), data=allisontab,subset=trainset)
+mse4 <- mean(((allisontab$TotalSleep - predict(fit4,allisontab))^2)[testset])
 ```
 
 We can see that the MSE appears to increase for the more complex models. This suggests a simple linear fit performs better at predicting values that were not included in the training set.
@@ -248,8 +251,14 @@ We can see that the MSE appears to increase for the more complex models. This su
 **Exercise**: compute the MSE on the training partition. Compare the resulting values to the MSE on the test partition. What do you observe? Is the difference in errors between the three models as large as when computing the MSE on the test partition? Why do you think this is?
 
 ```{r, echo=FALSE, eval=FALSE}
-mse2.training <- mean(((allisontab$logBrain - predict(fit2,allisontab))^2)[trainset])
-mse3.training <- mean(((allisontab$logBrain - predict(fit2,allisontab))^2)[trainset])
+mse1.training <- mean(((allisontab$TotalSleep - predict(fit1,allisontab))^2)[trainset])
+mse2.training <- mean(((allisontab$TotalSleep - predict(fit2,allisontab))^2)[trainset])
+mse3.training <- mean(((allisontab$TotalSleep - predict(fit3,allisontab))^2)[trainset])
+mse4.training <- mean(((allisontab$TotalSleep - predict(fit4,allisontab))^2)[trainset])
+par(mfrow=c(2,1))
+plot(c(1,2,3,4),c(mse1,mse2,mse3,mse4),xlab="polynomial degree of model",ylab="MSE(test)",type="l")
+plot(c(mse1.training,mse2.training,mse3.training,mse4.training),xlab="polynomial degree of model",ylab="MSE(train)",type="l")
+par(mfrow=c(1,1))
 ```
 
 ## Cross-validation
