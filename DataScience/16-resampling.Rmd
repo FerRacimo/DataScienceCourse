@@ -130,13 +130,16 @@ Note that here, we are still using Normal quantiles, which is why this method ha
 
 The percentile approach is less 'parametric' and simply involves obtaining percentiles of the bootstrap distribution. If we are interested in a 95% CI, for example, we just look for the values of the bootstrap distribution that correspond to the 2.5% percentile and the 97.5% percentile, so that the central bootstrap distribution mass between them adds up to 95%.
 
-```{r}
+**Exercise**: To obtain the bootstrap-based quantile confidence intervals, compute the 95% quantiles (lower 2.5% and upper 97.5%) of the bootstrap distribution we've obtained before.
+
+```{r, echo=FALSE, eval=FALSE}
 # Let bootsvec be our vector of boostrapped parameters from the previous exercise
 CIs.bootsQ <- quantile(bootsvec, c(0.025,0.975))
 CIs.bootsQ
 ```
 
 Compare these confidence intervals to the (highly parametric) CIs that are obtained directly from the linear model, using the function `confint`, which assumes that the fitted parameter is normally distributed, and does not use any information about bootstraps at all (just the standard error of the fitted model).
+
 
 ```{r}
 CIs.param <- confint(lmmodel)[2,]
