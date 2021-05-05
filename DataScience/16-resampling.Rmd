@@ -244,9 +244,14 @@ We can see that the MSE appears to increase for the more complex models. This su
 
 **Exercise**: compute the MSE on the training partition. Compare the resulting values to the MSE on the test partition. What do you observe? Is the difference in errors between the three models as large as when computing the MSE on the test partition? Why do you think this is?
 
+```{r, echo=FALSE, eval=FALSE}
+mse2.training <- mean(((allisontab$logBrain - predict(fit2,allisontab))^2)[trainset])
+mse3.training <- mean(((allisontab$logBrain - predict(fit2,allisontab))^2)[trainset])
+```
+
 ## Cross-validation
 
-We'll now perform a cross-validation exercise. If you haven't installed it, you'll need to install the library `boot` before loading it.
+We'll now perform a cross-validation exercise. If you haven't installed it, you'll need to install the library `boot` before loading it. This allows you to perform various resampling techniques, including both bootstrapping and cross-validation.
 
 ```{r}
 if(require("boot") == FALSE){install.packages("boot")}
@@ -279,5 +284,19 @@ for(m in 1:5){
 
 **Exercise**: Plot the results of this cross-validation exercise. Which model has the lowest LOOCV error?
 
-**Exercise**: Take a look at the help function for `cv.glm`. Which argument would you modify to be able to compute the 10-fold cross-validation error, instead of the LOOCV error. Can you do this for the five models we tested above?
+```{r, echo=FALSE, eval=FALSE}
+plot(seq(1,5),CVerr,xlab="Model complexity",ylab="LOOCV error")
+```
 
+The LOOCV error is approximately unbiased for the true prediction error, but often has high variance, and can be computationally expensive when our datasets are large. 5-fold and 10-fold cross-validation are recommended as a good compromise between reduced variance and a bit of bias in the estimation of the prediction error. Let's try increasing the size of the K-fold partition.
+
+**Exercise**: Take a look at the help function for `cv.glm`. Which argument would you modify to be able to compute the 10-fold cross-validation error, instead of the LOOCV error. Can you do this for the five models we tested above? Which model has the lowest cross-validation error now?
+
+```{r, echo=FALSE, eval=FALSE}
+CVK10err=rep(0,5)
+for(m in 1:5){
+  fit=glm(TotalSleep ~ poly(logBody,m), data=allisontab)
+  CVK10err[m]=cv.glm(allisontab,fit,K=10)$delta[1]
+}
+plot(seq(1,5),CVK10err,xlab="Model complexity",ylab="10-fold CV error")
+```

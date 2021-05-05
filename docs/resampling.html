@@ -24,7 +24,7 @@
 <meta name="author" content="Fernando Racimo, Shyam Gopalakrishnan" />
 
 
-<meta name="date" content="2021-05-04" />
+<meta name="date" content="2021-05-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -333,14 +333,14 @@ In R, we can thus obtain the CI around the mean as follows:</p>
 <span id="cb82-6"><a href="resampling.html#cb82-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(CIs.bootsSE) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;2.5%&quot;</span>,<span class="st">&quot;97.5%&quot;</span>)</span>
 <span id="cb82-7"><a href="resampling.html#cb82-7" aria-hidden="true" tabindex="-1"></a>CIs.bootsSE</span></code></pre></div>
 <pre><code>##      2.5%     97.5% 
-## 0.7077214 0.8119356</code></pre>
+## 0.7111711 0.8069734</code></pre>
 <p>Note that here, we are still using Normal quantiles, which is why this method has a bit of a parametric flavor.</p>
 <p>The percentile approach is less ‘parametric’ and simply involves obtaining percentiles of the bootstrap distribution. If we are interested in a 95% CI, for example, we just look for the values of the bootstrap distribution that correspond to the 2.5% percentile and the 97.5% percentile, so that the central bootstrap distribution mass between them adds up to 95%.</p>
 <div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="resampling.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let bootsvec be our vector of boostrapped parameters from the previous exercise</span></span>
 <span id="cb84-2"><a href="resampling.html#cb84-2" aria-hidden="true" tabindex="-1"></a>CIs.bootsQ <span class="ot">&lt;-</span> <span class="fu">quantile</span>(bootsvec, <span class="fu">c</span>(<span class="fl">0.025</span>,<span class="fl">0.975</span>))</span>
 <span id="cb84-3"><a href="resampling.html#cb84-3" aria-hidden="true" tabindex="-1"></a>CIs.bootsQ</span></code></pre></div>
 <pre><code>##      2.5%     97.5% 
-## 0.7083116 0.8155631</code></pre>
+## 0.7123327 0.8109149</code></pre>
 <p>Compare these confidence intervals to the (highly parametric) CIs that are obtained directly from the linear model, using the function <code>confint</code>, which assumes that the fitted parameter is normally distributed, and does not use any information about bootstraps at all (just the standard error of the fitted model).</p>
 <div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="resampling.html#cb86-1" aria-hidden="true" tabindex="-1"></a>CIs.param <span class="ot">&lt;-</span> <span class="fu">confint</span>(lmmodel)[<span class="dv">2</span>,]</span>
 <span id="cb86-2"><a href="resampling.html#cb86-2" aria-hidden="true" tabindex="-1"></a>CIs.param</span></code></pre></div>
@@ -388,8 +388,8 @@ In R, we can thus obtain the CI around the mean as follows:</p>
 <p><img src="DataScience_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
 <div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="resampling.html#cb92-1" aria-hidden="true" tabindex="-1"></a>permest <span class="ot">&lt;-</span> <span class="fu">lm</span>(logBrain <span class="sc">~</span> logBody, <span class="at">data=</span>permuted)<span class="sc">$</span>coeff[<span class="dv">2</span>]</span>
 <span id="cb92-2"><a href="resampling.html#cb92-2" aria-hidden="true" tabindex="-1"></a>permest</span></code></pre></div>
-<pre><code>##     logBody 
-## -0.07181601</code></pre>
+<pre><code>##    logBody 
+## 0.04025663</code></pre>
 <p><strong>Exercise</strong>: try estimating the same parameter from a series of 100 permuted versions of our original data, and collecting each of the permuted parameters into a vector called “permvec.”</p>
 <p>We now have a distribution of the parameter estimate under the assumption that there is no relationship between these two variables:</p>
 <p><strong>Exercise</strong>: obtain an empirical one-tailed P-value from this distribution by counting how many of the permuted samples are as large as our original estimate, and dividing by the total number of permuted samples we have.</p>
@@ -425,7 +425,7 @@ In R, we can thus obtain the CI around the mean as follows:</p>
 </div>
 <div id="cross-validation" class="section level2" number="12.4">
 <h2><span class="header-section-number">12.4</span> Cross-validation</h2>
-<p>We’ll now perform a cross-validation exercise. If you haven’t installed it, you’ll need to install the library <code>boot</code> before loading it.</p>
+<p>We’ll now perform a cross-validation exercise. If you haven’t installed it, you’ll need to install the library <code>boot</code> before loading it. This allows you to perform various resampling techniques, including both bootstrapping and cross-validation.</p>
 <div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="resampling.html#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">require</span>(<span class="st">&quot;boot&quot;</span>) <span class="sc">==</span> <span class="cn">FALSE</span>){<span class="fu">install.packages</span>(<span class="st">&quot;boot&quot;</span>)}</span></code></pre></div>
 <pre><code>## Loading required package: boot</code></pre>
 <div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="resampling.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;boot&quot;</span>)</span></code></pre></div>
@@ -443,7 +443,8 @@ In R, we can thus obtain the CI around the mean as follows:</p>
 <span id="cb103-4"><a href="resampling.html#cb103-4" aria-hidden="true" tabindex="-1"></a>  CVerr[m]<span class="ot">=</span><span class="fu">cv.glm</span>(allisontab,fit)<span class="sc">$</span>delta[<span class="dv">1</span>]</span>
 <span id="cb103-5"><a href="resampling.html#cb103-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p><strong>Exercise</strong>: Plot the results of this cross-validation exercise. Which model has the lowest LOOCV error?</p>
-<p><strong>Exercise</strong>: Take a look at the help function for <code>cv.glm</code>. Which argument would you modify to be able to compute the 10-fold cross-validation error, instead of the LOOCV error. Can you do this for the five models we tested above?</p>
+<p>The LOOCV error is approximately unbiased for the true prediction error, but often has high variance, and can be computationally expensive when our datasets are large. 5-fold and 10-fold cross-validation are recommended as a good compromise between reduced variance and a bit of bias in the estimation of the prediction error. Let’s try increasing the size of the K-fold partition.</p>
+<p><strong>Exercise</strong>: Take a look at the help function for <code>cv.glm</code>. Which argument would you modify to be able to compute the 10-fold cross-validation error, instead of the LOOCV error. Can you do this for the five models we tested above? Which model has the lowest cross-validation error now?</p>
 
 </div>
 </div>

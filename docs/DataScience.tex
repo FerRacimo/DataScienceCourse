@@ -118,7 +118,7 @@
 
 \title{Data Analysis and Statistical Thinking: An R Workbook}
 \author{Fernando Racimo, Shyam Gopalakrishnan}
-\date{2021-05-04}
+\date{2021-05-05}
 
 \begin{document}
 \maketitle
@@ -185,7 +185,7 @@ This function has 3 required input parameters: n, size and prob. The first param
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0 0 0 1 1 0 1 1 1 0 1 1 1 1 1 1 0 1 1 0
+##  [1] 1 1 1 1 1 1 0 0 1 1 0 1 0 1 0 1 1 0 1 1
 \end{verbatim}
 
 Here, we generate 20 toin cosses, and the zeroes and ones represent whether we got a heads or a tails in each trial. For now, we will ignore the second parameter (size) and fix it at 1, but we'll revisit it in a moment. The third parameter (prob) dictates how biased the coin is. If we set it to 0.9, we'll get the outcomes of a biased coin toss, in particular biased towards heads:
@@ -197,7 +197,7 @@ Here, we generate 20 toin cosses, and the zeroes and ones represent whether we g
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1
+##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1
 \end{verbatim}
 
 \textbf{Exercise}: What happens when you set prob to 0.1? Or 0.999? Why?
@@ -224,7 +224,7 @@ Let's create a new variable (n) that will determine how many trials we attempt, 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.65
+## [1] 0.55
 \end{verbatim}
 
 \textbf{Exercise}: Run the chunk of code above, in your own console. Do you get the same number as I do? Do you get exactly 0.5? If not, why not? Try the same exercise but with 100 trials, 1000 trials and 100000 trials. What happens as we increase the number of trials? This should illustrate how powerful R can be. We just threw 100 thousand coins into the air without even lifting our fingers! Try to repeat the exercise, but this time, set the Bernoulli prob parameter to be equal to a number of your choice (between 0 and 1). What is the average of all your coin tosses?
@@ -243,7 +243,7 @@ One way of doing this is by running 20 Bernoulli trials, and then adding them up
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 12
+## [1] 9
 \end{verbatim}
 
 Turns out there's a short-hand way of performing the same experiment, i.e.~tossing a bunch of coins - each a Bernoulli random variable - observing their outcomes and adding them up, without using the sum() function at all. Here's where the second input parameter - size - of the rbinom() function comes into play. So far, we've always left it equal to 1 in all our command lines above, but we can set it to any positive integer:
@@ -255,7 +255,7 @@ Turns out there's a short-hand way of performing the same experiment, i.e.~tossi
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 8
+## [1] 7
 \end{verbatim}
 
 The above code is equivalent to taking 20 Bernoulli trials, and then adding their outcomes up. The ``experiment'' we are running is now not a single coin toss, but 20 coin tosses together, so the first parameter is now 1 (note: if we had set it to 20, we would have performed 20 20-toss experiments). The outcome of this experiment is neither heads nor tails, but the sum of all the heads in all those coin tosses.
@@ -280,7 +280,7 @@ We can compute the average of multiple Binomial trials. Let's try adding the res
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  9  7 10 10 11
+## [1] 9 8 9 9 7
 \end{verbatim}
 
 \begin{Shaded}
@@ -291,7 +291,7 @@ We can compute the average of multiple Binomial trials. Let's try adding the res
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 47
+## [1] 42
 \end{verbatim}
 
 To get the average, we divide by the total number of trials. Remember here that the number of Binomial trials is 5:
@@ -304,7 +304,7 @@ To get the average, we divide by the total number of trials. Remember here that 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 9.4
+## [1] 8.4
 \end{verbatim}
 
 A shorthand for obtaining the mean is the function mean(). This should give you the same result:
@@ -317,7 +317,7 @@ A shorthand for obtaining the mean is the function mean(). This should give you 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 9.4
+## [1] 8.4
 \end{verbatim}
 
 Note that the mean need not be an integer, even though the outcome of each Binomial trial \emph{must} be an integer.
@@ -387,26 +387,26 @@ Ok, this is very neat, but how can we check this equation is correct? Well, we c
 \end{Shaded}
 
 \begin{verbatim}
-##   [1]  7  6 11  9 12 12 11 11  9  9 10 12 10 10 11 10  9 10  5 10  8  8  9 12  9
-##  [26]  6 10  8  9  7 14 13  9 10  6  7  9  7 11 14 11 14  5  9 11 11 12 10 13  7
-##  [51] 11  7  9 12  9 10 10 12 10  6 11 10 10 12 13  7 10 11 13 12 12  8 10  8  9
-##  [76] 11 10 12  7  9  8 10  9  6 12 11 10  9 12  6 14 13 13 10 12  6  8 14 12 12
-## [101]  7 10  8  8 11 13 16 11  9  7 10 13  6  7 14 12 11 11  8 10  9  9 10  9 10
-## [126] 10  8 10 10  9  8  7 15 12 11  9  9 12 12 10  9 10 10 12 12  8 10 15  8 13
-## [151] 12 15  8 13 12 11  7  7  9 10  7 11  8 12  9 10  6  9 10  8 12 11  9 11 11
-## [176]  8 12 11  8 11 12 10  8  8 11 11 11 13  9  6  8 10  9  8  8  6  7 13 12  7
-## [201]  6 12  6  7  9 13  9 11  8 12 11  7  6 11 11 11 14 12  9 16 11 10 12 10 12
-## [226]  6 12 16  6 12 12 10  7 10  9  8  8 10 14  9 13 10 14  8 13  9 11 12 12 13
-## [251]  9  7  5  8 11 13  9 12 10  9 11 10 13 10  9 11 13 11 10 12 11  9  9 12  8
-## [276]  9 11 13  8 12  8  9  6  5 11  9  5  6 13  8  7 10 11  5  8 10 11 10 13 14
-## [301] 10 11 14 13 13 10 11  6  7 10  9  8 11 12 10 11  9 14 10 11  9  9  8  9 11
-## [326]  9 11 11 10  7  9 10 10  8 10  8 12  8 10 10  7  9  9  9 11 11 12  8  6 10
-## [351] 11  7 12 10  7 11  9 14 10  9 11  9 14  9  8 14  9  7  9  9 11 12 10 14  9
-## [376] 11  6  8 11  9 14  8 11 11  7  9 13 11 13 12 10  8  8  8 12  9 12 13 10 13
-## [401] 10  9 11  8 12 10  9  9  9  4  6 13 10 11 13  8 12 12 11 11 11 10  7 10  6
-## [426] 13 13  9  9  8 10 10  7 11 11  7 13 10  7 10  6  7 12 11  8  6 11 13 10  7
-## [451]  9 10 12  9 12 10  8 12  6 10 10  8 10 10 12  7  9  9 11 15  8  5  6 13 10
-## [476] 11 11  7 10 10 12 10  8 10 11  8  7  5 10  7 12 12 13  9  8 11  7  6 12 10
+##   [1] 10 10  9  9  8 11 12  7  7  9 15  9 11  8  8  9 12  9 12  8  9 10 12 11 11
+##  [26]  8 10  8 10 13  9  5  9 13  8 10 11 12 11 10 11 10  7 10  8  8  9 11  8 10
+##  [51]  8  7  9 13 10  7 13  9 14 14  9 12  8 15 11  9 11  6  8  9 14  8  9 11 10
+##  [76]  9  9  9 10  6  9 10 12 10  6 10  9 11 11 10 12 13 12 10 12 11  9 10 11 10
+## [101]  4  8 11 13 12  9 11  9  9 10 10  8  9  9  9 10 10 12  7 15 11 12  9  8 11
+## [126] 11 10 10  7  7 10 11 10  7  9 13 10 13  9 11 11  9 15 10  7 14 11  7 10 10
+## [151] 13 13  8 10 12 11 10  9 11  7 10  5 11  9 13 10  9  9 10 11 11 12  8  6  8
+## [176]  4 11  5  9  7 11  9 10  9 12 12 11  7 12 11 13 10  7 12 12  8 10 10  6 13
+## [201]  9 10  8 12  6 10 12  9  8  8 10 10  8 11 10 11  9  9  9 12  8 12 13  9 11
+## [226]  8 13  9  9  9 13  9  8  6  9  6  9 12 12  8  9 11  8 15  7 12 12 12 12  8
+## [251]  8 12 10 13 12 11  5  8  8 12  6  8 13  7  8 10  7 11 10 13 12  7 11  8 10
+## [276]  7  9  9 11 13 12  7 12 11 10  8  9  9 13  8 10 12 16 10 11 11 11 14 10  6
+## [301]  9  9 13 12 12 12  8 11 10 13 13 15 13 11 14 12 10 10  9 13  5 11  8  8 11
+## [326] 11 11  9 10  9 11  5  8 10  9 10 10  8 10 10 10 11  8 11  9 11 14 10 10  8
+## [351]  8 12 10  3  7 12 12  6 14 10 10 12  7 13 14 12 12 10  4  8  8 13 10 11 11
+## [376] 13  9 11  7  9  9  8  8 10  9 11  9  8  3  8  9 11 10 13 11  8  9  8 10 10
+## [401] 11  9 12  8 10 12 11  7  9  7 11  9 14  7  9  9  8 10 10  9  8 10 10  9 10
+## [426] 10 13  9  9 12  9 10 11 12  9 11 12 13  9  7  7 12 11  7 11 11  9  9  6  8
+## [451] 10 11  9 12 11  7 10 12  6  7 11 13 12  9 12 13  5  7 11 10 13 11  6 12 13
+## [476]  7  6  8 10  9 10  9 10 11  8 10  8 11 11 11 11 11 11 12 14  9  7  8  9  7
 \end{verbatim}
 
 We can determine which of these trials was equal to 10 using the ``=='' symbol:
@@ -420,7 +420,7 @@ We can determine which of these trials was equal to 10 using the ``=='' symbol:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] FALSE FALSE FALSE FALSE FALSE FALSE
+## [1]  TRUE  TRUE FALSE FALSE FALSE FALSE
 \end{verbatim}
 
 This returns a new vector in which each element is equal to TRUE if the corresponding element in ``binomvec'' is equal to 10, and FALSE otherwise. The nice thing is that R considers the value of TRUE to also be equal to 1, and the value of FALSE to also be equal to 0, so we can actually apply the function sum() to this vector!
@@ -493,7 +493,7 @@ Just as we can compute the sample mean of a set of trials using the function mea
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 5 5 3 3 5 4
+## [1] 5 5 7 5 3 5
 \end{verbatim}
 
 \begin{Shaded}
@@ -503,7 +503,7 @@ Just as we can compute the sample mean of a set of trials using the function mea
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 5.00097
+## [1] 4.99825
 \end{verbatim}
 
 \begin{Shaded}
@@ -513,7 +513,7 @@ Just as we can compute the sample mean of a set of trials using the function mea
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 2.480934
+## [1] 2.508632
 \end{verbatim}
 
 \textbf{Exercise}: Compute the variance of a set of 100,000 Binomial trials, each of size 10, for different values of the probability of heads, ranging from 0 to 1 (in steps of 0.1). This is equivalent to performing one hundred thousand 5-toss experiments, with different types of biased coins in each experiment. For what value of the binomial probability is the variance maximized? Afterwards, try overlaying the theoretical variance of the binomial distribuiton (\texttt{size*p*(1-p)}) on top of your plot.
@@ -624,7 +624,7 @@ What if we want to create our own probability distribution? In R, we can, using 
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 2 6 4 5 1 2 6 6 6 5
+##  [1] 1 2 6 2 4 4 3 5 1 6
 \end{verbatim}
 
 The option \texttt{replace=TRUE} ensures we can sample \textbf{with replacement} from the \texttt{sides} vector. Because each element has equal probability of occurring, the above is also calle a \textbf{discrete uniform distribution}. This is not necessary, however. Here's an example in which we roll a loaded dice where the side \texttt{6} is biased to appear more frequently than the others:
@@ -639,7 +639,7 @@ The option \texttt{replace=TRUE} ensures we can sample \textbf{with replacement}
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 6 6 2 5 3 6 2 6 6 3
+##  [1] 5 3 6 5 6 1 6 1 2 6
 \end{verbatim}
 
 Let's put this function into practice.
@@ -1649,7 +1649,7 @@ In R, we can thus obtain the CI around the mean as follows:
 
 \begin{verbatim}
 ##      2.5%     97.5% 
-## 0.7112475 0.8090555
+## 0.7111689 0.8056386
 \end{verbatim}
 
 Note that here, we are still using Normal quantiles, which is why this method has a bit of a parametric flavor.
@@ -1666,7 +1666,7 @@ The percentile approach is less `parametric' and simply involves obtaining perce
 
 \begin{verbatim}
 ##      2.5%     97.5% 
-## 0.7149903 0.8128316
+## 0.7129330 0.8085511
 \end{verbatim}
 
 Compare these confidence intervals to the (highly parametric) CIs that are obtained directly from the linear model, using the function \texttt{confint}, which assumes that the fitted parameter is normally distributed, and does not use any information about bootstraps at all (just the standard error of the fitted model).
@@ -1755,7 +1755,7 @@ Now we can obtain a permuted version of our original data, and compute the slope
 
 \begin{verbatim}
 ##     logBody 
-## -0.09338198
+## 0.009351609
 \end{verbatim}
 
 \textbf{Exercise}: try estimating the same parameter from a series of 100 permuted versions of our original data, and collecting each of the permuted parameters into a vector called ``permvec''.
@@ -1816,7 +1816,7 @@ We can see that the MSE appears to increase for the more complex models. This su
 \hypertarget{cross-validation}{%
 \section{Cross-validation}\label{cross-validation}}
 
-We'll now perform a cross-validation exercise. If you haven't installed it, you'll need to install the library \texttt{boot} before loading it.
+We'll now perform a cross-validation exercise. If you haven't installed it, you'll need to install the library \texttt{boot} before loading it. This allows you to perform various resampling techniques, including both bootstrapping and cross-validation.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1870,7 +1870,9 @@ Now, let's compute the LOOCV error for increasingly complex polynomial models (l
 
 \textbf{Exercise}: Plot the results of this cross-validation exercise. Which model has the lowest LOOCV error?
 
-\textbf{Exercise}: Take a look at the help function for \texttt{cv.glm}. Which argument would you modify to be able to compute the 10-fold cross-validation error, instead of the LOOCV error. Can you do this for the five models we tested above?
+The LOOCV error is approximately unbiased for the true prediction error, but often has high variance, and can be computationally expensive when our datasets are large. 5-fold and 10-fold cross-validation are recommended as a good compromise between reduced variance and a bit of bias in the estimation of the prediction error. Let's try increasing the size of the K-fold partition.
+
+\textbf{Exercise}: Take a look at the help function for \texttt{cv.glm}. Which argument would you modify to be able to compute the 10-fold cross-validation error, instead of the LOOCV error. Can you do this for the five models we tested above? Which model has the lowest cross-validation error now?
 
 \hypertarget{mixed-models}{%
 \chapter{Mixed Models}\label{mixed-models}}
@@ -1978,7 +1980,7 @@ Using the loadings, we can plot our original (standardized) data matrix into the
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-104-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-107-1.pdf}
 
 You can compare the results from the first section (using the ready-made function prcomp) and this section (taking a longer road), to check that the results are equivalent. The function \texttt{range()} returns a vector containing the minimum and maximum of a given vector. Using this function, we can observe that the minimum and maximum differences in values for the loadings, the scores and the standard deviations of the PCs are all infinitesimally small (effectively zero).
 
@@ -2105,48 +2107,44 @@ Let's perform NMDS ordination using the Bray-Curtis dissimilarity. Remember that
 
 \begin{verbatim}
 ## Run 0 stress 0.1192678 
-## Run 1 stress 0.1192679 
-## ... Procrustes: rmse 8.187661e-05  max resid 0.000254235 
-## ... Similar to previous best
-## Run 2 stress 0.119268 
-## ... Procrustes: rmse 6.51795e-05  max resid 0.00011331 
-## ... Similar to previous best
-## Run 3 stress 0.1183186 
+## Run 1 stress 0.1183186 
 ## ... New best solution
-## ... Procrustes: rmse 0.02027039  max resid 0.06495626 
-## Run 4 stress 0.3032401 
-## Run 5 stress 0.1192678 
-## Run 6 stress 0.1809579 
-## Run 7 stress 0.2341213 
-## Run 8 stress 0.1192683 
-## Run 9 stress 0.1192683 
-## Run 10 stress 0.1183186 
-## ... Procrustes: rmse 7.134716e-05  max resid 0.0002290379 
+## ... Procrustes: rmse 0.02027125  max resid 0.06495979 
+## Run 2 stress 0.1192679 
+## Run 3 stress 0.1192679 
+## Run 4 stress 0.1192678 
+## Run 5 stress 0.1192679 
+## Run 6 stress 0.1183186 
+## ... New best solution
+## ... Procrustes: rmse 1.915208e-05  max resid 6.075921e-05 
 ## ... Similar to previous best
+## Run 7 stress 0.1183189 
+## ... Procrustes: rmse 0.0002013542  max resid 0.0005543546 
+## ... Similar to previous best
+## Run 8 stress 0.1183186 
+## ... New best solution
+## ... Procrustes: rmse 2.464106e-06  max resid 7.092019e-06 
+## ... Similar to previous best
+## Run 9 stress 0.1192678 
+## Run 10 stress 0.119268 
 ## Run 11 stress 0.1183186 
-## ... Procrustes: rmse 6.039469e-06  max resid 2.094076e-05 
+## ... Procrustes: rmse 2.192502e-05  max resid 5.642039e-05 
 ## ... Similar to previous best
-## Run 12 stress 0.1192684 
-## Run 13 stress 0.1183186 
-## ... Procrustes: rmse 1.957562e-05  max resid 5.966438e-05 
-## ... Similar to previous best
-## Run 14 stress 0.1192683 
+## Run 12 stress 0.1809588 
+## Run 13 stress 0.1192678 
+## Run 14 stress 0.1808911 
 ## Run 15 stress 0.1183186 
-## ... Procrustes: rmse 9.359684e-05  max resid 0.0002615581 
+## ... Procrustes: rmse 7.267548e-06  max resid 2.273253e-05 
 ## ... Similar to previous best
-## Run 16 stress 0.1192679 
-## Run 17 stress 0.1183186 
-## ... Procrustes: rmse 9.24119e-05  max resid 0.0002530793 
+## Run 16 stress 0.1183188 
+## ... Procrustes: rmse 6.526521e-05  max resid 0.0002081441 
 ## ... Similar to previous best
+## Run 17 stress 0.1192681 
 ## Run 18 stress 0.1183186 
-## ... Procrustes: rmse 2.164739e-05  max resid 6.484153e-05 
+## ... Procrustes: rmse 6.979353e-05  max resid 0.0001941316 
 ## ... Similar to previous best
-## Run 19 stress 0.1183186 
-## ... Procrustes: rmse 8.083001e-05  max resid 0.0002082536 
-## ... Similar to previous best
-## Run 20 stress 0.1183186 
-## ... Procrustes: rmse 5.668036e-05  max resid 0.0001876308 
-## ... Similar to previous best
+## Run 19 stress 0.1889661 
+## Run 20 stress 0.1192683 
 ## *** Solution reached
 \end{verbatim}
 
@@ -2160,7 +2158,7 @@ As you can see, the function goes through a series of steps until convergence is
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-111-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-114-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2239,7 +2237,7 @@ Ok, now on to the second preliminary detail. Clustering methods require the spec
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-119-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-122-1.pdf}
 
 \begin{verbatim}
 ## *** : The Hubert index is a graphical method of determining the number of clusters.
@@ -2249,7 +2247,7 @@ Ok, now on to the second preliminary detail. Clustering methods require the spec
 ## 
 \end{verbatim}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-119-2.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-122-2.pdf}
 
 \begin{verbatim}
 ## *** : The D index is a graphical method of determining the number of clusters. 
@@ -2296,7 +2294,7 @@ It seems like ten of the methods suggest that the best number of clusters should
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-120-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-123-1.pdf}
 
 Let's go with 2 clusters then. We are now finally ready to perform a K-means clustering. We do so as follows:
 
@@ -2333,7 +2331,7 @@ We can use this vector to plot our data, colored by the resulting clusters.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-123-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-126-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2341,11 +2339,11 @@ We can use this vector to plot our data, colored by the resulting clusters.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-123-2.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-126-2.pdf}
 
 \textbf{Exercise}: Now try computing a K-means clustering on the data yourself, this time using 3 clusters. Plot the result using a different color for each cluster.
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-124-1.pdf} \includegraphics{DataScience_files/figure-latex/unnamed-chunk-124-2.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-127-1.pdf} \includegraphics{DataScience_files/figure-latex/unnamed-chunk-127-2.pdf}
 
 \textbf{Exercise}: How well do the clusters from the previous exercise correspond to the 3 iris species? Are they perfectly matched? Why? Why not?
 
@@ -2424,7 +2422,7 @@ We'll begin by focusing on the relationship between two of the continuous variab
 ## Warning: Removed 4 rows containing missing values (geom_point).
 \end{verbatim}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-129-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-132-1.pdf}
 
 Hmmm this looks weird. We have many measurements of body weight around 0 (small values) and a few very large values of thousands of kilograms. This is not surprising: given that this dataset spans several different species, the measurements spans several orders of magnitude (from elephants to molerats). To account for this, variables involving body measurements (like weight or length) are traditionally converted into a log-scale when fitted into a linear model. Let's see what happens when we log-scale the body weight variable:
 
@@ -2438,7 +2436,7 @@ Hmmm this looks weird. We have many measurements of body weight around 0 (small 
 ## Warning: Removed 4 rows containing missing values (geom_point).
 \end{verbatim}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-130-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-133-1.pdf}
 
 A pattern appears to emerge now. There seems to be a negative correlation between the log of body weight and the amount of sleep a species has. Indeed, we can measure this correlation using the \texttt{cor()} function:
 
@@ -2716,7 +2714,7 @@ Now we can obtain a permuted version of our original data, and compute the slope
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{DataScience_files/figure-latex/unnamed-chunk-140-1.pdf}
+\includegraphics{DataScience_files/figure-latex/unnamed-chunk-143-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
