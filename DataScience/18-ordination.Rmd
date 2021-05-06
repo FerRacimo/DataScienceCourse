@@ -35,31 +35,30 @@ fit<-prcomp(irisnumvar, scale=TRUE) # Perform PCA
 
 **Exercise**: Try using the `summary()` and `plot()` functions to obtain a summary of the resulting PCA object How many principal components were created? (note that the number of PCs always equals the number of original variables). How much variance does the first principal component serve to explain in our data? How much variance does the second component explain? How many PCs would we need to be able to explain at least 95\% of the variation in our data?
 
-```{r, echo = FALSE}
-# summary(fit)
+```{r, eval=FALSE, echo = FALSE}
+summary(fit)
 
-# plot(fit,type="lines")
-
+plot(fit,type="lines")
 ```
 
 The "Rotation" matrix is included inside the `fit` object we just constructed. You can retrieve it by typing `fit[2]$rotation`. This matrix contains the "loadings" of each of the original variables on the newly created PCs.
 
 **Exercise**: Take a look at the rotation matrix. The larger the absolute value of a variable in each PC, the more that variable contributes to that PC. For each component, use the function `barplot()` to plot the loadings (contributions) of each variable into that component. Which variables contribute most to each component? 
 
-```{r, echo = FALSE}
-#rotmat <- fit[2]$rotation
-#par(mfrow=c(2,2))
-#barplot(rotmat[,1],main="PC1")
-#barplot(rotmat[,2],main="PC2")
-#barplot(rotmat[,3],main="PC3")
-#barplot(rotmat[,4],main="PC4")
-#par(mfrow=c(1,1))
+```{r, eval=FALSE, echo = FALSE}
+rotmat <- fit[2]$rotation
+par(mfrow=c(2,2))
+barplot(rotmat[,1],main="PC1")
+barplot(rotmat[,2],main="PC2")
+barplot(rotmat[,3],main="PC3")
+barplot(rotmat[,4],main="PC4")
+par(mfrow=c(1,1))
 ```
 
 **Exercise**: Use the function "biplot" to plot the first two PCs of our data. The plotted arrows provide a graphical rendition of the loadings of each of the original variables on the two PCs. Across this reduced dimensional space, we can see that particular variables tend to co-vary quite strongly. Which ones? We can also see a separation into two groups on PC1. Based on the previous exercise (looking at the rotation matrix), which variables do you think would be most different between samples in one group and in the other?
 
-```{r, echo = FALSE}
-# biplot(fit)
+```{r, eval=FALSE, echo = FALSE}
+biplot(fit)
 ```
 
 <!--
@@ -163,6 +162,10 @@ head(newiris)
 #vir.glm.PC1 <- glm(isvirginica ~ PC1, family = binomial(link='logit'), data = newiris)
 ```
 
+
+
+<!--
+
 ## NMDS
 
 We'll now perform non-metric multidimensional scaling. Let's first take a look at the raw data we will use. This is a data matrix containing information about dune meadow vegetation. There are 30 species and 20 sites. Each cell corresponds to the number of specimens of a particular species that has been observed at a particular site (Jongman et al. 1987). As one can see, there are many sites where some species are completely absent (the cell value equals 0):
@@ -197,3 +200,5 @@ Here, the option `choices` determines which NMDS dimensions are being plotted. W
 **Exercise**: Change the number of dimensions and re-run the ordination. Note that you'll have to create multiple plots to observe all the dimensions if there are more than 2 of them. How do the results change?
 
 **Exercise**: Change the distance metric used and re-run the ordination with k=2 (e.g. try using the Euclidean distance instead). You can take a look at the list of possible distances and their definitions using `?vegdist`. Do the results change? Why?
+
+-->
