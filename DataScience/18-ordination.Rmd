@@ -137,13 +137,13 @@ range(fit$x - scoresLONG)
 
 ## Principal components as explanatory variables
 
-We can use principal components as explanatory variables to any linear model. In this case, we'll use the first two principal components of the PCA we performed above, to perform a logistic regression on the probability that an individual belongs to the species 'virginica'. First, let's create a new variable that is equal to 1 if an individual belongs to this species, and is 0 otherwise. We'll use this variable as the response variable
+While PCA is an unsupervised learning method, we can use principal components as explanatory variables in a supervised learning method too. As an example, we'll use the first two principal components of the PCA we just performed above, to perform a logistic regression on the probability that an individual belongs to the species 'virginica'. First, let's create a new variable that is equal to 1 if an individual belongs to this species, and is 0 otherwise. We'll use this variable as the response variable
 
 ```{r}
 isvirginica <-  as.numeric(iris[,5] == "virginica")
 ```
 
-We now collate the principal components from the exercise above into a new dataframe that also includes the response variable we just created.
+We now collate the principal components from the exercise above into a new data-frame that also includes the response variable we just created.
 
 ```{r}
 # The PC scores are stored in the fifth element of fit. Here, we could have also used the object scoresLONG which we obtained by fitting a PCA manually.

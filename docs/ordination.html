@@ -205,6 +205,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.2" data-path="ordination.html"><a href="ordination.html#principal-component-analysis-pca"><i class="fa fa-check"></i><b>14.2</b> Principal component analysis (PCA)</a></li>
 <li class="chapter" data-level="14.3" data-path="ordination.html"><a href="ordination.html#pca-under-the-hood"><i class="fa fa-check"></i><b>14.3</b> PCA under the hood</a></li>
 <li class="chapter" data-level="14.4" data-path="ordination.html"><a href="ordination.html#principal-components-as-explanatory-variables"><i class="fa fa-check"></i><b>14.4</b> Principal components as explanatory variables</a></li>
+<li class="chapter" data-level="14.5" data-path="ordination.html"><a href="ordination.html#nmds"><i class="fa fa-check"></i><b>14.5</b> NMDS</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>15</b> Clustering</a>
 <ul>
@@ -321,9 +322,9 @@ We can also plot the first two PCs, like we had done before in base R, but now c
 </div>
 <div id="principal-components-as-explanatory-variables" class="section level2" number="14.4">
 <h2><span class="header-section-number">14.4</span> Principal components as explanatory variables</h2>
-<p>We can use principal components as explanatory variables to any linear model. In this case, we’ll use the first two principal components of the PCA we performed above, to perform a logistic regression on the probability that an individual belongs to the species ‘virginica.’ First, let’s create a new variable that is equal to 1 if an individual belongs to this species, and is 0 otherwise. We’ll use this variable as the response variable</p>
+<p>While PCA is an unsupervised learning method, we can use principal components as explanatory variables in a supervised learning method too. As an example, we’ll use the first two principal components of the PCA we just performed above, to perform a logistic regression on the probability that an individual belongs to the species ‘virginica.’ First, let’s create a new variable that is equal to 1 if an individual belongs to this species, and is 0 otherwise. We’ll use this variable as the response variable</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="ordination.html#cb15-1" aria-hidden="true" tabindex="-1"></a>isvirginica <span class="ot">&lt;-</span>  <span class="fu">as.numeric</span>(iris[,<span class="dv">5</span>] <span class="sc">==</span> <span class="st">&quot;virginica&quot;</span>)</span></code></pre></div>
-<p>We now collate the principal components from the exercise above into a new dataframe that also includes the response variable we just created.</p>
+<p>We now collate the principal components from the exercise above into a new data-frame that also includes the response variable we just created.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="ordination.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The PC scores are stored in the fifth element of fit. Here, we could have also used the object scoresLONG which we obtained by fitting a PCA manually.</span></span>
 <span id="cb16-2"><a href="ordination.html#cb16-2" aria-hidden="true" tabindex="-1"></a>PC.scores <span class="ot">&lt;-</span> fit[<span class="dv">5</span>] </span>
 <span id="cb16-3"><a href="ordination.html#cb16-3" aria-hidden="true" tabindex="-1"></a>newiris <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(PC.scores,isvirginica)</span>
@@ -338,21 +339,14 @@ We can also plot the first two PCs, like we had done before in base R, but now c
 ## 6 -2.068701 -1.4842053 -0.02687825  0.006586116           0</code></pre>
 <p><strong>Exercise</strong>: use the <code>glm()</code> function on the newly created <code>newiris</code> data-frame, to perform a logistic regression for the probability that an individual belongs to the species virginica, using the first two principal components (PC1 and PC2) as explanatory variables. Do both components have fitted effects that are significantly different from 0? Do these results make sense in light of the PCA biplots created in the sections above?</p>
 <p><strong>Exercise</strong>: Compare the logistic model to another logistic model, this time using only PC1 as the explanatory variable. Which model has the highest AIC score?</p>
-<!--
-
-## NMDS
-
-We'll now perform non-metric multidimensional scaling. Let's first take a look at the raw data we will use. This is a data matrix containing information about dune meadow vegetation. There are 30 species and 20 sites. Each cell corresponds to the number of specimens of a particular species that has been observed at a particular site (Jongman et al. 1987). As one can see, there are many sites where some species are completely absent (the cell value equals 0):
-
-
-```r
-require(vegan)
-data(dune)
-head(dune)
-```
-
-```
-##   Achimill Agrostol Airaprae Alopgeni Anthodor Bellpere Bromhord Chenalbu
+</div>
+<div id="nmds" class="section level2" number="14.5">
+<h2><span class="header-section-number">14.5</span> NMDS</h2>
+<p>We’ll now perform non-metric multidimensional scaling. Let’s first take a look at the raw data we will use. This is a data matrix containing information about dune meadow vegetation. There are 30 species and 20 sites. Each cell corresponds to the number of specimens of a particular species that has been observed at a particular site (Jongman et al. 1987). As one can see, there are many sites where some species are completely absent (the cell value equals 0):</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="ordination.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(vegan)</span>
+<span id="cb18-2"><a href="ordination.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(dune)</span>
+<span id="cb18-3"><a href="ordination.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dune)</span></code></pre></div>
+<pre><code>##   Achimill Agrostol Airaprae Alopgeni Anthodor Bellpere Bromhord Chenalbu
 ## 1        1        0        0        0        0        0        0        0
 ## 2        3        0        0        2        0        3        4        0
 ## 3        0        4        0        7        0        2        0        0
@@ -379,87 +373,59 @@ head(dune)
 ## 3        2        0        2        0        2        0
 ## 4        2        0        1        0        2        0
 ## 5        3        2        2        0        2        0
-## 6        3        5        5        0        6        0
-```
-
-Note that here linearity is not a good assumption to make for our ordination: a difference between a site containing 0 specimens (absence) and a site containing 1 specimen is conceptually larger than a difference between a site containing 1 specimen and another site containing 2. In other words, the difference between presence and absence is more important than a difference in quantity of specimens. Thus, our first instinct should not be to perform PCA on it. Because NMDS relies on "distances", we need to specify a distance metric that we'll use. The function for performing NMDS in the package 'vegan' is called metaMDS() and its default distance metric is "bray", which corresponds to the Bray-Curtis dissimilarity: a statistic used to quantify the compositional dissimilarity between two different sites, based on counts at each site
-
-Let's perform NMDS ordination using the Bray-Curtis dissimilarity. Remember that, unlike PCA, NMDS requires us to specify the number of dimensions (k) a priori (the default in vegan is 2). It also performs a series of transformations on the data that are appropriate for ecological data (default: autotransform=TRUE). The trymax option ensures that the algorithm is started from different points (in our case, 50) to avoid local minima.
-
-
-```r
-ord <- metaMDS(dune, k=2, autotransform = TRUE, trymax=50, distance="bray")
-```
-
-```
-## Run 0 stress 0.1192678 
+## 6        3        5        5        0        6        0</code></pre>
+<p>Note that here linearity is not a good assumption to make for our ordination: a difference between a site containing 0 specimens (absence) and a site containing 1 specimen is conceptually larger than a difference between a site containing 1 specimen and another site containing 2. In other words, the difference between presence and absence is more important than a difference in quantity of specimens. Thus, our first instinct should not be to perform PCA on it. Because NMDS relies on “distances,” we need to specify a distance metric that we’ll use. The function for performing NMDS in the package ‘vegan’ is called metaMDS() and its default distance metric is “bray,” which corresponds to the Bray-Curtis dissimilarity: a statistic used to quantify the compositional dissimilarity between two different sites, based on counts at each site</p>
+<p>Let’s perform NMDS ordination using the Bray-Curtis dissimilarity. Remember that, unlike PCA, NMDS requires us to specify the number of dimensions (k) a priori (the default in vegan is 2). It also performs a series of transformations on the data that are appropriate for ecological data (default: autotransform=TRUE). The trymax option ensures that the algorithm is started from different points (in our case, 50) to avoid local minima.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="ordination.html#cb20-1" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(dune, <span class="at">k=</span><span class="dv">2</span>, <span class="at">autotransform =</span> <span class="cn">TRUE</span>, <span class="at">trymax=</span><span class="dv">50</span>, <span class="at">distance=</span><span class="st">&quot;bray&quot;</span>)</span></code></pre></div>
+<pre><code>## Run 0 stress 0.1192678 
 ## Run 1 stress 0.1183186 
 ## ... New best solution
-## ... Procrustes: rmse 0.02026993  max resid 0.06495462 
-## Run 2 stress 0.1183186 
-## ... Procrustes: rmse 1.214531e-05  max resid 2.958991e-05 
-## ... Similar to previous best
+## ... Procrustes: rmse 0.0202672  max resid 0.06494773 
+## Run 2 stress 0.1809578 
 ## Run 3 stress 0.1183186 
-## ... Procrustes: rmse 4.173286e-05  max resid 0.0001354954 
+## ... Procrustes: rmse 4.191754e-05  max resid 0.000125041 
 ## ... Similar to previous best
-## Run 4 stress 0.1183186 
-## ... Procrustes: rmse 5.5209e-05  max resid 0.0001347236 
+## Run 4 stress 0.1192678 
+## Run 5 stress 0.1183186 
+## ... Procrustes: rmse 1.263198e-05  max resid 2.772116e-05 
 ## ... Similar to previous best
-## Run 5 stress 0.1192678 
-## Run 6 stress 0.1183186 
-## ... Procrustes: rmse 7.416326e-05  max resid 0.0002184795 
+## Run 6 stress 0.119268 
+## Run 7 stress 0.1192678 
+## Run 8 stress 0.1192679 
+## Run 9 stress 0.1808912 
+## Run 10 stress 0.1183186 
+## ... Procrustes: rmse 5.028843e-05  max resid 0.0001241026 
 ## ... Similar to previous best
-## Run 7 stress 0.1192679 
-## Run 8 stress 0.1192694 
-## Run 9 stress 0.119268 
-## Run 10 stress 0.1192682 
-## Run 11 stress 0.1192679 
-## Run 12 stress 0.1192682 
-## Run 13 stress 0.1192678 
-## Run 14 stress 0.1183186 
-## ... Procrustes: rmse 4.357284e-05  max resid 0.0001349727 
+## Run 11 stress 0.1183186 
+## ... New best solution
+## ... Procrustes: rmse 1.600413e-05  max resid 2.99829e-05 
 ## ... Similar to previous best
-## Run 15 stress 0.1183186 
-## ... Procrustes: rmse 3.966365e-05  max resid 0.0001224165 
+## Run 12 stress 0.1192679 
+## Run 13 stress 0.1192679 
+## Run 14 stress 0.1192678 
+## Run 15 stress 0.188965 
+## Run 16 stress 0.1183186 
+## ... Procrustes: rmse 1.866572e-05  max resid 5.777192e-05 
 ## ... Similar to previous best
-## Run 16 stress 0.1192679 
-## Run 17 stress 0.1183186 
-## ... Procrustes: rmse 2.986045e-05  max resid 7.758387e-05 
+## Run 17 stress 0.119268 
+## Run 18 stress 0.1183186 
+## ... Procrustes: rmse 4.737286e-06  max resid 1.330064e-05 
 ## ... Similar to previous best
-## Run 18 stress 0.119268 
-## Run 19 stress 0.1183186 
-## ... Procrustes: rmse 1.396546e-06  max resid 2.7069e-06 
-## ... Similar to previous best
+## Run 19 stress 0.1192681 
 ## Run 20 stress 0.1183186 
-## ... Procrustes: rmse 5.644933e-05  max resid 0.0001783361 
+## ... Procrustes: rmse 2.435024e-05  max resid 7.979353e-05 
 ## ... Similar to previous best
-## *** Solution reached
-```
-
-As you can see, the function goes through a series of steps until convergence is reached. Let's plot the results:
-
-
-```r
-par(mfrow=c(1,2))
-plot(ord,choices=c(1,2),display="sites",main="NMDS ordination of sites",type="t")
-plot(ord,choices=c(1,2),display="species",main="NMDS ordination of species",type="t")
-```
-
-<img src="DataScience_files/figure-html/unnamed-chunk-22-1.png" width="672" />
-
-```r
-par(mfrow=c(1,1))
-```
-
-Here, the option `choices` determines which NMDS dimensions are being plotted. We only have two dimensions, so there's only two dimensions that we can plot here. In turn, the option `display` allows us to plot an ordination of the sites (assuming species are properties of each site), or of the species (assuming sites are properties of each species).
-
-**Exercise**: Take a look at the plots. Which species tend to co-occcur with each other? Which sites tend to have similar species compositions?
-
-**Exercise**: Change the number of dimensions and re-run the ordination. Note that you'll have to create multiple plots to observe all the dimensions if there are more than 2 of them. How do the results change?
-
-**Exercise**: Change the distance metric used and re-run the ordination with k=2 (e.g. try using the Euclidean distance instead). You can take a look at the list of possible distances and their definitions using `?vegdist`. Do the results change? Why?
-
--->
+## *** Solution reached</code></pre>
+<p>As you can see, the function goes through a series of steps until convergence is reached. Let’s plot the results:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="ordination.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb22-2"><a href="ordination.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord,<span class="at">choices=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="at">display=</span><span class="st">&quot;sites&quot;</span>,<span class="at">main=</span><span class="st">&quot;NMDS ordination of sites&quot;</span>,<span class="at">type=</span><span class="st">&quot;t&quot;</span>)</span>
+<span id="cb22-3"><a href="ordination.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord,<span class="at">choices=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>),<span class="at">display=</span><span class="st">&quot;species&quot;</span>,<span class="at">main=</span><span class="st">&quot;NMDS ordination of species&quot;</span>,<span class="at">type=</span><span class="st">&quot;t&quot;</span>)</span></code></pre></div>
+<p><img src="DataScience_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="ordination.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
+<p>Here, the option <code>choices</code> determines which NMDS dimensions are being plotted. We only have two dimensions, so there’s only two dimensions that we can plot here. In turn, the option <code>display</code> allows us to plot an ordination of the sites (assuming species are properties of each site), or of the species (assuming sites are properties of each species).</p>
+<p><strong>Exercise</strong>: Take a look at the plots. Which species tend to co-occcur with each other? Which sites tend to have similar species compositions?</p>
+<p><strong>Exercise</strong>: Change the number of dimensions and re-run the ordination. Note that you’ll have to create multiple plots to observe all the dimensions if there are more than 2 of them. How do the results change?</p>
+<p><strong>Exercise</strong>: Change the distance metric used and re-run the ordination with k=2 (e.g. try using the Euclidean distance instead). You can take a look at the list of possible distances and their definitions using <code>?vegdist</code>. Do the results change? Why?</p>
 
 </div>
 </div>
