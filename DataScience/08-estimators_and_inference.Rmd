@@ -36,7 +36,7 @@ dim(testmat) # dimensions of matrix
 What type of Normal distribution are we sampling from though? By default, the function rnorm samples from a standard Normal distribution with mean equal to 0 and standard deviation equal to 1. In our function `simsamps`, we are only feeding one argument to the normal distribution (the number of draws we want to obtain from it). The three dots placed in both the argument of the `simsamps` function and in its internal call to `rsim` allows us to feed more parameters to `rsim`:
 
 ```{r}
-testmat <- simsamps(30,100,rnorm,mean=3,sd=5) # generate matrix of 1000 Normal(3,5) data sets of size 30
+testmat <- simsamps(30,100,rnorm,mean=3,sd=5) # generate matrix of 100 Normal(3,5) data sets of size 30
 ```
 
 We can obtain the sample mean and sample median from each of these datasets, using the `apply` function:
